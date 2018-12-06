@@ -80,7 +80,7 @@ class InstructionProductionController extends Controller
 	public function actionIndexdetail(){
 		$this->layout = 'blank';
 		$searchModel = new SearchInstructionProductionDetail();
-        $dataProvider = $searchModel->search(Yii::$app->request->post(), Yii::$app->session->get('idInstWhTr'));
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), Yii::$app->session->get('idInstProd'));
 
         return $this->render('indexdetail', [
             'searchModel' => $searchModel,
@@ -100,7 +100,7 @@ class InstructionProductionController extends Controller
 		$searchModel = new SearchInstructionProductionDetail();
         $dataProvider = $searchModel->search(Yii::$app->request->post(), $id);
 
-		Yii::$app->session->set('idInstWhTr', $model->id);
+		Yii::$app->session->set('idInstProd', $model->id);
 
         return [
             'model' => $model,
@@ -178,7 +178,7 @@ class InstructionProductionController extends Controller
 					$model->file_attachment = $filepath.$model->id.'/'.$filename;
 					$model->save();
 
-					Yii::$app->session->set('idInstWhTr', $model->id);
+					Yii::$app->session->set('idInstProd', $model->id);
 
 					if (!file_exists($filepath.$model->id.'/')) {
 						mkdir($filepath.$model->id.'/', 0777, true);
@@ -188,7 +188,7 @@ class InstructionProductionController extends Controller
 
             return 'success';
         } else {
-						Yii::$app->session->remove('idInstWhTr');
+						Yii::$app->session->remove('idInstProd');
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -206,7 +206,7 @@ class InstructionProductionController extends Controller
 		$this->layout = 'blank';
         $model = $this->findModel($id);
 
-		Yii::$app->session->set('idInstWhTr', $model->id);
+		Yii::$app->session->set('idInstProd', $model->id);
         if ($model->load(Yii::$app->request->post())) {
 
 			$filename = '';
@@ -237,9 +237,43 @@ class InstructionProductionController extends Controller
         }
     }
 
+    public function actionCreateItemSet(){
+    	$this->layout = 'blank';
+		$id = Yii::$app->session->get('idInstProd');
+
+		$model = new InstructionProductionDetail();
+
+		if (Yii::$app->request->isPost){
+			if($model->save()){
+				Yii::$app->session->set('idInstProdDetail', $model->id);
+				return 'success';
+			}
+		}
+
+		return $this->render('createitemset', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionCreateItemSetDetail($id = NULL){
+    	$this->layout = 'blank';
+    	if($id == NULL) $id = Yii::$app->session->get('idInstProdDetail');
+		
+
+		$model = new InstructionProductionDetail();
+
+		if (Yii::$app->request->isPost){
+			
+		}
+
+		return $this->render('createitemset', [
+            'model' => $model,
+        ]);
+    }
+
 	public function actionCreatedetail(){
 		$this->layout = 'blank';
-		$id = Yii::$app->session->get('idInstWhTr');
+		$id = Yii::$app->session->get('idInstProd');
 
 		if (Yii::$app->request->isPost && empty(Yii::$app->request->post('SearchMasterItemIm'))){
 
@@ -345,7 +379,7 @@ class InstructionProductionController extends Controller
 			return Displayerror::pesan($model->getErrors());
 		}
 
-		Yii::$app->session->remove('idInstWhTr');
+		Yii::$app->session->remove('idInstProd');
 		return 'success';
 	}
 

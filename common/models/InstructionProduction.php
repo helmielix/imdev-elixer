@@ -41,7 +41,7 @@ class InstructionProduction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['hasil_produksi',  'id_warehouse', 'target_produksi',  'id_modul'], 'required'],
+            [[  'id_warehouse', 'target_produksi',  'id_modul'], 'required'],
             [['hasil_produksi', 'id_warehouse', 'status_listing', 'id_modul'], 'integer'],
             [['target_produksi', 'created_date', 'updated_date'], 'safe'],
             [['file_attachment', 'revision_remark'], 'string'],

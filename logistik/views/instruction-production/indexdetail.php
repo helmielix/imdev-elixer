@@ -27,9 +27,10 @@ hellooo world
 </div>
 <div class="instruction-wh-transfer-detail-index">
 
-	<?php if($this->context->action->id == 'view'){ ?>
+	<?php if($this->context->action->id == 'indexdetail'){ ?>
     <p>
-        <?= Html::button(Yii::t('app','Add'), ['id'=>'createButton','class' => 'btn btn-success']) ?>
+        <?= Html::button(Yii::t('app','Add Set Item'), ['id'=>'createSetButton','class' => 'btn btn-success']) ?>
+        <?= Html::button(Yii::t('app','Add Supporting Item'), ['id'=>'createSupportButton','class' => 'btn btn-success']) ?>
     </p>
 	<?php } ?>
 	<?php Pjax::begin([
@@ -65,14 +66,16 @@ hellooo world
                     },
                 ],
             ],
-			
+			'target_produksi',
+
 			[
 				'attribute' => 'id_item_im',
 				'value' => 'idMasterItemIm.im_code',
 			],
-			'req_good',
-			'req_not_good',
-			'req_reject',
+            'qty',
+			// 'req_good',
+			// 'req_not_good',
+			// 'req_reject',
             
         ],
     ]); ?>
@@ -99,7 +102,7 @@ hellooo world
 		   return false; 
 	   }
 	})
-    $('#createButton').click(function () {
+    $('#createSetButton').click(function () {
         $('#modal').modal('show')
             .find('#modalContent')
             .load('<?php 
@@ -107,7 +110,7 @@ hellooo world
 			if (basename(Yii::$app->request->pathInfo) == 'view'){
 				$par = 'view';
 			}
-			echo Url::to([$this->context->id.'/createdetail', 'par' => $par]) ;?>');
+			echo Url::to([$this->context->id.'/create-item-set', 'par' => $par]) ;?>');
         $('#modalHeader').html('<h3> Create Detail Instruksi Warehouse Transfer</h3>');
     });
 	

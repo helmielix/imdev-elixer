@@ -60,16 +60,8 @@ use common\models\ItemProductionReference;
 		'allowClear' => true],
 		]) ?>
 
-    <?= $form->field($model, 'hasil_produksi')->widget(Select2::classname(), [
-		'data' => ArrayHelper::map($dataItem, 'item_hasil','item_hasil_name'),
-		// 'data' => $dataWarehouse,
-		'language' => 'en',
-		'options' => ['placeholder' => 'Select '.$model->getAttributeLabel('hasil_produksi')],
-		'pluginOptions' => [
-		'allowClear' => true],
-		]) ?>
+   
 
-    <?= $form->field($model, 'qty')->textInput() ?>
 
     <?= $form->field($model, 'file')->fileInput() ?>
 

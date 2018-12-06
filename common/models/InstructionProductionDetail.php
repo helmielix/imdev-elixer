@@ -22,9 +22,8 @@ use yii\behaviors\BlameableBehavior;
  */
 class InstructionProductionDetail extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+    public $im_code;
+
     public static function tableName()
     {
         return 'instruction_production_detail';
@@ -36,7 +35,7 @@ class InstructionProductionDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_instruction_production', 'id_item_im'], 'required'],
+            [['id_instruction_production'], 'required'],
             [['id_instruction_production', 'id_item_im', 'created_by', 'req_good', 'req_not_good', 'req_reject'], 'integer'],
             [['id_instruction_production'], 'exist', 'skipOnError' => true, 'targetClass' => InstructionProduction::className(), 'targetAttribute' => ['id_instruction_production' => 'id']],
             // [['id_item_im'], 'exist', 'skipOnError' => true, 'targetClass' => ItemIm::className(), 'targetAttribute' => ['id_item_im' => 'id']],
