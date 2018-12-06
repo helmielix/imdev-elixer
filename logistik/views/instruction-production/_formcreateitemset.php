@@ -34,7 +34,7 @@ use common\models\MasterItemIm;
     ]); ?>
 
     <?php 
-        $dataItem = MasterItemIm::find()->select('distinct(name)')->all();
+        $dataItem = MasterItemIm::find()->all();
     ?>
 
    
@@ -69,7 +69,7 @@ use common\models\MasterItemIm;
 
 <script>
 $('#item_name-id').change(function() {
-	console.log($('#rr_number-id :selected').val());
+	console.log($('#item_name-id :selected').val());
 	$.ajax({
             url: 'getim?idItem='+$('#item_name-id :selected').val(),
             type: 'post',

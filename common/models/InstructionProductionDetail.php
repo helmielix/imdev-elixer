@@ -36,7 +36,8 @@ class InstructionProductionDetail extends \yii\db\ActiveRecord
     {
         return [
             [['id_instruction_production'], 'required'],
-            [['id_instruction_production', 'id_item_im', 'created_by', 'req_good', 'req_not_good', 'req_reject'], 'integer'],
+            // [['id_item_im'], 'save'],
+            [['id_instruction_production', 'id_item_im', 'created_by', 'req_good', 'req_not_good', 'req_reject', 'id_item_im', 'qty'], 'integer'],
             [['id_instruction_production'], 'exist', 'skipOnError' => true, 'targetClass' => InstructionProduction::className(), 'targetAttribute' => ['id_instruction_production' => 'id']],
             // [['id_item_im'], 'exist', 'skipOnError' => true, 'targetClass' => ItemIm::className(), 'targetAttribute' => ['id_item_im' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],

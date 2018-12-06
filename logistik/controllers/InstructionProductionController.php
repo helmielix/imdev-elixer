@@ -243,10 +243,15 @@ class InstructionProductionController extends Controller
 
 		$model = new InstructionProductionDetail();
 
-		if (Yii::$app->request->isPost){
+		if ($model->load(Yii::$app->request->post())){
+			// return masuk;
+			$model->id_instruction_production = $id;
+
 			if($model->save()){
 				Yii::$app->session->set('idInstProdDetail', $model->id);
 				return 'success';
+			}else{
+				return print_r($model->getErrors());
 			}
 		}
 
@@ -255,19 +260,90 @@ class InstructionProductionController extends Controller
         ]);
     }
 
+    public function actionGetim($idItem){
+    
+    	// return print_r(Url::base());
+		$model = MasterItemIm::find()
+			->where(['=', 'id', $idItem])
+			->one();
+		
+		$arrResult = array(
+			'im_code' => $model->im_code,
+         );
+
+		return json_encode($arrResult);
+    }
+    
+
     public function actionCreateItemSetDetail($id = NULL){
     	$this->layout = 'blank';
     	if($id == NULL) $id = Yii::$app->session->get('idInstProdDetail');
-		
-
-		$model = new InstructionProductionDetail();
 
 		if (Yii::$app->request->isPost){
-			
+
+			$data_im_code   = Yii::$app->request->post('im_code');
+			$data_r_good    = Yii::$app->request->post('rgood');
+			$data_r_dis_good = Yii::$app->request->post('rdisgood');
+			$data_r_good_recon  = Yii::$app->request->post('rgoodrecon');
+
+			if (count($data_im_code) == 0){
+				return json_encode(['status' => 'success']);
+			}
+
+			foreach($data_im_code as $key => $value){
+				// if($data_r_good[$key] == '')
+				if($data_r_good[$key] == '' && $data_r_notgood[$key] == '' && $data_r_reject[$key] == '' && $data_r_good[$key] == 0 && $data_r_notgood[$key] == 0 && $data_r_reject[$key] == 0){
+					continue;
+				}
+				$values = explode(';',$value);
+
+				$model = new InstructionProductionDetail();
+				$model->id_instruction_wh	= $id;
+				$model->id_item_im			= $values[0];
+				$model->req_good			= ($data_r_good[$key] == '') ? 0 : $data_r_good[$key];
+				$model->req_not_good		= ($data_r_notgood[$key] == '') ? 0 : $data_r_notgood[$key];
+				$model->req_reject			= ($data_r_reject[$key] == '') ? 0 : $data_r_reject[$key];
+
+				$modelMasterItem = MasterItemIm::findOne($values[0]);
+				$overStock = 1;
+				$pesan = [];
+				if($model->req_good > $modelMasterItem->s_good){
+					$pesan[] = $model->getAttributeLabel('req_good')." is more than Stock for IM Code ".$values[1];
+					$overStock = 0;
+				}
+				if($model->req_not_good > $modelMasterItem->s_not_good){
+					$pesan[] = $model->getAttributeLabel('req_not_good')." is more than Stock for IM Code ".$values[1];
+					$overStock = 0;
+				}
+				if($model->req_reject > $modelMasterItem->s_reject){
+					$pesan[] = $model->getAttributeLabel('req_reject')." is more than Stock for IM Code ".$values[1];
+					$overStock = 0;
+				}
+
+				if ($overStock == 0)
+					return json_encode(['status' => 'error', 'id' => $values[0], 'pesan' => implode("\n",$pesan)]);
+
+				if(!$model->save()){
+					$error = $model->getErrors();
+					$error[0] = ['for IM Code '.$values[1]];
+					return json_encode(['status' => 'error', 'id' => $values[0], 'pesan' => Displayerror::pesan($error)]);
+				}
+			}
+
+			return json_encode(['status' => 'success']);
+			// return 'success';
+
 		}
 
-		return $this->render('createitemset', [
-            'model' => $model,
+		$modelDetail = InstructionProductionDetail::find()->select(['id_item_im'])->andWhere(['id_instruction_production' => $id])->all();
+		$idItemIm = ArrayHelper::map($modelDetail, 'id_item_im', 'id_item_im');
+
+		$searchModel = new SearchMasterItemIm();
+        $dataProvider = $searchModel->searchByCreateDetailItem(Yii::$app->request->post(), $idItemIm);
+
+        return $this->render('create_item_set_detail', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
