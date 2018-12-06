@@ -31,6 +31,7 @@ use common\models\MasterItemImDetail;
 use common\models\MasterSn;
 use common\models\LogMasterSn;
 use common\models\UserWarehouse;
+use common\models\Warehouse;
 
 use common\widgets\Displayerror;
 use common\widgets\Email;
