@@ -147,7 +147,7 @@ $arrQtyDetail = '';
                 		'filter' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => 'warna'])->all(), 'id', 'description'),
 					],
 					[
-						'attribute' => 'type',
+						'attribute' => 'sn_type',
 						'value' => function($model){
 							return $model->referenceType->description;
 						},

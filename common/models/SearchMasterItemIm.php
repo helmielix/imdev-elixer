@@ -17,7 +17,7 @@ class SearchMasterItemIm extends MasterItemIm
     {
         return [
             [['id', 'created_by', 'updated_by', 'status', 'sn_type', 'qty_request', 'qty_good', 'qty_noot_good', 'qty_reject','qty_dismantle_good','qty_good_rec','asset_barcode'], 'integer'],
-            [['name', 'brand', 'created_date', 'updated_date', 'im_code', 'orafin_code', 'grouping', 'warna', 'orafin_code', 'name'], 'safe'],
+            [['sn_type','name', 'brand', 'created_date', 'updated_date', 'im_code', 'orafin_code', 'grouping', 'warna', 'orafin_code', 'name'], 'safe'],
         ];
     }
 
@@ -67,9 +67,9 @@ class SearchMasterItemIm extends MasterItemIm
             'master_item_im.im_code',
             'master_item_im.id',
             'master_item_im.grouping as grouping',
-            'master_item_im.brand as brand',
-            'master_item_im.warna as warna',
-            'master_item_im.type as type',
+            'master_item_im.brand ',
+            'master_item_im.warna ',
+            'master_item_im.type ',
             // 'master_item_im.req_good_qty as req_good_qty',
 
         ])
@@ -225,7 +225,6 @@ class SearchMasterItemIm extends MasterItemIm
             'status' => $this->status,
             'created_date' => $this->created_date,
             'updated_date' => $this->updated_date,
-            'sn_type' => $this->sn_type,
         ]);
 
         $query->andFilterWhere(['ilike', 'name', $this->name])
@@ -233,6 +232,9 @@ class SearchMasterItemIm extends MasterItemIm
             ->andFilterWhere(['ilike', 'im_code', $this->im_code])
             ->andFilterWhere(['ilike', 'orafin_code', $this->orafin_code])
             ->andFilterWhere(['ilike', 'grouping', $this->grouping])
+            ->andFilterWhere(['ilike', 'brand', $this->brand])
+            ->andFilterWhere(['ilike', 'warna', $this->warna])
+            ->andFilterWhere(['=', 'sn_type', $this->sn_type])
             ->andFilterWhere(['ilike', 'refwarna.description', $this->warna])
             ->andFilterWhere(['ilike', 'grf_detail.qty_request', $this->qty_request])
             ->andFilterWhere(['ilike', 'inbound_grf_detail.qty_good', $this->qty_good]);

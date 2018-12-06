@@ -1,0 +1,55 @@
+<IfModule mod_rewrite.c>
+    Options +FollowSymlinks
+    RewriteEngine On
+</IfModule>
+ 
+<IfModule mod_rewrite.c>   
+	#module logistik
+	RewriteCond %{REQUEST_URI} ^/(logistik)
+	RewriteRule ^logistik/assets/(.*)$ logistik/web/assets/$1 [L]
+	RewriteRule ^logistik/css/(.*)$ logistik/web/css/$1 [L]
+	RewriteRule ^logistik/js/(.*)$ logistik/web/js/$1 [L]
+	RewriteRule ^logistik/images/(.*)$ logistik/web/images/$1 [L]
+
+    RewriteCond %{REQUEST_URI} !^/logistik/web/(assets|js|css|images)/
+    RewriteCond %{REQUEST_URI} ^/(logistik)
+    RewriteRule ^.*$ logistik/web/index.php [L]
+	
+	#module grf and lost
+	RewriteCond %{REQUEST_URI} ^/(grflost)
+	RewriteRule ^grflost/assets/(.*)$ grflost/web/assets/$1 [L]
+	RewriteRule ^grflost/css/(.*)$ grflost/web/css/$1 [L]
+	RewriteRule ^grflost/js/(.*)$ grflost/web/js/$1 [L]
+	RewriteRule ^grflost/images/(.*)$ grflost/web/images/$1 [L]
+
+    RewriteCond %{REQUEST_URI} !^/grflost/web/(assets|js|css|images)/
+    RewriteCond %{REQUEST_URI} ^/(grflost)
+    RewriteRule ^.*$ grflost/web/index.php [L]
+	
+	#common
+	#RewriteCond %{REQUEST_URI} ^/(im)/(common)/images
+	#RewriteRule ^(.*)$ common/images/$1 [L]
+	#RewriteCond %{REQUEST_URI} ^/(im)/(common)/assets
+	#RewriteRule ^common/assets/(.*)$ common/assets/$1 [L]
+
+	##RewriteCond %{REQUEST_URI} ^/im/(common)
+	##RewriteCond %{REQUEST_URI} ^/(common)
+	#RewriteRule ^common/css/(.*)$ common/css/$1 [L]
+	#RewriteRule ^common/js/(.*)$ common/js/$1 [L]
+	#RewriteRule ^common/img/(.*)$ common/img/$1 [L]
+
+	RewriteCond %{REQUEST_URI} ^/(common)
+	RewriteRule ^common/assets/(.*)$ common/assets/$1 [L]
+	RewriteRule ^common/css/(.*)$ common/css/$1 [L]
+	RewriteRule ^common/js/(.*)$ common/js/$1 [L]
+	RewriteRule ^common/images/(.*)$ common/images/$1 [L]
+	RewriteRule ^common/img/(.*)$ common/img/$1 [L]
+	
+	
+	#frontend
+    RewriteCond %{REQUEST_URI} !^/(frontend|logistik|divisidua|divisitiga|grflost)/web/(assets|css|js|images)/
+    RewriteCond %{REQUEST_URI} !index.php
+    RewriteCond %{REQUEST_FILENAME} !-f [OR]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^.*$ frontend/web/index.php
+</IfModule>
