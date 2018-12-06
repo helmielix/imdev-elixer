@@ -33,17 +33,14 @@ use yii\helpers\Url;
         ],
         'requiredCssClass' => 'requiredField'
     ]); ?>
-    <?= $form->field($model, 'buyer')->dropDownList(
-        ArrayHelper::map(Reference::find()->where(['in','id',[1,2]])->all(),'id','description'),
+    
+
+    <?= $form->field($model, 'id_warehouse')->dropDownList(
+        ArrayHelper::map(Warehouse::find()->all(),'id','nama_warehouse'),
         ['prompt'=>'Select...']
         );?>
 
-    <?= $form->field($model, 'warehouse')->dropDownList(
-        ArrayHelper::map(Warehouse::find()->where(['in','id',[1]])->all(),'id','nama_warehouse'),
-        ['prompt'=>'Select...']
-        );?>
-<!-- 
-    <?= $form->field($model, 'no_iom')->textInput() ?> -->
+    <?= $form->field($model, 'no_iom')->textInput() ?> 
 
 
     <?= $form->field($model, 'date_iom')->widget(
@@ -56,15 +53,7 @@ use yii\helpers\Url;
                             ]
                         ]) ?>
 
-    <?= $form->field($model, 'estimasi_disposal')->widget(
-                     DatePicker::className(),
-                        [ 'inline' => false,
-                            'clientOptions' => [
-                            'autoclose' => true,
-                            'format' => 'yyyy-mm-dd',
-                            // 'startDate' => $model->idCdmPnl->pnl_date
-                            ]
-                        ]) ?>
+    
 
     <?= $form->field($model, 'file')->fileInput() ?>
     <div class="form-group">
@@ -81,9 +70,8 @@ use yii\helpers\Url;
         </div>
     </div>
 
-    <?= $form->field($model, 'revision_remark')->textarea(['rows' => 6]) ?> 
+    <?php $form->field($model, 'revision_remark')->textarea(['rows' => 6]) ?> 
 
-<!--     <?= $form->field($model, 'id_modul')->textInput() ?> -->
 
 
     <div class="form-group">

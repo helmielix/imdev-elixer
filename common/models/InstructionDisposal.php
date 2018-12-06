@@ -68,19 +68,19 @@ class InstructionDisposal extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['no_iom', 'warehouse', 'instruction_number', 'buyer', 'date_iom', 'estimasi_disposal', 'id_modul'], 'required'],
-            [['created_by', 'updated_by', 'status_listing', 'warehouse', 'buyer', 'id_modul'], 'integer'],
+            [['no_iom', 'id_warehouse', 'instruction_number',  'date_iom', 'id_modul'], 'required'],
+            [['created_by', 'updated_by', 'status_listing', 'id_warehouse', 'id_modul'], 'integer'],
             [['instruction_number'], 'string', 'max' => 26],
             [['no_iom'], 'string', 'max' => 26],
             [['created_date', 'updated_date','estimasi_disposal', 'date_iom', 'target_implementation'], 'safe'],
             [['file_attachment' ], 'string', 'max' => 255],
             [['revision_remark'], 'string'],
             [['id_modul'], 'exist', 'skipOnError' => true, 'targetClass' => Modul::className(), 'targetAttribute' => ['id_modul' => 'id']],
-            [['buyer'], 'exist', 'skipOnError' => true, 'targetClass' => Reference::className(), 'targetAttribute' => ['buyer' => 'id']],
+            // [['buyer'], 'exist', 'skipOnError' => true, 'targetClass' => Reference::className(), 'targetAttribute' => ['buyer' => 'id']],
             [['status_listing'], 'exist', 'skipOnError' => true, 'targetClass' => StatusReference::className(), 'targetAttribute' => ['status_listing' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
-            [['warehouse'], 'exist', 'skipOnError' => true, 'targetClass' => Warehouse::className(), 'targetAttribute' => ['warehouse' => 'id']],
+            [['id_warehouse'], 'exist', 'skipOnError' => true, 'targetClass' => Warehouse::className(), 'targetAttribute' => ['id_warehouse' => 'id']],
             [['file'], 'file', 'extensions' => 'xls,xlsx', 'maxSize'=>1024*1024*5],
             [['file'], 'required', 'on'=>'create'],
         ];
@@ -95,18 +95,19 @@ class InstructionDisposal extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
             'status_listing' => 'Status Listing',
-            'no_iom' => 'No Iom',
-            'warehouse' => 'Warehouse',
+            'no_iom' => 'Nomor IOM',
+            'id_warehouse' => 'Warehouse',
             'buyer' => 'Buyer',
             'instruction_number' => 'Instruction Number',
-            'file_attachment' => 'SPK File',
-            'file' => 'File Attachment',
+            'file_attachment' => 'IOM File',
+            'file' => 'IOM File',
             'created_date' => 'Created Date',
             'updated_date' => 'Updated Date',
             'target_implementation' => 'Target Implementation',
             'revision_remark' => 'Note',
             'id_modul' => 'Id Modul',
             'id' => 'ID',
+            'date_iom' => 'Tanggal IOM'
         ];
     }
 

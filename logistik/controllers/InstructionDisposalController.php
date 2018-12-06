@@ -144,9 +144,9 @@ class InstructionDisposalController extends Controller
             
             $monthroman = Numbertoroman::convert(date('n'));
 
-            $model->no_iom = sprintf("%04d", $newidinst1).'/IOM/INT/DIV1/'.$monthroman.date('/Y');
+            // $model->no_iom = sprintf("%04d", $newidinst1).'/IOM/INT/DIV1/'.$monthroman.date('/Y');
             
-            $model->status_listing = 1;
+            $model->status_listing = 50;
 
             if (isset($_FILES['file'])) {
                 if (isset($_FILES['file']['size'])) {
