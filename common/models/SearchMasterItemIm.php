@@ -67,9 +67,9 @@ class SearchMasterItemIm extends MasterItemIm
             'master_item_im.im_code',
             'master_item_im.id',
             'master_item_im.grouping as grouping',
-            'master_item_im.brand ',
-            'master_item_im.warna ',
-            'master_item_im.type ',
+            'master_item_im.brand as brand',
+            'master_item_im.warna as warna',
+            'master_item_im.type as type',
             // 'master_item_im.req_good_qty as req_good_qty',
 
         ])

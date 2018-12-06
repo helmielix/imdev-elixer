@@ -29,10 +29,7 @@ $arrQtyDetail = '';
             ?>
             
         <?php endif; ?>
-	<?php 
-		Pjax::begin(['id' => 'gridpjax', 'timeout' => 5000, 'enablePushState' => false, 'clientOptions' => ['method' => 'POST']]) 
-		// Pjax::begin()
-	?>
+	
     <?php $form = ActiveForm::begin([
 		'enableClientValidation' => true,
         'id' => 'createForm',
@@ -64,6 +61,7 @@ $arrQtyDetail = '';
 	
 
     
+		<?php ActiveForm::end(); ?>
 	
 		<?php function getFilterStatus() {
 			if(Yii::$app->controller->action->id == 'index')
@@ -94,7 +92,12 @@ $arrQtyDetail = '';
 					6 => 'Rejected',
 				];
 			} ; ?>
+
 			
+			<?php 
+				Pjax::begin(['id' => 'gridpjax', 'timeout' => 5000, 'enablePushState' => false, 'clientOptions' => ['method' => 'GET']]) 
+				// Pjax::begin()
+			?>
 			<?= GridView::widget([
 				'dataProvider' => $dataProvider,
 				'filterModel' => $searchModel,
@@ -205,7 +208,7 @@ $arrQtyDetail = '';
         
 
 
-    <?php ActiveForm::end(); ?>
+   
 <?php \yii\widgets\Pjax::end(); ?>
 
 <script>

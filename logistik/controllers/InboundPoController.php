@@ -878,7 +878,7 @@ class InboundPoController extends Controller
         	$modelInbound = InboundPo::findOne(\Yii::$app->session->get('idInboundPo'));
 
 			$searchModel = new SearchMasterItemIm();
-			$dataProvider = $searchModel->searchByOrafinCode(Yii::$app->request->post(), $orafinCode, $modelInbound->id_warehouse);
+			$dataProvider = $searchModel->searchByOrafinCode(Yii::$app->request->queryParams, $orafinCode, $modelInbound->id_warehouse);
 			$dataProvider->pagination=false;
 			$dataProvider->sort=false;
 			$modelOrafin = OrafinViewMkmPrToPay::find()->joinWith('orafinmaster')->select([
@@ -995,12 +995,12 @@ class InboundPoController extends Controller
         }
     }
 
-    private function listView($idInboundPo = NULL,$orafinCode = NULL, $rrNumber = NULL, $queryParams = NULL)
+    private function listView($idInboundPo = NULL,$orafinCode = NULL, $rrNumber = NULL)
     {
     	$model = new InboundPoDetail();
         $modelInbound = InboundPo::findOne(\Yii::$app->session->get('idInboundPo'));
 		$searchModel = new SearchInboundPoDetail();
-        $dataProvider = $searchModel->searchByIdInbound($queryParams,$idInboundPo, $orafinCode);
+        $dataProvider = $searchModel->searchByIdInbound(Yii::$app->request->getQueryParams(),$idInboundPo, $orafinCode);
 
 		$modelOrafin = OrafinViewMkmPrToPay::find()->joinWith('orafinmaster')->select([
 				'orafin_view_mkm_pr_to_pay.pr_item_code as orafin_code',
@@ -1027,8 +1027,7 @@ class InboundPoController extends Controller
 		
 		if($idInboundPo==NULL)$idInboundPo = \Yii::$app->session->get('idInboundPo');
 		// print_r(\Yii::$app->session->get('idInboundPo'));
-		// return var_dump(Yii::$app->request->post());
-        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber,Yii::$app->request->queryParams));
+        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber));
             
         
     }
@@ -1040,7 +1039,7 @@ class InboundPoController extends Controller
 		
 		if($idInboundPo==NULL)$idInboundPo = \Yii::$app->session->get('idInboundPo');
 		// print_r(\Yii::$app->session->get('idInboundPo'));
-        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber,Yii::$app->request->queryParams));
+        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber));
             
         
     }
@@ -1052,7 +1051,7 @@ class InboundPoController extends Controller
 		
 		if($idInboundPo==NULL)$idInboundPo = \Yii::$app->session->get('idInboundPo');
 		// print_r(\Yii::$app->session->get('idInboundPo'));
-        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber,Yii::$app->request->queryParams));
+        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber));
             
         
     }
