@@ -127,7 +127,7 @@ class InboundPoController extends Controller
     {
 		$this->layout = 'blank';
 		
-        $searchModel = new SearchInboundPo();
+        $searchModel = new SearchInboundPo();        
         $dataProvider = $searchModel->searchByAction(Yii::$app->request->queryParams,'indexdetail', \Yii::$app->session->get('idInboundPo'));
 		$model = $this->findModel(Yii::$app->session->get('idInboundPo'));
 		
@@ -966,7 +966,7 @@ class InboundPoController extends Controller
         } else {
         	$modelInbound = InboundPo::findOne(\Yii::$app->session->get('idInboundPo'));
 			$searchModel = new SearchMasterItemIm();
-			$dataProvider = $searchModel->searchByOrafinCode(Yii::$app->request->post(), $orafinCode, $modelInbound->id_warehouse);
+			$dataProvider = $searchModel->searchByOrafinCode(Yii::$app->request->queryParams, $orafinCode, $modelInbound->id_warehouse);
 			$dataProvider->pagination=false;
 			$dataProvider->sort=false;
 			$modelOrafin = OrafinViewMkmPrToPay::find()->joinWith('orafinmaster')->select([

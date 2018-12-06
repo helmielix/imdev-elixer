@@ -150,8 +150,9 @@ $arrQtyDetail = '';
                 		'filter' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => 'warna'])->all(), 'id', 'description'),
 					],
 					[
-						'attribute' => 'sn_type',
+						'attribute' => 'type',
 						'value' => function($model){
+							// return $model->sn_type;
 							return $model->referenceType->description;
 						},
 						'filter' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => 'item_type'])->all(), 'id', 'description'),
@@ -183,33 +184,34 @@ $arrQtyDetail = '';
 				
 				],
 			]); ?>
+			<?php \yii\widgets\Pjax::end(); ?>
 		
-		<div class="form-group">
-<label class='control-label col-sm-4'> </label>
-        <div class='col-sm-6 pull-right'>
-            <?php switch ($this->context->action->id) {
-                case 'createdetail':
-                    $actionText = 'Create';
-                    break;
-                case 'updatedetail':
-                    $actionText = 'Update';
-                    break;
+		<div class="row">
+			<!-- <label class='control-label col-sm-4'> </label> -->
+	        <div class='col-sm-6'>
+	            <?php switch ($this->context->action->id) {
+	                case 'createdetail':
+	                    $actionText = 'Create';
+	                    break;
+	                case 'updatedetail':
+	                    $actionText = 'Update';
+	                    break;
 
-            } ?>
-            <?php 
-            	if($this->context->action->id == 'createdetail' || $this->context->action->id == 'updatedetail'){
-            ?> 
-	            <?= Html::button($actionText, ['id'=>'createdButton','class' => 'btn btn-success', 'data-pjax' => false]) ?>
-	            <?= Html::button('Submitting...', ['id'=>'loadingButton','class' => 'btn btn-secondary', 'style'=>'display:none','data-pjax' => false]) ?>
-            <?php }?>
-        </div>
-</div>
+	            } ?>
+	            <?php 
+	            	if($this->context->action->id == 'createdetail' || $this->context->action->id == 'updatedetail'){
+	            ?> 
+		            <?= Html::button($actionText, ['id'=>'createdButton','class' => 'btn btn-success', 'data-pjax' => false]) ?>
+		            <?= Html::button('Submitting...', ['id'=>'loadingButton','class' => 'btn btn-secondary', 'style'=>'display:none','data-pjax' => false]) ?>
+	            <?php }?>
+	        </div>
+		</div>
 </div>
         
 
 
    
-<?php \yii\widgets\Pjax::end(); ?>
+
 
 <script>
 	// $('#createButton').click(function () {
