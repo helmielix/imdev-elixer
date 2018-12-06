@@ -67,7 +67,7 @@ function getFilterStatus() {
 		</h3>
 		<div class="row">
 			<div class="col-sm-12">
-				<p class="pull-right">
+				<p>
 					<?php if (Yii::$app->controller->action->id == 'index') { ?>
 						<?=  Html::a('Create', '#create?header=Create Instruksi Warehouse Transfer', ['class' => 'btn btn-success', 'id' => 'createModal', 'value'=>Url::to(['instruction-production/create']), 'header'=> yii::t('app','Create Instruksi Warehouse Transfer')]) ; ?>
 					<?php } ?>
@@ -117,7 +117,8 @@ function getFilterStatus() {
           },
           'filter' => getFilterStatus()
       ],
-      'hasil_produksi',
+      'instruction_number',
+      'target_produksi',
       'id_warehouse',
 
 

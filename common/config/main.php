@@ -40,7 +40,7 @@ return [
             'admin/role/*',
             
             'parameter-master-item/*',
-			// '*'
+			'*'
         ]
     ],
 ];
