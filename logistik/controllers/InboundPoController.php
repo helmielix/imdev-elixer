@@ -995,12 +995,12 @@ class InboundPoController extends Controller
         }
     }
 
-    private function listView($idInboundPo = NULL,$orafinCode = NULL, $rrNumber = NULL)
+    private function listView($idInboundPo = NULL,$orafinCode = NULL, $rrNumber = NULL, $queryParams = NULL)
     {
     	$model = new InboundPoDetail();
         $modelInbound = InboundPo::findOne(\Yii::$app->session->get('idInboundPo'));
 		$searchModel = new SearchInboundPoDetail();
-        $dataProvider = $searchModel->searchByIdInbound(Yii::$app->request->getQueryParams(),$idInboundPo, $orafinCode);
+        $dataProvider = $searchModel->searchByIdInbound($queryParams,$idInboundPo, $orafinCode);
 
 		$modelOrafin = OrafinViewMkmPrToPay::find()->joinWith('orafinmaster')->select([
 				'orafin_view_mkm_pr_to_pay.pr_item_code as orafin_code',
@@ -1027,7 +1027,8 @@ class InboundPoController extends Controller
 		
 		if($idInboundPo==NULL)$idInboundPo = \Yii::$app->session->get('idInboundPo');
 		// print_r(\Yii::$app->session->get('idInboundPo'));
-        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber));
+		// return var_dump(Yii::$app->request->post());
+        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber,Yii::$app->request->queryParams));
             
         
     }
@@ -1039,7 +1040,7 @@ class InboundPoController extends Controller
 		
 		if($idInboundPo==NULL)$idInboundPo = \Yii::$app->session->get('idInboundPo');
 		// print_r(\Yii::$app->session->get('idInboundPo'));
-        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber));
+        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber,Yii::$app->request->queryParams));
             
         
     }
@@ -1051,7 +1052,7 @@ class InboundPoController extends Controller
 		
 		if($idInboundPo==NULL)$idInboundPo = \Yii::$app->session->get('idInboundPo');
 		// print_r(\Yii::$app->session->get('idInboundPo'));
-        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber));
+        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber,Yii::$app->request->queryParams));
             
         
     }

@@ -15,7 +15,11 @@ use common\models\Reference;
 ?>
 <div class="inbound-po-detail-index">
 
-   
+   <?php 
+   $dataProvider->setTotalCount(count($dataProvider->getModels())) ;
+   $dataProvider->setPagination( new \yii\data\Pagination(['totalCount' => count($dataProvider->getModels())]) ) ;
+   ?>
+    
 	<?php Pjax::begin([
             'id' => 'pjaxcreatedetail', 
             'timeout' => false, 

@@ -30,10 +30,7 @@ $arrQtyDetail = '';
             ?>
             
         <?php endif; ?>
-	<?php 
-		Pjax::begin(['id' => 'gridpjax', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'GET']]) 
-		// Pjax::begin()
-	?>
+	
     <?php $form = ActiveForm::begin([
 		'enableClientValidation' => true,
         'id' => 'createForm',
@@ -62,7 +59,7 @@ $arrQtyDetail = '';
 		
 		<?= $form->field($modelIm->referenceSn, 'description')->textInput(['disabled'=>true])->label('SN / Non SN');?>
 		
-	
+	<?php ActiveForm::end(); ?>
 
     
 	
@@ -96,6 +93,10 @@ $arrQtyDetail = '';
 				];
 			} ; ?>
 			
+			<?php 
+				Pjax::begin(['id' => 'gridpjax', 'timeout' => 5000, 'enablePushState' => false, 'clientOptions' => ['method' => 'get']]) 
+				// Pjax::begin()
+			?>
 			<?= GridView::widget([
 				'dataProvider' => $dataProvider,
 				'filterModel' => $searchModel,
@@ -167,6 +168,7 @@ $arrQtyDetail = '';
 				
 				],
 			]); ?>
+			<?php \yii\widgets\Pjax::end(); ?>
 		
 		<div class="form-group">
 <label class='control-label col-sm-4'> </label>
@@ -203,8 +205,8 @@ $arrQtyDetail = '';
         
 
 
-    <?php ActiveForm::end(); ?>
-<?php \yii\widgets\Pjax::end(); ?>
+    
+
 
 <script>
 	$('#previousButton').click(function () {

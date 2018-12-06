@@ -19,7 +19,7 @@ class SearchInboundPoDetail extends InboundPoDetail
     {
         return [
             [['id', 'id_inbound_po', 'id_item_im'], 'integer'],
-            [['sn_type','grouping','im_code','brand','warna','type','qty_good','qty_not_good','qty_reject','qty'], 'safe'],
+            [['sn_type','im_code','qty_good','qty_not_good','qty_reject','qty','grouping','brand','warna','type'], 'safe'],
         ];
     }
 
@@ -151,13 +151,14 @@ class SearchInboundPoDetail extends InboundPoDetail
             'qty_good'=> $this->qty_good,
             'qty_not_good'=> $this->qty_not_good,
             'qty_reject'=> $this->qty_reject,
+            'grouping'=> $this->grouping,
             
         ]);
 
         $query->andFilterWhere(['ilike', 'im_code', $this->im_code])
         ->andFilterWhere(['ilike', 'brand', $this->brand])
         ->andFilterWhere(['ilike', 'warna', $this->warna])
-        ->andFilterWhere(['ilike', 'grouping', $this->grouping])
+        // ->andFilterWhere(['ilike', 'master_item_im.grouping', $this->grouping])
         ->andFilterWhere(['ilike', 'type', $this->type]);
 
 
