@@ -1,0 +1,49 @@
+<?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\SearchCaReference */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Ca References';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="ca-reference-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a('Create Ca Reference', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\ActionColumn'],
+
+            'id',
+            'name',
+            'value',
+			// 'status'
+			[
+				'attribute' => 'status',
+				'format' => 'raw',
+				'value' => function ($searchModel) {
+						if($searchModel->statusReference){
+							return "<span class='label' style='background-color:{$searchModel->statusReference->status_color}' >{$searchModel->statusReference->status_listing}</span>";
+						}
+						
+                        
+					},
+				'filter' => [
+					27 => 'Active',
+					18 => 'Non Active'
+				],
+			]
+
+        ],
+    ]); ?>
+</div>

@@ -1,0 +1,52 @@
+.panelContainer {
+
+	-webkit-box-shadow: 3px 4px 8px -1px rgba(168,168,168,1);
+	-moz-box-shadow: 3px 4px 8px -1px rgba(168,168,168,1);
+	box-shadow: 3px 4px 8px -1px rgba(168,168,168,1);
+	background: white;
+	margin-bottom: 20px;
+}
+
+.wrapper {
+	overflow-y: hidden !important;
+}
+.right {
+	float: right;
+}
+
+.left {
+	float: left;
+}
+
+.secondrow {
+	margin-top: 20px;
+}
+
+
+#eastNorthPanel {
+	margin-left: 15px;
+}
+
+#eastSouthPanel {
+	margin-left: 15px;
+	margin-top: 15px;
+}
+
+.panelHeader {
+	height: 30px;
+    background: #66add6;
+    color: white;
+    padding: 5px 10px;
+}
+
+#map {
+	height: 370px;
+}
+
+.content-header {
+	padding: 0px !important;
+}
+
+#mapContainer {
+	height: 400px;
+}

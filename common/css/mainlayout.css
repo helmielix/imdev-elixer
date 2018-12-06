@@ -1,0 +1,42 @@
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+    color: black !important;
+    background-color: #fbef04 !important;
+}
+
+.navbar-nav > li > a {
+	opacity: 0.7;
+}
+
+.navbar-nav > li > a:hover {
+	opacity: 1;
+    background-color: #ffffc1 !important;
+}
+
+.navbar-nav > li.active > a  {
+	opacity: 1;
+    background-color: #ffffc1 !important;
+}
+
+.navbar-default {
+	border: none !important;
+}
+
+
+.headerText {
+	position: absolute;
+    width: 293px;
+    top: 5px;
+	font-size: 15px;
+	color: black;
+	opacity: 0.7;
+}
+
+.headerText:hover {
+	opacity: 1;
+}
+
+form div.required label.control-label:after {
+  content:" * ";
+  color:red;
+}
+

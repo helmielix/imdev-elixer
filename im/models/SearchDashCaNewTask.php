@@ -1,0 +1,74 @@
+<?php
+
+namespace ca\models;
+
+use Yii;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
+use app\models\DashCaNewTask;
+
+/**
+ * OwnerSearch represents the model behind the search form about `app\models\OWNER`.
+ */
+class SearchDashCaNewTask extends DashCaNewTask
+{
+    /**
+     * @inheritdoc
+     */ 
+	 
+    public function rules()
+    {
+        return [
+             [['task_date','table_source', 'task','note'], 'safe'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        // bypass scenarios() implementation in the parent class
+        return Model::scenarios();
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function search($params)
+    {
+        $query = DashCaNewTask::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => array('pageSize' => 50),
+
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+   //      $query->andFilterWhere([
+			// 'date(task_date)'=>$this->task_date
+   //      ]);
+
+        $query->andFilterWhere(['ilike', 'table_source', $this->table_source])
+		        ->andFilterWhere(['ilike', 'note', $this->task])
+			    ->andFilterWhere(['ilike', 'note', $this->note])
+                ->andFilterWhere(['ilike', 'task_date', $this->task_date]);
+
+        return $dataProvider;
+    }
+}

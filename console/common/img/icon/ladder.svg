@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="91" height="91" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <g>
+  <title>ladder</title>
+  <ellipse fill="#ffffff" stroke="#000000" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" cx="6.4805" cy="76.19142" id="svg_5"/>
+  <polygon id="svg_10" fill="#333333"/>
+  <g id="svg_17">
+   <rect fill="#00ffff" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="69.249998" y="4.5" width="13.999999" height="3" id="svg_16"/>
+   <rect fill="#00ffff" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="9" y="4" width="61.999997" height="4" id="svg_15"/>
+   <circle fill="#00ffff" stroke="#000000" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" cx="5.75" cy="6" r="3" id="svg_2"/>
+   <line stroke="#000000" y2="3.94411" x2="71.293214" y1="3.94411" x1="7.96573" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="none" id="svg_4"/>
+   <line stroke="#000000" y2="8.19411" x2="71.293214" y1="8.19411" x1="7.96573" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="none" id="svg_7"/>
+   <line stroke="#000000" y2="4.81911" x2="83.668214" y1="4.81911" x1="70.34073" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="none" id="svg_8"/>
+   <line stroke="#000000" y2="7.31911" x2="83.668214" y1="7.31911" x1="70.34073" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="none" id="svg_11"/>
+   <line stroke="#000000" y2="5.944079" x2="84.855745" y1="5.944079" x1="81.528261" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" fill="none" id="svg_12" transform="rotate(90, 83.192, 5.94408)"/>
+  </g>
+ </g>
+</svg>

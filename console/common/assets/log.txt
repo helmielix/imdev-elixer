@@ -1,0 +1,3 @@
+
+{"request_date":"2018-03-19 05:33:15","no_wo":"OSP\/WO\/1802-00223","instalation_date":"2018-02-22","area":"Kab. Banyumas","notes":"","userid_im":"2141126022","list_item":[[]],"response":200}
+{"request_date":"2018-03-19 05:33:32","no_wo":"OSP\/WO\/1802-00210","instalation_date":"2018-02-15","area":"Kota Bogor","notes":"","userid_im":"2140909009","list_item":[{"orafin_code":"OM119-07.276","qty":22}],"response":200}

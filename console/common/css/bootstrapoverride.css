@@ -1,0 +1,11 @@
+.navbar-yellow {
+	background-color: #ffff96 !important;
+}
+
+.navbar-yellow > span {
+	color: #8d8b5f !important;
+}
+
+#modalFlipbook .modal-lg {
+    width: 1380px !important;
+} 

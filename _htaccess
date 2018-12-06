@@ -1,0 +1,44 @@
+<IfModule mod_rewrite.c>
+    Options +FollowSymlinks
+    RewriteEngine On
+</IfModule>
+ 
+<IfModule mod_rewrite.c>   
+	#module divisisatu
+	RewriteCond %{REQUEST_URI} ^/(im)
+	RewriteRule ^im/divisisatu/assets/(.*)$ im/divisisatu/web/assets/$1 [L]
+	RewriteRule ^im/divisisatu/css/(.*)$ im/divisisatu/web/css/$1 [L]
+	RewriteRule ^im/divisisatu/js/(.*)$ im/divisisatu/web/js/$1 [L]
+	RewriteRule ^im/divisisatu/images/(.*)$ im/divisisatu/web/images/$1 [L]
+
+    RewriteCond %{REQUEST_URI} !^/im/divisisatu/web/(assets|js|css|images)/
+    RewriteCond %{REQUEST_URI} ^/(im)
+    RewriteRule ^.*$ im/divisisatu/web/index.php [L]
+	
+	#module grf and lost
+	RewriteCond %{REQUEST_URI} ^/(im)
+	RewriteRule ^im/grflost/assets/(.*)$ im/grflost/web/assets/$1 [L]
+	RewriteRule ^im/grflost/css/(.*)$ im/grflost/web/css/$1 [L]
+	RewriteRule ^im/grflost/js/(.*)$ im/grflost/web/js/$1 [L]
+	RewriteRule ^im/grflost/images/(.*)$ im/grflost/web/images/$1 [L]
+
+    RewriteCond %{REQUEST_URI} !^/im/grflost/web/(assets|js|css|images)/
+    RewriteCond %{REQUEST_URI} ^/(im)
+    RewriteRule ^.*$ im/grflost/web/index.php [L]
+	
+	#common
+	RewriteCond %{REQUEST_URI} ^/(im)
+	RewriteRule ^im/common/assets/(.*)$ im/common/assets/$1 [L]
+	RewriteRule ^im/common/css/(.*)$ im/common/css/$1 [L]
+	RewriteRule ^im/common/js/(.*)$ im/common/js/$1 [L]
+	RewriteRule ^im/common/images/(.*)$ im/common/images/$1 [L]
+	RewriteRule ^im/common/img/(.*)$ im/common/img/$1 [L]
+	
+	
+	#frontend
+    RewriteCond %{REQUEST_URI} !^/im/(frontend|divisisatu|divisidua|divisitiga)/web/(assets|css|js|images)/
+    RewriteCond %{REQUEST_URI} !index.php
+    RewriteCond %{REQUEST_FILENAME} !-f [OR]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^.*$ im/frontend/web/index.php
+</IfModule>

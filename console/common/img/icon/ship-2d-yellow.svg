@@ -1,0 +1,316 @@
+<?xml version="1.0"?>
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <defs>
+  <filter id="svg_29_blur">
+   <feGaussianBlur stdDeviation="0.1"/>
+  </filter>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_29">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_1"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_29">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_2"/>
+  </marker>
+  <filter id="svg_37_blur">
+   <feGaussianBlur stdDeviation="0.1"/>
+  </filter>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_45">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_3"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_45">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_9"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_46">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_10"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_46">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_11"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_47">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_12"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_47">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_13"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_48">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_16"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_48">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_18"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_49">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_23"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_49">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_24"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_50">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_25"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_50">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_26"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_51">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_27"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_51">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_28"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_52">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_30"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_52">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_31"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_53">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_32"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_53">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_33"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_54">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_34"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_54">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_36"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_55">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_37"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_55">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_38"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_56">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_39"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_56">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_40"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_57">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_41"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_57">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_42"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_58">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_43"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_58">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_44"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_59">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_79"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_59">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_80"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_60">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_81"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_60">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_82"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_61">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_83"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_61">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_84"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_62">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_85"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_62">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_86"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_63">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_87"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_63">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_88"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_64">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_89"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_64">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_90"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_73">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_91"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_73">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_92"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_35">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_93"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_35">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_94"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_74">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_95"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_74">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_96"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_78">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_97"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_78">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_98"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_79">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_99"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_mid_svg_79">
+   <path stroke-width="10" stroke="#000000" fill="#000000" d="m50,0l0,100" id="svg_100"/>
+  </marker>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <rect fill="#ffff00" stroke="#000000" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" stroke-opacity="0" x="442.82124" y="162.99187" width="60.4682" height="35.10626" id="svg_216"/>
+  <rect fill="#ffff00" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" stroke-opacity="0" x="434.41181" y="160.58917" width="9.87781" height="40.31213" id="svg_215" stroke="#000000"/>
+  <rect stroke="#000000" fill="#ffff00" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" stroke-opacity="0" x="426.2693" y="155.71701" width="9.87781" height="48.72162" id="svg_214"/>
+  <rect fill="#ffff00" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" stroke-opacity="0" x="417.32588" y="148.77584" width="9.87781" height="61.13562" id="svg_213" stroke="#000000"/>
+  <rect fill="#ffff00" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" stroke-opacity="0" x="408.3824" y="143.50323" width="9.87781" height="71.2804" id="svg_211" stroke="#000000"/>
+  <rect fill="#ffff00" stroke="#000000" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" stroke-opacity="0" x="305.19936" y="142.43535" width="106.65362" height="74.21704" id="svg_209"/>
+  <rect fill="#ffff00" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" stroke-opacity="0" x="250.139726" y="146.66403" width="155.01572" height="66.07449" id="svg_208" stroke="#000000"/>
+  <line id="svg_4" y2="216.93746" x2="242.9844" y1="142.68746" x1="242.9844" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#000000" fill="none"/>
+  <line stroke="#000000" id="svg_5" y2="145.00778" x2="307.95315" y1="145.11325" x1="244.14456" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <line id="svg_6" y2="142.26559" x2="411.83987" y1="142.26559" x1="304.26175" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#000000" fill="none"/>
+  <line id="svg_7" y2="161.04428" x2="438.99004" y1="141.84567" x1="411.98304" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" stroke="#000000"/>
+  <line id="svg_8" y2="160.51168" x2="499.27347" y1="160.51168" x1="438.10159" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#000000" fill="none"/>
+  <line id="svg_14" y2="217.59871" x2="411.85965" y1="199.42965" x1="438.94534" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" stroke="#000000"/>
+  <line stroke="#000000" id="svg_15" y2="217.46481" x2="305.1055" y1="217.67575" x1="411.94535" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <line stroke="#000000" id="svg_17" y2="214.30075" x2="244.25002" y1="214.61716" x1="305.84378" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <line id="svg_19" y2="199.79882" x2="500.8818" y1="199.79882" x1="438.70797" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#000000" fill="none"/>
+  <line id="svg_20" y2="166.41796" x2="506.65621" y1="160.24804" x1="499.06246" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#000000" fill="none"/>
+  <line id="svg_21" y2="193.4707" x2="506.97262" y1="199.16601" x1="499.37887" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#000000" fill="none"/>
+  <line transform="rotate(-1.3043427467346191 505.2323913574208,179.6674804687481) " stroke="#000000" id="svg_22" y2="192.44238" x2="504.99508" y1="166.89257" x1="505.46969" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_29)" marker-start="url(#se_marker_start_svg_29)" filter="url(#svg_29_blur)" id="svg_29" d="m364.965576,169.473282l-1.265625,23.097672" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" transform="rotate(90 377.78002929687506,168.04943847656253) " id="svg_35" marker-mid="url(#se_marker_mid_svg_35)" marker-start="url(#se_marker_start_svg_35)" filter="url(#svg_37_blur)" d="m378.412842,154.602173l-1.265625,26.894531" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" id="svg_45" transform="rotate(90 270.45898437500006,153.28710937500003) " marker-mid="url(#se_marker_mid_svg_45)" marker-start="url(#se_marker_start_svg_45)" filter="url(#svg_37_blur)" d="m271.091797,136.042969l-1.265625,34.488281" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_46" stroke="#000000" transform="rotate(90 269.98437500000006,175.11914062500003) " marker-mid="url(#se_marker_mid_svg_46)" marker-start="url(#se_marker_start_svg_46)" filter="url(#svg_37_blur)" d="m270.617188,157.875l-1.265625,34.488281" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_47" stroke="#000000" transform="rotate(90 270.30078125000006,203.59570312500003) " marker-mid="url(#se_marker_mid_svg_47)" marker-start="url(#se_marker_start_svg_47)" filter="url(#svg_37_blur)" d="m270.933594,186.351563l-1.265625,34.488281" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_48" stroke="#000000" transform="rotate(90 270.30078125000006,182.39648437500003) " marker-mid="url(#se_marker_mid_svg_48)" marker-start="url(#se_marker_start_svg_48)" filter="url(#svg_37_blur)" d="m270.933594,165.152344l-1.265625,34.488281" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" id="svg_49" transform="rotate(-0.00010474967712070793 288.65023807157417,164.67654420156) " marker-mid="url(#se_marker_mid_svg_49)" marker-start="url(#se_marker_start_svg_49)" filter="url(#svg_37_blur)" d="m289.285156,154.710938l-1.265625,19.933594" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_50" stroke="#000000" transform="rotate(-0.00010474967712070793 253.2120361571406,164.99285888325642) " marker-mid="url(#se_marker_mid_svg_50)" marker-start="url(#se_marker_start_svg_50)" filter="url(#svg_37_blur)" d="m253.847656,155.027344l-1.265625,19.933594" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_51" stroke="#000000" transform="rotate(-0.00010474967712070793 253.2120361571406,193.78582763684) " marker-mid="url(#se_marker_mid_svg_51)" marker-start="url(#se_marker_start_svg_51)" filter="url(#svg_37_blur)" d="m253.847656,183.820313l-1.265625,19.933594" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_52" stroke="#000000" transform="rotate(-0.00010474967712070793 288.33593746756253,193.4707031223638) " marker-mid="url(#se_marker_mid_svg_52)" marker-start="url(#se_marker_start_svg_52)" filter="url(#svg_37_blur)" d="m288.96875,183.503906l-1.265625,19.933594" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" id="svg_53" transform="rotate(59.49037551879883 394.6740112304687,190.71202087402347) " marker-mid="url(#se_marker_mid_svg_53)" marker-start="url(#se_marker_start_svg_53)" filter="url(#svg_37_blur)" d="m395.454834,187.111526l-1.561615,7.201004" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" id="svg_54" marker-mid="url(#se_marker_mid_svg_54)" marker-start="url(#se_marker_start_svg_54)" filter="url(#svg_29_blur)" d="m398.821045,173.111938l-1.265625,15.385254" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_55" stroke="#000000" transform="rotate(122.67224884033203 395.024169921875,170.2642822265625) " marker-mid="url(#se_marker_mid_svg_55)" marker-start="url(#se_marker_start_svg_55)" filter="url(#svg_37_blur)" d="m395.804993,166.663773l-1.561615,7.201004" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" transform="rotate(90.79582977294922 311.8922119140625,170.92433166503903) " id="svg_56" marker-mid="url(#se_marker_mid_svg_56)" marker-start="url(#se_marker_start_svg_56)" filter="url(#svg_29_blur)" d="m312.052673,170.143524l-0.320892,1.5616" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_57" stroke="#000000" transform="rotate(90.79582977294922 313.96484375,170.91229248046872) " marker-mid="url(#se_marker_mid_svg_57)" marker-start="url(#se_marker_start_svg_57)" filter="url(#svg_29_blur)" d="m314.125305,170.131485l-0.320892,1.5616" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_58" stroke="#000000" transform="rotate(90.79582977294922 316.0107421875,170.91229248046872) " marker-mid="url(#se_marker_mid_svg_58)" marker-start="url(#se_marker_start_svg_58)" filter="url(#svg_29_blur)" d="m316.171204,170.131485l-0.320892,1.5616" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_59" stroke="#000000" transform="rotate(90.79582977294922 318.1129760742187,170.91229248046875) " marker-mid="url(#se_marker_mid_svg_59)" marker-start="url(#se_marker_start_svg_59)" filter="url(#svg_29_blur)" d="m318.273438,170.131485l-0.320892,1.5616" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_60" stroke="#000000" transform="rotate(90.79582977294922 320.2500305175781,170.8559875488281) " marker-mid="url(#se_marker_mid_svg_60)" marker-start="url(#se_marker_start_svg_60)" filter="url(#svg_29_blur)" d="m320.410492,170.07518l-0.320892,1.561615" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_61" stroke="#000000" transform="rotate(90.79582977294922 322.35223388671875,170.91229248046872) " marker-mid="url(#se_marker_mid_svg_61)" marker-start="url(#se_marker_start_svg_61)" filter="url(#svg_29_blur)" d="m322.512695,170.131485l-0.320892,1.5616" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_62" stroke="#000000" transform="rotate(90.79582977294922 324.39813232421875,170.91229248046872) " marker-mid="url(#se_marker_mid_svg_62)" marker-start="url(#se_marker_start_svg_62)" filter="url(#svg_29_blur)" d="m324.558594,170.131485l-0.320892,1.5616" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_63" stroke="#000000" transform="rotate(90.79582977294922 326.4788818359375,170.91229248046872) " marker-mid="url(#se_marker_mid_svg_63)" marker-start="url(#se_marker_start_svg_63)" filter="url(#svg_29_blur)" d="m326.639343,170.131485l-0.320892,1.5616" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_64" stroke="#000000" transform="rotate(90.79582977294922 328.46502685546875,170.93783569335938) " marker-mid="url(#se_marker_mid_svg_64)" marker-start="url(#se_marker_start_svg_64)" filter="url(#svg_29_blur)" d="m328.625488,170.157043l-0.320892,1.5616" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_65" stroke="#000000" transform="rotate(90.79582977294922 312.0373840332031,189.09869384765622) " marker-mid="url(#se_marker_mid_svg_73)" marker-start="url(#se_marker_start_svg_73)" filter="url(#svg_29_blur)" d="m312.197876,188.317886l-0.320923,1.561615" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_66" stroke="#000000" transform="rotate(90.79582977294922 314.21014404296875,189.05499267578122) " marker-mid="url(#se_marker_mid_svg_73)" marker-start="url(#se_marker_start_svg_73)" filter="url(#svg_29_blur)" d="m314.370605,188.274185l-0.320892,1.561615" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_67" stroke="#000000" transform="rotate(90.79582977294922 316.36868286132807,189.04873657226565) " marker-mid="url(#se_marker_mid_svg_73)" marker-start="url(#se_marker_start_svg_73)" filter="url(#svg_29_blur)" d="m316.529144,188.267929l-0.320892,1.561615" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_68" stroke="#000000" transform="rotate(90.79582977294922 318.47088623046875,189.04873657226565) " marker-mid="url(#se_marker_mid_svg_73)" marker-start="url(#se_marker_start_svg_73)" filter="url(#svg_29_blur)" d="m318.631348,188.267929l-0.320892,1.561615" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_69" stroke="#000000" transform="rotate(90.79582977294922 320.6079406738282,189.04873657226562) " marker-mid="url(#se_marker_mid_svg_73)" marker-start="url(#se_marker_start_svg_73)" filter="url(#svg_29_blur)" d="m320.768402,188.267929l-0.320892,1.561615" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_70" stroke="#000000" transform="rotate(90.79582977294922 322.5975341796875,189.092529296875) " marker-mid="url(#se_marker_mid_svg_73)" marker-start="url(#se_marker_start_svg_73)" filter="url(#svg_29_blur)" d="m322.757996,188.311722l-0.320892,1.561615" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_71" stroke="#000000" transform="rotate(90.79582977294922 324.50970458984375,189.0678863525391) " marker-mid="url(#se_marker_mid_svg_73)" marker-start="url(#se_marker_start_svg_73)" filter="url(#svg_29_blur)" d="m324.670166,188.287094l-0.320923,1.5616" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_72" stroke="#000000" transform="rotate(90.79582977294922 326.41796875,189.06085205078125) " marker-mid="url(#se_marker_mid_svg_73)" marker-start="url(#se_marker_start_svg_73)" filter="url(#svg_29_blur)" d="m326.57843,188.280045l-0.320892,1.5616" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_73" stroke="#000000" transform="rotate(90.79582977294922 328.40759277343744,189.092529296875) " marker-mid="url(#se_marker_mid_svg_73)" marker-start="url(#se_marker_start_svg_73)" filter="url(#svg_29_blur)" d="m328.568024,188.311722l-0.320892,1.561615" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_74" stroke="#000000" transform="rotate(90 377.30541992187506,192.41271972656253) " marker-mid="url(#se_marker_mid_svg_74)" marker-start="url(#se_marker_start_svg_74)" filter="url(#svg_37_blur)" d="m377.938232,178.965454l-1.265625,26.894531" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" id="svg_75" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m462.568542,190.416641l-0.949219,4.746063" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_76" stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m468.180725,190.432693l-0.949219,4.746109" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path transform="rotate(90 464.70831298828125,190.4676361083985) " id="svg_77" stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m465.182922,188.094589l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path transform="rotate(90 464.78338623046875,194.7202758789063) " id="svg_78" stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m465.257996,192.347229l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m472.000366,190.468857l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_105"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m477.612518,190.484924l-0.949188,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_106"/>
+  <path transform="rotate(90 474.14013671875,190.51986694335943) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m474.614746,188.14682l-0.949219,4.746063" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_107"/>
+  <path transform="rotate(90 474.2152099609375,194.77250671386724) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m474.689819,192.39946l-0.949219,4.746033" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_108"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m481.085602,190.543945l-0.949219,4.746063" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_109"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m486.697784,190.559998l-0.949219,4.746109" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_110"/>
+  <path transform="rotate(90 483.2253723144531,190.59494018554693) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m483.699982,188.221893l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_111"/>
+  <path transform="rotate(90 483.3004455566406,194.84757995605474) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m483.775055,192.474533l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_112"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m490.621338,190.543945l-0.949219,4.746063" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_113"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m496.233521,190.559998l-0.949219,4.746109" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_114"/>
+  <path transform="rotate(90 492.7611083984375,190.59494018554693) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m493.235718,188.221893l-0.949188,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_115"/>
+  <path transform="rotate(90 492.836181640625,194.84757995605474) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m493.310791,192.474533l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_116"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m453.454437,190.393784l-0.949219,4.746063" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_117"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m459.06662,190.409836l-0.949219,4.746109" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_118"/>
+  <path transform="rotate(90 455.5942077636719,190.44477844238287) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m456.068817,188.071732l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_119"/>
+  <path transform="rotate(90 455.6692810058594,194.69741821289068) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m456.14389,192.324371l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_120"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m443.69342,190.468857l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_121"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m449.305603,190.484924l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_122"/>
+  <path transform="rotate(90 445.8331909179688,190.5198669433594) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m446.3078,188.14682l-0.949219,4.746063" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_123"/>
+  <path transform="rotate(90 445.9082641601563,194.77250671386722) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m446.382874,192.39946l-0.949219,4.746033" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_124"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m443.543243,165.540741l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_125"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m449.155426,165.556793l-0.949219,4.746124" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_126"/>
+  <path transform="rotate(90 445.6830139160156,165.59175109863287) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m446.157623,163.218704l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_127"/>
+  <path transform="rotate(90 445.7580871582031,169.84439086914068) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m446.232697,167.471344l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_128"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m453.379333,165.465668l-0.949219,4.746063" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_129"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m458.991516,165.48172l-0.949188,4.746109" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_130"/>
+  <path transform="rotate(90 455.51910400390625,165.5166625976563) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m455.993744,163.143616l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_131"/>
+  <path transform="rotate(90 455.59417724609375,169.76930236816412) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m456.068787,167.396255l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_132"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m462.539673,165.465668l-0.949219,4.746063" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_133"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m468.151855,165.48172l-0.949219,4.746109" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_134"/>
+  <path transform="rotate(90 464.679443359375,165.5166625976563) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m465.154053,163.143616l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_135"/>
+  <path transform="rotate(90 464.7545166015625,169.76928710937506) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m465.229126,167.396255l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_136"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m471.925262,165.465668l-0.949219,4.746063" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_137"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m477.537445,165.48172l-0.949219,4.746109" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_138"/>
+  <path transform="rotate(90 474.0650329589844,165.5166625976563) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m474.539642,163.143616l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_139"/>
+  <path transform="rotate(90 474.1401062011719,169.76928710937506) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m474.614716,167.396255l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_140"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m480.935425,165.615829l-0.949219,4.746063" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_141"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m486.547607,165.631882l-0.949219,4.746109" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_142"/>
+  <path transform="rotate(90 483.0751953125,165.6668090820313) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m483.549805,163.293777l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_143"/>
+  <path transform="rotate(90 483.1502685546875,169.91943359375006) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m483.624878,167.546417l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_144"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m490.471191,165.540741l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_145"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m496.083374,165.556793l-0.949219,4.746124" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_146"/>
+  <path transform="rotate(90 492.6109619140625,165.5917358398438) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m493.085571,163.218704l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_147"/>
+  <path transform="rotate(90 492.68603515625,169.84436035156256) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m493.160645,167.471344l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_148"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m432.925018,165.302979l-0.949188,4.746063" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_149"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m438.537231,165.319046l-0.949219,4.746109" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_150"/>
+  <path transform="rotate(90 435.0648193359375,165.35397338867193) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m435.539429,162.980927l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_151"/>
+  <path transform="rotate(90 435.139892578125,169.60659790039068) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m435.614502,167.233582l-0.949219,4.746033" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_152"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m433.144012,190.459473l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_153"/>
+  <path stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m438.756195,190.47554l-0.949219,4.746109" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_154"/>
+  <path transform="rotate(90 435.3401184082032,190.5104675292969) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m435.814728,188.137436l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_155"/>
+  <path transform="rotate(90 435.35885620117193,194.76312255859378) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m435.833466,192.390076l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_156"/>
+  <path id="svg_102" stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m422.955475,190.493881l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_103" stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m428.567657,190.509949l-0.949219,4.746109" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path transform="rotate(90 425.03894042968756,190.60119628906253) " id="svg_104" stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m425.51355,188.228165l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_157" transform="rotate(90 425.1703186035157,194.79753112792972) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m425.644928,192.424484l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_158" stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m423.063904,165.231018l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_159" stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m428.676086,165.247086l-0.949219,4.746109" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_160" transform="rotate(90 425.260009765625,165.28201293945318) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m425.734619,162.908981l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_161" transform="rotate(90 425.2787475585938,169.53466796875003) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_78)" marker-start="url(#se_marker_start_svg_78)" filter="url(#svg_29_blur)" d="m425.753357,167.161621l-0.949219,4.746048" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" id="svg_180" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m422.983917,198.394012l-0.949219,6.013138" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path transform="rotate(90 424.95895385742193,198.3596343994141) " id="svg_181" stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m425.433563,195.986603l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" id="svg_182" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m428.09436,198.140594l-0.949219,3.521271" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" transform="rotate(58.648277282714844 424.7933959960938,203.18161010742182) " id="svg_183" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m425.268005,200.30899l-0.949219,5.745239" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_184" stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m428.316498,158.967499l-0.949219,3.521271" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_185" transform="rotate(90 425.0653381347656,162.20166015625006) " stroke="#000000" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m425.539948,159.828629l-0.949219,4.746078" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" id="svg_186" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m423.168488,155.641083l-0.949188,6.906342" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path stroke="#000000" transform="rotate(125.14855194091797 425.13656616210943,156.92358398437503) " id="svg_187" marker-mid="url(#se_marker_mid_svg_79)" marker-start="url(#se_marker_start_svg_79)" filter="url(#svg_29_blur)" d="m425.611176,153.903259l-0.949219,6.040649" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <path id="svg_190" stroke="#000000" transform="rotate(90.79582977294922 330.44110107421875,170.94549560546875) " marker-mid="url(#se_marker_mid_svg_73)" marker-start="url(#se_marker_start_svg_73)" filter="url(#svg_29_blur)" d="m330.601563,170.164688l-0.320892,1.561615" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+  <line fill="none" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="331.43601" y1="185.81066" x2="331.45977" y2="188.92286" id="svg_165" stroke-width="0.2" stroke="#000000"/>
+  <path stroke="#000000" transform="rotate(90.79582977294922 330.53173828125,189.0690460205078) " marker-mid="url(#se_marker_mid_svg_73)" marker-start="url(#se_marker_start_svg_73)" filter="url(#svg_29_blur)" d="m330.692169,188.288239l-0.320892,1.561615" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none" id="svg_168"/>
+  <line fill="none" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="321.36238" y1="175.57031" x2="321.38614" y2="195.90692" stroke-width="0.2" id="svg_169" transform="rotate(90.15762329101562 321.374267578125,185.7386169433594) " stroke="#000000"/>
+  <line fill="none" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="311.30618" y1="185.82182" x2="311.32994" y2="188.93402" stroke-width="0.2" stroke="#000000" id="svg_170"/>
+  <line fill="none" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="321.28328" y1="164.22915" x2="321.30704" y2="184.56576" stroke-width="0.2" transform="rotate(90.15762329101562 321.295166015625,174.39746093750003) " stroke="#000000" id="svg_171"/>
+  <line fill="none" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="311.16562" y1="171.16681" x2="311.18938" y2="174.27901" stroke-width="0.2" stroke="#000000" id="svg_172"/>
+  <line fill="none" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="331.42793" y1="171.16681" x2="331.45169" y2="174.27901" stroke-width="0.2" stroke="#000000" id="svg_173"/>
+  <line fill="none" stroke-width="0.1" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="329.04298" y1="174.47565" x2="329.00074" y2="179.92134" id="svg_174" stroke="#000000" transform="rotate(3.299463987350464 329.02185058593636,177.1984863281244) "/>
+  <line fill="none" stroke-width="0.1" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="331.28934" y1="174.43872" x2="331.24711" y2="179.88441" stroke="#000000" transform="rotate(3.299463987350464 331.2682189941419,177.16156005859386) " id="svg_175"/>
+  <line fill="none" stroke-width="0.1" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="331.3131" y1="180.33052" x2="331.27086" y2="185.77621" stroke="#000000" transform="rotate(176.70054626464844 331.2919921875,183.0533599853516) " id="svg_179"/>
+  <line fill="none" stroke-width="0.1" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="328.98487" y1="180.30677" x2="328.94263" y2="185.75247" stroke="#000000" transform="rotate(176.70054626464844 328.9637451171875,183.0296173095703) " id="svg_188"/>
+  <line fill="none" stroke-width="0.1" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="328.85721" y1="179.88359" x2="328.87289" y2="180.35807" id="svg_189" stroke="#000000" transform="rotate(1.4416165351867676 328.86505126953136,180.1208190917971) "/>
+  <line fill="none" stroke-width="0.1" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="331.12822" y1="179.88433" x2="331.1439" y2="180.35881" stroke="#000000" transform="rotate(1.4416165351867676 331.136047363279,180.12156677246182) " id="svg_193"/>
+  <line fill="none" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="311.22897" y1="174.38197" x2="311.25273" y2="185.61913" stroke-width="0.2" id="svg_194" stroke="#000000"/>
+  <rect fill="none" stroke="#000000" stroke-width="0.2" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="314.9945" y="177.76734" width="3.49232" height="3.04093" id="svg_195"/>
+  <rect fill="none" stroke="#000000" stroke-width="0.2" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="322.81064" y="176.62699" width="4.77521" height="4.70394" id="svg_198"/>
+  <rect fill="none" stroke="#000000" stroke-width="0.2" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="320.12607" y="178.57508" width="5.36914" height="1.42544" id="svg_197"/>
+  <rect fill="#333333" stroke="#000000" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" stroke-opacity="0" x="253.88317" y="153.93999" width="34.01336" height="20.64829" id="svg_202"/>
+  <rect fill="#333333" stroke="#000000" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" stroke-opacity="0" x="253.95825" y="183.07285" width="33.86319" height="19.82236" id="svg_203"/>
+  <rect fill="#ffff00" stroke="#000000" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" stroke-opacity="0" x="245.39857" y="147.50774" width="7.20813" height="64.6062" id="svg_206"/>
+  <text stroke="#000000" transform="matrix(0.6029411554336548,0,0,0.5744680762290955,142.43865644373,91.11702317744493) " font-weight="bold" xml:space="preserve" text-anchor="middle" font-family="Serif" font-size="24" id="svg_101" y="208.08335" x="405.810932" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" fill="#000000">Timah</text>
+ </g>
+</svg>

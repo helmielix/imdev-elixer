@@ -1,0 +1,68 @@
+
+#southPanel {
+	height: 300px;
+	position: absolute;
+	width: calc(100% - 230px);
+}
+
+#southPanelHeader {
+	height: 270px;
+}
+
+.panelZoomController {
+	position: absolute;
+    top: 0px;
+    width: 100%;
+    left: 0px;
+}
+
+.panelZoomButton {
+	left: calc(50% - 20px);
+    position: absolute;
+    width: 40px;
+    height: 14px;
+	text-align: center;
+    line-height: 18px;
+    overflow: hidden;
+    color: lightgray;
+}
+
+.panelZoomSeparator {
+	left: calc(50% - 20px);
+    position: absolute;
+    width: 40px;
+	height: 2px;
+	background: lightgrey;
+	margin-top: 14px;
+}
+
+.panelZoomButton:hover {
+	background: grey;
+	cursor: pointer;
+	color: white;
+}
+
+.panelZoomButton.down {
+	margin-top: 16px;
+	line-height: 10px;
+}
+
+.drawButton.selected {
+	color: green !important;
+}
+
+.legend_icon_block {
+	font-weight: bold;
+}
+
+.legend_icon_block {
+	position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: 3px;
+}
+
+.legend_text_block {
+	width: 165px;
+	margin-left: 23px;
+}
