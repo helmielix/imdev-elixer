@@ -31,13 +31,13 @@ $arrQtyDetail = '';
             
         <?php endif; ?>
 	<?php 
-		Pjax::begin(['id' => 'gridpjax', 'timeout' => 5000, 'enablePushState' => false, 'clientOptions' => ['method' => 'GET']]) 
+		Pjax::begin(['id' => 'gridpjax', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'GET']]) 
 		// Pjax::begin()
 	?>
     <?php $form = ActiveForm::begin([
 		'enableClientValidation' => true,
         'id' => 'createForm',
-        'options' => ['data-pjax' => true ],
+        // 'options' => ['data-pjax' => true ],
         'layout' => 'horizontal',
 		'fieldConfig' => [
             'template' => "{label}\n{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",

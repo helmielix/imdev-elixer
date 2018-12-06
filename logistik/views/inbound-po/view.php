@@ -226,7 +226,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	
 </div>
 <script>
-    $('.viewsButton').click(function (event) {
+    $('#modalContent').on('click', '.viewsButton', function(event){ 
+    // $('.viewsButton').click(function (event) {
             event.stopImmediatePropagation();  
             var url = '';
             if($(this).attr('url') == 'viewdetail'){
