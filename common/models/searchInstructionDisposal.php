@@ -10,7 +10,7 @@ use common\models\InstructionDisposal;
 /**
  * searchInstructionDisposal represents the model behind the search form about `common\models\InstructionDisposal`.
  */
-class searchInstructionDisposal extends InstructionDisposal
+class SearchInstructionDisposal extends InstructionDisposal
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class searchInstructionDisposal extends InstructionDisposal
     public function rules()
     {
         return [
-            [['created_by', 'updated_by', 'status_listing', 'no_iom', 'warehouse', 'buyer','instruction_number', 'id_modul', 'id'], 'integer'],
-            [['created_date', 'updated_date', 'file_attachment', 'target_implementation', 'date_iom', 'estimasi_disposal', 'revision_remark'], 'safe'],
+            [['created_by', 'updated_by', 'status_listing', 'no_iom', 'id_warehouse', 'id'], 'integer'],
+            [['created_date', 'updated_date', 'file_attachment', 'date_iom', 'revision_remark'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class searchInstructionDisposal extends InstructionDisposal
      * @return ActiveDataProvider
      */
     public function _search($params, $id_modul, $action){
-        $query = InstructionDisposal::find()->andWhere(['id_modul' => $id_modul]);
+        $query = InstructionDisposal::find();//->andWhere(['id_modul' => $id_modul]);
         
         if($action == 'input'){
             $query  ->andFilterWhere(['instruction_disposal.status_listing' => [ 1,2,3,6,7 ]]);
@@ -77,15 +77,15 @@ class searchInstructionDisposal extends InstructionDisposal
             'updated_by' => $this->updated_by,
             'status_listing' => $this->status_listing,
             'no_iom' => $this->no_iom,
-            'warehouse' => $this->warehouse,
-            'buyer' => $this->buyer,
-            'instruction_number' => $this->instruction_number,
+            'id_warehouse' => $this->id_warehouse,
+            // 'buyer' => $this->buyer,
+            // 'instruction_number' => $this->instruction_number,
             'created_date' => $this->created_date,
             'updated_date' => $this->updated_date,
-            'target_implementation' => $this->target_implementation,
+            // 'target_implementation' => $this->target_implementation,
             'date_iom' => $this->date_iom,
-            'estimasi_disposal' => $this->estimasi_disposal,
-            'id_modul' => $this->id_modul,
+            // 'estimasi_disposal' => $this->estimasi_disposal,
+            // 'id_modul' => $this->id_modul,
             'id' => $this->id,
         ]);
 

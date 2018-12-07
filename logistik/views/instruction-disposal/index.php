@@ -115,35 +115,23 @@ function getFilterStatus() {
                 },
                 'filter' => getFilterStatus()
             ],
-            'instruction_number',
+            //'instruction_number',
             'no_iom',
-            'warehouse',
              [
-				'attribute' => 'created_date',
-				'value'  => 'created_date',
-				'format' => 'datetime',
-				'filter' => DatePicker::widget([
-					'model' => $searchModel,
-					'attribute' => 'created_date',
-					'clientOptions' => [
-						'autoclose' => true,
-						'format' => 'yyyy-mm-dd',
-					],
-				]),
-			],
-			[
-				'attribute' => 'updated_date',
-				'value'  => 'updated_date',
-				'format' => 'datetime',
-				'filter' => DatePicker::widget([
-					'model' => $searchModel,
-					'attribute' => 'updated_date',
-					'clientOptions' => [
-						'autoclose' => true,
-						'format' => 'yyyy-mm-dd',
-					],
-				]),
-			],
+                'attribute' => 'date_iom',
+                'value'  => 'date_iom',
+                'format' => 'datetime',
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'date_iom',
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd',
+                    ],
+                ]),
+            ],
+            'id_warehouse',
+			
             // 'buyer',
             // 'created_date',
             // 'updated_date',
