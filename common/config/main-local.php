@@ -4,12 +4,12 @@ return [
 
 		'db' => [
 			'class' => 'yii\db\Connection',
-			// 'dsn' => 'pgsql:host=10.9.38.46;dbname=inventory',
-			'dsn' => 'pgsql:host=localhost;dbname=inventory',
+			 'dsn' => 'pgsql:host=10.9.38.46;dbname=inventory',
+			//'dsn' => 'pgsql:host=localhost;dbname=inventory',
 			'username' => 'postgres',
-			'password' => 'postgres',
+			//'password' => 'postgres',
 			// 'password' => '@Admin123',
-			 // 'password' => 'Playmedia@2018',
+			  'password' => 'Playmedia@2018',
 			'charset' => 'utf8',
 			'schemaMap' => [
 				'pgsql'=> [
