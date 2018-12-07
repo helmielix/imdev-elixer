@@ -144,11 +144,11 @@ class SearchMasterItemIm extends MasterItemIm
 			'type',
 			'warna',
 			'sn_type',
-			's_good',
-			's_not_good',
-			's_reject',
-			's_good_dismantle',
-			's_not_good_dismantle'
+			'master_item_im_detail.s_good',
+			'master_item_im_detail.s_not_good',
+			'master_item_im_detail.s_reject',
+			'master_item_im_detail.s_good_dismantle',
+			'master_item_im_detail.s_not_good_dismantle'
 		]);
 		
 		if ($idMasterItemIm != null){

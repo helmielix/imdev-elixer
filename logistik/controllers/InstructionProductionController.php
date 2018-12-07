@@ -6,6 +6,7 @@ use Yii;
 use common\models\InstructionProduction;
 use common\models\LogInstructionProduction;
 use common\models\InstructionProductionDetail;
+use common\models\InstructionProductionDetailSetItem;
 use common\models\MasterItemIm;
 use common\models\SearchInstructionProduction;
 use common\models\SearchLogInstructionProduction;
@@ -334,12 +335,12 @@ class InstructionProductionController extends Controller
 			// return 'success';
 
 		}
-
-		$modelDetail = InstructionProductionDetail::find()->select(['id_item_im'])->andWhere(['id_instruction_production' => $id])->all();
-		$idItemIm = ArrayHelper::map($modelDetail, 'id_item_im', 'id_item_im');
+		$model = InstructionProduction::findOne(Yii::$app->session->get('idInstProd'));
+		$modelDetail = InstructionProductionDetailSetItem::find()->select(['id_item_set'])->andWhere(['id_instruction_production_detail' => $id])->all();
+		$idItemIm = ArrayHelper::map($modelDetail, 'id_item_set', 'id_item_set');
 
 		$searchModel = new SearchMasterItemIm();
-        $dataProvider = $searchModel->searchByCreateDetailItem(Yii::$app->request->post(), $idItemIm);
+        $dataProvider = $searchModel->searchByCreateDetailItem(Yii::$app->request->post(),$model->id, $idItemIm);
 
         return $this->render('create_item_set_detail', [
             'searchModel' => $searchModel,

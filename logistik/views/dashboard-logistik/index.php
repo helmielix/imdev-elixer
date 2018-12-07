@@ -16,28 +16,21 @@ $this->title = 'Dashboard';
 
 // Page Lib
 $this->registerCssFile('@commonpath/css/report.css',['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerCssFile('@commonpath/css/map.css',['depends' => [\yii\web\JqueryAsset::className()]]);
+// $this->registerCssFile('@commonpath/css/map.css',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 // JqueryUI Lib
 $this->registerCssFile('@commonpath/css/jquery-ui.css',['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerCssFile('@commonpath/css/jquery-ui_override.css',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 // Highchart Lib
-$this->registerJsFile('@commonpath/js/lib/highchart.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerJsFile('@web/js/initchart.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerJsFile('@commonpath/js/mapreportresize.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+// $this->registerJsFile('@commonpath/js/lib/highchart.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+// $this->registerJsFile('@web/js/initchart.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+// $this->registerJsFile('@commonpath/js/mapreportresize.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 ?>
 
 <div style="height:1260px ; padding-left: 20px; padding-right: 5px; padding-top: 20px; padding-bottom: 50px;">
-	<div id="mapContainer" class="panelContainer full">
-		<div class="panelHeader" id="listPanelHeader" style="padding-bottom: 20px;">
-			Online Map
-		</div>
-			<?= $this->render(
-				'../../../common/views/olmap.php'
-			) ?>
-	</div>
+	
 
 	<div id="firstRowPanel" class="panelContainer full">
 
@@ -76,18 +69,18 @@ $this->registerJsFile('@commonpath/js/mapreportresize.js',['depends' => [\yii\we
 						'attribute'=>'note',
 						'format' => 'raw',
 						'value'=>function ($searchModel) {
-							if($searchModel->table_source == "IOM AREA EXPANSION Verification") {
+							if($searchModel->table_source == "INBOUND PO Verification") {
 								return $searchModel->note .
-									Html::a('View',Url::to(['inbound-po/viewverify','id'=>$searchModel->task]));
-							} elseif ($searchModel->table_source == "IOM AREA EXPANSION Approval"){
+									Html::a('View',Url::to(['inbound-po/indexverify#viewverify','id'=>$searchModel->task]));
+							} elseif ($searchModel->table_source == "INBOUND PO Approval"){
 								return $searchModel->note .
-									Html::a('View',Url::to(['inbound-po/viewapprove','id'=>$searchModel->task]));
-							} elseif ($searchModel->table_source == "IOM AREA EXPANSION Rejection"){
+									Html::a('View',Url::to(['inbound-po/indexapprove#viewapprove','id'=>$searchModel->task]));
+							} elseif ($searchModel->table_source == "INBOUND PO TAG SN"){
 								return $searchModel->note .
-									Html::a('View',Url::to(['inbound-po/viewoverview','id'=>$searchModel->task]));
-							} elseif ($searchModel->table_source == "IOM AREA EXPANSION Revision"){
+									Html::a('View',Url::to(['inbound-po/indextagsn#viewsn','id'=>$searchModel->task]));
+							} elseif ($searchModel->table_source == "INBOUND PO Revision"){
 								return $searchModel->note .
-									Html::a('View',Url::to(['inbound-po/view','id'=>$searchModel->task]));
+									Html::a('View',Url::to(['inbound-po/index#view','id'=>$searchModel->task]));
 							}
 						},
 						'filter'=>true,
@@ -97,32 +90,7 @@ $this->registerJsFile('@commonpath/js/mapreportresize.js',['depends' => [\yii\we
 		</div>
 	</div>
 
-	<div id="thirdRowPanel" class="panelContainer center thirdrow" >
-		<div class="panelHeader" id="listPanelHeader">
-			Homepass CA - By City
-
-				<div class="col-lg-3 pull-right">
-					<?php $form = ActiveForm::begin([]); ?>
-						<?= $form->field($model, 'city')->widget(Select2::classname(), [
-							  'data' => ArrayHelper:: map ( CaBaSurvey:: find()->joinWith('idArea.idSubdistrict.idDistrict.idCity')->orderBy(['city'=>SORT_ASC])-> all(), 'idArea.idSubdistrict.idDistrict.idCity.name','idArea.idSubdistrict.idDistrict.idCity.name'),
-							  'language' => 'en',
-							  'options' => ['placeholder' => 'Kota Jakarta Selatan', 'id' => 'regionlist'],
-							  'pluginOptions' => [
-							  'allowClear' => true],
-							  'pluginEvents' => [
-								"change" => 'function(data) {
-									regionListChange();
-								}',
-							],
-						  ])->label("") ?>
-					 <?php ActiveForm::end(); ?>
-				 </div>
-
-		</div>
-		<div class="contentPanel" id="chartPanel1" >
-
-		</div>
-	</div>
+	
 
 
 
