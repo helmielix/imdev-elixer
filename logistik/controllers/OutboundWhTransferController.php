@@ -17,6 +17,7 @@ use common\models\LogMasterSn;
 use common\models\UploadForm;
 use common\models\Reference;
 use common\models\UserWarehouse;
+use common\models\Warehouse;
 
 use PHPExcel;
 use PHPExcel_IOFactory;
