@@ -18,7 +18,7 @@ class SearchInboundPo extends InboundPo
     public function rules()
     {
         return [
-            [['id',  'created_by', 'updated_by', 'status_listing'], 'integer'],
+            [['id',  'created_by', 'updated_by', 'status_listing', 'verified_by'], 'integer'],
             [['created_date', 'updated_date','pr_number','po_number','supplier','tgl_sj','rr_number', 'item_name','im_code','brand','warna','grouping','qty_rr','qty','qty_good','qty_not_good','qty_reject','orafin_name','orafin_code','sn_type','id_inbound', 'type'], 'safe'],
         ];
     }
@@ -249,6 +249,8 @@ class SearchInboundPo extends InboundPo
             'id' => $this->id,
             // 'rr_number' => $this->rr_number,
             'created_by' => $this->created_by,
+            'verified_by' => $this->verified_by,
+            'approved_by' => $this->approved_by,
             'updated_by' => $this->updated_by,
             'created_date' => $this->created_date,
             'updated_date' => $this->updated_date,

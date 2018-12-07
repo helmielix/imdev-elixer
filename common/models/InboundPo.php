@@ -60,11 +60,13 @@ class InboundPo extends \yii\db\ActiveRecord
         return [
             [[ 'po_number', 'rr_number', 'tgl_sj', 'no_sj', 'id_warehouse'], 'required'],
             [[ 'file'], 'required', 'on' => 'create'],
-            [[ 'created_by', 'updated_by', 'status_listing'], 'integer'],
+            [[ 'created_by', 'updated_by', 'status_listing','verified_by','approved_by'], 'integer'],
             [['created_date', 'updated_date'], 'safe'],
             [['file'], 'file', 'extensions' => 'pdf,jpg', 'maxSize'=>1024*1024*5],
             [['status_listing'], 'exist', 'skipOnError' => true, 'targetClass' => StatusReference::className(), 'targetAttribute' => ['status_listing' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [['verified_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['verified_by' => 'id']],
+            [['approved_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['approved_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
@@ -78,6 +80,8 @@ class InboundPo extends \yii\db\ActiveRecord
             'id' => 'ID',
             // 'rr_number' => 'Rr Number',
             'created_by' => 'Created By',
+            'verified_by' => 'Verified By',
+            'approved_by' => 'Approved By',
             'updated_by' => 'Updated By',
             'created_date' => 'Created Date',
             'updated_date' => 'Updated Date',

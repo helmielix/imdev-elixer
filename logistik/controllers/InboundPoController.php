@@ -263,7 +263,8 @@ class InboundPoController extends Controller
 		// if (Yii::$app->request->isPost){
 			// return var_dump(Yii::$app->request->post());
 		// }
-		$model = $this->findModelJoinOrafin($id);
+		// return print_r($id);
+		$model = $this->findModel($id);
 		
 		Yii::$app->session->set('idInboundPo',$id);
 		
@@ -1093,8 +1094,8 @@ class InboundPoController extends Controller
 
         if (isset($_FILES['file']['size'])) {
             if($_FILES['file']['size'] != 0) {
-                $filename=('Uploads/'.$_FILES['file']['name']);
-                move_uploaded_file($_FILES['file']['tmp_name'], 'Uploads/'.basename( $_FILES['file']['name']));
+                $filename=('uploads/'.$_FILES['file']['name']);
+                move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/'.basename( $_FILES['file']['name']));
                 $datas = \moonland\phpexcel\Excel::import($filename, [
                     'setFirstRecordAsKeys' => true,
                     // 'setIndexSheetByName' => true,

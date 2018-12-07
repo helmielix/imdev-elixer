@@ -24,7 +24,14 @@ $this->params['breadcrumbs'][] = $this->title;
 				'pr_number',
 				'po_number',
 				'supplier',
-				'rr_date',
+				 [
+                    'label' => 'Tanggal RR',
+                    'value' => function($model){
+                        return $model->rr_number; // tes
+                        return OrafinViewMkmPrToPay::find()->where(['=', 'rcv_no', $model->rr_number])
+                                ->one()->rcv_date;
+                    }
+                ],
                 'no_sj',
 				'tgl_sj',
                 'waranty',
@@ -39,7 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function($model){
                         return $model->createdBy->username;
                     }
-                ],[
+                ],
+                [
                     'label' => 'Verified By',
                     'value' => function($model){
                         if($model->verifiedBy){

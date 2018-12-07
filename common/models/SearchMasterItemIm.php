@@ -157,9 +157,43 @@ class SearchMasterItemIm extends MasterItemIm
 		
 		$query->andWhere(['master_item_im_detail.id_warehouse' => $idwarehouse]);
         
-		$dataProvider = $this->_search($params, $query);
+		// $dataProvider = $this->_search($params, $query);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => ['pageSize' => Yii::$app->params['defaultPageSize'] ],
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
+            'status' => $this->status,
+            'created_date' => $this->created_date,
+            'updated_date' => $this->updated_date,
+        ]);
+
+        $query->andFilterWhere(['ilike', 'name', $this->name])            
+            ->andFilterWhere(['ilike', 'im_code', $this->im_code])                                
+            ->andFilterWhere(['ilike', 'referenceGrouping', $this->grouping])
+            ->andFilterWhere(['ilike', 'referenceType', $this->type])
+            ->andFilterWhere(['ilike', 'referenceBrand refbrand', $this->brand])
+            ->andFilterWhere(['ilike', 'refwarna.description', $this->warna])
+            ->andFilterWhere(['ilike', 'grf_detail.qty_request', $this->qty_request])
+            ->andFilterWhere(['ilike', 'inbound_grf_detail.qty_good', $this->qty_good]);            
 
         return $dataProvider;
+
+        // return $dataProvider;
 	}
 
     public function searchMasterOrafin($params, $orafinCode = null){
