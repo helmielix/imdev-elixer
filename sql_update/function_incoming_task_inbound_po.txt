@@ -13,12 +13,13 @@ $BODY$
 BEGIN   
     EXECUTE 'TRUNCATE TABLE public.dash_inbound_po_new_task';
     RAISE NOTICE 'QUERY EXECUTED SUCCESSFULLY';  
-    INSERT INTO public.dash_inbound_po_new_task (task_date,table_source,note,task)  
+    INSERT INTO public.dash_inbound_po_new_task (task_date,table_source,note,id_warehouse,task)  
     
     select * from ( 
 SELECT date_trunc('second'::text, inbound_po.updated_date)::text AS task_date,
     'INBOUND PO Revision'::text AS table_source,
     'Task for INBOUND PO: '::text || inbound_po.po_number::text AS note,
+    inbound_po.id_warehouse::text AS id_warehouse,
     inbound_po.id::text AS task
    FROM inbound_po
   WHERE inbound_po.status_listing = 3
@@ -26,6 +27,7 @@ UNION
 SELECT date_trunc('second'::text, inbound_po.updated_date)::text AS task_date,
     'INBOUND PO Verification'::text AS table_source,
     'Task for INBOUND PO: '::text || inbound_po.po_number::text AS note,
+    inbound_po.id_warehouse::text AS id_warehouse,
     inbound_po.id::text AS task
    FROM inbound_po
   WHERE inbound_po.status_listing = 1 OR  inbound_po.status_listing = 2
@@ -33,6 +35,7 @@ UNION
 SELECT date_trunc('second'::text, inbound_po.updated_date)::text AS task_date,
     'INBOUND PO Approval'::text AS table_source,
     'Task for INBOUND PO: '::text || inbound_po.po_number::text AS note,
+    inbound_po.id_warehouse::text AS id_warehouse,
     inbound_po.id::text AS task
    FROM inbound_po
   WHERE inbound_po.status_listing = 4 
@@ -40,11 +43,12 @@ UNION
 SELECT date_trunc('second'::text, inbound_po.updated_date)::text AS task_date,
     'INBOUND PO TAG SN'::text AS table_source,
     'Task for INBOUND PO: '::text || inbound_po.po_number::text AS note,
+    inbound_po.id_warehouse::text AS id_warehouse,
     inbound_po.id::text AS task
    FROM inbound_po
   WHERE inbound_po.status_listing = 5
 
-      ) AS dash
+      ) AS dash 
     WHERE (_task_date = '' OR task_date ilike ('%' || _task_date || '%')) AND
     (_table_source = '' OR table_source ilike ('%' || _table_source || '%')) AND
     (_note = '' OR note ilike ('%' || _note || '%')) AND
