@@ -14,6 +14,7 @@ if(Yii::$app->controller->action->id == 'index') $this->title = Yii::t('app','In
 if(Yii::$app->controller->action->id == 'indexverify') $this->title = Yii::t('app','Verify Inbound PO');
 if(Yii::$app->controller->action->id == 'indexapprove') $this->title = Yii::t('app','Approve Inbound PO');
 if(Yii::$app->controller->action->id == 'indexoverview') $this->title = Yii::t('app','Overview Inbound PO');
+if(Yii::$app->controller->action->id == 'indextagsn') $this->title = Yii::t('app','Tag SN Inbound PO');
 
 // $this->registerCssFile('@commonpath/css/olmap_with_grid.css',['depends' => [\yii\web\JqueryAsset::className()]]);
 // $this->registerJsFile('@commonpath/js/mapresize.js',['depends' => [\yii\web\JqueryAsset::className()]]);
@@ -27,7 +28,7 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
         'header'=>'<h3 id="modalHeader">Detail Material Inbound PO</h3>',
         'id'=>'modal',
         'size'=>'modal-lg',
-        // 'clientOptions' => ['backdrop' => 'static', 'keyboard' => false]
+        'clientOptions' => ['backdrop' => 'static', 'keyboard' => false]
     ]);
     echo '<div id="modalContent"> </div>';
     Modal::end();
@@ -39,6 +40,8 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
             if(Yii::$app->controller->action->id == 'index'){echo 'List Input Inbound PO';};
             if(Yii::$app->controller->action->id == 'indexverify'){echo 'List Inbound PO Verification';};
             if(Yii::$app->controller->action->id == 'indexapprove'){echo 'List Inbound PO Approval';};
+            if(Yii::$app->controller->action->id == 'indexoverview'){echo 'List Inbound PO Overview';};
+            if(Yii::$app->controller->action->id == 'indextagsn'){echo 'List Inbound PO Overview';};
         ?>
     
    
@@ -70,6 +73,19 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
                 48 => 'Partially Tag Uploaded',
                 999 => 'New Inbound PO',
             ];
+        if(Yii::$app->controller->action->id == 'indexoverview')
+            return [
+                1 => 'Inputted',
+                7 => 'Drafted',
+                2 => 'Revised',
+                3 => 'Need Revise',
+                5 => 'Approved',
+                4 => 'Verified',
+                43 => 'Partially Uploaded',
+                48 => 'Partially Tag Uploaded',
+                42 => 'Tag Inputted',
+
+            ];
     } ; ?>
     <?php
         $exportColumns = [
@@ -99,6 +115,7 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
         ]
     ?>
         <?php if (Yii::$app->controller->action->id == 'indexoverview'): ?>
+            <br>
             <?= ExportMenu::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => $exportColumns
@@ -133,7 +150,8 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
                             if(Yii::$app->controller->action->id == 'index') $viewurl = 'view';
                             if(Yii::$app->controller->action->id == 'indexapprove') $viewurl = 'viewapprove';
                             if(Yii::$app->controller->action->id == 'indexverify') $viewurl = 'viewverify';
-                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
+                            if(Yii::$app->controller->action->id == 'indexoverview') $viewurl = 'viewoverview';
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id.'&header=Detail_Inbound_PO', [
                                 'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['inbound-po/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app','Detail Inbound PO')
                                 ]);
                         }

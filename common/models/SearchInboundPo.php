@@ -89,21 +89,31 @@ class SearchInboundPo extends InboundPo
 
         if($action == 'input') {
             $query->andFilterWhere(['or',['=','inbound_po.status_listing', 1],['=','inbound_po.status_listing', 7], ['=','inbound_po.status_listing', 2],['=','inbound_po.status_listing', 3],['=','inbound_po.status_listing', 43]])
-            ->orderBy(['inbound_po.updated_date' => SORT_DESC]);
+            // ->orderBy(['inbound_po.updated_date' => SORT_DESC])
+            ;
             $dataProvider = $this->_search($params, $query);
         }else if($action == 'verify') {
             $query->andFilterWhere(['or',['=','inbound_po.status_listing', 1],['=','inbound_po.status_listing', 2],['=','inbound_po.status_listing', 4]])
-            ->orderBy(['inbound_po.updated_date' => SORT_DESC]);
+            // ->orderBy(['inbound_po.updated_date' => SORT_DESC])
+            ;
             $dataProvider = $this->_search($params, $query);
         }else if($action == 'approve') {
             $query->andFilterWhere(['or',['=','inbound_po.status_listing', 5],['=','inbound_po.status_listing', 4],])
             ->andWhere(['in','id_warehouse',$idWarehouse])
-            ->orderBy(['inbound_po.updated_date' => SORT_DESC]);
+            // ->orderBy(['inbound_po.updated_date' => SORT_DESC])
+            ;
+            $dataProvider = $this->_search($params, $query);
+        }else if($action == 'overview') {
+            $query->andFilterWhere(['!=','inbound_po.status_listing', 13])
+            ->andWhere(['in','id_warehouse',$idWarehouse])
+            // ->orderBy(['inbound_po.updated_date' => SORT_DESC])
+            ;
             $dataProvider = $this->_search($params, $query);
         } else if ($action == 'tagsn') {
             $query->andFilterWhere(['in','inbound_po.status_listing' ,[5,35,42,48]])
                 ->andWhere(['in','id_warehouse',$idWarehouse])
-                ->orderBy(['inbound_po.updated_date' => SORT_DESC]);
+                // ->orderBy(['inbound_po.updated_date' => SORT_DESC])
+                ;
                 $dataProvider = $this->_search($params, $query);
         } else if ($action == 'detail_sn') {
             $query->joinWith('inboundPoDetails.itemIm')
@@ -224,6 +234,7 @@ class SearchInboundPo extends InboundPo
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => ['pageSize' => Yii::$app->params['defaultPageSize']],
+            'sort'=> ['defaultOrder' => ['updated_date'=>SORT_DESC]],
         ]);
 
         // $dataProvider->sort->attributes['area'] = [

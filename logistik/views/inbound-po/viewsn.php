@@ -265,7 +265,8 @@ $this->params['breadcrumbs'][] = $this->title;
     });
 	
 	// $('.resetButton').click(function () {
-    $(document).on('click', '.resetButton', function(event){   
+    $('#gridViewdetail-container').on('click', '.resetButton', function(event){   
+        event.stopImmediatePropagation();
         $.ajax({
             url:'<?php echo Url::to(['/inbound-po/resetsn']) ;?>?idInboundPoDetail='+$(this).attr('idInboundPoDetail'),
             type: 'post',
@@ -282,7 +283,8 @@ $this->params['breadcrumbs'][] = $this->title;
     });
 
     // $('.resetqtycondButton').click(function () {
-    $(document).on('click', '.resetqtycondButton', function(event){
+    $('#gridViewdetail-container').on('click', '.resetqtycondButton', function(event){
+        event.stopImmediatePropagation();
         $.ajax({
             url:'<?php echo Url::to(['/inbound-po/resetqtycond']) ;?>?idInboundPoDetail='+$(this).attr('idInboundPoDetail'),
             type: 'post',

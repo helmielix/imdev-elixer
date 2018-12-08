@@ -59,7 +59,7 @@ class LogInboundPo extends \yii\db\ActiveRecord
     {
         return [
             [[ 'created_by', 'updated_by', 'status_listing','id','id_modul'], 'integer'],
-            [['created_date', 'updated_date','rr_number','no_sj','tgl_sj','waranty','po_number','supplier','pr_number','revision_remark'], 'safe'],
+            [['created_date', 'updated_date','rr_number','no_sj','tgl_sj','waranty','po_number','supplier','pr_number','revision_remark','id_warehouse'], 'safe'],
             [['status_listing'], 'exist', 'skipOnError' => true, 'targetClass' => StatusReference::className(), 'targetAttribute' => ['status_listing' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
