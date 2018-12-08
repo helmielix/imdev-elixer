@@ -134,6 +134,15 @@
 
 				array_push($arrItemsChild, ['label' => 'Repair Outbound', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);
 
+				// ## OUTBOUND Produksi
+				// array_push($arrItemsChildChild, ['label' => yii::t('app','Tag SN'), 'icon' => 'plus', 'url' => ['/outbound-produksi/index']]);
+				// array_push($arrItemsChildChild, ['label' => yii::t('app','Print SJ'), 'icon' => 'check-square-o', 'url' => ['/outbound-produksi/indexprintsj']]);
+				// array_push($arrItemsChildChild, ['label' => yii::t('app','Approval'), 'icon' => 'check-square-o', 'url' => ['/outbound-produksi/indexapprove']]);
+				// array_push($arrItemsChildChild, ['label' => yii::t('app','Overview'), 'icon' => 'check-square-o', 'url' => ['/outbound-produksi/indexapprove']]);
+				// array_push($arrItemsChildChild, ['label' => yii::t('app','Log History'), 'icon' => 'check-square-o', 'url' => ['/outbound-produksi/indexapprove']]);
+
+				// array_push($arrItemsChild, ['label' => 'Produksi', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);
+
     			## OUTBOUND Grf
     			$arrItemsChildChild = [];
 				array_push($arrItemsChildChild, ['label' => yii::t('app','Tag SN'), 'icon' => 'plus', 'url' => ['/outbound-grf/index']]);

@@ -25,6 +25,7 @@ if(Yii::$app->controller->action->id == 'indexoverview') $this->title = Yii::t('
         'header'=>'<h3 id="modalHeader"></h3>',
         'id'=>'modal',
         'size'=>'modal-lg'
+        
     ]);
     echo '<div id="modalContent"> </div>';
     Modal::end();
