@@ -60,7 +60,10 @@ $this->registerCss('
 				'attribute' => 'brand',
 				'value' => 'referenceBrand.description',
 			],
-			// 'type',
+			[
+				'attribute' => 'type',
+				'value' => 'referenceType.description',
+			],
 			[
 				'attribute' => 'warna',
 				'value' => 'referenceWarna.description',
@@ -71,22 +74,28 @@ $this->registerCss('
 				'value' => 'referenceSn.description',
 				'filter' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => 'sn_type'])->all(), 'id_grouping', 'description'),
 			],
-			// 'stock_qty',
 			[
 				'attribute' => 's_good',
+				'contentOptions' => ['class' => 'bg-warning'],
+				'headerOptions' => ['class' => 'kartik-sheet-style'],
+				'mergeHeader' => true,
+				'vAlign' => 'middle',
+			],
+			[
+				'attribute' => 'req_good',
 				'contentOptions' => ['class' => 'bg-success'],
 				'headerOptions' => ['class' => 'kartik-sheet-style'],
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 				'value' => function ($model) use ($datasession){
 					if(isset($datasession[$model->id]['update'])){
-						$model->s_good += $datasession[$model->id]['rgood'];
+						$model->req_good += $datasession[$model->id]['rgood'];
 					}
-					return $model->s_good;
+					return $model->req_good;
 				},
 			],
 			[
-				'attribute' => 's_not_good',
+				'attribute' => 'req_dis_good',
 				'contentOptions' => ['class' => 'bg-warning'],
 				'headerOptions' => ['class' => 'kartik-sheet-style'],
 				'mergeHeader' => true,
@@ -100,14 +109,14 @@ $this->registerCss('
 				'vAlign' => 'middle',
 			],
 			[
-				'attribute' => 's_good_dismantle',
+				'attribute' => 'req_good_dismantle',
 				'contentOptions' => ['class' => 'bg-dismantle'],
 				'headerOptions' => ['class' => 'kartik-sheet-style'],
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 			],
 			[
-				'attribute' => 's_not_good_dismantle',
+				'attribute' => 'req_dis_good_dismantle',
 				'contentOptions' => ['class' => 'bg-info'],
 				'headerOptions' => ['class' => 'kartik-sheet-style'],
 				'mergeHeader' => true,
@@ -133,44 +142,7 @@ $this->registerCss('
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 			],
-			[
-				'label' => 'Req. Not Good',
-				'format' => 'raw',
-				'value' => function ($model) use ($datasession)
-				{
-					$out = '<div class="col-xs-12">';
-					$out .= '</div>';
-					$val = '';
-					if (isset($datasession[$model->id]['rnotgood'])){
-						$val = $datasession[$model->id]['rnotgood'];
-					}
-					$out = Html::textInput('rnotgood[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'rnotgood']);
-					return $out;
-				},
-				'contentOptions' => ['class' => 'bg-warning'],
-				'headerOptions' => ['class' => 'kartik-sheet-style'],
-				'mergeHeader' => true,
-				'vAlign' => 'middle',
-			],
-			[
-				'label' => 'Req. Reject',
-				'format' => 'raw',
-				'value' => function ($model) use ($datasession)
-				{
-					$out = '<div class="col-xs-12">';
-					$out .= '</div>';
-					$val = '';
-					if (isset($datasession[$model->id]['rreject'])){
-						$val = $datasession[$model->id]['rreject'];
-					}
-					$out = Html::textInput('rreject[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'rreject']);
-					return $out;
-				},
-				'contentOptions' => ['class' => 'bg-danger'],
-				'headerOptions' => ['class' => 'kartik-sheet-style'],
-				'mergeHeader' => true,
-				'vAlign' => 'middle',
-			],
+			
 			[
 				'label' => 'Req. Good Dismantle',
 				'format' => 'raw',
@@ -190,25 +162,7 @@ $this->registerCss('
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 			],
-			[
-				'label' => 'Req. Not Good Dismantle',
-				'format' => 'raw',
-				'value' => function ($model) use ($datasession)
-				{
-					$out = '<div class="col-xs-12">';
-					$out .= '</div>';
-					$val = '';
-					if (isset($datasession[$model->id]['rnotgooddismantle'])){
-						$val = $datasession[$model->id]['rnotgooddismantle'];
-					}
-					$out = Html::textInput('rnotgooddismantle[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'rnotgooddismantle']);
-					return $out;
-				},
-				'contentOptions' => ['class' => 'bg-info'],
-				'headerOptions' => ['class' => 'kartik-sheet-style'],
-				'mergeHeader' => true,
-				'vAlign' => 'middle',
-			],
+			
 			[
 				'label' => 'Rem. Good',
 				'format' => 'raw',
@@ -220,7 +174,7 @@ $this->registerCss('
 						if (isset($datasession[$model->id]['rgood'])){
 						$val = $datasession[$model->id]['rgood'];
 					}
-					$rem = $model->s_good - $val;
+					$rem = $model->req_good - $val;
 					return $rem;
 				},
 				'contentOptions' => ['class' => 'bg-success'],
@@ -228,38 +182,7 @@ $this->registerCss('
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 			],
-			[
-				'label' => 'Rem. Not Good',
-				'format' => 'raw',
-				'value' => function($model) use ($datasession){
-					$val = 0;
-					if (isset($datasession[$model->id]['rnotgood'])){
-						$val = $datasession[$model->id]['rnotgood'];
-					}
-					$rem = $model->s_not_good - $val;
-					return $rem;					
-				},
-				'contentOptions' => ['class' => 'bg-warning'],
-				'headerOptions' => ['class' => 'kartik-sheet-style'],
-				'mergeHeader' => true,
-				'vAlign' => 'middle',
-			],
-			[
-				'label' => 'Rem. Reject',
-				'format' => 'raw',
-				'value' => function($model) use ($datasession){
-					$val = 0;
-					if (isset($datasession[$model->id]['rreject'])){
-						$val = $datasession[$model->id]['rreject'];
-					}
-					$rem = $model->s_reject - $val;
-					return $rem;
-				},
-				'contentOptions' => ['class' => 'bg-danger'],
-				'headerOptions' => ['class' => 'kartik-sheet-style'],
-				'mergeHeader' => true,
-				'vAlign' => 'middle',
-			],
+			
 			[
 				'label' => 'Rem. Good Dismantle',
 				'format' => 'raw',
@@ -268,7 +191,7 @@ $this->registerCss('
 					if (isset($datasession[$model->id]['rgooddismantle'])){
 						$val = $datasession[$model->id]['rgooddismantle'];
 					}
-					$rem = $model->s_good_dismantle - $val;
+					$rem = $model->req_good_dismantle - $val;
 					return $rem;
 				},
 				'contentOptions' => ['class' => 'bg-dismantle'],
@@ -276,22 +199,7 @@ $this->registerCss('
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 			],
-			[
-				'label' => 'Rem. Not Good Dismantle',
-				'format' => 'raw',
-				'value' => function($model) use ($datasession){
-					$val = 0;
-					if (isset($datasession[$model->id]['rnotgooddismantle'])){
-						$val = $datasession[$model->id]['rnotgooddismantle'];
-					}
-					$rem = $model->s_not_good_dismantle - $val;
-					return $rem;
-				},
-				'contentOptions' => ['class' => 'bg-info'],
-				'headerOptions' => ['class' => 'kartik-sheet-style'],
-				'mergeHeader' => true,
-				'vAlign' => 'middle',
-			],
+			
 			
 			
         ],
@@ -347,11 +255,11 @@ $this->registerCss('
             data: data,
 			dataType: 'json',
             success: function (result) {
-                currentRow.find('td:eq(6)').html(result.s_good);
-				currentRow.find('td:eq(7)').html(result.s_not_good);
+                currentRow.find('td:eq(6)').html(result.req_good);
+				currentRow.find('td:eq(7)').html(result.req_dis_good);
 				currentRow.find('td:eq(8)').html(result.s_reject);
-				currentRow.find('td:eq(9)').html(result.s_good_dismantle);
-				currentRow.find('td:eq(10)').html(result.s_not_good_dismantle);
+				currentRow.find('td:eq(9)').html(result.req_good_dismantle);
+				currentRow.find('td:eq(10)').html(result.req_dis_good_dismantle);
             },
             complete: function () {
                 stock = currentRow.find('td:eq('+col+')').text();

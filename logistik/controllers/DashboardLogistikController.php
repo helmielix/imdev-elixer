@@ -6,8 +6,8 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use divisisatu\models\SearchDashCaNewTask;
-use app\models\DashCaHpByCity;
+use common\models\SearchDashInboundPoNewTask;
+// use app\models\DashCaHpByCity;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -30,91 +30,48 @@ class DashboardLogistikController extends Controller
     public function actionIndex()
 
     {	
-throw new \yii\web\ForbiddenHttpException('akses ditutup sementara');
-$task_date='';
+// throw new \yii\web\ForbiddenHttpException('akses ditutup sementara');
+		$task_date='';
         $task='';
         $table_source='';
-        if (isset(Yii::$app->request->queryParams['SearchDashCaNewTask'])) {
-            $params = Yii::$app->request->queryParams['SearchDashCaNewTask'];
+        if (isset(Yii::$app->request->queryParams['SearchDashInboundPoNewTask'])) {
+            $params = Yii::$app->request->queryParams['SearchDashInboundPoNewTask'];
             extract($params);
             // return "select action_dash_iko_new_task('$task_date','$table_source','$task','');";
         }
-        $data = Yii::$app->db->createCommand("select _dash_ca_new_task('$task_date','$table_source','$task','');")->queryAll();
+        $data = Yii::$app->db->createCommand("select _dash_inbound_po_new_task('$task_date','$table_source','$task','');")->queryAll();
 
         $this->layout = 'map';
-        $searchModel = new SearchDashCaNewTask();
+        $searchModel = new SearchDashInboundPoNewTask();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$arrFilter = ['or','1=0'];
 		$isAddFilter = false;
-		if(Yii::$app->user->can('/ca-iom-area-expansion/index')) {
-			array_push($arrFilter,['ilike','table_source','IOM AREA EXPANSION Revision']);
+		if(Yii::$app->user->can('/inbound-po/index')) {
+			array_push($arrFilter,['ilike','table_source','INBOUND PO Revision']);
 		}
-		if(Yii::$app->user->can('/ca-iom-area-expansion/index')) {
-			array_push($arrFilter,['ilike','table_source','IOM AREA EXPANSION Rejection']);
+		// if(Yii::$app->user->can('/inbound-po/index')) {
+		// 	array_push($arrFilter,['ilike','table_source','INBOUND PO Rejection']);
+		// }
+		if(Yii::$app->user->can('/inbound-po/indexverify')) {
+			array_push($arrFilter,['ilike','table_source','INBOUND PO Verification']);
 		}
-		if(Yii::$app->user->can('/ca-iom-area-expansion/indexverify')) {
-			array_push($arrFilter,['ilike','table_source','IOM AREA EXPANSION Verification']);
+		if(Yii::$app->user->can('/inbound-po/indexapprove')) {
+			array_push($arrFilter,['ilike','table_source','INBOUND PO Approval']);
 		}
-		if(Yii::$app->user->can('/ca-iom-area-expansion/indexapprove')) {
-			array_push($arrFilter,['ilike','table_source','IOM AREA EXPANSION Approval']);
-		}
-		
-		if(Yii::$app->user->can('/ca-ba-survey/index')) {
-			array_push($arrFilter,['ilike','table_source','BA SURVEY Revision']);
-		}
-		if(Yii::$app->user->can('/ca-ba-survey/index')) {
-			array_push($arrFilter,['ilike','table_source','BA SURVEY Rejection']);
-		}
-		if(Yii::$app->user->can('/ca-ba-survey/indexverify')) {
-			array_push($arrFilter,['ilike','table_source','BA SURVEY Verification']);
-		}
-		if(Yii::$app->user->can('/ca-ba-survey/indexapprove')) {
-			array_push($arrFilter,['ilike','table_source','BA SURVEY Approval']);
-		}
-		
-		if(Yii::$app->user->can('/ca-ba-survey/index_iom')) {
-			array_push($arrFilter,['ilike','table_source','IOM Rollout Input']);
-		}
-		if(Yii::$app->user->can('/ca-ba-survey/indexverify_iom')) {
-			array_push($arrFilter,['ilike','table_source','IOM Rollout Verification']);
-		}
-		if(Yii::$app->user->can('/ca-ba-survey/indexapprove_iom')) {
-			array_push($arrFilter,['ilike','table_source','IOM Rollout Approval']);
-		} 
-		if(Yii::$app->user->can('/ca-ba-survey/index_iom')) {
-			array_push($arrFilter,['ilike','table_source','IOM Rollout Revision']);
-		} 
-		if(Yii::$app->user->can('/ca-ba-survey/index_iom')) {
-			array_push($arrFilter,['ilike','table_source','IOM Rollout Rejection']);
+		if(Yii::$app->user->can('/inbound-po/indextagsn')) {
+			array_push($arrFilter,['ilike','table_source','INBOUND PO TAG SN']);
 		}
 
-		if(Yii::$app->user->can('/ca-ba-survey/index_presurvey')) {
-     	 array_push($arrFilter,['ilike','table_source','PRE-SURVEY Revision']);
-	    }
-	    if(Yii::$app->user->can('/ca-ba-survey/index_presurvey')) {
-     	 array_push($arrFilter,['ilike','table_source','PRE-SURVEY Rejection']);
-	    }
-	    if(Yii::$app->user->can('/ca-ba-survey/indexverify_presurvey')) {
-	      array_push($arrFilter,['ilike','table_source','PRE-SURVEY Verification']);
-	    }
-	    if(Yii::$app->user->can('/ca-ba-survey/indexapprove_presurvey')) {
-	      array_push($arrFilter,['ilike','table_source','PRE-SURVEY Approval']);
-	    }
-
-	    if(Yii::$app->user->can('/ppl-iko-atp/indexverify')) {
-	      array_push($arrFilter,['ilike','table_source','IKO ATP Invitation']);
-	    }
-	    if(Yii::$app->user->can('/ppl-osp-atp/indexverify')) {
-	      array_push($arrFilter,['ilike','table_source','OSP ATP Invitation']);
-	    }
+		
+		
 			
 		$dataProvider->query->andFilterWhere($arrFilter);
 		$dataProvider->query->orderBy(['task_date'=>SORT_ASC,'task'=>SORT_ASC]);
 		
-		$model = new DashCaHpByCity();
+		// $model = new DashCaHpByCity();
 		
         return $this->render('index', [
-			'model' => $model,
+			// 'model' => $model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
