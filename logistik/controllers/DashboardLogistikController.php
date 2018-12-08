@@ -74,8 +74,7 @@ class DashboardLogistikController extends Controller
 			array_push($arrFilter,['ilike','table_source','INBOUND PO Verification']);
 		}
 		if(Yii::$app->user->can('/inbound-po/indexapprove')) {
-			array_push($arrFilter,['ilike','table_source','INBOUND PO Approval']);
-			array_push($arrFilter,['in','id_warehouse',$arrIdWarehouse]);
+			array_push($arrFilter,['and',['in','id_warehouse',$arrIdWarehouse],['ilike','table_source','INBOUND PO Approval']]);
 		}
 		if(Yii::$app->user->can('/inbound-po/indextagsn')) {
 			array_push($arrFilter,['and',['in','id_warehouse',$arrIdWarehouse],['ilike','table_source','INBOUND PO TAG SN']]);			
