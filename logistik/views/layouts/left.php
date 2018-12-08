@@ -2,9 +2,9 @@
     <section class="sidebar">
 
 		<?php $arrItems = [] ;
-		if(Yii::$app->user->can('/dashboard-ca/index')) {
+		if(Yii::$app->user->can('/dashboard-logistik/index')) {
 			array_push($arrItems,
-				['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/dashboard-ca/index']]);
+				['label' => 'Incoming task', 'icon' => 'home', 'url' => ['/dashboard-logistik/index']]);
 		}
 
 
@@ -19,7 +19,7 @@
 
 				array_push($arrItemsChild, ['label' => 'Disposal Instruction', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);
 
-				array_push($arrItemsChild, ['label' => yii::t('app','Disposal'), 'icon' => 'plus', 'url' => ['/instruction-disposal-im/index']]);
+				// array_push($arrItemsChild, ['label' => yii::t('app','Disposal'), 'icon' => 'plus', 'url' => ['/instruction-disposal-im/index']]);
 
 				//WH Transfer Instruction
 				$arrItemsChildChild = [];

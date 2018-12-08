@@ -17,8 +17,8 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
 <?php Modal::begin([
         'header'=>'<h3 id="modalHeader"></h3>',
         'id'=>'modal',
-        'size'=>'modal-lg'
-        'clientOptions' => ['backdrop' => 'static', 'keyboard' => false]
+        'size'=>'modal-lg',
+        // 'clientOptions' => ['backdrop' => 'static', 'keyboard' => false]
     ]);
     echo '<div id="modalContent"> </div>';
     Modal::end();

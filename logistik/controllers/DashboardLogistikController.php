@@ -9,6 +9,8 @@ use yii\filters\VerbFilter;
 use common\models\SearchDashInboundPoNewTask;
 // use app\models\DashCaHpByCity;
 use yii\data\ActiveDataProvider;
+use common\models\UserWarehouse;
+use common\models\Warehouse;
 
 /**
  * BukuTamuController implements the CRUD actions for BukuTamu model.
@@ -27,10 +29,26 @@ class DashboardLogistikController extends Controller
         ];
     }
 
+    protected function getIdWarehouse(){
+        $arrIdWarehouse = [];
+    	if (Yii::$app->user->identity->wh_level == 1 || Yii::$app->user->identity->id == 5){
+    		$modelUserWarehouse = Warehouse::find()->select('id as id_warehouse')->asArray()->all();
+    	}else{
+    		$modelUserWarehouse = UserWarehouse::find()->select('id_warehouse')->where(['id_user'=>Yii::$app->user->identity->id])->asArray()->all();
+    	}
+
+        foreach ($modelUserWarehouse as $key => $value) {
+        	array_push($arrIdWarehouse, $value['id_warehouse']);
+        }
+
+        return $arrIdWarehouse;
+    }
+
     public function actionIndex()
 
     {	
 // throw new \yii\web\ForbiddenHttpException('akses ditutup sementara');
+    	$arrIdWarehouse = $this->getIdWarehouse();
 		$task_date='';
         $task='';
         $table_source='';
@@ -57,9 +75,10 @@ class DashboardLogistikController extends Controller
 		}
 		if(Yii::$app->user->can('/inbound-po/indexapprove')) {
 			array_push($arrFilter,['ilike','table_source','INBOUND PO Approval']);
+			array_push($arrFilter,['in','id_warehouse',$arrIdWarehouse]);
 		}
 		if(Yii::$app->user->can('/inbound-po/indextagsn')) {
-			array_push($arrFilter,['ilike','table_source','INBOUND PO TAG SN']);
+			array_push($arrFilter,['and',['in','id_warehouse',$arrIdWarehouse],['ilike','table_source','INBOUND PO TAG SN']]);			
 		}
 
 		
