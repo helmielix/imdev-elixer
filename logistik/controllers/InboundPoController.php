@@ -15,6 +15,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use common\widgets\Email;
 
 use common\models\OrafinRr;
 use common\models\SearchOrafinRr;
@@ -116,6 +117,18 @@ class InboundPoController extends Controller
     	$arrIdWarehouse = $this->getIdWarehouse();
         $searchModel = new SearchInboundPo();
         $dataProvider = $searchModel->searchByAction(Yii::$app->request->queryParams,'approve',null,$arrIdWarehouse);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionIndexoverview()
+    {
+    	$arrIdWarehouse = $this->getIdWarehouse();
+        $searchModel = new SearchInboundPo();
+        $dataProvider = $searchModel->searchByAction(Yii::$app->request->queryParams,'overview',null,$arrIdWarehouse);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -401,6 +414,31 @@ class InboundPoController extends Controller
 			'dataProvider' => $dataProvider,
         ]);
     }
+
+    public function actionViewoverview($id)
+    {		
+    	$id = \Yii::$app->session->get('idInboundPo');			
+		// if (basename(Yii::$app->request->referrer) != 'index'){
+			// throw new \yii\web\HttpException(405, 'The requested Page could not be access.');
+		// }
+		$this->layout = 'blank';
+		
+		$searchModel = new SearchInboundPo();
+        $dataProvider = $searchModel->searchByAction(Yii::$app->request->getQueryParams(),'detail', $id);
+		
+		// if (Yii::$app->request->isPost){
+			// return var_dump(Yii::$app->request->post());
+		// }
+		$model = $this->findModel($id);
+		
+		Yii::$app->session->set('idInboundPo',$id);
+		
+        return $this->render('view', [
+            'model' => $model,
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+        ]);
+    }
 	
 	public function actionViewdetailsn($idInboundPoDetail = NULL)
     {
@@ -459,7 +497,11 @@ class InboundPoController extends Controller
         	if($model->save()){
 
         		$this->createLog($model);
-        		return 'success';
+        			$arrAuth = ['/inbound-po/indexapprove'];
+	                $header = 'Alert Approval INBOUND PO';
+	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/indexapprove#viewapprove?id='.$model->id.'?header=Detail_INBOUND_PO';
+	                Email::sendEmail($arrAuth,$header,$subject,$model->id_warehouse);
+                return 'success';
         	}
         }
     }
@@ -496,7 +538,11 @@ class InboundPoController extends Controller
 	                    $this->createLogsn($modelMasterSn);
                 }
                	// return print_r($arrayInbound);
-
+					$arrAuth = ['/inbound-po/indextagsn'];
+	                $header = 'Approval INBOUND PO';
+	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/indextagsn#viewsn?id='.$model->id.'?header=Detail_Material_Inbound_PO';
+	                Email::sendEmail($arrAuth,$header,$subject,$model->id_warehouse);
+         
                 return 'success';
             } else {
                 return print_r($model->getErrors());
@@ -516,6 +562,10 @@ class InboundPoController extends Controller
 				$model->revision_remark = $_POST['InboundPo']['revision_remark'];
 				if ( $model->save()) {
 					$this->createLog($model);
+					$arrAuth = ['/inbound-po/index'];
+	                $header = 'Alert Need Revise INBOUND PO';
+	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/index#view?id='.$model->id.'?header=Detail_BUSDEV_BAS';
+	                Email::sendEmail($arrAuth,$header,$subject);
 					return 'success';
 				} else {
 					return print_r($model->getErrors());
@@ -532,16 +582,52 @@ class InboundPoController extends Controller
     {  		
 		$model = InboundPoDetail::findOne($idInboundPoDetail);
 		
-		$modelMasterItem = MasterItemIm::findOne($model->id_item_im);
-		$modelMasterItem->stock_qty = $modelMasterItem->stock_qty - $model->qty;
-		$modelMasterItem->save();
+		// $modelMasterItem = MasterItemIm::findOne($model->id_item_im);
+		// $modelMasterItem->stock_qty = $modelMasterItem->stock_qty - $model->qty;
+		// $modelMasterItem->save();
 		
-        InboundPoDetailSn::deleteAll('id_inbound_po_detail = '.$idInboundPoDetail);
-		
-		
+
+        // InboundPoDetailSn::deleteAll('id_inbound_po_detail = '.$idInboundPoDetail);
+        $modelMasterItemDetail = MasterItemImDetail::find();
+        // menggunakan variable reference
+        $where = ['and', ['id_warehouse' => $model->idInboundPo->id_warehouse], ['id_master_item_im' => &$id_item_im]];
+
+
+		if ($model->status_stock == 1) {
+			// data sudah pernah menambah stock
+	        $modeldetailSn = InboundPoDetailSn::find()->andWhere(['id_inbound_po_detail' => $idInboundPoDetail])->all();
+	        
+	        foreach ($modeldetailSn as $key => $modelSn){
+	        	// menyesuaikan stock
+	            $id_item_im = $modelSn->idInboundPoDetail->id_item_im;
+				$columnstock = 's_'.str_replace(' ', '_', $modelSn->condition);
+				$modelstock = $modelMasterItemDetail->andWhere($where)->one();
+				$modelstock->{$columnstock} -= 1;
+				$modelstock->save();
+
+				// menghapus SN yang pernah terinput
+				if ( is_string($modelSn->serial_number) ){
+    				$wheresn = ['serial_number' => $modelSn->serial_number];
+    			}else{
+    				$wheresn = ['mac_address' => $modelSn->mac_address];
+    			}
+    			$modelMasterSn = MasterSn::find()->andWhere($wheresn)->andWhere(['status' => 27])->one();
+    			if($modelMasterSn !== null){
+	    			$modelMasterSn->status = 13;
+					$this->createLogmastersn($modelMasterSn);
+	    			$modelMasterSn->delete();
+    			}
+
+    			$modelSn->delete();
+
+			}
+	
+		}        
+
 		$modelInbounPO = InboundPo::findOne($model->id_inbound_po);
 		\Yii::$app->session->set('idInboundPo', $model->id_inbound_po);
         $model->status_listing = 999;
+        $model->status_stock = 0;
         $model->qty_good = 0;
         $model->qty_not_good = 0;
         $model->qty_reject = 0;
@@ -580,6 +666,13 @@ class InboundPoController extends Controller
 					$modelInbound->status_listing = 1;
 				}
 				$modelInbound->save();
+				//send email to verificator
+				$arrAuth = ['/inbound-po/indexverify'];
+                $header = 'Alert Verify INBOUND PO';
+                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/indexverify#viewverify?id='.$model->id.'?header=Verify_INBOUND_PO';
+                Email::sendEmail($arrAuth,$header,$subject);
+
+
 				$this->createLog($modelInbound);
 			}else if($cekStatus == 2){
 				$modelInbound = $this->findModel($id);
@@ -619,6 +712,13 @@ class InboundPoController extends Controller
 			if($value['status_listing'] != 41){
 				$cek = 0;
 			}
+
+			// rubah status_stock menyatakan data sudah pernah merubah stock
+			if ($value['qty_good'] + $value['qty_not_good'] + $value['qty_reject'] > 0) {
+				$modelinboundpodetail = InboundPoDetail::findOne($value['id']);
+				$modelinboundpodetail->status_stock = 1;
+				$modelinboundpodetail->save(false);
+			}
 		}
 
 		$modelInbound = InboundPo::findOne(\Yii::$app->session->get('idInboundPo'));
@@ -645,11 +745,25 @@ class InboundPoController extends Controller
 		// $modelMasterItem->save();
 		
         // InboundPoDetailSn::deleteAll('id_inbound_po_detail = '.$idInboundPoDetail);
+
+		$modelMasterItemDetail = MasterItemImDetail::find();
+        // menggunakan variable reference
+        $where = ['and', ['id_warehouse' => $model->idInboundPo->id_warehouse], ['id_master_item_im' => &$id_item_im]];
+        if ($model->status_stock == 1){
+        	$id_item_im = $model->id_item_im;
+			$modelstock = $modelMasterItemDetail->andWhere($where)->one();
+			$modelstock->s_good	-= $model->qty_good;
+			$modelstock->s_not_good	-= $model->qty_not_good;
+			$modelstock->s_reject	-= $model->qty_reject;			
+
+			$modelstock->save();
+        }
 		
 		
 		$modelInbounPO = InboundPo::findOne($model->id_inbound_po);
 		\Yii::$app->session->set('idInboundPo', $model->id_inbound_po);
         $model->status_listing = 999;
+        $model->status_stock = 0;
         $model->qty_good = 0;
         $model->qty_not_good = 0;
         $model->qty_reject = 0;
@@ -792,7 +906,8 @@ class InboundPoController extends Controller
 					}
 				}
 			}
-			
+						
+
 			if (!$model->save()){
 				return Displayerror::pesan($model->getErrors());
 			}
@@ -826,9 +941,12 @@ class InboundPoController extends Controller
         $model = new InboundPoDetail();
 		$this->layout = 'blank';
 		$cek = 1;
-		// print_r(\Yii::$app->session->get('orafinCode'));
-        if ($model->load(Yii::$app->request->post())) {
+		// print_r(\Yii::$app->session->get('orafinCode'));		
+
+        // if ($model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isPost) {
         	// return print_r($maxQty);
+        	
 			$quantities = $_POST['req_good_qty'];
 			$imCodes = $_POST['im_code'];
 			// $idItems = $_POST['id'];
@@ -874,7 +992,7 @@ class InboundPoController extends Controller
 			
 		
         } else {
-        	// return print_r($rrNumber);
+        	// return ($rrNumber.' rrNumber');
 
         	$modelInbound = InboundPo::findOne(\Yii::$app->session->get('idInboundPo'));
 
@@ -886,8 +1004,10 @@ class InboundPoController extends Controller
 					'orafin_view_mkm_pr_to_pay.pr_item_code as orafin_code',
 					'mkm_master_item.item_desc as orafin_name',
 					'orafin_view_mkm_pr_to_pay.rcv_quantity_received as qty',
+					'orafin_view_mkm_pr_to_pay.rcv_no as rr_number',
 				])->where(['and',['orafin_view_mkm_pr_to_pay.pr_item_code'=>$orafinCode],['orafin_view_mkm_pr_to_pay.rcv_no'=>$rrNumber]])->one();
 				
+
 			$modelIm = MasterItemIm::find()->where(['orafin_code'=>$modelOrafin->orafin_code])->one();
 			
             return $this->render('createdetail', [
@@ -909,7 +1029,7 @@ class InboundPoController extends Controller
 		$cek = 1;
 		if($idInboundPo==NULL)$idInboundPo = \Yii::$app->session->get('idInboundPo');
 		// print_r(\Yii::$app->session->get('orafinCode'));
-        if ($model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isPost) {
 			// return 'stop ini post';
 			$quantities = $_POST['req_good_qty'];
 			$imCodes = $_POST['im_code'];
@@ -974,6 +1094,7 @@ class InboundPoController extends Controller
 					'orafin_view_mkm_pr_to_pay.pr_item_code as orafin_code',
 					'mkm_master_item.item_desc as orafin_name',
 					'orafin_view_mkm_pr_to_pay.rcv_quantity_received as qty',
+					'orafin_view_mkm_pr_to_pay.rcv_no as rr_number',
 				])->where(['and',['orafin_view_mkm_pr_to_pay.pr_item_code'=>$orafinCode],['orafin_view_mkm_pr_to_pay.rcv_no'=>$rrNumber]])->one();
 			
 			$modelIm = MasterItemIm::find()->where(['orafin_code'=>$modelOrafin->orafin_code])->one();
@@ -1046,6 +1167,18 @@ class InboundPoController extends Controller
     }
 
     public function actionViewdetailapprove($idDetail = NULL, $idInboundPo = NULL,$orafinCode = NULL, $rrNumber = NULL, $maxQty = NULL)
+    {
+
+		$this->layout = 'blank';
+		
+		if($idInboundPo==NULL)$idInboundPo = \Yii::$app->session->get('idInboundPo');
+		// print_r(\Yii::$app->session->get('idInboundPo'));
+        return $this->render('viewdetail', $this->listView($idInboundPo,$orafinCode,$rrNumber));
+            
+        
+    }
+
+    public function actionViewdetailoverview($idDetail = NULL, $idInboundPo = NULL,$orafinCode = NULL, $rrNumber = NULL, $maxQty = NULL)
     {
 
 		$this->layout = 'blank';
@@ -1314,6 +1447,10 @@ class InboundPoController extends Controller
 				
                 // \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
                 // $this->createLog($model);
+					$arrAuth = ['/inbound-po/indexverify'];
+	                $header = 'Alert Verify INBOUND PO';
+	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/indexverify#viewverify?id='.$model->id.'?header=Verify_INBOUND_PO';
+	                Email::sendEmail($arrAuth,$header,$subject);
                 
                 return 'success';
             } else {
@@ -1531,4 +1668,13 @@ class InboundPoController extends Controller
 								->join('inner join', 'orafin_view_mkm_pr_to_pay', 'inbound_po.rr_number = orafin_view_mkm_pr_to_pay.rcv_no and inbound_po.po_number = orafin_view_mkm_pr_to_pay.po_num')->one();
 		return $model;
     }
+    private function createLogmastersn($model){
+		$modelLog = new LogMasterSn();
+        $modelLog->setAttributes($model->attributes);
+		if(!$modelLog->save()){
+			throw new NotFoundHttpException(Displayerror::pesan($modelLog->getErrors()));
+			return Displayerror::pesan($modelLog->getErrors());
+		}
+		
+	}
 }

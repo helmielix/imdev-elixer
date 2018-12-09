@@ -59,9 +59,9 @@ $arrQtyDetail = '';
 		<?= $form->field($modelIm->referenceSn, 'description')->textInput(['disabled'=>true])->label('SN / Non SN');?>
 		
 	
-
-    
 		<?php ActiveForm::end(); ?>
+    
+		
 	
 		<?php function getFilterStatus() {
 			if(Yii::$app->controller->action->id == 'index')
@@ -185,6 +185,7 @@ $arrQtyDetail = '';
 				],
 			]); ?>
 			<?php \yii\widgets\Pjax::end(); ?>
+			
 		
 		<div class="row">
 			<!-- <label class='control-label col-sm-4'> </label> -->
@@ -228,9 +229,18 @@ $arrQtyDetail = '';
 		});
 		form.yiiActiveForm("validate");
 		if (!form.find('.has-error').length) {
-			data = new FormData(form[0]);
-			data.append( 'InboundPoDetail[im_code]', $( '#inboundpodetail-im_code' ).val() );
-			data.append( 'InboundPoDetail[qty]', $( '#inboundpodetail-qty' ).val() );
+			// data = new FormData(form[0]);
+			// data.append( 'InboundPoDetail[im_code]', $( '#inboundpodetail-im_code' ).val() );
+			// data.append( 'InboundPoDetail[qty]', $( '#inboundpodetail-qty' ).val() );
+
+			var form = $('#gridViewdetail-container');
+			data = new FormData();
+			form.find('input:hidden, input:text')
+				.each(function(){
+					name = $(this).attr('name');
+					val = $(this).val();
+					data.append(name, val);
+				});
 			
             var button = $(this);
             button.prop('disabled', true);

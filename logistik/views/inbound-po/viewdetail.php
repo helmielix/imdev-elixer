@@ -198,6 +198,8 @@ $arrQtyDetail = '';
 				echo Html::button(Yii::t('app','Previous'), ['id'=>'previousVerButton','class' => 'btn btn-success']);
 			}else if($this->context->action->id == 'viewdetailapprove'){
 				echo Html::button(Yii::t('app','Previous'), ['id'=>'previousAppButton','class' => 'btn btn-success']);
+			}else if($this->context->action->id == 'viewdetailoverview'){
+				echo Html::button(Yii::t('app','Previous'), ['id'=>'previousOveButton','class' => 'btn btn-success']);
 			}
 		?>
 	</p>
@@ -219,14 +221,21 @@ $arrQtyDetail = '';
     $('#previousVerButton').click(function () {
         $('#modal').modal('show')
             .find('#modalContent')
-            .load('<?php echo Url::to(['inbound-po/viewverify','idInbouncPo'=>Yii::$app->session->get('idInbounPo')]) ;?>');
+            .load('<?php echo Url::to(['inbound-po/viewverify','id'=>Yii::$app->session->get('idInboundPo')]) ;?>');
         $('#modalHeader').html('<h3> Create Inbound PO </h3>');
     });
 
     $('#previousAppButton').click(function () {
         $('#modal').modal('show')
             .find('#modalContent')
-            .load('<?php echo Url::to(['inbound-po/viewapprove','idInbouncPo'=>Yii::$app->session->get('idInbounPo')]) ;?>');
+            .load('<?php echo Url::to(['inbound-po/viewapprove','id'=>Yii::$app->session->get('idInboundPo')]) ;?>');
+        $('#modalHeader').html('<h3> Create Inbound PO </h3>');
+    });
+
+    $('#previousOveButton').click(function () {
+        $('#modal').modal('show')
+            .find('#modalContent')
+            .load('<?php echo Url::to(['inbound-po/viewoverview','id'=>Yii::$app->session->get('idInboundPo')]) ;?>');
         $('#modalHeader').html('<h3> Create Inbound PO </h3>');
     });
 	// $('#createButton').click(function () {

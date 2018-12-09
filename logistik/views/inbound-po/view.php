@@ -170,6 +170,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             if(Yii::$app->controller->action->id == 'view') $viewurl = 'viewdetail';
                             if(Yii::$app->controller->action->id == 'viewapprove') $viewurl = 'viewdetailapprove';
                             if(Yii::$app->controller->action->id == 'viewverify') $viewurl = 'viewdetailverify';
+                            if(Yii::$app->controller->action->id == 'viewoverview') $viewurl = 'viewdetailoverview';
 
                             return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#view', [
                                         'title' => Yii::t('app', 'view'), 'class' => 'viewsButton','idInboundPo'=>$model->id_inbound,'url'=>$viewurl,'orafinCode'=>$model->orafin_code, 'rrNumber'=>$model->rr_number, 'idItemIm' => $model->id_item_im, 'header'=> yii::t('app','Create Material GRF Vendor IKO')
@@ -236,8 +237,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 url = '<?php echo Url::to(['/inbound-po/viewdetailverify']) ;?>';
             }else if($(this).attr('url') == 'viewdetailapprove'){
                 url = '<?php echo Url::to(['/inbound-po/viewdetailapprove']) ;?>';
+            }else if($(this).attr('url') == 'viewdetailoverview'){
+                url = '<?php echo Url::to(['/inbound-po/viewdetailoverview']) ;?>';
             }
             console.log(url);
+            // return false;
             $('#modal').modal('show')
                 .find('#modalContent')
                 .load(url+'?idInboundPo='+$(this).attr('idInboundPo')+'&orafinCode='+$(this).attr('orafinCode')+'&rrNumber='+$(this).attr('rrNumber')+'&idItemIm='+$(this).attr('idItemIm'));
