@@ -18,7 +18,7 @@ use yii\behaviors\BlameableBehavior;
  */
 class ParameterMasterItem extends \yii\db\ActiveRecord
 {
-    public $item_name, $item_orafin, $grouping, $brand, $type, $warna, $uom, $sn, $name, $im_code; 
+    public $item_name, $item_orafin, $grouping, $brand, $type, $warna, $uom, $sn, $name, $im_code, $s_good, $s_good_dismantle, $s_good_rec, $sn_type, $id_item_im, $id_parameter; 
 
     public static function tableName()
     {
@@ -77,5 +77,35 @@ class ParameterMasterItem extends \yii\db\ActiveRecord
     public function getIdMasterItemIm()
     {
         return $this->hasOne(MasterItemIm::className(), ['id' => 'id_item']);
+    }
+
+    public function getParameterMasterItemDetails()
+    {
+        return $this->hasMany(MasterItemIm::className(), ['id' => 'id_parameter']);
+    }
+
+    public function getReferenceType()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'type']);
+    }
+    
+    public function getReferenceWarna()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'warna']);
+    }
+    
+    public function getReferenceBrand()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'brand']);
+    }
+    
+    public function getReferenceGrouping()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'grouping']);
+    }
+    
+    public function getReferenceSn()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'sn_type']);
     }
 }

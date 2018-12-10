@@ -22,7 +22,7 @@ use yii\behaviors\BlameableBehavior;
  */
 class InstructionProductionDetail extends \yii\db\ActiveRecord
 {
-    public $im_code;
+    public $im_code, $target_produksi;
 
     public static function tableName()
     {
@@ -82,9 +82,9 @@ class InstructionProductionDetail extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdMasterItemIm()
+    public function getIdParameterMasterItem()
     {
-        return $this->hasOne(MasterItemIm::className(), ['id' => 'id_item_im']);
+        return $this->hasOne(ParameterMasterItem::className(), ['id' => 'id_item_im']);
     }
 
     /**
