@@ -261,6 +261,29 @@ class InstructionProductionController extends Controller
         ]);
     }
 
+    public function actionUpdateItemSet($idDetail){
+    	$this->layout = 'blank';
+		$id = Yii::$app->session->get('idInstProd');
+
+		$model = InstructionProductionDetail::findOne($idDetail);
+
+		if ($model->load(Yii::$app->request->post())){
+			// return masuk;
+			$model->id_instruction_production = $id;
+
+			if($model->save()){
+				Yii::$app->session->set('idInstProdDetail', $model->id);
+				return 'success';
+			}else{
+				return print_r($model->getErrors());
+			}
+		}
+
+		return $this->render('createitemset', [
+            'model' => $model,
+        ]);
+    }
+
     public function actionGetim($idItem){
     
     	// return print_r(Url::base());
@@ -339,8 +362,10 @@ class InstructionProductionController extends Controller
 		$modelDetail = InstructionProductionDetailSetItem::find()->select(['id_item_set'])->andWhere(['id_instruction_production_detail' => $id])->all();
 		$idItemIm = ArrayHelper::map($modelDetail, 'id_item_set', 'id_item_set');
 
+		// return json_encode($idItemIm);
+
 		$searchModel = new SearchMasterItemIm();
-        $dataProvider = $searchModel->searchByCreateDetailItem(Yii::$app->request->post(),$model->id, $idItemIm);
+        $dataProvider = $searchModel->searchByCreateDetailItem(Yii::$app->request->post(),$model->id_warehouse, $idItemIm);
 
         return $this->render('create_item_set_detail', [
             'searchModel' => $searchModel,
