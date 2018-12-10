@@ -3,6 +3,7 @@
 namespace logistik\controllers;
 
 use Yii;
+
 use common\models\InstructionProduction;
 use common\models\LogInstructionProduction;
 use common\models\InstructionProductionDetail;
@@ -12,6 +13,10 @@ use common\models\SearchInstructionProduction;
 use common\models\SearchLogInstructionProduction;
 use common\models\SearchInstructionProductionDetail;
 use common\models\SearchMasterItemIm;
+use common\models\SearchParameterMasterItem;
+use common\models\SearchParameterMasterItemDetail;
+use common\models\ParameterMasterItem;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -250,6 +255,7 @@ class InstructionProductionController extends Controller
 
 			if($model->save()){
 				Yii::$app->session->set('idInstProdDetail', $model->id);
+				Yii::$app->session->set('idItemPar', $model->id_item_im);
 				return 'success';
 			}else{
 				return print_r($model->getErrors());
@@ -286,10 +292,11 @@ class InstructionProductionController extends Controller
 
     public function actionGetim($idItem){
     
+    	$model = ParameterMasterItem::find()->select(['master_item_im.im_code as im_code'])->joinWith('idMasterItemIm')->where(['=', 'parameter_master_item.id', $idItem])->one();
     	// return print_r(Url::base());
-		$model = MasterItemIm::find()
-			->where(['=', 'id', $idItem])
-			->one();
+		// $model = MasterItemIm::find()
+		// 	->where(['=', 'id', $idItem])
+		// 	->one();
 		
 		$arrResult = array(
 			'im_code' => $model->im_code,
@@ -363,9 +370,9 @@ class InstructionProductionController extends Controller
 		$idItemIm = ArrayHelper::map($modelDetail, 'id_item_set', 'id_item_set');
 
 		// return json_encode($idItemIm);
-
-		$searchModel = new SearchMasterItemIm();
-        $dataProvider = $searchModel->searchByCreateDetailItem(Yii::$app->request->post(),$model->id_warehouse, $idItemIm);
+		// return print_r(Yii::$app->session->get('idItemPar'));
+		$searchModel = new SearchParameterMasterItemDetail();
+        $dataProvider = $searchModel->searchByAction(Yii::$app->request->post(), Yii::$app->session->get('idItemPar'));
 
         return $this->render('create_item_set_detail', [
             'searchModel' => $searchModel,

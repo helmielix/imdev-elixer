@@ -55,7 +55,11 @@ $this->registerCss('
 					return $model->im_code . Html::hiddenInput('im_code[]', $model->id.';'.$model->im_code, ['class' => 'im_code']);
 				},
 			],
-			'name',
+			[
+				'attribute' => 'name',
+				'value' => 'name',
+			],
+			// 'name',
 			[
 				'attribute' => 'brand',
 				'value' => 'referenceBrand.description',
@@ -89,8 +93,8 @@ $this->registerCss('
 				'vAlign' => 'middle',
 			],
 			[
-				'attribute' => 's_reject',
-				'contentOptions' => ['class' => 'bg-danger'],
+				'attribute' => 's_good_rec',
+				'contentOptions' => ['class' => 'bg-warning'],
 				'headerOptions' => ['class' => 'kartik-sheet-style'],
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
@@ -131,7 +135,27 @@ $this->registerCss('
 					$out 	= Html::textInput('rgooddismantle[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'rgooddismantle']);
 					return $out;
 				},
-				'contentOptions' => ['class' => 'bg-dismantle'],
+				'contentOptions' => ['class' => 'bg-info'],
+				'headerOptions' => ['class' => 'kartik-sheet-style'],
+				'mergeHeader' => true,
+				'vAlign' => 'middle',
+			],
+
+			[
+				'label' => 'Req. Good Recond',
+				'format' => 'raw',
+				'value' => function ($model) use ($datasession)
+				{
+					$out = '<div class="col-xs-12">';
+					$out .= '</div>';
+					$val = '';
+					if (isset($datasession[$model->id]['rgoodrec'])){
+						$val = $datasession[$model->id]['rgoodrec'];
+					}
+					$out 	= Html::textInput('rgoodrec[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'rgoodrec']);
+					return $out;
+				},
+				'contentOptions' => ['class' => 'bg-danger'],
 				'headerOptions' => ['class' => 'kartik-sheet-style'],
 				'mergeHeader' => true,
 				'vAlign' => 'middle',

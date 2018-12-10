@@ -7,7 +7,7 @@ use dosamigos\datepicker\DatePicker;
 use yii\helpers\Url;
 use kartik\select2\Select2;
 use common\models\Reference;
-use common\models\MasterItemIm;
+use common\models\ParameterMasterItem;
 
 /* @var $this yii\web\View */
 /* @var $model divisisatu\models\InstructionWhTransfer */
@@ -34,7 +34,7 @@ use common\models\MasterItemIm;
     ]); ?>
 
     <?php 
-        $dataItem = MasterItemIm::find()->all();
+        $dataItem = ParameterMasterItem::find()->select(['parameter_master_item.id as id','master_item_im.name as name'])->joinWith('idMasterItemIm')->all();
     ?>
 
    
@@ -121,7 +121,7 @@ $('#createButton').click(function () {
 				if(response == 'success') {					
 					$('#modal').modal('show')
 						.find('#modalContent')
-						.load('<?php echo Url::to([$this->context->id.'/create-item-set-detail', 'id' => Yii::$app->session->get('idInstProdDetail')]) ;?>');
+						.load('<?php echo Url::to([$this->context->id.'/create-item-set-detail', 'id' => Yii::$app->session->get('idInstPar')]) ;?>');
 					$('#modalHeader').html('<h3>Detail Instruksi Warehouse Transfer</h3>');
 				} else {
 					alert('error with message: ' + response);

@@ -18,7 +18,7 @@ use yii\behaviors\BlameableBehavior;
  */
 class ParameterMasterItem extends \yii\db\ActiveRecord
 {
-    public $item_name, $item_orafin, $grouping, $brand, $type, $warna, $uom, $sn; 
+    public $item_name, $item_orafin, $grouping, $brand, $type, $warna, $uom, $sn, $name, $im_code; 
 
     public static function tableName()
     {
@@ -72,5 +72,10 @@ class ParameterMasterItem extends \yii\db\ActiveRecord
     public function getStatusReference()
     {
         return $this->hasOne(StatusReference::className(), ['id' => 'status_listing']);
+    }
+
+    public function getIdMasterItemIm()
+    {
+        return $this->hasOne(MasterItemIm::className(), ['id' => 'id_item']);
     }
 }
