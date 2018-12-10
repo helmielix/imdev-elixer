@@ -161,6 +161,12 @@ $this->registerCss('
 				'vAlign' => 'middle',
 			],
 			
+			[
+				'attribute' => 'qty_total',
+				'value' => function($model) use ($modelProdDetail){
+					return $model->qty_item_child * $modelProdDetail->qty;
+				}
+			]
 			// [
 			// 	'label' => 'Rem. Good',
 			// 	'format' => 'raw',

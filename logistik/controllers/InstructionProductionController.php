@@ -366,6 +366,8 @@ class InstructionProductionController extends Controller
 
 		}
 		$model = InstructionProduction::findOne(Yii::$app->session->get('idInstProd'));
+		$modelProdDetail = InstructionProductionDetail::findOne($id);
+
 		$modelDetail = InstructionProductionDetailSetItem::find()->select(['id_item_set'])->andWhere(['id_instruction_production_detail' => $id])->all();
 		$idItemIm = ArrayHelper::map($modelDetail, 'id_item_set', 'id_item_set');
 
@@ -375,6 +377,7 @@ class InstructionProductionController extends Controller
         $dataProvider = $searchModel->searchByAction(Yii::$app->request->post(), Yii::$app->session->get('idItemPar'));
 
         return $this->render('create_item_set_detail', [
+        	'modelProdDetail' => $modelProdDetail,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

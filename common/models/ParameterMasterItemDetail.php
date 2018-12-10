@@ -15,7 +15,7 @@ use Yii;
  */
 class ParameterMasterItemDetail extends \yii\db\ActiveRecord
 {
-   public $im_code, $name, $s_good, $s_good_dismantle, $s_good_rec, $brand, $type, $warna, $sn_type;
+   public $im_code, $name, $s_good, $s_good_dismantle, $s_good_rec, $brand, $type, $warna, $sn_type, $qty_total;
 
     public static function tableName()
     {

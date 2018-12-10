@@ -72,6 +72,7 @@ class SearchParameterMasterItemDetail extends ParameterMasterItemDetail
     {
         $query = ParameterMasterItemDetail::find()
         ->select([
+            'parameter_master_item_detail.qty_item_child',
             'master_item_im.im_code',
             'master_item_im.name',
             'master_item_im.brand',
