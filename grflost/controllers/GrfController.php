@@ -432,6 +432,9 @@ class GrfController extends Controller
 					}
 				}
 			}
+
+			if($model->status_listing == 3)	$model->status_listing = 2;
+
 			
 			if (!$model->save()){
 				return Displayerror::pesan($model->getErrors());
@@ -638,6 +641,8 @@ class GrfController extends Controller
         $model = $this->findModel($id);
         if($model->status_listing == 1 || $model->status_listing == 2){
             $model->status_listing = 4;
+            $model->verified_by = Yii::$app->user->identity->id;
+
             if ($model->save()) {
                 return 'success';
             } 
@@ -651,7 +656,7 @@ class GrfController extends Controller
 		
 		if ($model->status_listing == 4){
 			$model->status_listing = 5;
-			
+			$model->approved_by = Yii::$app->user->identity->id;
 			if ($model->save()){
 				return 'success';
 			}
