@@ -314,8 +314,8 @@ class InstructionProductionController extends Controller
 
 			$data_im_code   = Yii::$app->request->post('im_code');
 			$data_r_good    = Yii::$app->request->post('rgood');
-			$data_r_dis_good = Yii::$app->request->post('rdisgood');
-			$data_r_good_recon  = Yii::$app->request->post('rgoodrecon');
+			$data_r_dis_good = Yii::$app->request->post('rgooddismantle');
+			$data_r_good_recon  = Yii::$app->request->post('rgoodrec');
 
 			if (count($data_im_code) == 0){
 				return json_encode(['status' => 'success']);
@@ -323,17 +323,17 @@ class InstructionProductionController extends Controller
 
 			foreach($data_im_code as $key => $value){
 				// if($data_r_good[$key] == '')
-				if($data_r_good[$key] == '' && $data_r_notgood[$key] == '' && $data_r_reject[$key] == '' && $data_r_good[$key] == 0 && $data_r_notgood[$key] == 0 && $data_r_reject[$key] == 0){
+				if($data_r_good[$key] == '' && $data_r_dis_good[$key] == '' && $data_r_good_recon[$key] == '' && $data_r_good[$key] == 0 && $data_r_dis_good[$key] == 0 && $data_r_good_recon[$key] == 0){
 					continue;
 				}
 				$values = explode(';',$value);
 
-				$model = new InstructionProductionDetail();
-				$model->id_instruction_wh	= $id;
-				$model->id_item_im			= $values[0];
+				$model = new InstructionProductionDetailSetItem();
+				$model->id_instruction_production_detail	= $id;
+				$model->id_item_set			= $values[0];
 				$model->req_good			= ($data_r_good[$key] == '') ? 0 : $data_r_good[$key];
-				$model->req_not_good		= ($data_r_notgood[$key] == '') ? 0 : $data_r_notgood[$key];
-				$model->req_reject			= ($data_r_reject[$key] == '') ? 0 : $data_r_reject[$key];
+				$model->req_dis_good		= ($data_r_dis_good[$key] == '') ? 0 : $data_r_dis_good[$key];
+				$model->req_good_recond			= ($data_r_good_recon[$key] == '') ? 0 : $data_r_good_recon[$key];
 
 				$modelMasterItem = MasterItemIm::findOne($values[0]);
 				$overStock = 1;
@@ -342,12 +342,12 @@ class InstructionProductionController extends Controller
 					$pesan[] = $model->getAttributeLabel('req_good')." is more than Stock for IM Code ".$values[1];
 					$overStock = 0;
 				}
-				if($model->req_not_good > $modelMasterItem->s_not_good){
-					$pesan[] = $model->getAttributeLabel('req_not_good')." is more than Stock for IM Code ".$values[1];
+				if($model->req_dis_good > $modelMasterItem->s_not_good){
+					$pesan[] = $model->getAttributeLabel('req_dis_good')." is more than Stock for IM Code ".$values[1];
 					$overStock = 0;
 				}
-				if($model->req_reject > $modelMasterItem->s_reject){
-					$pesan[] = $model->getAttributeLabel('req_reject')." is more than Stock for IM Code ".$values[1];
+				if($model->req_good_recond > $modelMasterItem->s_reject){
+					$pesan[] = $model->getAttributeLabel('data_r_good_recon')." is more than Stock for IM Code ".$values[1];
 					$overStock = 0;
 				}
 
@@ -366,6 +366,8 @@ class InstructionProductionController extends Controller
 
 		}
 		$model = InstructionProduction::findOne(Yii::$app->session->get('idInstProd'));
+		$modelProdDetail = InstructionProductionDetail::findOne($id);
+
 		$modelDetail = InstructionProductionDetailSetItem::find()->select(['id_item_set'])->andWhere(['id_instruction_production_detail' => $id])->all();
 		$idItemIm = ArrayHelper::map($modelDetail, 'id_item_set', 'id_item_set');
 
@@ -375,10 +377,147 @@ class InstructionProductionController extends Controller
         $dataProvider = $searchModel->searchByAction(Yii::$app->request->post(), Yii::$app->session->get('idItemPar'));
 
         return $this->render('create_item_set_detail', [
+        	'modelProdDetail' => $modelProdDetail,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    public function actionCreateSupportingItem($id = NULL){
+    	$this->layout = 'blank';
+    	if($id == NULL) $id = Yii::$app->session->get('idInstProd');
+    	// if($id == NULL) $idProd = Yii::$app->session->get('idInstProd');
+
+		if (Yii::$app->request->isPost){
+			
+
+
+
+			$data_im_code   = Yii::$app->request->post('im_code');
+			$data_r_good    = Yii::$app->request->post('rgood');
+			$data_r_dis_good = Yii::$app->request->post('rgooddismantle');
+			$data_r_good_recon  = Yii::$app->request->post('rgoodrec');
+
+			if (count($data_im_code) == 0){
+				return json_encode(['status' => 'success']);
+			}
+
+			foreach($data_im_code as $key => $value){
+				// if($data_r_good[$key] == '')
+				if($data_r_good[$key] == '' && $data_r_dis_good[$key] == '' && $data_r_good_recon[$key] == '' && $data_r_good[$key] == 0 && $data_r_dis_good[$key] == 0 && $data_r_good_recon[$key] == 0){
+					continue;
+				}
+				$values = explode(';',$value);
+
+				$modelDetail = new InstructionProductionDetail();
+
+				$modelDetail->id_instruction_production = $id;
+				$modelDetail->id_item_im = $values[0];
+				$modelDetail->qty = $data_r_good[$key] + $data_r_dis_good[$key] + $data_r_good_recon[$key];
+				if(!$modelDetail->save()){
+					return print_r($modelDetail->getErrors());
+				}
+
+
+				$model = new InstructionProductionDetailSetItem();
+				$model->id_instruction_production_detail	= $modelDetail->id;
+				$model->id_item_set			= $values[0];
+				$model->req_good			= ($data_r_good[$key] == '') ? 0 : $data_r_good[$key];
+				$model->req_dis_good		= ($data_r_dis_good[$key] == '') ? 0 : $data_r_dis_good[$key];
+				$model->req_good_recond			= ($data_r_good_recon[$key] == '') ? 0 : $data_r_good_recon[$key];
+
+				$modelMasterItem = MasterItemIm::findOne($values[0]);
+				$overStock = 1;
+				$pesan = [];
+				// if($model->req_good > $modelMasterItem->s_good){
+				// 	$pesan[] = $model->getAttributeLabel('req_good')." is more than Stock for IM Code ".$values[1];
+				// 	$overStock = 0;
+				// }
+				// if($model->req_dis_good > $modelMasterItem->s_not_good){
+				// 	$pesan[] = $model->getAttributeLabel('req_dis_good')." is more than Stock for IM Code ".$values[1];
+				// 	$overStock = 0;
+				// }
+				// if($model->req_good_recond > $modelMasterItem->s_reject){
+				// 	$pesan[] = $model->getAttributeLabel('data_r_good_recon')." is more than Stock for IM Code ".$values[1];
+				// 	$overStock = 0;
+				// }
+
+				if ($overStock == 0)
+					return json_encode(['status' => 'error', 'id' => $values[0], 'pesan' => implode("\n",$pesan)]);
+
+				if(!$model->save()){
+					$error = $model->getErrors();
+					$error[0] = ['for IM Code '.$values[1]];
+					return json_encode(['status' => 'error', 'id' => $values[0], 'pesan' => Displayerror::pesan($error)]);
+				}
+			}
+
+			return json_encode(['status' => 'success']);
+			// return 'success';
+
+		}
+		$model = InstructionProduction::findOne(Yii::$app->session->get('idInstProd'));
+		$modelProdDetail = InstructionProductionDetail::findOne($id);
+
+		$modelDetail = InstructionProductionDetailSetItem::find()->select(['id_item_set'])->andWhere(['id_instruction_production_detail' => $id])->all();
+		$idItemIm = ArrayHelper::map($modelDetail, 'id_item_set', 'id_item_set');
+
+		// return json_encode($idItemIm);
+		// return print_r($model->id_warehouse);
+		// $searchModel = new SearchMasterItemIm();
+  //       $dataProvider = $searchModel->searchByCreateDetailItem(Yii::$app->request->getQueryParams(), $model->id_warehouse);
+		$searchModel = new SearchParameterMasterItemDetail();
+        $dataProvider = $searchModel->searchByParent(Yii::$app->request->post(), Yii::$app->session->get('idItemPar'));
+
+        return $this->render('create_supporting_item', [
+        	'modelProdDetail' => $modelProdDetail,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionSetsessiondetail(){
+		if (Yii::$app->request->isPost){
+			$data = Yii::$app->session->get('detailinstruction');
+
+			$id   = Yii::$app->request->post('id');
+			$val  = Yii::$app->request->post('val');
+			$type = Yii::$app->request->post('type');
+
+			$data[$id][$type] = $val;
+
+			Yii::$app->session->set('detailinstruction', $data);
+			return var_dump($data);
+		}
+	}
+
+    public function actionCurrentstock(){
+		if (Yii::$app->request->isPost){
+			$id   = Yii::$app->request->post('id');
+
+			$model = MasterItemImDetail::findOne($id);
+			$session = Yii::$app->session->get('detailinstruction');
+
+			if ( isset($session[$id]['update']) ){
+				$model->s_good				+= $session[$id]['update'][$id]['rgood'];
+				$model->s_not_good			+= $session[$id]['update'][$id]['rnotgood'];
+				$model->s_reject			+= $session[$id]['update'][$id]['rreject'];
+				$model->s_dismantle			+= $session[$id]['update'][$id]['rdismantle'];
+				$model->s_revocation		+= $session[$id]['update'][$id]['rrevocation'];
+				$model->s_good_rec 			+= $session[$id]['update'][$id]['rgood_rec'];
+				$model->s_good_for_recond	+= $session[$id]['update'][$id]['rgood_for_recond'];
+			}
+			// return var_dump($model);
+			$arr['s_good'] 			  = $model->s_good;
+			$arr['s_not_good'] 		  = $model->s_not_good;
+			$arr['s_reject']		  = $model->s_reject;
+			$arr['s_dismantle']		  = $model->s_dismantle;
+			$arr['s_revocation']	  = $model->s_revocation;
+			$arr['s_good_rec'] 		  = $model->s_good_rec;
+			$arr['s_good_for_recond'] = $model->s_good_for_recond;
+			return json_encode($arr);
+		}
+	}
 
 	public function actionCreatedetail(){
 		$this->layout = 'blank';
@@ -388,8 +527,8 @@ class InstructionProductionController extends Controller
 
 			$data_im_code   = Yii::$app->request->post('im_code');
 			$data_r_good    = Yii::$app->request->post('rgood');
-			$data_r_notgood = Yii::$app->request->post('rnotgood');
-			$data_r_reject  = Yii::$app->request->post('rreject');
+			$data_r_dis_good = Yii::$app->request->post('rnotgood');
+			$data_r_good_recon  = Yii::$app->request->post('rreject');
 
 			if (count($data_im_code) == 0){
 				return json_encode(['status' => 'success']);
@@ -397,7 +536,7 @@ class InstructionProductionController extends Controller
 
 			foreach($data_im_code as $key => $value){
 				// if($data_r_good[$key] == '')
-				if($data_r_good[$key] == '' && $data_r_notgood[$key] == '' && $data_r_reject[$key] == '' && $data_r_good[$key] == 0 && $data_r_notgood[$key] == 0 && $data_r_reject[$key] == 0){
+				if($data_r_good[$key] == '' && $data_r_dis_good[$key] == '' && $data_r_good_recon[$key] == '' && $data_r_good[$key] == 0 && $data_r_dis_good[$key] == 0 && $data_r_good_recon[$key] == 0){
 					continue;
 				}
 				$values = explode(';',$value);
@@ -406,8 +545,8 @@ class InstructionProductionController extends Controller
 				$model->id_instruction_wh	= $id;
 				$model->id_item_im			= $values[0];
 				$model->req_good			= ($data_r_good[$key] == '') ? 0 : $data_r_good[$key];
-				$model->req_not_good		= ($data_r_notgood[$key] == '') ? 0 : $data_r_notgood[$key];
-				$model->req_reject			= ($data_r_reject[$key] == '') ? 0 : $data_r_reject[$key];
+				$model->req_dis_good		= ($data_r_dis_good[$key] == '') ? 0 : $data_r_dis_good[$key];
+				$model->data_r_good_recon			= ($data_r_good_recon[$key] == '') ? 0 : $data_r_good_recon[$key];
 
 				$modelMasterItem = MasterItemIm::findOne($values[0]);
 				$overStock = 1;
@@ -416,12 +555,12 @@ class InstructionProductionController extends Controller
 					$pesan[] = $model->getAttributeLabel('req_good')." is more than Stock for IM Code ".$values[1];
 					$overStock = 0;
 				}
-				if($model->req_not_good > $modelMasterItem->s_not_good){
-					$pesan[] = $model->getAttributeLabel('req_not_good')." is more than Stock for IM Code ".$values[1];
+				if($model->req_dis_good > $modelMasterItem->s_not_good){
+					$pesan[] = $model->getAttributeLabel('req_dis_good')." is more than Stock for IM Code ".$values[1];
 					$overStock = 0;
 				}
-				if($model->req_reject > $modelMasterItem->s_reject){
-					$pesan[] = $model->getAttributeLabel('req_reject')." is more than Stock for IM Code ".$values[1];
+				if($model->data_r_good_recon > $modelMasterItem->s_reject){
+					$pesan[] = $model->getAttributeLabel('data_r_good_recon')." is more than Stock for IM Code ".$values[1];
 					$overStock = 0;
 				}
 
@@ -472,7 +611,7 @@ class InstructionProductionController extends Controller
 
 	public function actionSubmit($id){
 		$model = InstructionProduction::findOne($id);
-		$modelDetail = InstructionProductionDetail::find()->andWhere(['id_instruction_wh' => $id])->count();
+		$modelDetail = InstructionProductionDetail::find()->andWhere(['id_instruction_production' => $id])->count();
 		if ($modelDetail > 0){
 			if($model->status_listing == 2 || $model->status_listing == 3){
 				$model->status_listing = 2;

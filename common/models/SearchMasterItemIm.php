@@ -147,9 +147,9 @@ class SearchMasterItemIm extends MasterItemIm
 			'master_item_im_detail.s_good',
 			'master_item_im_detail.s_not_good',
 			'master_item_im_detail.s_reject',
-			'master_item_im_detail.s_dismantle',
-            'master_item_im_detail.s_revocation',
-            'master_item_im_detail.s_good_for_recond',
+			'master_item_im_detail.s_good_dismantle',
+            'master_item_im_detail.s_not_good_dismantle',
+            // 'master_item_im_detail.s_good_for_recond',
 			'master_item_im_detail.s_good_rec',
 		]);
 		

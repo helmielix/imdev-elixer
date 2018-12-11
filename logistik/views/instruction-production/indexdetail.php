@@ -66,11 +66,17 @@ hellooo world
                     },
                 ],
             ],
-			'target_produksi',
+			// 'target_produksi',
+            [
+                'attribute' => 'id_item_im',
+                'label' => 'Target Produksi',
+                'value' => 'idParameterMasterItem.idMasterItemIm.name'
+            ],
 
 			[
 				'attribute' => 'id_item_im',
-				'value' => 'idMasterItemIm.im_code',
+                'label' => "IM Code",
+				'value' => 'idParameterMasterItem.idMasterItemIm.im_code',
 			],
             'qty',
 			// 'req_good',
@@ -80,13 +86,12 @@ hellooo world
         ],
     ]); ?>
 	<?php yii\widgets\Pjax::end() ?>
-	<?php if($this->context->action->id == 'view'){ ?>
     <p>        
 		<?php if(Yii::$app->controller->action->id == 'indexdetail')
 			echo Html::button(Yii::t('app','Previous'), ['id'=>'previousButton','class' => 'btn btn-primary']);  ?>
 		<?= Html::button(Yii::t('app','Submit Instruction'), ['id'=>'submitButton','class' => 'btn btn-success']) ?>		
     </p>
-	<?php } ?>
+	
 </div>
 
 <script>
@@ -113,6 +118,18 @@ hellooo world
 			echo Url::to([$this->context->id.'/create-item-set', 'par' => $par]) ;?>');
         $('#modalHeader').html('<h3> Create Detail Instruksi Warehouse Transfer</h3>');
     });
+
+    $('#createSupportButton').click(function () {
+        $('#modal').modal('show')
+            .find('#modalContent')
+            .load('<?php 
+            $par = null;
+            if (basename(Yii::$app->request->pathInfo) == 'view'){
+                $par = 'view';
+            }
+            echo Url::to([$this->context->id.'/create-supporting-item', 'par' => $par]) ;?>');
+        $('#modalHeader').html('<h3> Create Detail Instruksi Warehouse Transfer</h3>');
+    });
 	
     $('#previousButton').click(function () {
         $('#modal').modal('show')
@@ -127,7 +144,7 @@ hellooo world
         button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
 		
 		$.ajax({
-            url: '<?php echo Url::to([$this->context->id.'/submit', 'id' => Yii::$app->session->get('idInstWhTr')]) ;?>',
+            url: '<?php echo Url::to([$this->context->id.'/submit', 'id' => Yii::$app->session->get('idInstProd')]) ;?>',
             type: 'post',
             processData: false,
             contentType: false,

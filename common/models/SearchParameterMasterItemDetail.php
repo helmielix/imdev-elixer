@@ -72,7 +72,9 @@ class SearchParameterMasterItemDetail extends ParameterMasterItemDetail
     {
         $query = ParameterMasterItemDetail::find()
         ->select([
+            'parameter_master_item_detail.qty_item_child',
             'master_item_im.im_code',
+            'master_item_im.id as id_item_im',
             'master_item_im.name',
             'master_item_im.brand',
             'master_item_im.type',
@@ -83,7 +85,52 @@ class SearchParameterMasterItemDetail extends ParameterMasterItemDetail
             'master_item_im_detail.s_good_rec as s_good_rec',
         ])
         ->joinWith('masterItemChild.masterItemImDetails')
-        ->where(['and',['parameter_master_item_detail.id_parameter'=>$id],['master_item_im_detail.id_warehouse'=>8]]);
+        ->where(['and',['parameter_master_item_detail.id_parameter'=>$id],['master_item_im_detail.id_warehouse'=>3]]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'id_item_parent' => $this->id_item_parent,
+            'id_item_child' => $this->id_item_child,
+            'qty_item_child' => $this->qty_item_child,
+            'status_listing' => $this->status_listing,
+        ]);
+
+        return $dataProvider;
+    }
+
+    public function searchByParent($params, $id)
+    {
+        $query = ParameterMasterItem::find()
+        ->select([
+            'parameter_master_item.id as id_parameter',
+            'master_item_im.im_code',
+            'master_item_im.id as id_item_im',
+            'master_item_im.name',
+            'master_item_im.brand',
+            'master_item_im.type',
+            'master_item_im.warna',
+            'master_item_im.sn_type',
+            'master_item_im_detail.s_good as s_good',
+            'master_item_im_detail.s_good_dismantle as s_good_dismantle',
+            'master_item_im_detail.s_good_rec as s_good_rec',
+        ])
+        ->joinWith('idMasterItemIm.masterItemImDetails')
+        ->where(['and',['master_item_im_detail.id_warehouse'=>3]]);
 
         // add conditions that should always apply here
 

@@ -52,7 +52,7 @@ $this->registerCss('
 				'attribute' => 'im_code',
 				'format' => 'raw',
 				'value' => function ($model){
-					return $model->im_code . Html::hiddenInput('im_code[]', $model->id_item_im.';'.$model->im_code, ['class' => 'im_code']);
+					return $model->im_code . Html::hiddenInput('im_code[]', $model->id_parameter.';'.$model->im_code, ['class' => 'im_code']);
 				},
 			],
 			[
@@ -161,12 +161,12 @@ $this->registerCss('
 				'vAlign' => 'middle',
 			],
 			
-			[
-				'attribute' => 'qty_total',
-				'value' => function($model) use ($modelProdDetail){
-					return $model->qty_item_child * $modelProdDetail->qty;
-				}
-			]
+			// [
+			// 	'attribute' => 'qty_total',
+			// 	'value' => function($model) use ($modelProdDetail){
+			// 		return $model->qty_item_child * $modelProdDetail->qty;
+			// 	}
+			// ]
 			// [
 			// 	'label' => 'Rem. Good',
 			// 	'format' => 'raw',
@@ -328,7 +328,7 @@ $this->registerCss('
 		$('tr[data-key').removeClass('info');
 		
 		$.ajax({
-            url: '<?php echo Url::to([$this->context->id.'/create-item-set-detail', 'id' => Yii::$app->session->get('idInstProdDetail')]) ;?>',
+            url: '<?php echo Url::to([$this->context->id.'/create-supporting-item', 'id' => Yii::$app->session->get('idInstProd')]) ;?>',
             type: 'post',
             data: data,
             processData: false,
