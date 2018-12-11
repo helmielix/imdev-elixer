@@ -12,6 +12,7 @@ use common\models\MasterItemIm;
 use common\models\SearchInstructionProduction;
 use common\models\SearchLogInstructionProduction;
 use common\models\SearchInstructionProductionDetail;
+use common\models\SearchInstructionProductionDetailSetItem;
 use common\models\SearchMasterItemIm;
 use common\models\SearchParameterMasterItem;
 use common\models\SearchParameterMasterItemDetail;
@@ -120,7 +121,19 @@ class InstructionProductionController extends Controller
 		return $this->render('view', $this->detailView($id));
 	}
 
-	
+	public function actionViewdetail($id){
+		$this->layout = 'blank';
+		$model = InstructionProductionDetail::findOne($id);
+		$searchModel = new SearchInstructionProductionDetailSetItem();
+		$dataProvider =  $searchModel->searchByParent(Yii::$app->request->post(), $id);
+
+		return $this->render('viewdetail', [
+			'par' => 'viewdetail',
+			'model' => $model,
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+		]);
+	}
 
 	public function actionViewlog($id){
 		// echo basename(Yii::$app->request->referrer);

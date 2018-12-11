@@ -51,15 +51,29 @@ hellooo world
             ['class' => 'yii\grid\SerialColumn'],
 			[
                 'class' => 'yii\grid\ActionColumn',
-                'template'=>'{update} {delete}',
+                'template'=>'{update} {delete} {view}',
                 'buttons'=>[
+                    'view' => function($url, $model){
+                        if(Yii::$app->controller->action->id == 'indexdetail'){
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#view?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-production/viewdetail','id' => $model->id]), 'header'=> yii::t('app','Detail Material GRF Vendor IKO')
+                            ]);
+                        }else{
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#view?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-production/viewdetail','id' => $model->id,'par'=>'viewdetail']), 'header'=> yii::t('app','Detail Material GRF Vendor IKO')
+                            ]);
+                         
+                        }
+                     },   
                     'delete' => function ($url, $model) {
+                        if(Yii::$app->controller->action->id == 'indexdetail')
                         return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-trash"></span>', '#', [
                             'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/deletedetail', 'id' => $model->id]), 'header'=> yii::t('app','GRF Detail')
                         ]);
                     },
 					
                     'update' => function ($url, $model) {
+                        if(Yii::$app->controller->action->id == 'indexdetail')
                         return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-pencil"></span>', '#', [
                             'title' => Yii::t('app', 'update'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/updatedetail', 'idDetail'=> $model->id]), 'header'=> yii::t('app','Update Detail Warehouse Transfers Instruction')
                         ]);
@@ -87,9 +101,10 @@ hellooo world
     ]); ?>
 	<?php yii\widgets\Pjax::end() ?>
     <p>        
-		<?php if(Yii::$app->controller->action->id == 'indexdetail')
-			echo Html::button(Yii::t('app','Previous'), ['id'=>'previousButton','class' => 'btn btn-primary']);  ?>
-		<?= Html::button(Yii::t('app','Submit Instruction'), ['id'=>'submitButton','class' => 'btn btn-success']) ?>		
+		<?php if(Yii::$app->controller->action->id == 'indexdetail'){
+			echo Html::button(Yii::t('app','Previous'), ['id'=>'previousButton','class' => 'btn btn-primary']); 
+        
+		echo Html::button(Yii::t('app','Submit Instruction'), ['id'=>'submitButton','class' => 'btn btn-success']); }?>		
     </p>
 	
 </div>

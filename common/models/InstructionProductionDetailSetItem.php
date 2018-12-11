@@ -19,9 +19,8 @@ use Yii;
  */
 class InstructionProductionDetailSetItem extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+    public $im_code, $name, $brand, $sn_type, $uom;
+
     public static function tableName()
     {
         return 'instruction_production_detail_set_item';
@@ -60,5 +59,40 @@ class InstructionProductionDetailSetItem extends \yii\db\ActiveRecord
     public function getIdInstructionProductionDetail()
     {
         return $this->hasOne(InstructionProductionDetail::className(), ['id' => 'id_instruction_production_detail']);
+    }
+
+    public function getIdMasterItemIm()
+    {
+        return $this->hasOne(MasterItemIm::className(), ['id' => 'id_item_set']);
+    }
+
+    public function getReferenceType()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'type']);
+    }
+    
+    public function getReferenceWarna()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'warna']);
+    }
+    
+    public function getReferenceBrand()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'brand']);
+    }
+    
+    public function getReferenceGrouping()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'grouping']);
+    }
+    
+    public function getReferenceSn()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'sn_type']);
+    }
+
+    public function getReferenceUom()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'uom']);
     }
 }
