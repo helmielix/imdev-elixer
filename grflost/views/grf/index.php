@@ -73,7 +73,7 @@ function getFilterStatus() {
 		</h3>
 		<div class="row">
 			<div class="col-sm-12">
-				<p class="pull-right">
+				<p>
 					<?php if (Yii::$app->controller->action->id == 'index') { ?>
 						<?=  Html::a('Create', '#create?header=Create Good Request Form', ['class' => 'btn btn-success', 'id' => 'createModal', 'value'=>Url::to(['grf/create']), 'header'=> yii::t('app','Create Good Request Form')]) ; ?>
 					<?php } ?>
