@@ -116,7 +116,7 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
     ?>
         <?php if (Yii::$app->controller->action->id == 'indexoverview'): ?>
             <br>
-            <?= ExportMenu::widget([
+            <?php ExportMenu::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => $exportColumns
             ]); ?>

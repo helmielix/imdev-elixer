@@ -173,7 +173,7 @@ $('#approveButton').click(function(){
 	button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
 	
 	$.ajax({
-		url: '<?php echo Url::to([$this->context->id.'/approve', 'id' => Yii::$app->session->get('idInstWhTr')]) ;?>',
+		url: '<?php echo Url::to([$this->context->id.'/approve', 'id' => Yii::$app->session->get('idOutProduction')]) ;?>',
 		type: 'post',
 		processData: false,
 		contentType: false,
@@ -221,7 +221,7 @@ $('#submitButton').click(function () {
 		data.append( 'OutboundWhTransfer[driver]', $( '#outboundwhtransfer-driver' ).val() );
 		
 		$.ajax({
-		url: '<?php echo Url::to([$this->context->id.'/submit', 'id' => Yii::$app->session->get('idInstWhTr')]) ;?>',
+		url: '<?php echo Url::to([$this->context->id.'/submit', 'id' => Yii::$app->session->get('idOutProduction')]) ;?>',
 		type: 'post',
 		processData: false,
 		contentType: false,

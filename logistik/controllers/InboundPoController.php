@@ -499,7 +499,7 @@ class InboundPoController extends Controller
         		$this->createLog($model);
         			$arrAuth = ['/inbound-po/indexapprove'];
 	                $header = 'Alert Approval INBOUND PO';
-	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/indexapprove#viewapprove?id='.$model->id.'?header=Detail_INBOUND_PO';
+	                $subject = 'This document is waiting your approval. Please click this link document : '.Url::base(true).'/inbound-po/indexapprove#viewapprove?id='.$model->id.'&header=Detail_INBOUND_PO';
 	                Email::sendEmail($arrAuth,$header,$subject,$model->id_warehouse);
                 return 'success';
         	}
@@ -515,33 +515,36 @@ class InboundPoController extends Controller
             $model->approved_by = Yii::$app->user->identity->id;
             if ( $model->save()) {
                $this->createLog($model);
-               $modelInbound = InboundPoDetail::find()->joinWith('inboundPoDetailSns',  'RIGHT JOIN')
-               											->select(['inbound_po_detail_sn.serial_number','inbound_po_detail.id','inbound_po_detail_sn.mac_address'])
-               											->where(['inbound_po_detail.id_inbound_po'=>$model->id])->all();
-               $arrayInbound = ArrayHelper::map($modelInbound, 'serial_number','mac_address');
-               
-           		$modelInboundPo = InboundPo::findOne($model->id);
-                foreach ($arrayInbound as $key => $value) {
-                		return print_r($value);
-                    	$modelMasterSn = new MasterSn();
-                    	if(MasterSn::find()->where(['serial_number'=>$value])->exists()){
-                    		$modelMasterSn = MasterSn::find()->where(['serial_number'=>$value])->one();
-                    	}
 
-                    	$modelMasterSn->serial_number = $value;
-	                    $modelMasterSn->mac_address = $data['MAC_ADDRESS'];
-	                    $modelMasterSn->condition = strtolower($data['CONDITION']);
-	                    $modelMasterSn->id_warehouse = $inboundPo->id_warehouse;
-	                    $modelMasterSn->last_transaction = 'TAG SN INBOUND PO'; 
-	                    $modelMasterSn->status = 27; 
-	                    $modelMasterSn->save();
-	                    $this->createLogsn($modelMasterSn);
-                }
+               // BELUM ADA SN BARU APPROVE SUMMARY DAN MATERIAL
+             //   $modelInbound = InboundPoDetail::find()->joinWith('inboundPoDetailSns',  'RIGHT JOIN')
+             //   											->select(['inbound_po_detail_sn.serial_number','inbound_po_detail.id','inbound_po_detail_sn.mac_address'])
+             //   											->where(['inbound_po_detail.id_inbound_po'=>$model->id])->all();
+             //   $arrayInbound = ArrayHelper::map($modelInbound, 'serial_number','mac_address');
+               
+           		// $modelInboundPo = InboundPo::findOne($model->id);
+             //    foreach ($arrayInbound as $key => $value) {
+             //    		// return print_r($value);
+             //        	$modelMasterSn = new MasterSn();
+             //        	if(MasterSn::find()->where(['serial_number'=>$value])->exists()){
+             //        		$modelMasterSn = MasterSn::find()->where(['serial_number'=>$value])->one();
+             //        	}
+
+             //        	$modelMasterSn->serial_number = $value;
+	            //         $modelMasterSn->mac_address = $data['MAC_ADDRESS'];
+	            //         $modelMasterSn->condition = strtolower($data['CONDITION']);
+	            //         $modelMasterSn->id_warehouse = $inboundPo->id_warehouse;
+	            //         $modelMasterSn->last_transaction = 'TAG SN INBOUND PO'; 
+	            //         $modelMasterSn->status = 27; 
+	            //         $modelMasterSn->save();
+	            //         $this->createLogsn($modelMasterSn);
+             //    }
+               // BELUM ADA SN BARU APPROVE SUMMARY DAN MATERIAL
                	// return print_r($arrayInbound);
-					$arrAuth = ['/inbound-po/indextagsn'];
-	                $header = 'Approval INBOUND PO';
-	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/indextagsn#viewsn?id='.$model->id.'?header=Detail_Material_Inbound_PO';
-	                Email::sendEmail($arrAuth,$header,$subject,$model->id_warehouse);
+				$arrAuth = ['/inbound-po/indextagsn'];
+                $header = 'Tagging SN INBOUND PO';
+                $subject = 'This document is ready for tagging SN. Please click this link document : '.Url::base(true).'/inbound-po/indextagsn#viewsn?id='.$model->id.'&header=Detail_Material_Inbound_PO';
+                Email::sendEmail($arrAuth,$header,$subject,$model->id_warehouse);
          
                 return 'success';
             } else {
@@ -564,7 +567,7 @@ class InboundPoController extends Controller
 					$this->createLog($model);
 					$arrAuth = ['/inbound-po/index'];
 	                $header = 'Alert Need Revise INBOUND PO';
-	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/index#view?id='.$model->id.'?header=Detail_BUSDEV_BAS';
+	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/index#view?id='.$model->id.'&header=Detail_BUSDEV_BAS';
 	                Email::sendEmail($arrAuth,$header,$subject);
 					return 'success';
 				} else {
@@ -614,7 +617,7 @@ class InboundPoController extends Controller
     			$modelMasterSn = MasterSn::find()->andWhere($wheresn)->andWhere(['status' => 27])->one();
     			if($modelMasterSn !== null){
 	    			$modelMasterSn->status = 13;
-					$this->createLogmastersn($modelMasterSn);
+					$this->createLogsn($modelMasterSn);
 	    			$modelMasterSn->delete();
     			}
 
@@ -660,17 +663,22 @@ class InboundPoController extends Controller
 			}
 			if($cekStatus == 0){
 				$modelInbound = $this->findModel($id);
+				$sendmail = false;
 				if($modelInbound->status_listing == 3){
 					$modelInbound->status_listing = 2;
+					$sendmail = true;
 				}else{
 					$modelInbound->status_listing = 1;
+					$sendmail = true;
 				}
 				$modelInbound->save();
-				//send email to verificator
-				$arrAuth = ['/inbound-po/indexverify'];
-                $header = 'Alert Verify INBOUND PO';
-                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/indexverify#viewverify?id='.$model->id.'?header=Verify_INBOUND_PO';
-                Email::sendEmail($arrAuth,$header,$subject);
+				if ($sendmail) {
+					//send email to verificator
+					$arrAuth = ['/inbound-po/indexverify'];
+	                $header = 'Alert Verify INBOUND PO';
+	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/indexverify#viewverify?id='.$modelInbound->id.'&header=Verify_INBOUND_PO';
+	                Email::sendEmail($arrAuth,$header,$subject);
+				}
 
 
 				$this->createLog($modelInbound);
@@ -693,6 +701,7 @@ class InboundPoController extends Controller
     {  		
 		$model = InboundPoDetail::find()->where(['id_inbound_po'=>\Yii::$app->session->get('idInboundPo')])->asArray()->all();
 		$cek = 1;
+		$partial = 0;
 		foreach ($model as $value) {		 
 			$idWarehouse = InboundPo::findOne($value['id_inbound_po']);
 			if(MasterItemImDetail::find()->where(['and',['id_master_item_im'=>$value['id_item_im']],['id_warehouse'=>$idWarehouse->id_warehouse]])->exists()){
@@ -718,6 +727,7 @@ class InboundPoController extends Controller
 				$modelinboundpodetail = InboundPoDetail::findOne($value['id']);
 				$modelinboundpodetail->status_stock = 1;
 				$modelinboundpodetail->save(false);
+				$partial = 1;
 			}
 		}
 
@@ -727,7 +737,12 @@ class InboundPoController extends Controller
 			$modelInbound->save();
 			$this->createLog($modelInbound);
 		}else{
-			$modelInbound->status_listing = 48; //partially uploaded
+			if ($partial == 1){
+				$modelInbound->status_listing = 48; //partially uploaded
+			}else{
+				$modelInbound->status_listing = 5; //new inbound PO (qty semua detail 0)
+			}
+
 			$modelInbound->save();
 			$this->createLog($modelInbound);
 		}
@@ -1447,10 +1462,10 @@ class InboundPoController extends Controller
 				
                 // \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
                 // $this->createLog($model);
-					$arrAuth = ['/inbound-po/indexverify'];
-	                $header = 'Alert Verify INBOUND PO';
-	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/indexverify#viewverify?id='.$model->id.'?header=Verify_INBOUND_PO';
-	                Email::sendEmail($arrAuth,$header,$subject);
+					// $arrAuth = ['/inbound-po/indexverify'];
+	    //             $header = 'Alert Verify INBOUND PO di update';
+	    //             $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/indexverify#viewverify?id='.$model->id.'&header=Verify_INBOUND_PO';
+	    //             Email::sendEmail($arrAuth,$header,$subject);
                 
                 return 'success';
             } else {

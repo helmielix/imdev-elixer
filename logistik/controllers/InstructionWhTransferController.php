@@ -77,6 +77,11 @@ class InstructionWhTransferController extends Controller
         return $this->render('index', $this->listIndex('approve'));
     }
 
+    public function actionIndexoverview()
+    {
+        return $this->render('index', $this->listIndex('overview'));
+    }
+
     public function actionIndexlog()
     {
         $searchModel = new SearchLogInstructionWhTransfer();
@@ -174,6 +179,11 @@ class InstructionWhTransferController extends Controller
 	}
 
 	public function actionViewapprove($id){
+		$this->layout = 'blank';
+		return $this->render('view', $this->detailView($id));
+	}
+
+	public function actionViewoverview($id){
 		$this->layout = 'blank';
 		return $this->render('view', $this->detailView($id));
 	}
@@ -296,12 +306,14 @@ class InstructionWhTransferController extends Controller
 
 		if (Yii::$app->request->isPost && empty(Yii::$app->request->post('SearchMasterItemIm'))){
 
-			$data_im_code       = Yii::$app->request->post('im_code');
-			$data_r_good        = Yii::$app->request->post('rgood');
-			$data_r_notgood     = Yii::$app->request->post('rnotgood');
-			$data_r_reject      = Yii::$app->request->post('rreject');
-			$data_r_good_dis    = Yii::$app->request->post('rgooddismantle');
-			$data_r_notgood_dis = Yii::$app->request->post('rnotgooddismantle');
+			$data_im_code         = Yii::$app->request->post('im_code');
+			$data_r_good          = Yii::$app->request->post('rgood');
+			$data_r_notgood       = Yii::$app->request->post('rnotgood');
+			$data_r_reject        = Yii::$app->request->post('rreject');
+			$data_r_dismantle     = Yii::$app->request->post('rdismantle');
+			$data_r_revocation    = Yii::$app->request->post('rrevocation');
+			$data_r_good_for_recond  = Yii::$app->request->post('rgoodforrecond');
+			$data_r_good_rec  	  = Yii::$app->request->post('rgoodrec');
 
 			if (count($data_im_code) == 0){
 				return json_encode(['status' => 'success']);
@@ -309,15 +321,17 @@ class InstructionWhTransferController extends Controller
 
 			foreach($data_im_code as $key => $value){
 
-				if( ($data_r_good[$key] == '' && $data_r_notgood[$key] == '' && $data_r_reject[$key] == '' && $data_r_good_dis[$key] == '' && $data_r_notgood_dis[$key] == '') ||
-					($data_r_good[$key] == 0 && $data_r_notgood[$key] == 0 && $data_r_reject[$key] == 0 && $data_r_good_dis[$key] == 0 && $data_r_notgood_dis[$key] == 0)){
+				if( ($data_r_good[$key] == '' && $data_r_notgood[$key] == '' && $data_r_reject[$key] == '' && $data_r_dismantle[$key] == '' && $data_r_revocation[$key] == '' && $data_r_good_rec[$key] == '' && $data_r_good_for_recond[$key] == '') ||
+					($data_r_good[$key] == 0 && $data_r_notgood[$key] == 0 && $data_r_reject[$key] == 0 && $data_r_dismantle[$key] == 0 && $data_r_revocation[$key] == 0 && $data_r_good_rec[$key] == 0 && $data_r_good_for_recond[$key] == 0)){
 					continue;
 				}
-				$data_r_good[$key] 			= ($data_r_good[$key] == '') ? 0 : $data_r_good[$key];
-				$data_r_notgood[$key]		= ($data_r_notgood[$key] == '') ? 0 : $data_r_notgood[$key];
-				$data_r_reject[$key]		= ($data_r_reject[$key] == '') ? 0 : $data_r_reject[$key];
-				$data_r_good_dis[$key]		= ($data_r_good_dis[$key] == '') ? 0 : $data_r_good_dis[$key];
-				$data_r_notgood_dis[$key]	= ($data_r_notgood_dis[$key] == '') ? 0 : $data_r_notgood_dis[$key];
+				$data_r_good[$key] 				= ($data_r_good[$key] == '') ? 0 : $data_r_good[$key];
+				$data_r_notgood[$key]			= ($data_r_notgood[$key] == '') ? 0 : $data_r_notgood[$key];
+				$data_r_reject[$key]			= ($data_r_reject[$key] == '') ? 0 : $data_r_reject[$key];
+				$data_r_dismantle[$key]			= ($data_r_dismantle[$key] == '') ? 0 : $data_r_dismantle[$key];
+				$data_r_revocation[$key]		= ($data_r_revocation[$key] == '') ? 0 : $data_r_revocation[$key];
+				$data_r_good_rec[$key]			= ($data_r_good_rec[$key] == '') ? 0 : $data_r_good_rec[$key];
+				$data_r_good_for_recond[$key]	= ($data_r_good_for_recond[$key] == '') ? 0 : $data_r_good_for_recond[$key];
 
 				$values = explode(';',$value);
 
@@ -327,8 +341,10 @@ class InstructionWhTransferController extends Controller
 				$oldreq_good = 0;
 				$oldreq_not_good = 0;
 				$oldreq_reject = 0;
-				$oldreq_good_dismantle = 0;
-				$oldreq_not_good_dismantle = 0;
+				$oldreq_dismantle = 0;
+				$oldreq_revocation = 0;
+				$oldreq_good_rec = 0;
+				$oldreq_good_for_recond = 0;
 				if ( $modelcek->count() == 0 ){
 					$model = new InstructionWhTransferDetail();
 				}else{
@@ -336,8 +352,10 @@ class InstructionWhTransferController extends Controller
 					$oldreq_good 				= $model->req_good;
 					$oldreq_not_good 			= $model->req_not_good;
 					$oldreq_reject 				= $model->req_reject;
-					$oldreq_good_dismantle 		= $model->req_good_dismantle;
-					$oldreq_not_good_dismantle 	= $model->req_not_good_dismantle;
+					$oldreq_dismantle 			= $model->req_dismantle;
+					$oldreq_revocation 			= $model->req_revocation;
+					$oldreq_good_rec 			= $model->req_good_rec;
+					$oldreq_good_for_recond		= $model->req_good_for_recond;
 				}
 
 				$modelMasterItem = MasterItemImDetail::findOne($values[0]);
@@ -346,17 +364,21 @@ class InstructionWhTransferController extends Controller
 				// return var_dump( Yii::$app->session->get('detailinstruction')[$values[0]]['update'][$values[0]] );
 				$session = Yii::$app->session->get('detailinstruction')[$values[0]];
 				if ( isset($session['update']) ){
-					$datagood 		= $data_r_good[$key] - $session['update'][$values[0]]['rgood'];
-					$datanotgood 	= $data_r_notgood[$key] - $session['update'][$values[0]]['rnotgood'];
-					$datareject 	= $data_r_reject[$key] - $session['update'][$values[0]]['rreject'];
-					$datagooddis 	= $data_r_good_dis[$key] - $session['update'][$values[0]]['rgooddismantle'];
-					$datanotgooddis = $data_r_notgood_dis[$key] - $session['update'][$values[0]]['rnotgooddismantle'];
+					$datagood 			 = $data_r_good[$key] - $session['update'][$values[0]]['rgood'];
+					$datanotgood 		 = $data_r_notgood[$key] - $session['update'][$values[0]]['rnotgood'];
+					$datareject 		 = $data_r_reject[$key] - $session['update'][$values[0]]['rreject'];
+					$datadismantle 		 = $data_r_dismantle[$key] - $session['update'][$values[0]]['rdismantle'];
+					$datarevocation 	 = $data_r_revocation[$key] - $session['update'][$values[0]]['rrevocation'];
+					$datagood_rec 		 = $data_r_good_rec[$key] - $session['update'][$values[0]]['rgood_rec'];
+					$datagood_for_recond = $data_r_good_for_recond[$key] - $session['update'][$values[0]]['rgood_for_recond'];
 				}else{
-					$datagood 		= $data_r_good[$key];
-					$datanotgood 	= $data_r_notgood[$key];
-					$datareject 	= $data_r_reject[$key];
-					$datagooddis 	= $data_r_good_dis[$key];
-					$datanotgooddis = $data_r_notgood_dis[$key];
+					$datagood 			 = $data_r_good[$key];
+					$datanotgood 		 = $data_r_notgood[$key];
+					$datareject 		 = $data_r_reject[$key];
+					$datadismantle 		 = $data_r_dismantle[$key];
+					$datarevocation 	 = $data_r_revocation[$key];
+					$datagood_rec 		 = $data_r_good_rec[$key];
+					$datagood_for_recond = $data_r_good_for_recond[$key];
 				}
 
 				if($datagood > $modelMasterItem->s_good){
@@ -371,12 +393,20 @@ class InstructionWhTransferController extends Controller
 					$pesan[] = $model->getAttributeLabel('req_reject')." is more than Stock for IM Code ".$values[1];
 					$overStock = 0;
 				}
-				if($datagooddis > $modelMasterItem->s_good_dismantle){
-					$pesan[] = $model->getAttributeLabel('req_good_dismantle')." is more than Stock for IM Code ".$values[1];
+				if($datadismantle > $modelMasterItem->s_dismantle){
+					$pesan[] = $model->getAttributeLabel('req_dismantle')." is more than Stock for IM Code ".$values[1];
 					$overStock = 0;
 				}
-				if($datanotgooddis > $modelMasterItem->s_not_good_dismantle){
-					$pesan[] = $model->getAttributeLabel('req_not_good_dismantle')." is more than Stock for IM Code ".$values[1];
+				if($datarevocation > $modelMasterItem->s_revocation){
+					$pesan[] = $model->getAttributeLabel('req_revocation')." is more than Stock for IM Code ".$values[1];
+					$overStock = 0;
+				}
+				if($datagood_rec > $modelMasterItem->s_good_rec){
+					$pesan[] = $model->getAttributeLabel('req_good_rec')." is more than Stock for IM Code ".$values[1];
+					$overStock = 0;
+				}
+				if($datagood_for_recond > $modelMasterItem->s_good_for_recond){
+					$pesan[] = $model->getAttributeLabel('req_good_for_recond')." is more than Stock for IM Code ".$values[1];
 					$overStock = 0;
 				}
 
@@ -390,8 +420,10 @@ class InstructionWhTransferController extends Controller
 				$model->req_good				= $data_r_good[$key];
 				$model->req_not_good			= $data_r_notgood[$key];
 				$model->req_reject				= $data_r_reject[$key];
-				$model->req_good_dismantle		= $data_r_good_dis[$key];
-				$model->req_not_good_dismantle	= $data_r_notgood_dis[$key];
+				$model->req_dismantle			= $data_r_dismantle[$key];
+				$model->req_revocation			= $data_r_revocation[$key];
+				$model->req_good_rec			= $data_r_good_rec[$key];
+				$model->req_good_for_recond		= $data_r_good_for_recond[$key];
 
 				$newRec = false;
 				if ( !$model->isNewRecord ){
@@ -400,9 +432,11 @@ class InstructionWhTransferController extends Controller
 						$model->req_good				+= $oldreq_good;
 						$model->req_not_good			+= $oldreq_not_good;
 						$model->req_reject				+= $oldreq_reject;
-						$model->req_good_dismantle		+= $oldreq_good_dismantle;
-						$model->req_not_good_dismantle	+= $oldreq_not_good_dismantle;
-						// return "$oldreq_good, $oldreq_not_good, $oldreq_reject, $oldreq_good_dismantle, $oldreq_not_good_dismantle";
+						$model->req_dismantle			+= $oldreq_dismantle;
+						$model->req_revocation			+= $oldreq_revocation;
+						$model->req_good_rec			+= $oldreq_good_rec;
+						$model->req_good_for_recond		+= $oldreq_good_for_recond;
+						// return "$oldreq_good, $oldreq_not_good, $oldreq_reject, $oldreq_dismantle, $oldreq_revocation";
 					}
 
 				}else{
@@ -472,8 +506,10 @@ class InstructionWhTransferController extends Controller
 						new \yii\db\Expression('req_good - qty_good as good'),
 						new \yii\db\Expression('req_not_good - qty_not_good as not_good'),
 						new \yii\db\Expression('req_reject - qty_reject as reject'),
-						new \yii\db\Expression('req_good_dismantle - qty_good_dismantle as good_dismantle'),
-						new \yii\db\Expression('req_not_good_dismantle - qty_not_good_dismantle as not_good_dismantle'),
+						new \yii\db\Expression('req_dismantle - qty_dismantle as dismantle'),
+						new \yii\db\Expression('req_revocation - qty_revocation as revocation'),
+						new \yii\db\Expression('req_good_rec - qty_good_rec as good_rec'),
+						new \yii\db\Expression('req_good_for_recond - qty_good_for_recond as good_for_recond'),
 					])
 					->from('outbound_wh_transfer_detail, inbound_wh_transfer_detail')
 					->andWhere(['outbound_wh_transfer_detail.id' => $id_detail[1]])
@@ -499,14 +535,22 @@ class InstructionWhTransferController extends Controller
 							$errorMax = $command['reject'];
 						}
 					break;
-					case 'adjsgooddismantle[]':
-						if ($val > $command['good_dismantle']){
-							$errorMax = $command['good_dismantle'];
+					case 'adjsdismantle[]':
+						if ($val > $command['dismantle']){
+							$errorMax = $command['dismantle'];
 						}
 					break;
-					case 'adjsnotgooddismantle[]':
-						if ($val > $command['not_good_dismantle']){
-							$errorMax = $command['not_good_dismantle'];
+					case 'adjsrevocation[]':
+						if ($val > $command['revocation']){
+							$errorMax = $command['revocation'];
+						}
+					case 'adjsgood_rec[]':
+						if ($val > $command['good_rec']){
+							$errorMax = $command['good_rec'];
+						}
+					case 'adjsgood_for_recond[]':
+						if ($val > $command['good_for_recond']){
+							$errorMax = $command['good_for_recond'];
 						}
 					break;
 				}
@@ -535,37 +579,44 @@ class InstructionWhTransferController extends Controller
 				$model->s_good				+= $session[$id]['update'][$id]['rgood'];
 				$model->s_not_good			+= $session[$id]['update'][$id]['rnotgood'];
 				$model->s_reject			+= $session[$id]['update'][$id]['rreject'];
-				$model->s_good_dismantle	+= $session[$id]['update'][$id]['rgooddismantle'];
-				$model->s_not_good_dismantle+= $session[$id]['update'][$id]['rnotgooddismantle'];
+				$model->s_dismantle			+= $session[$id]['update'][$id]['rdismantle'];
+				$model->s_revocation		+= $session[$id]['update'][$id]['rrevocation'];
+				$model->s_good_rec 			+= $session[$id]['update'][$id]['rgood_rec'];
+				$model->s_good_for_recond	+= $session[$id]['update'][$id]['rgood_for_recond'];
 			}
 			// return var_dump($model);
-			$arr['s_good'] = $model->s_good;
-			$arr['s_not_good'] = $model->s_not_good;
-			$arr['s_reject'] = $model->s_reject;
-			$arr['s_good_dismantle'] = $model->s_good_dismantle;
-			$arr['s_not_good_dismantle'] = $model->s_not_good_dismantle;
+			$arr['s_good'] 			  = $model->s_good;
+			$arr['s_not_good'] 		  = $model->s_not_good;
+			$arr['s_reject']		  = $model->s_reject;
+			$arr['s_dismantle']		  = $model->s_dismantle;
+			$arr['s_revocation']	  = $model->s_revocation;
+			$arr['s_good_rec'] 		  = $model->s_good_rec;
+			$arr['s_good_for_recond'] = $model->s_good_for_recond;
 			return json_encode($arr);
 		}
 	}
 
 	public function actionUpdatedetail($idDetail){
+		// unused
 		$this->layout = 'blank';
 		$model = InstructionWhTransferDetail::findOne($idDetail);
 		$model->scenario = 'updatedetail';
 		// $model->rem_good = $model->idMasterItemImDetail->s_good + $model->req_good;
 		// $model->rem_not_good = $model->idMasterItemImDetail->s_not_good + $model->req_not_good;
 		// $model->rem_reject = $model->idMasterItemImDetail->s_reject + $model->req_reject;
-		// $model->rem_good_dismantle = $model->idMasterItemImDetail->s_good_dismantle + $model->req_good_dismantle;
-		// $model->rem_not_good_dismantle = $model->idMasterItemImDetail->s_not_good_dismantle + $model->req_not_good_dismantle;
+		// $model->rem_dismantle = $model->idMasterItemImDetail->s_dismantle + $model->req_dismantle;
+		// $model->rem_revocation = $model->idMasterItemImDetail->s_revocation + $model->req_revocation;
 
 		$idMasterItemImDetail = MasterItemImDetail::find()->andWhere(['and', ['id_master_item_im' => $model->id_item_im], ['id_warehouse' => $model->idInstructionWh->wh_origin]])->one();
 		if ($model->load(Yii::$app->request->post())) {
 
-			$data['rem_good'] = $idMasterItemImDetail->s_good + $model->req_good;
-			$data['rem_not_good'] = $idMasterItemImDetail->s_not_good + $model->req_not_good;
-			$data['rem_reject'] = $idMasterItemImDetail->s_reject + $model->req_reject;
-			$data['rem_good_dismantle'] = $idMasterItemImDetail->s_good_dismantle + $model->req_good_dismantle;
-			$data['rem_not_good_dismantle'] = $idMasterItemImDetail->s_not_good_dismantle + $model->req_not_good_dismantle;
+			$data['rem_good'] 			 = $idMasterItemImDetail->s_good + $model->req_good;
+			$data['rem_not_good'] 		 = $idMasterItemImDetail->s_not_good + $model->req_not_good;
+			$data['rem_reject'] 		 = $idMasterItemImDetail->s_reject + $model->req_reject;
+			$data['rem_dismantle'] 		 = $idMasterItemImDetail->s_dismantle + $model->req_dismantle;
+			$data['rem_revocation'] 	 = $idMasterItemImDetail->s_revocation + $model->req_revocation;
+			$data['rem_good_rec'] 		 = $idMasterItemImDetail->s_good_rec + $model->req_good_rec;
+			$data['rem_good_for_recond'] = $idMasterItemImDetail->s_good_for_recond + $model->req_good_for_recond;
 
 			$json = $data;
 			if ($model->req_good > $idMasterItemImDetail->s_good + $model->req_good){
@@ -580,12 +631,12 @@ class InstructionWhTransferController extends Controller
 				$json['pesan'] = $model->getAttributeLabel('req_reject').' must be less than "'.$model->getAttributeLabel('s_reject').'".';
 				return json_encode($json);
 			}
-			if ($model->req_good_dismantle > $idMasterItemImDetail->s_good_dismantle + $model->req_good_dismantle){
-				$json['pesan'] = $model->getAttributeLabel('req_good_dismantle').' must be less than "'.$model->getAttributeLabel('s_good_dismantle').'".';
+			if ($model->req_dismantle > $idMasterItemImDetail->s_dismantle + $model->req_dismantle){
+				$json['pesan'] = $model->getAttributeLabel('req_dismantle').' must be less than "'.$model->getAttributeLabel('s_dismantle').'".';
 				return json_encode($json);
 			}
-			if ($model->req_not_good_dismantle > $idMasterItemImDetail->s_not_good_dismantle + $model->req_not_good_dismantle){
-				$json['pesan'] = $model->getAttributeLabel('rem_not_good_dismantle').' already change, and '.$model->getAttributeLabel('req_not_good_dismantle').' is more than current stock';
+			if ($model->req_revocation > $idMasterItemImDetail->s_revocation + $model->req_revocation){
+				$json['pesan'] = $model->getAttributeLabel('rem_revocation').' already change, and '.$model->getAttributeLabel('req_revocation').' is more than current stock';
 				return json_encode($json);
 			}
 
@@ -605,8 +656,8 @@ class InstructionWhTransferController extends Controller
 			$data[$idMasterItemImDetail->id]['rgood'] = $model->req_good;
 			$data[$idMasterItemImDetail->id]['rnotgood'] = $model->req_not_good;
 			$data[$idMasterItemImDetail->id]['rreject'] = $model->req_reject;
-			$data[$idMasterItemImDetail->id]['rgooddismantle'] = $model->req_good_dismantle;
-			$data[$idMasterItemImDetail->id]['rnotgooddismantle'] = $model->req_not_good_dismantle;
+			$data[$idMasterItemImDetail->id]['rdismantle'] = $model->req_dismantle;
+			$data[$idMasterItemImDetail->id]['rrevocation'] = $model->req_revocation;
 			$data[$idMasterItemImDetail->id]['update'] = $data;
 
 			Yii::$app->session->set('detailinstruction', $data);
@@ -716,32 +767,38 @@ class InstructionWhTransferController extends Controller
 				// $masterstock = MasterItemImDetail::findOne($modeloutbounddetail->id_item_im);
 				$masterstock = MasterItemImDetail::find()->andWhere(['and', ['id_warehouse' => $modeloutbounddetail->idOutboundWh->idInstructionWh->wh_origin], ['id_master_item_im' => $modeloutbounddetail->id_item_im]])->one();
 
-				$masterstock->s_good += Yii::$app->request->post('adjsgood')[0];
-				$masterstock->s_not_good += Yii::$app->request->post('adjsnotgood')[0];
-				$masterstock->s_reject += Yii::$app->request->post('adjsreject')[0];
-				$masterstock->s_good_dismantle += Yii::$app->request->post('adjsgooddismantle')[0];
-				$masterstock->s_not_good_dismantle += Yii::$app->request->post('adjsnotgooddismantle')[0];
+				$masterstock->s_good 			+= Yii::$app->request->post('adjsgood')[0];
+				$masterstock->s_not_good 		+= Yii::$app->request->post('adjsnotgood')[0];
+				$masterstock->s_reject 			+= Yii::$app->request->post('adjsreject')[0];
+				$masterstock->s_dismantle 		+= Yii::$app->request->post('adjsdismantle')[0];
+				$masterstock->s_revocation 		+= Yii::$app->request->post('adjsrevocation')[0];
+				$masterstock->s_good_rec 		+= Yii::$app->request->post('adjsgood_rec')[0];
+				$masterstock->s_good_for_recond += Yii::$app->request->post('adjsgood_for_recond')[0];
 				$masterstock->save();
 			}
 
 			$modelinbounddetail->status_listing = 36;
-			$modelinbounddetail->status_tagsn = 41;
-			$modelinbounddetail->status_report = 36;
+			$modelinbounddetail->status_tagsn   = 41;
+			$modelinbounddetail->status_report  = 36;
 			$modelinbounddetail->save();
 
 			$modeloutbounddetail->req_good 				 = $modelinbounddetail->qty_good;
 			$modeloutbounddetail->req_not_good 			 = $modelinbounddetail->qty_not_good;
 			$modeloutbounddetail->req_reject 			 = $modelinbounddetail->qty_reject;
-			$modeloutbounddetail->req_good_dismantle 	 = $modelinbounddetail->qty_good_dismantle;
-			$modeloutbounddetail->req_not_good_dismantle = $modelinbounddetail->qty_not_good_dismantle;
+			$modeloutbounddetail->req_dismantle 	 	 = $modelinbounddetail->qty_dismantle;
+			$modeloutbounddetail->req_revocation 		 = $modelinbounddetail->qty_revocation;
+			$modeloutbounddetail->req_good_rec 			 = $modelinbounddetail->qty_good_rec;
+			$modeloutbounddetail->req_good_for_recond	 = $modelinbounddetail->qty_good_for_recond;
 			$modeloutbounddetail->save();
 
 			$modelinstructiondetail = InstructionWhTransferDetail::find()->andWhere(['id_instruction_wh' => $id, 'id_item_im' => $modeloutbounddetail->id_item_im ])->one();
 			$modelinstructiondetail->req_good				= $modelinbounddetail->qty_good;
 			$modelinstructiondetail->req_not_good			= $modelinbounddetail->qty_not_good;
 			$modelinstructiondetail->req_reject				= $modelinbounddetail->qty_reject;
-			$modelinstructiondetail->req_good_dismantle		= $modelinbounddetail->qty_good_dismantle;
-			$modelinstructiondetail->req_not_good_dismantle = $modelinbounddetail->qty_not_good_dismantle;
+			$modelinstructiondetail->req_dismantle			= $modelinbounddetail->qty_dismantle;
+			$modelinstructiondetail->req_revocation			= $modelinbounddetail->qty_revocation;
+			$modelinstructiondetail->req_good_rec 			= $modelinbounddetail->qty_good_rec;
+			$modelinstructiondetail->req_good_for_recond 	= $modelinbounddetail->qty_good_for_recond;
 			$modelinstructiondetail->save();
 
 
@@ -851,8 +908,10 @@ class InstructionWhTransferController extends Controller
 			$modeldetail->req_good				= 0;
 			$modeldetail->req_not_good			= 0;
 			$modeldetail->req_reject			= 0;
-			$modeldetail->req_good_dismantle	= 0;
-			$modeldetail->req_not_good_dismantle= 0;
+			$modeldetail->req_dismantle			= 0;
+			$modeldetail->req_revocation		= 0;
+			$modeldetail->req_good_rec 		 	= 0;
+			$modeldetail->req_good_for_recond	= 0;
 			$modeldetail->save();
 			// update stock at model beforesave
 		}
@@ -868,14 +927,18 @@ class InstructionWhTransferController extends Controller
 			$modelIm->s_good				= $modelIm->s_good + $model->req_good;
 			$modelIm->s_not_good			= $modelIm->s_not_good + $model->req_not_good;
 			$modelIm->s_reject				= $modelIm->s_reject + $model->req_reject;
-			$modelIm->s_good_dismantle		= $modelIm->s_good_dismantle + $model->req_good_dismantle;
-			$modelIm->s_not_good_dismantle 	= $modelIm->s_not_good_dismantle + $model->req_not_good_dismantle;
+			$modelIm->s_dismantle			= $modelIm->s_dismantle + $model->req_dismantle;
+			$modelIm->s_revocation 			= $modelIm->s_revocation + $model->req_revocation;
+			$modelIm->s_good_rec 			= $modelIm->s_good_rec + $model->req_good_rec;
+			$modelIm->s_good_for_recond 	= $modelIm->s_good_for_recond + $model->req_good_for_recond;
 		}else{
 			$modelIm->s_good				= $modelIm->s_good - $model->req_good;
 			$modelIm->s_not_good			= $modelIm->s_not_good - $model->req_not_good;
 			$modelIm->s_reject				= $modelIm->s_reject - $model->req_reject;
-			$modelIm->s_good_dismantle		= $modelIm->s_good_dismantle - $model->req_good_dismantle;
-			$modelIm->s_not_good_dismantle 	= $modelIm->s_not_good_dismantle - $model->req_not_good_dismantle;
+			$modelIm->s_dismantle			= $modelIm->s_dismantle - $model->req_dismantle;
+			$modelIm->s_revocation 			= $modelIm->s_revocation - $model->req_revocation;
+			$modelIm->s_good_rec 			= $modelIm->s_good_rec - $model->req_good_rec;
+			$modelIm->s_good_for_recond 	= $modelIm->s_good_for_recond - $model->req_good_for_recond;
 		}
 
 

@@ -19,6 +19,8 @@ use common\models\OrafinViewMkmPrToPay;
 /* @var $model inbound\models\InboundPo */
 /* @var $form yii\widgets\ActiveForm */
 // $this->registerJsFile('@common/js/btn_modal.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
+$listallrr = ArrayHelper::getColumn(InboundPo::find()->andWhere(['!=','status_listing',13])->all(),'rr_number');
 ?>
 
 <div class="inbound-po-form">
@@ -41,7 +43,7 @@ use common\models\OrafinViewMkmPrToPay;
     ]); ?> 
 	
 			<?= $form->field($model, 'po_number')->widget(Select2::classname(), [
-				'data' => ArrayHelper :: map ( OrafinViewMkmPrToPay::find()->select(['po_num','po_num'])->where(['is not','rcv_no',null])->distinct()->all(), 'po_num','po_num'),
+				'data' => ArrayHelper :: map ( OrafinViewMkmPrToPay::find()->select(['po_num','po_num'])->where(['is not','rcv_no',null])->andWhere(['not in','rcv_no',$listallrr])->distinct()->all(), 'po_num','po_num'),
 				'language' => 'en',
 				'options' => ['placeholder' => 'Select PO Number ...','id'=>'po_number-id'],
 				'pluginOptions' => [

@@ -29,13 +29,15 @@
 				// array_push($arrItemsChild, ['label' => yii::t('app','Disposal'), 'icon' => 'plus', 'url' => ['/instruction-disposal-im/index']]);
 
 				//WH Transfer Instruction
-			if(Yii::$app->user->can('/instruction-wh-transfer/index') || Yii::$app->user->can('/instruction-wh-transfer/indexapprove') || Yii::$app->user->can('/instruction-wh-transfer/indexlog')) {
+			if(Yii::$app->user->can('/instruction-wh-transfer/index') || Yii::$app->user->can('/instruction-wh-transfer/indexapprove') || Yii::$app->user->can('/instruction-wh-transfer/indexoverview') || Yii::$app->user->can('/instruction-wh-transfer/indexlog')) {
 				$arrItemsChildChild = [];
 
 				if(Yii::$app->user->can('/instruction-wh-transfer/index'))
 					array_push($arrItemsChildChild, ['label' => yii::t('app','Input'), 'icon' => 'plus', 'url' => ['/instruction-wh-transfer/index']]);
 				if(Yii::$app->user->can('/instruction-wh-transfer/indexapprove'))
 					array_push($arrItemsChildChild, ['label' => yii::t('app','Approve'), 'icon' => 'plus', 'url' => ['/instruction-wh-transfer/indexapprove']]);
+				if(Yii::$app->user->can('/instruction-wh-transfer/indexoverview'))
+					array_push($arrItemsChildChild, ['label' => yii::t('app','Overview'), 'icon' => 'list', 'url' => ['/instruction-wh-transfer/indexoverview']]);
 				if(Yii::$app->user->can('/instruction-wh-transfer/indexlog'))
 					array_push($arrItemsChildChild, ['label' => yii::t('app','Log History'), 'icon' => 'list', 'url' => ['/instruction-wh-transfer/indexlog']]);
 

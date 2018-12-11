@@ -68,11 +68,13 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
 				'attribute' => 'brand',
 				// 'value' => 'idMasterItemImDetail.idMasterItemIm.referenceBrand.description',
 				'value' => 'idMasterItemIm.referenceBrand.description',
+                'filter' => Arrayhelper::map(Reference::find()->andWhere(['table_relation' => 'brand'])->all(), 'id', 'description'),
 			],
 			[
 				'attribute' => 'warna',
 				// 'value' => 'idMasterItemImDetail.idMasterItemIm.referenceWarna.description',
 				'value' => 'idMasterItemIm.referenceWarna.description',
+                'filter' => Arrayhelper::map(Reference::find()->andWhere(['table_relation' => 'warna'])->all(), 'id', 'description'),
 			],
 			[
 				'attribute' => 'sn_type',
@@ -81,12 +83,35 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
 				'filter' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => 'sn_type'])->all(), 'id_grouping', 'description'),
 			],
 
-			'req_good',
-			'req_not_good',
-			'req_reject',
-			'req_good_dismantle',
-			'req_not_good_dismantle',
-
+			
+            [
+                'attribute' => 'req_good',
+                'enableSorting' => false,
+            ],
+            [
+                'attribute' => 'req_not_good',
+                'enableSorting' => false,
+            ],
+            [
+                'attribute' => 'req_reject',
+                'enableSorting' => false,
+            ],
+            [
+                'attribute' => 'req_dismantle',
+                'enableSorting' => false,
+            ],
+            [
+                'attribute' => 'req_revocation',
+                'enableSorting' => false,
+            ],
+            [
+                'attribute' => 'req_good_rec',
+                'enableSorting' => false,
+            ],
+            [
+                'attribute' => 'req_good_for_recond',
+                'enableSorting' => false,
+            ],			
 
         ],
     ]); ?>

@@ -15,7 +15,7 @@ use yii\bootstrap\NavBar;
 			<div class="logo-lg">
 				<?= Html::img('@commonpath/images/logo_mnc_play_large.png', $options=["class"=>"mainLogo"]) ?>
 				<div class="logoText">
-					<span class="mainText"> Divisi 1 </span> 
+					<span class="mainText"> Logistik </span> 
 				</div>
 			</div>
     </a>

@@ -61,7 +61,7 @@ function getFilterStatus() {
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="row">
       <div class="col-sm-12">
-        <p class="pull-right">
+        <p class="">
           <?php if (Yii::$app->controller->action->id == 'index') { ?>
             <?=  Html::a('Create', '#create?header=Create', ['class' => 'btn btn-success', 'id' => 'createModal', 'value'=>Url::to(['instruction-disposal/create']), 'header'=> yii::t('app','Create')]) ; ?>
           <?php } ?>

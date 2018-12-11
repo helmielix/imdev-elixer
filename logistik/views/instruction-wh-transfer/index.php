@@ -61,10 +61,11 @@ function getFilterStatus() {
         </div>
 		<h3>
         <?php
-            // if(Yii::$app->controller->action->id == 'index'){
+            if(Yii::$app->controller->action->id == 'index'){
 				echo 'List Input Warehouse Transfer Instruction';
-			// };
-            // if(Yii::$app->controller->action->id == 'indexapprove'){echo 'List Inbound PO Approval';};
+			};
+            if(Yii::$app->controller->action->id == 'indexapprove'){echo 'List Approved Warehouse Transfer Instruction';};
+            if(Yii::$app->controller->action->id == 'indexoverview'){echo 'List Overview Warehouse Transfer Instruction';};
         ?>
 		</h3>
 		<div class="row">
@@ -92,8 +93,8 @@ function getFilterStatus() {
                 'buttons'=>[
                     'view' => function ($url, $model) {
                          if(Yii::$app->controller->action->id == 'index' && !isset($model->status_listing)){
-                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#view?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
-                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-wh-transfer/view','id' => $model->id]), 'header'=> yii::t('app','Detail Material GRF Vendor IKO')  
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#view?id='.$model->id.'&header=Detail_Instruction_Warehouse_Transfer', [
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-wh-transfer/view','id' => $model->id]), 'header'=> yii::t('app','Detail Instruction Warehouse Transfer')  
                             ]);
                         } 
 						else {
@@ -102,7 +103,7 @@ function getFilterStatus() {
                             if(Yii::$app->controller->action->id == 'indexoverview') $viewurl = 'viewoverview';
                             if($model->status_listing == 47 ) $viewurl = 'viewreport';
 							
-                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id.'&header=Detail_Instruction_Warehouse_Transfer', [
                                 'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-wh-transfer/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app','Detail Instruction Warehouse Transfer')  
                                 ]);
                         }

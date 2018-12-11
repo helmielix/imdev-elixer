@@ -40,7 +40,7 @@ use kartik\mpdf\Pdf;
 class OutboundProductionController extends Controller
 {
     private $id_modul = 1;
-	private $last_transaction = 'TAG SN OUTBOUND WH ';
+	private $last_transaction = 'TAG SN OUTBOUND Production ';
     public function behaviors()
     {
         return [
@@ -117,7 +117,7 @@ class OutboundProductionController extends Controller
 	private function detailView($id){
 		$model = $this->findModel($id);
 
-		Yii::$app->session->set('idInstWhTr', $id);
+		Yii::$app->session->set('idOutProduction', $id);
 
 		$searchModel = new SearchOutboundProductionDetail();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
@@ -166,19 +166,19 @@ class OutboundProductionController extends Controller
 		$searchModel = new SearchInstructionProductionDetail();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
 
-		return $this->render('//instruction-wh-transfer/view', [
+		return $this->render('//instruction-production/view', [
             'model' => $model,
 			'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
 	}
 
-	public function actionViewdetailsn($idOutboundWhDetail){
+	public function actionViewdetailsn($idOutboundProDetail){
 		$this->layout = 'blank';
-		$model = OutboundProductionDetail::findOne($idOutboundWhDetail);
+		$model = OutboundProductionDetail::findOne($idOutboundProDetail);
 
 		$searchModel = new SearchOutboundProductionDetailSn();
-        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $idOutboundWhDetail);
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $idOutboundProDetail);
 
 		return $this->render('viewdetailsn', [
             'model' => $model,
@@ -211,7 +211,7 @@ class OutboundProductionController extends Controller
 			foreach($modelInstructionDetail as $value){
 				$modelDetail = new OutboundProductionDetail();
 
-				$modelDetail->id_outbound_wh		= $value->id_instruction_wh;
+				$modelDetail->id_outbound_pro		= $value->id_instruction_wh;
 				$modelDetail->id_item_im			= $value->id_item_im;
 				$modelDetail->req_good				= $value->req_good;
 				$modelDetail->req_not_good			= $value->req_not_good;
@@ -288,7 +288,7 @@ class OutboundProductionController extends Controller
 		if ($model->status_listing == 3){
 			$model->status_listing = 2;
 		}else{
-			$modelOutboundWhDetail = OutboundProductionDetail::find()->where(['id_outbound_wh'=> $id])->asArray()->all();
+			$modelOutboundWhDetail = OutboundProductionDetail::find()->where(['id_outbound_pro'=> $id])->asArray()->all();
 			$cekStatus = 1;
 			foreach($modelOutboundWhDetail as $key => $value){
 				if($value['status_listing'] != 41){
@@ -361,7 +361,7 @@ class OutboundProductionController extends Controller
 			$model->published_date = date('Y-m-d');
 
 			// change all SN to INTRANSIT
-            $modeldetailsn = OutboundProductionDetailSn::find()->joinWith('idOutboundWhDetail')->andWhere(['id_outbound_wh' => $model->id_instruction_wh])->all();
+            $modeldetailsn = OutboundProductionDetailSn::find()->joinWith('idOutboundProDetail')->andWhere(['id_outbound_pro' => $model->id_instruction_wh])->all();
 			// foreach( $model->OutboundProductionDetails->OutboundProductionDetailSns as $modelsn){
 			foreach( $modeldetailsn as $modelsn){
 				if (is_string($modelsn->serial_number)){
@@ -403,9 +403,9 @@ class OutboundProductionController extends Controller
 
 	}
 
-	public function actionRestore($idOutboundWhDetail, $id){
-		// OutboundProductionDetailSn::deleteAll('id_outbound_wh_detail = '.$idOutboundWhDetail);
-		$modeldetailsn = OutboundProductionDetailSn::find()->andWhere(['id_outbound_wh_detail' => $idOutboundWhDetail])->all();
+	public function actionRestore($idOutboundProDetail, $id){
+		// OutboundProductionDetailSn::deleteAll('id_outbound_pro_detail = '.$idOutboundProDetail);
+		$modeldetailsn = OutboundProductionDetailSn::find()->andWhere(['id_outbound_pro_detail' => $idOutboundProDetail])->all();
 		foreach($modeldetailsn as $modelsn){
 			if ( is_string($modelsn->serial_number) ){
 				$where = ['serial_number' => $modelsn->serial_number];
@@ -421,7 +421,7 @@ class OutboundProductionController extends Controller
 			$modelsn->delete();
 		}
 
-		$model = OutboundProductionDetail::findOne($idOutboundWhDetail);
+		$model = OutboundProductionDetail::findOne($idOutboundProDetail);
 		$model->status_listing = 999;
 		$model->save();
 
@@ -452,7 +452,7 @@ class OutboundProductionController extends Controller
 					if(isset($datas[0][0])){
 						$datas = $datas[0];
 					}
-					//OutboundProductionDetailSn::deleteAll('id_outbound_wh_detail = '.Yii::$app->session->get('idOutboundProductionDetail'));
+					//OutboundProductionDetailSn::deleteAll('id_outbound_pro_detail = '.Yii::$app->session->get('idOutboundProductionDetail'));
 					$row = 2;
 					$periksa = "\nplease check on row ";
 					$reqCol = [
@@ -470,7 +470,7 @@ class OutboundProductionController extends Controller
 					$maxQtyNotGoodDismantle = $modelDetail->req_not_good_dismantle;
 
 					//get quantity already upload
-					$modelSn = OutboundProductionDetailSn::find()->andWhere(['id_outbound_wh_detail' => $id]);
+					$modelSn = OutboundProductionDetailSn::find()->andWhere(['id_outbound_pro_detail' => $id]);
 					$qtyGood 			= $modelSn->andWhere(['condition' => 'good'])->count();
 					$qtyNotGood 		= $modelSn->andWhere(['condition' => 'not good'])->count();
 					$qtyReject 			= $modelSn->andWhere(['condition' => 'reject'])->count();
@@ -493,7 +493,7 @@ class OutboundProductionController extends Controller
 
 						$modelSn = new OutboundProductionDetailSn();
 
-						$modelSn->id_outbound_wh_detail = $id;
+						$modelSn->id_outbound_pro_detail = $id;
 						$modelSn->serial_number = (string)$data['SERIAL_NUMBER'];
 						$modelSn->mac_address = (string)$data['MAC_ADDRESS'];
 						$modelSn->condition = strtolower($data['CONDITION']);
@@ -590,7 +590,7 @@ class OutboundProductionController extends Controller
 						$modelDetail->save();
 					}
 
-					// $modelOutboundWhDetail = OutboundProductionDetail::find()->where(['id_outbound_wh'=> $modelDetail->id_outbound_wh])->asArray()->all();
+					// $modelOutboundWhDetail = OutboundProductionDetail::find()->where(['id_outbound_pro'=> $modelDetail->id_outbound_pro])->asArray()->all();
 					// $cekStatus = 1;
 					// foreach($modelOutboundWhDetail as $key => $value){
 					// 	if($value['status_listing'] != 41){
@@ -725,15 +725,15 @@ class OutboundProductionController extends Controller
 		$arrayreturn['dataProvider'] = $dataprovider;
 
 		$modelDetail = OutboundProductionDetail::find()->joinWith('idMasterItemIm')->select([
-			'outbound_wh_transfer_detail.id_item_im',
-			'outbound_wh_transfer_detail.req_good',
-			'outbound_wh_transfer_detail.req_not_good',
-			'outbound_wh_transfer_detail.req_good_dismantle',
-			'outbound_wh_transfer_detail.req_reject',
+			'outbound_production_detail.id_item_im',
+			'outbound_production_detail.req_good',
+			'outbound_production_detail.req_not_good',
+			'outbound_production_detail.req_good_dismantle',
+			'outbound_production_detail.req_reject',
 			'master_item_im.im_code',
 			'master_item_im.name as item_name',
 			'master_item_im.brand',
-		])->where(['id_outbound_wh' => $id])->all();
+		])->where(['id_outbound_pro' => $id])->all();
 
 		return $this->render('viewprintpdf', [
 				'model' => $model,
@@ -786,17 +786,17 @@ class OutboundProductionController extends Controller
 
         $pdf = new Pdf([
             // 'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
-            'content' => $this->renderPartial('//instruction-wh-transfer/view', $arrayreturn),
-            'filename'=> 'instruction_warehouse_transfer.pdf',
+            'content' => $this->renderPartial('//instruction-production/view', $arrayreturn),
+            'filename'=> 'instruction_production.pdf',
             'format' => Pdf::FORMAT_A4,
             'orientation' => Pdf::ORIENT_PORTRAIT,
             'destination' => Pdf::DEST_BROWSER,
             'options' => [
-                'title' => 'Instruction warehouse transfer '.$model->instruction_number,
+                'title' => 'Instruction Production '.$model->instruction_number,
 
             ],
             'methods' => [
-                'SetHeader' => ['Instruction Warehouse'],
+                'SetHeader' => ['Instruction Production'],
                 'SetFooter' => ['|Page {PAGENO}|'],
             ]
         ]);

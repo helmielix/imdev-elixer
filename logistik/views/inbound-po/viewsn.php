@@ -8,12 +8,20 @@ use kartik\grid\GridView;
 use yii\widgets\Pjax;
 
 use common\models\Reference;
+use common\models\StatusReference;
+use common\models\OrafinViewMkmPrToPay;
 /* @var $this yii\web\View */
 /* @var $model inbound\models\InboundPo */
 
 // $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Inbound Pos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+function filterstatusdetail(){
+    $filter = ArrayHelper::map(StatusReference::find()->andWhere(['id' => [41, 43]])->all(), 'id', 'status_listing');
+    $filter[999] = 'Not Yet Uploaded';
+    return $filter;
+}
 ?>
 <div class="inbound-po-view">
 
@@ -27,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				 [
                     'label' => 'Tanggal RR',
                     'value' => function($model){
-                        return $model->rr_number; // tes
+                        //return $model->rr_number; // tes
                         return OrafinViewMkmPrToPay::find()->where(['=', 'rcv_no', $model->rr_number])
                                 ->one()->rcv_date;
                     }
@@ -154,7 +162,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         return "<span class='label' style='background-color:grey'>Open RR</span>";
                     }
                 },
-                // 'filter' => getFilterStatus()
+                'filter' => filterstatusdetail(),
+
             ],
 			[
                 'class' => 'yii\grid\ActionColumn',
@@ -198,7 +207,7 @@ $this->params['breadcrumbs'][] = $this->title;
                    
 					
 					'reset' => function ($url, $model) {
-                        if(($model->status_listing == 41 || $model->status_listing == 43) && $model->sn_type ==1){
+                        if(($model->status_listing == 41 || $model->status_listing == 43  ) && $model->sn_type ==1){
 							
                             return Html::a('<span style="margin:0px 2px;" class="label label-danger">Reset</span>', '#', [
                                 'title' => Yii::t('app', 'Reset'),'data-pjax' => false, 'class' => 'resetButton','idInboundPoDetail'=>$model->id_inbound_detail ,'value'=>$model->id_inbound_po, 'header'=> yii::t('app','Create Material GRF Vendor IKO')
@@ -216,7 +225,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 	<?php \yii\widgets\Pjax::end(); ?>
-    <?= Html::button(Yii::t('app','Submit'), ['id'=>'submitButton','class' => 'btn btn-success']) ?>
+     <?php if(Yii::$app->controller->action->id == 'viewsn' && $model->status_listing != 42 )
+     echo Html::button(Yii::t('app','Submit'), ['id'=>'submitButton','class' => 'btn btn-success']) ?>
 </div>
 <script>
     $('#checkboxMacaddr').click(function(){

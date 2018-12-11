@@ -43,10 +43,6 @@ class InstructionDisposalController extends Controller
      * Lists all InstructionDisposal models.
      * @return mixed
      */
-   public function actionIndex()
-    {
-        return $this->render('index', $this->listIndex('input'));
-    }
 
     private function listIndex($action)
     {
@@ -58,6 +54,16 @@ class InstructionDisposalController extends Controller
             'dataProvider' => $dataProvider,
         ];
     }
+
+    public function actionIndexrequest()
+    {
+      return $this->render('index', $this->listIndex('request'));
+    }
+
+    public function actionIndex()
+    {
+        return $this->render('index', $this->listIndex('input'));
+    }    
 
     public function actionIndexapprove()
     {
@@ -123,29 +129,11 @@ class InstructionDisposalController extends Controller
     {
         $this->layout = 'blank';
         $model = new InstructionDisposal();
+        $model->scenario = 'create';
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->scenario = 'create';
             $model->id_modul = $this->id_modul;
 
-            if ($model->load(Yii::$app->request->post())) {
-            $newidinst = InstructionDisposal::find()->andWhere(['and',['like', 'instruction_number', '%/'.date('Y'), false],['id_modul' => $model->id_modul]])->count() + 1;
-            $newidinstexist = InstructionDisposal::find()->andWhere(['and',['instruction_number' => $newidinst],['id_modul' => $model->id_modul]])->exists();
-            $newidinst++;
-            
-            $monthroman = Numbertoroman::convert(date('n'));
-            
-            $model->instruction_number = sprintf("%04d", $newidinst).'/INST-IC1/DSP/'.$monthroman.date('/Y');
-
-
-            $newidinst1 = InstructionDisposal::find()->andWhere(['and',['like', 'no_iom', '%/'.date('Y'), false],['id_modul' => $model->id_modul]])->count() + 1;
-            $newidinstexist = InstructionDisposal::find()->andWhere(['and',['no_iom' => $newidinst1],['id_modul' => $model->id_modul]])->exists();
-            $newidinst1++;
-            
-            $monthroman = Numbertoroman::convert(date('n'));
-
-            // $model->no_iom = sprintf("%04d", $newidinst1).'/IOM/INT/DIV1/'.$monthroman.date('/Y');
-            
             $model->status_listing = 50;
 
             if (isset($_FILES['file'])) {
@@ -153,7 +141,7 @@ class InstructionDisposalController extends Controller
                     if($_FILES['file']['size'] != 0) {
                         $model->file = $_FILES['file'];
                         $filename = $_FILES['file']['name'];
-                        $filepath = 'uploads/INST/DIVSATU/';
+                        $filepath = 'uploads/INST/DISPOSAL/';
                     }
                 }
             }
@@ -164,7 +152,7 @@ class InstructionDisposalController extends Controller
             $model->file_attachment = $filepath.$model->id.'/'.$filename;
             $model->save();
             
-            Yii::$app->session->set('idInstWhTr', $model->id);
+            Yii::$app->session->set('idInstructionDisposal', $model->id);
             // Yii::$app->session->set('idInstructionDisposal',$model->id);
             // return var_dump($model);
             
@@ -174,11 +162,60 @@ class InstructionDisposalController extends Controller
             move_uploaded_file($_FILES['file']['tmp_name'], $model->file_attachment);
             
             return 'success';
-        } 
-    } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+
+
+
+            // if ($model->load(Yii::$app->request->post())) {
+            //   $newidinst = InstructionDisposal::find()->andWhere(['and',['like', 'instruction_number', '%/'.date('Y'), false],['id_modul' => $model->id_modul]])->count() + 1;
+            //   $newidinstexist = InstructionDisposal::find()->andWhere(['and',['instruction_number' => $newidinst],['id_modul' => $model->id_modul]])->exists();
+            //   $newidinst++;
+              
+            //   $monthroman = Numbertoroman::convert(date('n'));
+              
+            //   $model->instruction_number = sprintf("%04d", $newidinst).'/INST-IC1/DSP/'.$monthroman.date('/Y');
+
+
+            //   $newidinst1 = InstructionDisposal::find()->andWhere(['and',['like', 'no_iom', '%/'.date('Y'), false],['id_modul' => $model->id_modul]])->count() + 1;
+            //   $newidinstexist = InstructionDisposal::find()->andWhere(['and',['no_iom' => $newidinst1],['id_modul' => $model->id_modul]])->exists();
+            //   $newidinst1++;
+              
+            //   $monthroman = Numbertoroman::convert(date('n'));
+
+            //   // $model->no_iom = sprintf("%04d", $newidinst1).'/IOM/INT/DIV1/'.$monthroman.date('/Y');
+              
+            //   $model->status_listing = 50;
+
+            //   if (isset($_FILES['file'])) {
+            //       if (isset($_FILES['file']['size'])) {
+            //           if($_FILES['file']['size'] != 0) {
+            //               $model->file = $_FILES['file'];
+            //               $filename = $_FILES['file']['name'];
+            //               $filepath = 'uploads/INST/DISPOSAL/';
+            //           }
+            //       }
+            //   }
+
+            //   if (!$model->save()){
+            //       return Displayerror::pesan($model->getErrors());
+            //   }
+            //   $model->file_attachment = $filepath.$model->id.'/'.$filename;
+            //   $model->save();
+              
+            //   Yii::$app->session->set('idInstWhTr', $model->id);
+            //   // Yii::$app->session->set('idInstructionDisposal',$model->id);
+            //   // return var_dump($model);
+              
+            //   if (!file_exists($filepath.$model->id.'/')) {
+            //       mkdir($filepath.$model->id.'/', 0777, true);
+            //   }
+            //   move_uploaded_file($_FILES['file']['tmp_name'], $model->file_attachment);
+              
+            //   return 'success';
+            // } 
+        } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
         }
     }
 
@@ -324,15 +361,7 @@ class InstructionDisposalController extends Controller
                 $periksa = "\nplease check on row ";
                 $reqCol = [
                     'IM CODE' => '',
-                    'Total Qty' => '',
-                    'UOM Penjualan' => '',
-                    'Qty Konversi' => '',
-                    'UOM Lama' => '',
-                    'Konversi' => '',
-                    'UOM Baru' => '',
-                    'Qty Total' => '',
-                    'UOM' => '',
-
+                    'GOOD' => '',
 
                 ];
                 $errorSum = '';

@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'label' => 'Tanggal RR',
                     'value' => function($model){
-                        return $model->rr_number; // tes
+                        //return $model->rr_number; // tes
                         return OrafinViewMkmPrToPay::find()->where(['=', 'rcv_no', $model->rr_number])
                                 ->one()->rcv_date;
                     }
@@ -78,7 +78,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->verifiedBy->username;
                         }
                         
-                    }
+                    },
+                    'visible' => ($model->status_listing > 3),
                 ],[
                     'label' => 'Approved By',
                     'value' => function($model){
@@ -86,7 +87,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->approvedBy->username;
                         }
                         
-                    }
+                    },
+                    'visible' => ($model->status_listing > 4),
                 ],
                 'revision_remark:ntext'
 			],
@@ -112,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
              ['class' => 'yii\grid\SerialColumn'],
-             'id_inbound',
+             // 'id_inbound',
 			[
                 'attribute' => 'orafin_name',
                 'contentOptions' => ['style' => 'width:30%'],
@@ -192,7 +194,7 @@ $this->params['breadcrumbs'][] = $this->title;
         
         <?php if((Yii::$app->controller->action->id == 'viewapprove' ) && $model->status_listing != 5 )
             echo Html::button(Yii::t('app','Approve'), ['id'=>'approveButton','class' => 'btn btn-success']); ?>
-            <?php if(Yii::$app->controller->action->id == 'viewverify' && $model->status_listing != 4)
+        <?php if(Yii::$app->controller->action->id == 'viewverify' && $model->status_listing != 4)
             echo Html::button(Yii::t('app','Revise'), ['id'=>'reviseButton','class' => 'btn btn-warning']); ?>
         <?php if((Yii::$app->controller->action->id == 'viewverify' ) && $model->status_listing != 43 && $model->status_listing != 4 )
             echo Html::button(Yii::t('app','Verify'), ['id'=>'verifyButton','class' => 'btn btn-success']); ?>

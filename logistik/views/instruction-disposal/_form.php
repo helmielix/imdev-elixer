@@ -8,6 +8,7 @@ use common\models\StatusReference;
 use common\models\Warehouse;
 use yii\helpers\ArrayHelper;
 use dosamigos\datepicker\DatePicker;
+use kartik\select2\Select2;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
@@ -33,12 +34,15 @@ use yii\helpers\Url;
         ],
         'requiredCssClass' => 'requiredField'
     ]); ?>
-    
-
-    <?= $form->field($model, 'id_warehouse')->dropDownList(
-        ArrayHelper::map(Warehouse::find()->all(),'id','nama_warehouse'),
-        ['prompt'=>'Select...']
-        );?>
+        
+    <?= $form->field($model, 'id_warehouse')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(Warehouse::find()->all(),'id','nama_warehouse'),
+        'language' => 'en',
+        'options' => ['placeholder' => 'Select...'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);?>
 
     <?= $form->field($model, 'no_iom')->textInput() ?> 
 
@@ -49,6 +53,7 @@ use yii\helpers\Url;
                             'clientOptions' => [
                             'autoclose' => true,
                             'format' => 'yyyy-mm-dd',
+                            'endDate' => date('Y-m-d'),
                             // 'startDate' => $model->idCdmPnl->pnl_date
                             ]
                         ]) ?>
@@ -69,9 +74,6 @@ use yii\helpers\Url;
             } ?>
         </div>
     </div>
-
-    <?php $form->field($model, 'revision_remark')->textarea(['rows' => 6]) ?> 
-
 
 
     <div class="form-group">
@@ -119,7 +121,7 @@ $('#createButton').click(function () {
                     $('#modal').modal('show')
                         .find('#modalContent')
                         .load('<?php echo Url::to([$this->context->id.'/indexdetail']) ;?>');
-                    $('#modalHeader').html('<h3>Detail Instruksi Disposal</h3>');
+                    $('#modalHeader').html('<h3>List Detail Barang Disposal</h3>');
                 } else {
                     alert('error with message: ' + response);
                 }

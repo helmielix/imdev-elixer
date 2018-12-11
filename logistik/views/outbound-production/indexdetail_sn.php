@@ -111,7 +111,7 @@ function getFilterStatus() {
 								return '';
 							}
                             return Html::a('<span style="margin:0px 2px;" class="label label-info">View</span>', '#', [
-                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/viewdetailsn', 'idOutboundWhDetail' => $model->id]), 'header'=> yii::t('app','Detail Serial Number')
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/viewdetailsn', 'idOutboundProDetail' => $model->id]), 'header'=> yii::t('app','Detail Serial Number')
                             ]);
                         }
                     },
@@ -130,7 +130,7 @@ function getFilterStatus() {
 								return '';
 							}
                             return Html::a('<span style="margin:0px 2px;" class="label label-danger"> <i class="fa fa-undo fa-flip-horizontal"></i> </span>', '#', [
-                                'title' => Yii::t('app', 'restore'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/restore', 'idOutboundWhDetail' => $model->id, 'id' => $model->id_outbound_wh]), 'header'=> yii::t('app','Create Tag SN')
+                                'title' => Yii::t('app', 'restore'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/restore', 'idOutboundProDetail' => $model->id, 'id' => $model->id_outbound_wh]), 'header'=> yii::t('app','Create Tag SN')
                             ]);
                         }
 					},
@@ -196,7 +196,7 @@ function getFilterStatus() {
     $('#previousButton').click(function () {
         $('#modal').modal('show')
             .find('#modalContent')
-            .load('<?php echo Url::to([$this->context->id.'/update','id'=>Yii::$app->session->get('idInstWhTr')]) ;?>');
+            .load('<?php echo Url::to([$this->context->id.'/update','id'=>Yii::$app->session->get('idOutProduction')]) ;?>');
         $('#modalHeader').html('<h3> Detail Instruksi Warehouse Transfer </h3>');
     });
 

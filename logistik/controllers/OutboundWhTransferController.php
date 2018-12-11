@@ -215,9 +215,11 @@ class OutboundWhTransferController extends Controller
 				$modelDetail->id_item_im			= $value->id_item_im;
 				$modelDetail->req_good				= $value->req_good;
 				$modelDetail->req_not_good			= $value->req_not_good;
-				$modelDetail->req_reject			= $value->req_reject;
-				$modelDetail->req_good_dismantle	= $value->req_good_dismantle;
-				$modelDetail->req_not_good_dismantle= $value->req_not_good_dismantle;
+				$modelDetail->req_revocation			= $value->req_revocation;
+				$modelDetail->req_dismantle	= $value->req_dismantle;
+				$modelDetail->req_revocation= $value->req_revocation;
+				$modelDetail->req_revocation1= $value->req_revocation1;
+				$modelDetail->req_revocation2= $value->req_revocation2;
 				$modelDetail->status_listing		= ($value->idMasterItemIm->sn_type == 1) ? 999 : 41;
 
 
@@ -465,17 +467,21 @@ class OutboundWhTransferController extends Controller
 					$modelDetail = OutboundWhTransferDetail::findOne($id);
 					$maxQtyGood 			= $modelDetail->req_good;
 					$maxQtyNotGood 			= $modelDetail->req_not_good;
-					$maxQtyReject 			= $modelDetail->req_reject;
-					$maxQtyGoodDismantle 	= $modelDetail->req_good_dismantle;
-					$maxQtyNotGoodDismantle = $modelDetail->req_not_good_dismantle;
+					$maxQtyReject 			= $modelDetail->req_revocation;
+					$maxQtyDismantle 	= $modelDetail->req_dismantle;
+					$maxQtyRevocation = $modelDetail->req_revocation;
+					$maxQtyRevocation1 = $modelDetail->req_revocation1;
+					$maxQtyRevocation2 = $modelDetail->req_revocation2;
 
 					//get quantity already upload
 					$modelSn = OutboundWhTransferDetailSn::find()->andWhere(['id_outbound_wh_detail' => $id]);
 					$qtyGood 			= $modelSn->andWhere(['condition' => 'good'])->count();
 					$qtyNotGood 		= $modelSn->andWhere(['condition' => 'not good'])->count();
 					$qtyReject 			= $modelSn->andWhere(['condition' => 'reject'])->count();
-					$qtyGoodDismantle 	= $modelSn->andWhere(['condition' => 'good dismantle'])->count();
-					$qtyNotGoodDismantle= $modelSn->andWhere(['condition' => 'not good dismantle'])->count();
+					$qtyDismantle 	= $modelSn->andWhere(['condition' => 'dismantle'])->count();
+					$qtyRevocation= $modelSn->andWhere(['condition' => 'revocation'])->count();
+					$qtyRevocation1= $modelSn->andWhere(['condition' => 'revocation1'])->count();
+					$qtyRevocation2= $modelSn->andWhere(['condition' => 'revocation2'])->count();
 
 					$newIdSn = [];
 					foreach ($datas as $key => $data) {
@@ -508,11 +514,17 @@ class OutboundWhTransferController extends Controller
 							case 'reject':
 								$qtyReject++;
 							break;
-							case 'good dismantle':
-								$qtyGoodDismantle++;
+							case 'dismantle':
+								$qtyDismantle++;
 							break;
-							case 'not good dismantle':
-								$qtyNotGoodDismantle++;
+							case 'revocation':
+								$qtyRevocation++;
+							break;
+							case 'revocation1':
+								$qtyRevocation1++;
+							break;
+							case 'revocation2':
+								$qtyRevocation2++;
 							break;
 						}
 
@@ -529,12 +541,20 @@ class OutboundWhTransferController extends Controller
 							$maxErr = 'Quantity Reject cannot be more than '. $maxQtyReject;
 						}
 
-						if ($qtyGoodDismantle > $maxQtyGoodDismantle){
-							$maxErr = 'Quantity Good Dismantle cannot be more than '. $maxQtyGoodDismantle;
+						if ($qtyDismantle > $maxQtyDismantle){
+							$maxErr = 'Quantity Dismantle cannot be more than '. $maxQtyDismantle;
 						}
 
-						if ($qtyNotGoodDismantle > $maxQtyNotGoodDismantle){
-							$maxErr = 'Quantity Not Good Dismantle cannot be more than '. $maxQtyNotGoodDismantle;
+						if ($qtyRevocation > $maxQtyRevocation){
+							$maxErr = 'Quantity Revocation cannot be more than '. $maxQtyRevocation;
+						}
+
+						if ($qtyRevocation1 > $maxQtyRevocation1){
+							$maxErr = 'Quantity Revocation1 cannot be more than '. $maxQtyRevocation1;
+						}
+
+						if ($qtyRevocation2 > $maxQtyRevocation2){
+							$maxErr = 'Quantity Revocation2 cannot be more than '. $maxQtyRevocation2;
 						}
 
 						if ($maxErr != ''){
@@ -581,8 +601,10 @@ class OutboundWhTransferController extends Controller
 					if ($maxQtyGood == $qtyGood &&
 						$maxQtyNotGood == $qtyNotGood &&
 						$maxQtyReject == $qtyReject &&
-						$maxQtyGoodDismantle == $qtyGoodDismantle &&
-						$maxQtyNotGoodDismantle == $qtyNotGoodDismantle){
+						$maxQtyDismantle == $qtyDismantle &&
+						$maxQtyRevocation == $qtyRevocation &&
+						$maxQtyRevocation1 == $qtyRevocation1 &&
+						$maxQtyRevocation2 == $qtyRevocation2){
 							$modelDetail->status_listing = 41;
 							$modelDetail->save();
 					}else{
@@ -668,8 +690,8 @@ class OutboundWhTransferController extends Controller
                 $objWriter->save($fileOut7);
                 return Yii::$app->response->sendFile($fileOut7);
 			}else {
-				return $file;
-                // throw new NotFoundHttpException('The requested page does not exist.');
+				// return $file;
+                throw new NotFoundHttpException('The requested page does not exist.');
             }
 		}else if ($id == 'instruction'){
 			$file = Yii::getAlias('@webroot') . '/uploads/TemplateInputSN.xlsx';
@@ -728,8 +750,10 @@ class OutboundWhTransferController extends Controller
 			'outbound_wh_transfer_detail.id_item_im',
 			'outbound_wh_transfer_detail.req_good',
 			'outbound_wh_transfer_detail.req_not_good',
-			'outbound_wh_transfer_detail.req_good_dismantle',
-			'outbound_wh_transfer_detail.req_reject',
+			'outbound_wh_transfer_detail.req_dismantle',
+			'outbound_wh_transfer_detail.req_revocation',
+			'outbound_wh_transfer_detail.req_revocation1',
+			'outbound_wh_transfer_detail.req_revocation2',
 			'master_item_im.im_code',
 			'master_item_im.name as item_name',
 			'master_item_im.brand',

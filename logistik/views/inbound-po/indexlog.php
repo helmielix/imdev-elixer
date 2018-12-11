@@ -66,6 +66,7 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
                 7 => 'Drafted',
                 13 => 'Deleted' ,
                 48 => 'Partially Tag Uploaded',
+                43 => 'Partially Uploaded',
 
             ];
         if(Yii::$app->controller->action->id == 'indexverify')
