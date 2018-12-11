@@ -55,7 +55,11 @@ $this->registerCss('
 					return $model->im_code . Html::hiddenInput('im_code[]', $model->id.';'.$model->im_code, ['class' => 'im_code']);
 				},
 			],
-			'name',
+			[
+				'attribute' => 'name',
+				'value' => 'name',
+			],
+			// 'name',
 			[
 				'attribute' => 'brand',
 				'value' => 'referenceBrand.description',
@@ -82,46 +86,20 @@ $this->registerCss('
 				'vAlign' => 'middle',
 			],
 			[
-				'attribute' => 'req_good',
-				'contentOptions' => ['class' => 'bg-success'],
-				'headerOptions' => ['class' => 'kartik-sheet-style'],
-				'mergeHeader' => true,
-				'vAlign' => 'middle',
-				'value' => function ($model) use ($datasession){
-					if(isset($datasession[$model->id]['update'])){
-						$model->req_good += $datasession[$model->id]['rgood'];
-					}
-					return $model->req_good;
-				},
-			],
-			[
-				'attribute' => 'req_dis_good',
+				'attribute' => 's_good_dismantle',
 				'contentOptions' => ['class' => 'bg-warning'],
 				'headerOptions' => ['class' => 'kartik-sheet-style'],
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 			],
 			[
-				'attribute' => 's_reject',
-				'contentOptions' => ['class' => 'bg-danger'],
+				'attribute' => 's_good_rec',
+				'contentOptions' => ['class' => 'bg-warning'],
 				'headerOptions' => ['class' => 'kartik-sheet-style'],
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 			],
-			[
-				'attribute' => 'req_good_dismantle',
-				'contentOptions' => ['class' => 'bg-dismantle'],
-				'headerOptions' => ['class' => 'kartik-sheet-style'],
-				'mergeHeader' => true,
-				'vAlign' => 'middle',
-			],
-			[
-				'attribute' => 'req_dis_good_dismantle',
-				'contentOptions' => ['class' => 'bg-info'],
-				'headerOptions' => ['class' => 'kartik-sheet-style'],
-				'mergeHeader' => true,
-				'vAlign' => 'middle',
-			],
+			
 			
 			[
 				'label' => 'Req. Good',
@@ -157,48 +135,68 @@ $this->registerCss('
 					$out 	= Html::textInput('rgooddismantle[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'rgooddismantle']);
 					return $out;
 				},
-				'contentOptions' => ['class' => 'bg-dismantle'],
+				'contentOptions' => ['class' => 'bg-info'],
+				'headerOptions' => ['class' => 'kartik-sheet-style'],
+				'mergeHeader' => true,
+				'vAlign' => 'middle',
+			],
+
+			[
+				'label' => 'Req. Good Recond',
+				'format' => 'raw',
+				'value' => function ($model) use ($datasession)
+				{
+					$out = '<div class="col-xs-12">';
+					$out .= '</div>';
+					$val = '';
+					if (isset($datasession[$model->id]['rgoodrec'])){
+						$val = $datasession[$model->id]['rgoodrec'];
+					}
+					$out 	= Html::textInput('rgoodrec[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'rgoodrec']);
+					return $out;
+				},
+				'contentOptions' => ['class' => 'bg-danger'],
 				'headerOptions' => ['class' => 'kartik-sheet-style'],
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 			],
 			
-			[
-				'label' => 'Rem. Good',
-				'format' => 'raw',
-				'value' => function($model) use ($datasession){
-					$val = 0;
-					// if(isset($datasession[$model->id]['update'])){
-						// $val = 0;
-					// }else 
-						if (isset($datasession[$model->id]['rgood'])){
-						$val = $datasession[$model->id]['rgood'];
-					}
-					$rem = $model->req_good - $val;
-					return $rem;
-				},
-				'contentOptions' => ['class' => 'bg-success'],
-				'headerOptions' => ['class' => 'kartik-sheet-style'],
-				'mergeHeader' => true,
-				'vAlign' => 'middle',
-			],
+			// [
+			// 	'label' => 'Rem. Good',
+			// 	'format' => 'raw',
+			// 	'value' => function($model) use ($datasession){
+			// 		$val = 0;
+			// 		// if(isset($datasession[$model->id]['update'])){
+			// 			// $val = 0;
+			// 		// }else 
+			// 			if (isset($datasession[$model->id]['rgood'])){
+			// 			$val = $datasession[$model->id]['rgood'];
+			// 		}
+			// 		$rem = $model->req_good - $val;
+			// 		return $rem;
+			// 	},
+			// 	'contentOptions' => ['class' => 'bg-success'],
+			// 	'headerOptions' => ['class' => 'kartik-sheet-style'],
+			// 	'mergeHeader' => true,
+			// 	'vAlign' => 'middle',
+			// ],
 			
-			[
-				'label' => 'Rem. Good Dismantle',
-				'format' => 'raw',
-				'value' => function($model) use ($datasession){
-					$val = 0;
-					if (isset($datasession[$model->id]['rgooddismantle'])){
-						$val = $datasession[$model->id]['rgooddismantle'];
-					}
-					$rem = $model->req_good_dismantle - $val;
-					return $rem;
-				},
-				'contentOptions' => ['class' => 'bg-dismantle'],
-				'headerOptions' => ['class' => 'kartik-sheet-style'],
-				'mergeHeader' => true,
-				'vAlign' => 'middle',
-			],
+			// [
+			// 	'label' => 'Rem. Good Dismantle',
+			// 	'format' => 'raw',
+			// 	'value' => function($model) use ($datasession){
+			// 		$val = 0;
+			// 		if (isset($datasession[$model->id]['rgooddismantle'])){
+			// 			$val = $datasession[$model->id]['rgooddismantle'];
+			// 		}
+			// 		$rem = $model->req_good_dismantle - $val;
+			// 		return $rem;
+			// 	},
+			// 	'contentOptions' => ['class' => 'bg-dismantle'],
+			// 	'headerOptions' => ['class' => 'kartik-sheet-style'],
+			// 	'mergeHeader' => true,
+			// 	'vAlign' => 'middle',
+			// ],
 			
 			
 			
@@ -289,17 +287,17 @@ $this->registerCss('
 	$qString = Yii::$app->request->queryString;
 	$id = null;
 	
-	if ($qString == 'par=indexdetail'){
-		$goto = '/indexdetail';
-	}else{
-		$goto = '/indexdetail';
-		$id = Yii::$app->session->get('idInstWhTr');
-	}
+	// if ($qString == 'par=indexdetail'){
+	// 	$goto = '/indexdetail';
+	// }else{
+		$goto = '/update-item-set';
+		$id = Yii::$app->session->get('idInstProdDetail');
+	// }
 	?>
 	$('#previousButton').click(function () {
         $('#modal').modal('show')
             .find('#modalContent')
-            .load('<?php echo Url::to([$this->context->id.$goto,'id'=>$id]) ;?>');
+            .load('<?php echo Url::to([$this->context->id.$goto,'idDetail'=>$id]) ;?>');
         $('#modalHeader').html('<h3> Create Inbound PO </h3>');
     });
     

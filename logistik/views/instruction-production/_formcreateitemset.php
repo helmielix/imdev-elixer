@@ -7,7 +7,7 @@ use dosamigos\datepicker\DatePicker;
 use yii\helpers\Url;
 use kartik\select2\Select2;
 use common\models\Reference;
-use common\models\MasterItemIm;
+use common\models\ParameterMasterItem;
 
 /* @var $this yii\web\View */
 /* @var $model divisisatu\models\InstructionWhTransfer */
@@ -34,18 +34,18 @@ use common\models\MasterItemIm;
     ]); ?>
 
     <?php 
-        $dataItem = MasterItemIm::find()->all();
+        $dataItem = ParameterMasterItem::find()->select(['parameter_master_item.id as id','master_item_im.name as name'])->joinWith('idMasterItemIm')->all();
     ?>
 
    
 	<?php
-        if (Yii::$app->controller->action->id == 'create-item-set'){
+        // if (Yii::$app->controller->action->id == 'create-item-set'){
 			echo $form->field($model, 'id_item_im')->dropDownList(
 				ArrayHelper::map($dataItem, 'id','name'),
 				['id'=>'item_name-id','prompt'=>'Select..'])->label('Nama Barang');
-		} else if (Yii::$app->controller->action->id == 'create-item-set'){
-			echo $form->field($model, 'id_item_im')->textInput(['disabled'=>$isDisabled])->label('Nama Barang');
-		}
+		// } else if (Yii::$app->controller->action->id == 'create-item-set'){
+		// 	echo $form->field($model, 'id_item_im')->textInput(['disabled'=>$isDisabled])->label('Nama Barang');
+		// }
 	?>
 
 	<?= $form->field($model, 'im_code')->textInput([ 'id'=>'im_code-id']);?>
@@ -58,7 +58,15 @@ use common\models\MasterItemIm;
         <label class='control-label col-sm-4'> </label>
         <div class='col-sm-6'>
         	<?= Html::button(Yii::t('app','Previous'), ['id'=>'previousButton','class' => 'btn btn-primary']);  ?>
-            <?= Html::button('Create', ['id'=>'createButton','class' => 'btn btn-success']) ?>
+            <?php switch ($this->context->action->id) {
+                case 'create-item-set':
+                    $actionText = 'Create';
+                    break;
+                case 'update-item-set':
+                    $actionText = 'Update';
+                    break;
+            } ?>
+            <?= Html::button($actionText, ['id'=>'createButton','class' => 'btn btn-success']) ?>
 
         </div>
     </div>
@@ -104,7 +112,7 @@ $('#createButton').click(function () {
         button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
 
 		$.ajax({
-			url: '<?php echo Url::to([$this->context->id.'/'.$this->context->action->id]) ;?>',
+			url: '<?php echo Url::to([$this->context->id.'/'.$this->context->action->id, 'idDetail' => $model->id]) ;?>',
 			type: 'post',
 			data: data,
 			processData: false,
@@ -113,7 +121,7 @@ $('#createButton').click(function () {
 				if(response == 'success') {					
 					$('#modal').modal('show')
 						.find('#modalContent')
-						.load('<?php echo Url::to([$this->context->id.'/create-item-set-detail', 'id' => Yii::$app->session->get('idInstProdDetail')]) ;?>');
+						.load('<?php echo Url::to([$this->context->id.'/create-item-set-detail', 'id' => Yii::$app->session->get('idInstPar')]) ;?>');
 					$('#modalHeader').html('<h3>Detail Instruksi Warehouse Transfer</h3>');
 				} else {
 					alert('error with message: ' + response);
@@ -160,7 +168,7 @@ $('#updateButton').click(function () {
 				if(response == 'success') {					
 					$('#modal').modal('show')
 						.find('#modalContent')
-						.load('<?php echo Url::to([$this->context->id.'/view', 'id' => Yii::$app->session->get('idInstWhTr')]) ;?>');
+						.load('<?php echo Url::to([$this->context->id.'/create-item-set-detail', 'id' => Yii::$app->session->get('idInstProdDetail')]) ;?>');
 					$('#modalHeader').html('<h3>Detail Instruksi Warehouse Transfer</h3>');
 				} else {
 					alert('error with message: ' + response);

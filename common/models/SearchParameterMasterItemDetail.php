@@ -70,7 +70,20 @@ class SearchParameterMasterItemDetail extends ParameterMasterItemDetail
 
     public function searchByAction($params, $id)
     {
-        $query = ParameterMasterItemDetail::find()->where(['id_parameter'=>$id]);
+        $query = ParameterMasterItemDetail::find()
+        ->select([
+            'master_item_im.im_code',
+            'master_item_im.name',
+            'master_item_im.brand',
+            'master_item_im.type',
+            'master_item_im.warna',
+            'master_item_im.sn_type',
+            'master_item_im_detail.s_good as s_good',
+            'master_item_im_detail.s_good_dismantle as s_good_dismantle',
+            'master_item_im_detail.s_good_rec as s_good_rec',
+        ])
+        ->joinWith('masterItemChild.masterItemImDetails')
+        ->where(['and',['parameter_master_item_detail.id_parameter'=>$id],['master_item_im_detail.id_warehouse'=>8]]);
 
         // add conditions that should always apply here
 

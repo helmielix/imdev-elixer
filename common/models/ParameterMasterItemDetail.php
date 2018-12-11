@@ -15,9 +15,8 @@ use Yii;
  */
 class ParameterMasterItemDetail extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+   public $im_code, $name, $s_good, $s_good_dismantle, $s_good_rec, $brand, $type, $warna, $sn_type;
+
     public static function tableName()
     {
         return 'parameter_master_item_detail';
@@ -54,6 +53,31 @@ class ParameterMasterItemDetail extends \yii\db\ActiveRecord
 
     public function getMasterItemChild()
     {
-        return $this->hasOne(MasterItemIm::className(), ['id' => 'id_item_parent']);
+        return $this->hasOne(MasterItemIm::className(), ['id' => 'id_item_child']);
+    }
+
+    public function getReferenceType()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'type']);
+    }
+    
+    public function getReferenceWarna()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'warna']);
+    }
+    
+    public function getReferenceBrand()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'brand']);
+    }
+    
+    public function getReferenceGrouping()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'grouping']);
+    }
+    
+    public function getReferenceSn()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'sn_type']);
     }
 }

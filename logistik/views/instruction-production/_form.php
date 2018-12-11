@@ -126,7 +126,7 @@ $('#createButton').click(function () {
 					$('#modal').modal('show')
 						.find('#modalContent')
 						.load('<?php
-						$goto = ($model->isNewRecord) ? '/indexdetail' : '/view';
+						$goto = '/indexdetail';
 						echo Url::to([$this->context->id.$goto, 'id' => Yii::$app->session->get('idInstWhTr')]) ;?>');
 					$('#modalHeader').html('<h3>Detail Instruksi Warehouse Transfer</h3>');
 				} else {
