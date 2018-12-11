@@ -118,7 +118,8 @@ function getFilterStatus() {
           },
           'filter' => getFilterStatus()
       ],
-      'hasil_produksi',
+      'instruction_number',
+      'target_produksi:date',
       'id_warehouse',
 
 

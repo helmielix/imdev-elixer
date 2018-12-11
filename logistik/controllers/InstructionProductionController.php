@@ -681,7 +681,7 @@ class InstructionProductionController extends Controller
         $modelLog->setAttributes($model->attributes);
 
 		if(!$modelLog->save()){
-			return print_r($modelLog->save());
+			return print_r($modelLog->getErrors());
 		}
     }
 

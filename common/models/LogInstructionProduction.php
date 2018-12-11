@@ -41,7 +41,7 @@ class LogInstructionProduction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['hasil_produksi',  'id_warehouse', 'target_produksi',  'id_modul'], 'required'],
+            // [['hasil_produksi',  'id_warehouse', 'target_produksi',  'id_modul'], 'required'],
             [['qty','id','hasil_produksi', 'id_warehouse', 'status_listing', 'id_modul'], 'integer'],
             [['instruction_number','target_produksi', 'created_date', 'updated_date'], 'safe'],
             [['file_attachment', 'revision_remark'], 'string'],
