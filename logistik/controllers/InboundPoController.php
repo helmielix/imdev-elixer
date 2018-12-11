@@ -157,12 +157,15 @@ class InboundPoController extends Controller
 			
         ]);
     }
-	
+
 	public function actionIndextagsn()
     {
     	$arrIdWarehouse = $this->getIdWarehouse();
+        $arrSnWarehouse= ArrayHelper::getColumn(UserWarehouse::find()->select(['id_warehouse'])->where(['id_user'=>Yii::$app->user->identity->id])->all(),'id_warehouse');
         $searchModel = new SearchInboundPo();
-        $dataProvider = $searchModel->searchByAction(Yii::$app->request->queryParams,'tagsn',null,$arrIdWarehouse);
+        $dataProvider = $searchModel->searchByAction(Yii::$app->request->queryParams,'tagsn',null,$arrSnWarehouse);
+
+
 		
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -968,6 +971,9 @@ class InboundPoController extends Controller
 			$sumQty = 0;
 			// return print_r($imCodes);
 			foreach($quantities as $key  => $data){
+				if($quantities[$key] == '' && $quantities[$key] == 0){
+					continue;
+				}
 				// return print_r($quantities[$key]);
 				$model = new InboundPoDetail();
 				$model->id_inbound_po = \Yii::$app->session->get('idInboundPo');

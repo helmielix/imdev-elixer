@@ -22,6 +22,7 @@ function filterstatusdetail(){
     $filter[999] = 'Not Yet Uploaded';
     return $filter;
 }
+
 ?>
 <div class="inbound-po-view">
 
@@ -205,16 +206,16 @@ function filterstatusdetail(){
                 'template'=>'{reset}',
                 'buttons'=>[
                    
-					
-					'reset' => function ($url, $model) {
-                        if(($model->status_listing == 41 || $model->status_listing == 43  ) && $model->sn_type ==1){
+
+					'reset' => function ($url, $searchModel) use ($model){
+                        if(($searchModel->status_listing == 41 || $searchModel->status_listing == 43 ) && $searchModel->sn_type ==1 && $model->status_listing !=42){
 							
                             return Html::a('<span style="margin:0px 2px;" class="label label-danger">Reset</span>', '#', [
-                                'title' => Yii::t('app', 'Reset'),'data-pjax' => false, 'class' => 'resetButton','idInboundPoDetail'=>$model->id_inbound_detail ,'value'=>$model->id_inbound_po, 'header'=> yii::t('app','Create Material GRF Vendor IKO')
+                                'title' => Yii::t('app', 'Reset'),'data-pjax' => false, 'class' => 'resetButton','idInboundPoDetail'    =>$searchModel->id_inbound_detail ,'value'=>$searchModel->id_inbound_po, 'header'=> yii::t('app','Create Material GRF Vendor IKO')
                             ]);
-                        }else if(($model->status_listing == 41 || $model->status_listing == 43) && $model->sn_type ==2){
+                        }else if(($searchModel->status_listing == 41 || $searchModel->status_listing == 43) && $searchModel->sn_type ==2 && $model->status_listing !=42){
                             return Html::a('<span style="margin:0px 2px;" class="label label-danger">Reset</span>', '#', [
-                                'title' => Yii::t('app', 'Reset'),'data-pjax' => false, 'class' => 'resetqtycondButton','idInboundPoDetail'=>$model->id_inbound_detail ,'value'=>$model->id_inbound_po, 'header'=> yii::t('app','Create Material GRF Vendor IKO')
+                                'title' => Yii::t('app', 'Reset'),'data-pjax' => false, 'class' => 'resetqtycondButton','idInboundPoDetail'=>$searchModel->id_inbound_detail ,'value'=>$searchModel->id_inbound_po, 'header'=> yii::t('app','Create Material GRF Vendor IKO')
                             ]);
                         }
                     },
