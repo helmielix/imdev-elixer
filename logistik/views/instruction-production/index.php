@@ -91,7 +91,7 @@ function getFilterStatus() {
                     'view' => function ($url, $model) {
                          if(Yii::$app->controller->action->id == 'index' && isset($model->status_listing)){
                             return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#view?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
-                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-wh-transfer/view','id' => $model->id]), 'header'=> yii::t('app','Detail Material GRF Vendor IKO')
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-production/view','id' => $model->id]), 'header'=> yii::t('app','Detail Material GRF Vendor IKO')
                             ]);
                         }
 						else {
@@ -99,7 +99,7 @@ function getFilterStatus() {
                             if(Yii::$app->controller->action->id == 'indexapprove') $viewurl = 'viewapprove';
                             if(Yii::$app->controller->action->id == 'indexoverview') $viewurl = 'viewoverview';
                             return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
-                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-wh-transfer/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app','Detail Inbound PO')
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-production/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app','Detail Inbound PO')
                                 ]);
                         }
                     },

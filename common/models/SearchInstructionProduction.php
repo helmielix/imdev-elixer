@@ -34,7 +34,7 @@ class SearchInstructionProduction extends InstructionProduction
   		if($action == 'input'){
   			$query	->andFilterWhere(['instruction_production.status_listing' => [ 1,2,3,6,7 ]]);
   		}else if($action == 'approve'){
-  			$query	->andFilterWhere(['instruction_production.status_listing' => [ 1,5 ]]);
+  			$query	->andFilterWhere(['instruction_production.status_listing' => [ 1,2,5 ]]);
   		}
 
   		$dataProvider = $this->_search($params, $query);

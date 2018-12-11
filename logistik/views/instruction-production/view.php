@@ -22,9 +22,30 @@ $this->params['breadcrumbs'][] = $this->title;
 				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
 				'attributes' => [
 					'instruction_number',
-					'delivery_target_date:date',
-					'wh_origin',
-					'wh_destination',
+					'target_produksi:date',
+					[
+						'attribute' => 'id_warehouse',
+						'value' => function($model){
+							return $model->idWarehouse->nama_warehouse;
+						}
+					],
+					// 'id_warehouse',
+					[
+		                'attribute'=>'file_attachment',
+		                'format'=>'raw',
+						'value' => function($searchModel){
+							if ($this->context->action->id == 'exportpdf' || $this->context->action->id == 'exportinstruction'){
+								return basename($searchModel->file_attachment);
+							}else{
+								return Html::a(basename($searchModel->file_attachment), ['downloadfile','id' => $searchModel->id, 'relation' => 'instruction'], $options = ['target'=>'_blank', 'data' => [
+				                        'method' => 'post',
+				                        'params' => [
+				                            'data' => 'file_attachment',
+				                        ]
+				                    ]]);
+							}
+						},
+		            ],
 				],
 			]) ?>
 		</div>
@@ -34,8 +55,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				'options' => ['class' => 'small table table-striped table-bordered detail-view'],
 				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
 				'attributes' => [
-					'grf_number',
-					'file_attachment',
+					'created_by',
+					// 'file_attachment',
 				],
 			]) ?>
 		</div>

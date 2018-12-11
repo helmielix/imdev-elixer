@@ -67,6 +67,11 @@ class InstructionProductionController extends Controller
         return $this->render('index', $this->listIndex('input'));
     }
 
+	public function actionIndexapprove()
+    {
+        return $this->render('index', $this->listIndex('approve'));
+    }
+
     public function actionIndexlog()
     {
         $searchModel = new SearchLogInstructionProduction();
@@ -76,11 +81,6 @@ class InstructionProductionController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-    }
-
-	public function actionIndexapprove()
-    {
-        return $this->render('index', $this->listIndex('approve'));
     }
 
 	public function actionIndexdetail(){
@@ -116,16 +116,11 @@ class InstructionProductionController extends Controller
     }
 
 	public function actionView($id){
-		// echo basename(Yii::$app->request->referrer);
-
-		// $basename = explode('?', basename(Yii::$app->request->referrer));
-		// if ($basename[0] == 'view'){
-			// return $this->redirect(['index']);
-			// // throw new \yii\web\HttpException(405, 'The requested Page could not be access.');
-		// }
 		$this->layout = 'blank';
 		return $this->render('view', $this->detailView($id));
 	}
+
+	
 
 	public function actionViewlog($id){
 		// echo basename(Yii::$app->request->referrer);
