@@ -147,8 +147,10 @@ class SearchMasterItemIm extends MasterItemIm
 			'master_item_im_detail.s_good',
 			'master_item_im_detail.s_not_good',
 			'master_item_im_detail.s_reject',
-			'master_item_im_detail.s_good_dismantle',
-			'master_item_im_detail.s_not_good_dismantle'
+			'master_item_im_detail.s_dismantle',
+            'master_item_im_detail.s_revocation',
+            'master_item_im_detail.s_good_for_recond',
+			'master_item_im_detail.s_good_rec',
 		]);
 		
 		if ($idMasterItemIm != null){
@@ -180,14 +182,14 @@ class SearchMasterItemIm extends MasterItemIm
             'status' => $this->status,
             'created_date' => $this->created_date,
             'updated_date' => $this->updated_date,
+            'master_item_im.sn_type' => $this->sn_type,
         ]);
 
         $query->andFilterWhere(['ilike', 'name', $this->name])            
             ->andFilterWhere(['ilike', 'im_code', $this->im_code])                                
             ->andFilterWhere(['ilike', 'referenceGrouping', $this->grouping])
-            ->andFilterWhere(['ilike', 'referenceType', $this->type])
-            ->andFilterWhere(['ilike', 'referenceBrand refbrand', $this->brand])
-            ->andFilterWhere(['ilike', 'refwarna.description', $this->warna])
+           ->andFilterWhere(['=', 'brand', $this->brand])
+            ->andFilterWhere(['=', 'warna', $this->warna])
             ->andFilterWhere(['ilike', 'grf_detail.qty_request', $this->qty_request])
             ->andFilterWhere(['ilike', 'inbound_grf_detail.qty_good', $this->qty_good]);            
 

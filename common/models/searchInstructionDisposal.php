@@ -44,6 +44,8 @@ class SearchInstructionDisposal extends InstructionDisposal
         
         if($action == 'input'){
             $query  ->andFilterWhere(['instruction_disposal.status_listing' => [ 1,2,3,6,7 ]]);
+        }else if($action == 'request'){
+            $query  ->andFilterWhere(['instruction_disposal.status_listing' => [ 50 ]]);
         }else if($action == 'approve'){
             $query  ->andFilterWhere(['instruction_disposal.status_listing' => [ 1,5 ]]);
         }

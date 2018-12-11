@@ -26,7 +26,7 @@ class InstructionWhTransferDetail extends \yii\db\ActiveRecord
      * @inheritdoc
      */
 	public $name, $brand, $warna, $sn_type;
-	public $rem_good, $rem_not_good, $rem_reject, $rem_good_dismantle, $rem_not_good_dismantle;
+	public $rem_good, $rem_not_good, $rem_reject, $rem_dismantle, $rem_revocation, $rem_good_rec, $rem_good_for_recond;
     public static function tableName()
     {
         return 'instruction_wh_transfer_detail';
@@ -39,17 +39,19 @@ class InstructionWhTransferDetail extends \yii\db\ActiveRecord
     {
         return [
             [['id_instruction_wh', 'id_item_im'], 'required'],
-            [['id_instruction_wh', 'id_item_im', 'created_by', 'req_good', 'req_not_good', 'req_reject', 'req_good_dismantle', 'req_not_good_dismantle'], 'integer'],
-            [['rem_good', 'rem_not_good', 'rem_reject', 'rem_good_dismantle', 'rem_not_good_dismantle'], 'integer'],
-            [['req_good', 'req_not_good', 'req_reject', 'req_good_dismantle', 'req_not_good_dismantle'], 'required', 'on' => 'updatedetail'],
+            [['id_instruction_wh', 'id_item_im', 'created_by', 'req_good', 'req_not_good', 'req_reject', 'req_dismantle', 'req_revocation', 'req_good_for_recond', 'req_good_rec'], 'integer'],
+            [['rem_good', 'rem_not_good', 'rem_reject', 'rem_dismantle', 'rem_revocation', 'rem_good_for_recond', 'rem_good_rec'], 'integer'],
+            [['req_good', 'req_not_good', 'req_reject', 'req_dismantle', 'req_revocation', 'rem_good_for_recond', 'rem_good_rec'], 'required', 'on' => 'updatedetail'],
             [['id_instruction_wh'], 'exist', 'skipOnError' => true, 'targetClass' => InstructionWhTransfer::className(), 'targetAttribute' => ['id_instruction_wh' => 'id']],
             // [['id_item_im'], 'exist', 'skipOnError' => true, 'targetClass' => ItemIm::className(), 'targetAttribute' => ['id_item_im' => 'id']],
             // [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
 			[['req_good'], 'compare', 'operator' => '<=', 'compareAttribute' => 'rem_good', 'type' => 'number', 'on' => 'updatedetail'],
 			[['req_not_good'], 'compare', 'operator' => '<=', 'compareAttribute' => 'rem_not_good', 'type' => 'number', 'on' => 'updatedetail'],
 			[['req_reject'], 'compare', 'operator' => '<=', 'compareAttribute' => 'rem_reject', 'type' => 'number', 'on' => 'updatedetail'],
-			[['req_good_dismantle'], 'compare', 'operator' => '<=', 'compareAttribute' => 'rem_good_dismantle', 'type' => 'number', 'on' => 'updatedetail'],
-			[['req_not_good_dismantle'], 'compare', 'operator' => '<=', 'compareAttribute' => 'rem_not_good_dismantle', 'type' => 'number', 'on' => 'updatedetail'],
+			[['req_dismantle'], 'compare', 'operator' => '<=', 'compareAttribute' => 'rem_dismantle', 'type' => 'number', 'on' => 'updatedetail'],
+			[['req_revocation'], 'compare', 'operator' => '<=', 'compareAttribute' => 'rem_revocation', 'type' => 'number', 'on' => 'updatedetail'],
+			[['req_good_rec'], 'compare', 'operator' => '<=', 'compareAttribute' => 'rem_good_rec', 'type' => 'number', 'on' => 'updatedetail'],
+			[['req_good_for_recond'], 'compare', 'operator' => '<=', 'compareAttribute' => 'rem_good_for_recond', 'type' => 'number', 'on' => 'updatedetail'],
         ];
     }
 
@@ -66,8 +68,10 @@ class InstructionWhTransferDetail extends \yii\db\ActiveRecord
             'req_good' => 'Request Good',
             'req_not_good' => 'Request Not Good',
             'req_reject' => 'Request Reject',
-			'req_good_dismantle' => 'Request Good Dismantle',
-            'req_not_good_dismantle' => 'Request Not Good Dismantle',
+			'req_dismantle' => 'Request Dismantle',
+            'req_revocation' => 'Request Revocation',
+            'req_good_for_recond' => 'Request Good for Recondition',
+            'req_good_rec' => 'Request Good Recondition',
 			'sn_type' => 'SN / Non SN',
         ];
     }
@@ -118,28 +122,54 @@ class InstructionWhTransferDetail extends \yii\db\ActiveRecord
 			$modelIm->save();
 		}
 
-		if(isset($this->oldAttributes['req_good_dismantle']) && $this->req_good_dismantle != $this->oldAttributes['req_good_dismantle']){
+		if(isset($this->oldAttributes['req_dismantle']) && $this->req_dismantle != $this->oldAttributes['req_dismantle']){
 			// The attribute is changed. Do something here...
 			// $modelIm = MasterItemImDetail::findOne($this->id_item_im);
 
 			// add old request to stock
-			$modelIm->s_good_dismantle = $modelIm->s_good_dismantle + $this->oldAttributes['req_good_dismantle'];
+			$modelIm->s_dismantle = $modelIm->s_dismantle + $this->oldAttributes['req_dismantle'];
 
 			// change stock to the new request
-			$modelIm->s_good_dismantle = $modelIm->s_good_dismantle - $this->req_good_dismantle;
+			$modelIm->s_dismantle = $modelIm->s_dismantle - $this->req_dismantle;
 
 			$modelIm->save();
 		}
 
-		if(isset($this->oldAttributes['req_not_good_dismantle']) && $this->req_not_good_dismantle != $this->oldAttributes['req_not_good_dismantle']){
+		if(isset($this->oldAttributes['req_revocation']) && $this->req_revocation != $this->oldAttributes['req_revocation']){
 			// The attribute is changed. Do something here...
 			// $modelIm = MasterItemImDetail::findOne($this->id_item_im);
 
 			// add old request to stock
-			$modelIm->s_not_good_dismantle = $modelIm->s_not_good_dismantle + $this->oldAttributes['req_not_good_dismantle'];
+			$modelIm->s_revocation = $modelIm->s_revocation + $this->oldAttributes['req_revocation'];
 
 			// change stock to the new request
-			$modelIm->s_not_good_dismantle = $modelIm->s_not_good_dismantle - $this->req_not_good_dismantle;
+			$modelIm->s_revocation = $modelIm->s_revocation - $this->req_revocation;
+
+			$modelIm->save();
+		}
+
+		if(isset($this->oldAttributes['req_good_for_recond']) && $this->req_good_for_recond != $this->oldAttributes['req_good_for_recond']){
+			// The attribute is changed. Do something here...
+			// $modelIm = MasterItemImDetail::findOne($this->id_item_im);
+
+			// add old request to stock
+			$modelIm->s_good_for_recond = $modelIm->s_good_for_recond + $this->oldAttributes['req_good_for_recond'];
+
+			// change stock to the new request
+			$modelIm->s_good_for_recond = $modelIm->s_good_for_recond - $this->req_good_for_recond;
+
+			$modelIm->save();
+		}
+
+		if(isset($this->oldAttributes['req_good_rec']) && $this->req_good_rec != $this->oldAttributes['req_good_rec']){
+			// The attribute is changed. Do something here...
+			// $modelIm = MasterItemImDetail::findOne($this->id_item_im);
+
+			// add old request to stock
+			$modelIm->s_good_rec = $modelIm->s_good_rec + $this->oldAttributes['req_good_rec'];
+
+			// change stock to the new request
+			$modelIm->s_good_rec = $modelIm->s_good_rec - $this->req_good_rec;
 
 			$modelIm->save();
 		}

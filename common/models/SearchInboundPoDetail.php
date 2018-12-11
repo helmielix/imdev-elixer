@@ -156,10 +156,10 @@ class SearchInboundPoDetail extends InboundPoDetail
         ]);
 
         $query->andFilterWhere(['ilike', 'im_code', $this->im_code])
-        ->andFilterWhere(['ilike', 'brand', $this->brand])
-        ->andFilterWhere(['ilike', 'warna', $this->warna])
+        ->andFilterWhere(['=', 'brand', $this->brand])
+        ->andFilterWhere(['=', 'warna', $this->warna])
         // ->andFilterWhere(['ilike', 'master_item_im.grouping', $this->grouping])
-        ->andFilterWhere(['ilike', 'type', $this->type]);
+        ->andFilterWhere(['=', 'type', $this->type]);
 
 
 

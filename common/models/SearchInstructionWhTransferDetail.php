@@ -94,14 +94,16 @@ class SearchInstructionWhTransferDetail extends InstructionWhTransferDetail
             'req_good' => $this->req_good,
             'req_not_good' => $this->req_not_good,
             'req_reject' => $this->req_reject,
-			'req_good_dismantle' => $this->req_good_dismantle,
-            'req_not_good_dismantle' => $this->req_not_good_dismantle,
+			'req_dismantle' => $this->req_dismantle,
+            'req_revocation' => $this->req_revocation,
+            'req_good_rec' => $this->req_good_rec,
+            'req_good_for_recond' => $this->req_good_for_recond,
         ]);
 
 		$query->andFilterWhere(['ilike', 'master_item_im.im_code', $this->id_item_im])
 			  ->andFilterWhere(['ilike', 'master_item_im.name', $this->name])
-			  ->andFilterWhere(['ilike', 'refbrand.description', $this->brand])
-			  ->andFilterWhere(['ilike', 'refwarna.description', $this->warna])
+			  ->andFilterWhere(['=', 'brand', $this->brand])
+            ->andFilterWhere(['=', 'warna', $this->warna])
 		;
 
         return $dataProvider;

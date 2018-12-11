@@ -13,8 +13,8 @@ use Yii;
  * @property string $s_good
  * @property string $s_not_good
  * @property string $s_reject
- * @property string $s_good_dismantle
- * @property string $s_not_good_dismantle
+ * @property string $s_dismantle
+ * @property string $s_revocation
  *
  * @property MasterItemIm $idMasterItemIm
  * @property Warehouse $idWarehouse
@@ -22,7 +22,7 @@ use Yii;
 class MasterItemImDetail extends \yii\db\ActiveRecord
 {
     public $im_code, $grouping, $brand, $warna, $type,  $req_good_qty;
-    // public $s_good, $s_not_good, $s_reject, $s_good_dismantle, $s_not_good_dismantle;
+    // public $s_good, $s_not_good, $s_reject, $s_dismantle, $s_revocation;
 
     public static function tableName()
     {
@@ -36,7 +36,7 @@ class MasterItemImDetail extends \yii\db\ActiveRecord
     {
         return [
             [['id_master_item_im', 'id_warehouse'], 'required'],
-            [['id_master_item_im', 'id_warehouse', 's_good', 's_not_good', 's_reject', 's_good_dismantle', 's_not_good_dismantle'], 'integer'],
+            [['id_master_item_im', 'id_warehouse', 's_good', 's_not_good', 's_reject', 's_dismantle', 's_revocation', 's_good_rec', 's_good_for_recond'], 'integer'],
             [['id_master_item_im'], 'exist', 'skipOnError' => true, 'targetClass' => MasterItemIm::className(), 'targetAttribute' => ['id_master_item_im' => 'id']],
             [['id_warehouse'], 'exist', 'skipOnError' => true, 'targetClass' => Warehouse::className(), 'targetAttribute' => ['id_warehouse' => 'id']],
         ];
@@ -54,8 +54,10 @@ class MasterItemImDetail extends \yii\db\ActiveRecord
             's_good' => 'S Good',
             's_not_good' => 'S Not Good',
             's_reject' => 'S Reject',
-            's_good_dismantle' => 'S Good Dismantle',
-            's_not_good_dismantle' => 'S Not Good Dismantle',
+            's_dismantle' => 'S Dismantle',
+            's_revocation' => 'S Revocation',
+            's_good_rec' => 'S Good Recond',
+            's_good_for_recond' => 'S Good for Recond',
         ];
     }
 

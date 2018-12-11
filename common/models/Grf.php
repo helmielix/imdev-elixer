@@ -36,7 +36,7 @@ use common\models\Vendor;
 class Grf extends \yii\db\ActiveRecord
 {
     public $file1,$file2,$file3, $division;
-    public   $rr_date,  $item_name, $im_code, $grouping, $qty, $sn_type, $id_instruction_grf, $orafin_code, $orafin_name, $id_detail, $id_instruction, $id_instruction_detail, $brand, $warna, $qty_good, $qty_not_good, $qty_reject, $incoming_date;
+    public   $rr_date,  $item_name, $im_code, $grouping, $qty, $sn_type, $id_instruction_grf, $orafin_code, $orafin_name, $id_detail, $id_instruction, $id_instruction_detail, $brand, $warna, $qty_good, $qty_not_good, $qty_reject, $incoming_date, $team_leader, $team_name;
 
     public static function tableName()
     {

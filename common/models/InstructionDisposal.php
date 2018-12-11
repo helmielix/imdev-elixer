@@ -68,7 +68,7 @@ class InstructionDisposal extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['no_iom', 'id_warehouse', 'instruction_number',  'date_iom', 'id_modul'], 'required'],
+            [['no_iom', 'id_warehouse',  'date_iom', 'id_modul'], 'required'],
             [['created_by', 'updated_by', 'status_listing', 'id_warehouse', 'id_modul'], 'integer'],
             [['instruction_number'], 'string', 'max' => 26],
             [['no_iom'], 'string', 'max' => 26],

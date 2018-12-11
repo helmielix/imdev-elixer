@@ -174,12 +174,13 @@ class SearchInboundPo extends InboundPo
                     'orafin_view_mkm_pr_to_pay.rcv_quantity_received' => $this->qty,
                     'inbound_po_detail.qty_rr' => $this->qty_rr,
                     'master_item_im.sn_type' => $this->sn_type,
+                    'inbound_po.id' => $this->id_inbound,
                 ]);
                 // $query->andFilterWhere(['ilike', 'orafin_view_mkm_pr_to_pay.pr_item_description', $this->orafin_name])
                 $query->andFilterWhere(['ilike', 'master_item_im.name', $this->orafin_name])
                 // ->andFilterWhere(['ilike', 'orafin_view_mkm_pr_to_pay.pr_item_code', $this->orafin_code])
                 ->andFilterWhere(['ilike', 'master_item_im.orafin_code', $this->orafin_code])
-                ->andFilterWhere(['ilike', 'master_item_im.grouping', $this->grouping]);
+                ->andFilterWhere(['=', 'master_item_im.grouping', $this->grouping]);
                 return $dataProvider;
         }else if ($action == 'indexdetail') {
             $query->joinWith('orafinPrToPay')
@@ -234,17 +235,31 @@ class SearchInboundPo extends InboundPo
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => ['pageSize' => Yii::$app->params['defaultPageSize']],
-            'sort'=> ['defaultOrder' => ['updated_date'=>SORT_DESC]],
+            // 'sort'=> [
+            //         'attributes' => [
+            //             'status_listing',
+            //             'rr_number',
+            //             'po_number',
+            //             'pr_number',
+            //             'tgl_sj',
+            //             'supplier',
+            //             'inbound_po.updated_date'  ,
+            //         ],
+            //         'defaultOrder' => ['updated_date'=>SORT_DESC]
+            //     ],
         ]);
 
-        // $dataProvider->sort->attributes['area'] = [
-            // 'asc' => ['area.id' => SORT_ASC],
-            // 'desc' => ['area.id' => SORT_DESC],
-        // ];
-
-        // $dataProvider->sort->attributes['boq_number'] = [
-            // 'asc' => ['planning_iko_boq_p.boq_number' => SORT_ASC],
-            // 'desc' => ['planning_iko_boq_p.boq_number' => SORT_DESC],
+        if($action!='detail_sn'){
+            $dataProvider->sort->defaultOrder['updated_date'] = SORT_DESC;
+        }else{
+            $dataProvider->sort->attributes = [
+                // 'item_name',
+            ];
+        }
+        
+        // $dataProvider->sort->attributes['COLUMN'] = [
+            // 'asc' => ['TABLE.COLUMN' => SORT_ASC],
+            // 'desc' => ['TABLE.COLUMN' => SORT_DESC],
         // ];
 
         $this->load($params);

@@ -34,13 +34,13 @@ class InboundWhTransferDetail extends \yii\db\ActiveRecord
     {
         return [
             [['id_inbound_wh', 'id_item_im'], 'required'],
-            [['id_inbound_wh', 'id_item_im', 'qty', 'qty_good', 'qty_not_good', 'qty_reject', 'qty_good_dismantle', 'qty_not_good_dismantle'], 'integer'],
+            [['id_inbound_wh', 'id_item_im', 'qty', 'qty_good', 'qty_not_good', 'qty_reject', 'qty_dismantle', 'qty_revocation', 'qty_good_for_recond', 'qty_good_rec'], 'integer'],
 
             [['id_inbound_wh'], 'exist', 'skipOnError' => true, 'targetClass' => InboundWhTransfer::className(), 'targetAttribute' => ['id_inbound_wh' => 'id_outbound_wh']],
             // [['id_item_im'], 'exist', 'skipOnError' => true, 'targetClass' => MasterItemImDetail::className(), 'targetAttribute' => ['id_item_im' => 'id']],
             [['id_item_im'], 'exist', 'skipOnError' => true, 'targetClass' => MasterItemIm::className(), 'targetAttribute' => ['id_item_im' => 'id']],
 
-			[['qty_good', 'qty_not_good', 'qty_reject', 'qty_good_dismantle', 'qty_not_good_dismantle'], 'default', 'value' => 0],
+			[['qty_good', 'qty_not_good', 'qty_reject', 'qty_dismantle', 'qty_revocation', 'qty_good_for_recond', 'qty_good_rec'], 'default', 'value' => 0],
 			[['status_tagsn'], 'default', 'value' => 44], // Not Registered
         ];
     }

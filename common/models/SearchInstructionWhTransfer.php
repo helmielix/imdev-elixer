@@ -41,7 +41,9 @@ class SearchInstructionWhTransfer extends InstructionWhTransfer
 			$query	->andFilterWhere(['instruction_wh_transfer.status_listing' => [ 1,2,5 ]]);
 			$query	->joinWith('outboundWhTransfer');
 			$query	->andWhere(['outbound_wh_transfer.status_listing' => null]);
-		}
+		}else if($action == 'overview'){
+            $query  ->andFilterWhere(['not in','instruction_wh_transfer.status_listing' , [ 13 ]]);
+        }
 		
 		$dataProvider = $this->_search($params, $query);
 
@@ -55,7 +57,18 @@ class SearchInstructionWhTransfer extends InstructionWhTransfer
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
 			'pagination' => ['pageSize' => Yii::$app->params['defaultPageSize'] ],
-			'sort'=> ['defaultOrder' => ['created_date'=>SORT_DESC]]
+            'sort'=> [
+                    'attributes' => [
+                        'status_listing',
+                        'instruction_number',
+                        'delivery_target_date',
+                        'wh_origin',
+                        'wh_destination',
+                        'created_date',                        
+                        'updated_date'  ,
+                    ],
+                    'defaultOrder' => ['created_date'=>SORT_DESC]
+                ],			
         ]);
 
         $this->load($params);
