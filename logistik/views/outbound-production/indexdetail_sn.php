@@ -67,6 +67,7 @@ function getFilterStatus() {
 				// 'value' => 'idMasterItemImDetail.idMasterItemIm.brand',
 				'value' => 'idParameterMasterItem.idMasterItemIm.referenceBrand.description',
 			],
+			'id',
 			// 'req_good',
 			// 'req_not_good',
 			// 'req_reject',
@@ -78,6 +79,17 @@ function getFilterStatus() {
 				'value' => 'idParameterMasterItem.idMasterItemIm.referenceSn.description',
 				'filter' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => 'sn_type'])->all(), 'id_grouping', 'description'),
 			],
+			[
+                'class' => 'yii\grid\ActionColumn',
+                'template'=>'{update}',
+                'buttons'=>[
+                   'update' => function ($url, $model) {
+                        return Html::a('<span style="margin:0px 2px" class="label label-success">Tag SN</span>', '#', [
+                            'title' => Yii::t('app', 'update'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/create-item-sn', 'id'=> $model->id]), 'header'=> yii::t('app','Update Detail Warehouse Transfers Instruction')
+                        ]);
+                    },
+                ],
+            ],
 			// [
    //              'attribute' => 'status_listing',
    //              'format' => 'raw',

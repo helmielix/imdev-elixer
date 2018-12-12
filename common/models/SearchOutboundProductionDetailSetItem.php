@@ -69,4 +69,36 @@ class SearchOutboundProductionDetailSetItem extends OutboundProductionDetailSetI
 
         return $dataProvider;
     }
+
+    public function searchByParent($params, $id)
+    {
+        $query = OutboundProductionDetailSetItem::find()->where(['id_outbound_production_detail'=>$id]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'id_outbound_production_detail' => $this->id_outbound_production_detail,
+            'id_item_set' => $this->id_item_set,
+            'req_good' => $this->req_good,
+            'req_dis_good' => $this->req_dis_good,
+            'req_good_recond' => $this->req_good_recond,
+            'total' => $this->total,
+        ]);
+
+        return $dataProvider;
+    }
 }

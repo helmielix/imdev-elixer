@@ -61,6 +61,11 @@ $this->params['breadcrumbs'][] = $this->title;
             .find('#modalContent')
             .load('<?php echo Url::to(['/'.\Yii::$app->controller->id.'/create', 'id' => Yii::$app->request->get('idOutboundGrf')]) ;?>');
         $('#modalHeader').html('<h3>Create Tag SN</h3>');
+    <?php }else if(\Yii::$app->controller->id == 'outbound-production'){ ?>
+		$('#modal').modal('show')
+            .find('#modalContent')
+            .load('<?php echo Url::to(['/'.\Yii::$app->controller->id.'/create-item-sn', 'id' => Yii::$app->request->get('idOutboundProdDetail')]) ;?>');
+        $('#modalHeader').html('<h3>Create Tag SN</h3>');
 		<?php } ?>
         
     });
@@ -89,6 +94,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?php } else if(\Yii::$app->controller->id == 'inbound-wh-transfer'){ ?>
 				  url: '<?php echo Url::to(['/'.\Yii::$app->controller->id.'/uploadsn', 'id' => Yii::$app->request->get('id'), 'idInboundWh' => Yii::$app->session->get('idInboundWh')]) ;?>',
 				<?php } else if(\Yii::$app->controller->id == 'outbound-grf'){ ?>
+				  url: '<?php echo Url::to(['/'.\Yii::$app->controller->id.'/uploadsn', 'id' => Yii::$app->request->get('id')]) ;?>',
+				<?php } else if(\Yii::$app->controller->id == 'outbound-production'){ ?>
 				  url: '<?php echo Url::to(['/'.\Yii::$app->controller->id.'/uploadsn', 'id' => Yii::$app->request->get('id')]) ;?>',
 				<?php } ?>
 				  type: 'post',
@@ -122,6 +129,11 @@ $this->params['breadcrumbs'][] = $this->title;
 							$('#modal').modal('show')
 								.find('#modalContent')
 								.load('<?php echo Url::to(['/'.\Yii::$app->controller->id.'/create', 'id' => Yii::$app->request->get('idOutboundGrf')]) ;?>');
+							$('#modalHeader').html('<h3>Create Tag SN</h3>');
+						<?php }else if(\Yii::$app->controller->id == 'outbound-production'){ ?>
+							$('#modal').modal('show')
+								.find('#modalContent')
+								.load('<?php echo Url::to(['/'.\Yii::$app->controller->id.'/create-item-sn', 'id' => Yii::$app->request->get('idOutboundProdDetail')]) ;?>');
 							$('#modalHeader').html('<h3>Create Tag SN</h3>');
 							<?php } ?>
 							

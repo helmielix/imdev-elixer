@@ -61,4 +61,14 @@ class OutboundProductionDetailSetItem extends \yii\db\ActiveRecord
     {
         return $this->hasOne(OutboundProductionDetail::className(), ['id' => 'id_outbound_production_detail']);
     }
+
+    public function getIdMasterItemIm()
+    {
+        return $this->hasOne(MasterItemIm::className(), ['id' => 'id_item_set']);
+    }
+
+    public function getStatusReference()
+    {
+        return $this->hasOne(StatusReference::className(), ['id' => 'status_listing']);
+    }
 }

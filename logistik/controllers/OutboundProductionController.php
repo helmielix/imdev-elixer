@@ -5,9 +5,11 @@ namespace logistik\controllers;
 use Yii;
 use common\models\OutboundProduction;
 use common\models\OutboundProductionDetail;
-use common\models\OutboundProductionDetailSn;
+// use common\models\OutboundProductionDetailSn;
 use common\models\OutboundProductionDetailSetItem;
 use common\models\SearchOutboundProduction;
+use common\models\SearchOutboundProductionDetailSetItem;
+use common\models\OutboundProductionDetailSetItemSn;
 use common\models\SearchOutboundProductionDetail;
 use common\models\SearchOutboundProductionDetailSn;
 use common\models\InstructionProduction;
@@ -274,6 +276,22 @@ class OutboundProductionController extends Controller
 
     }
 
+    public function actionCreateItemSn($id = null){
+    	$this->layout = 'blank';
+    	$model = OutboundProductionDetail::findOne($id);
+
+		$searchModel = new SearchOutboundProductionDetailSetItem();
+        $dataProvider = $searchModel->searchByParent(Yii::$app->request->getQueryParams(), $id);
+
+		Yii::$app->session->set('idOutboundProdDetail', $id);
+
+        return $this->render('viewdetail_sn_upload', [
+			'model' => $model,
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+		]);
+    }
+
     public function actionViewoutbound($id)
     {
         $this->layout ='blank';
@@ -490,20 +508,20 @@ class OutboundProductionController extends Controller
 					];
 
 					//get max quantity based on detail
-					$modelDetail = OutboundProductionDetail::findOne($id);
+					$modelDetail = OutboundProductionDetailSetItem::findOne($id);
 					$maxQtyGood 			= $modelDetail->req_good;
-					$maxQtyNotGood 			= $modelDetail->req_not_good;
-					$maxQtyReject 			= $modelDetail->req_reject;
-					$maxQtyGoodDismantle 	= $modelDetail->req_good_dismantle;
-					$maxQtyNotGoodDismantle = $modelDetail->req_not_good_dismantle;
+					// $maxQtyNotGood 			= $modelDetail->req_not_good;
+					// $maxQtyReject 			= $modelDetail->req_reject;
+					$maxQtyGoodDismantle 	= $modelDetail->req_dis_good;
+					$maxQtyGoodRecond = $modelDetail->req_good_recond;
 
 					//get quantity already upload
-					$modelSn = OutboundProductionDetailSn::find()->andWhere(['id_outbound_production_detail' => $id]);
+					$modelSn = OutboundProductionDetailSetItemSn::find()->andWhere(['id_outbound_production_detail_set_item' => $id]);
 					$qtyGood 			= $modelSn->andWhere(['condition' => 'good'])->count();
-					$qtyNotGood 		= $modelSn->andWhere(['condition' => 'not good'])->count();
-					$qtyReject 			= $modelSn->andWhere(['condition' => 'reject'])->count();
+					// $qtyNotGood 		= $modelSn->andWhere(['condition' => 'not good'])->count();
+					// $qtyReject 			= $modelSn->andWhere(['condition' => 'reject'])->count();
 					$qtyGoodDismantle 	= $modelSn->andWhere(['condition' => 'good dismantle'])->count();
-					$qtyNotGoodDismantle= $modelSn->andWhere(['condition' => 'not good dismantle'])->count();
+					$qtyGoodRecond= $modelSn->andWhere(['condition' => 'good recond'])->count();
 
 					$newIdSn = [];
 					foreach ($datas as $key => $data) {
@@ -519,9 +537,9 @@ class OutboundProductionController extends Controller
 							continue;
 						}
 
-						$modelSn = new OutboundProductionDetailSn();
+						$modelSn = new OutboundProductionDetailSetItemSn();
 
-						$modelSn->id_outbound_production_detail = $id;
+						$modelSn->id_outbound_production_detail_set_item = $id;
 						$modelSn->serial_number = (string)$data['SERIAL_NUMBER'];
 						$modelSn->mac_address = (string)$data['MAC_ADDRESS'];
 						$modelSn->condition = strtolower($data['CONDITION']);
@@ -530,17 +548,17 @@ class OutboundProductionController extends Controller
 							case 'good':
 								$qtyGood++;
 							break;
-							case 'not good':
-								$qtyNotGood++;
-							break;
-							case 'reject':
-								$qtyReject++;
-							break;
+							// case 'not good':
+							// 	$qtyNotGood++;
+							// break;
+							// case 'reject':
+							// 	$qtyReject++;
+							// break;
 							case 'good dismantle':
 								$qtyGoodDismantle++;
 							break;
-							case 'not good dismantle':
-								$qtyNotGoodDismantle++;
+							case 'good recond':
+								$qtyGoodRecond++;
 							break;
 						}
 
@@ -549,68 +567,68 @@ class OutboundProductionController extends Controller
 							$maxErr = 'Quantity Good cannot be more than '. $maxQtyGood;
 						}
 
-						if ($qtyNotGood > $maxQtyNotGood){
-							$maxErr = 'Quantity Not Good cannot be more than '. $maxQtyNotGood;
-						}
+						// if ($qtyNotGood > $maxQtyNotGood){
+						// 	$maxErr = 'Quantity Not Good cannot be more than '. $maxQtyNotGood;
+						// }
 
-						if ($qtyReject > $maxQtyReject){
-							$maxErr = 'Quantity Reject cannot be more than '. $maxQtyReject;
-						}
+						// if ($qtyReject > $maxQtyReject){
+						// 	$maxErr = 'Quantity Reject cannot be more than '. $maxQtyReject;
+						// }
 
 						if ($qtyGoodDismantle > $maxQtyGoodDismantle){
 							$maxErr = 'Quantity Good Dismantle cannot be more than '. $maxQtyGoodDismantle;
 						}
 
-						if ($qtyNotGoodDismantle > $maxQtyNotGoodDismantle){
-							$maxErr = 'Quantity Not Good Dismantle cannot be more than '. $maxQtyNotGoodDismantle;
+						if ($qtyGoodRecond > $maxQtyGoodRecond){
+							$maxErr = 'Quantity Good Recond cannot be more than '. $maxQtyGoodRecond;
 						}
 
 						if ($maxErr != ''){
 							// delete new data only
-							OutboundProductionDetailSn::deleteAll(['id' => $newIdSn]);
+							OutboundProductionDetailSetItemSn::deleteAll(['id' => $newIdSn]);
 							return $maxErr;
 						}
 
 						if(!$modelSn->save()) {
 							// delete new data only
-							OutboundProductionDetailSn::deleteAll(['id' => $newIdSn]);
+							OutboundProductionDetailSetItemSn::deleteAll(['id' => $newIdSn]);
 							$error = $modelSn->getErrors();
 							$error['line'] = [$periksa.$row];
 							return Displayerror::pesan($modelSn->getErrors());
 						}
 
 						// simpan data di mastersn
-						if ( is_string( $modelSn->serial_number ) ){
-							$where = ['serial_number' => $modelSn->serial_number];
-						}else{
-							$where = ['mac_address' => $modelSn->mac_address];
-						}
-						$modelMasterSn = MasterSn::find()
-							->andWhere($where)
-							->andWhere(['status' => 27])
-							->one();
-						if ($modelMasterSn === null){
-							// tidak ada di master SN
-                            OutboundProductionDetailSn::deleteAll(['id' => $newIdSn]);
-							return 'Serial number: '.$modelSn->serial_number.' tidak terdaftar dalam sistem';
-						}
+						// if ( is_string( $modelSn->serial_number ) ){
+						// 	$where = ['serial_number' => $modelSn->serial_number];
+						// }else{
+						// 	$where = ['mac_address' => $modelSn->mac_address];
+						// }
+						// $modelMasterSn = MasterSn::find()
+						// 	->andWhere($where)
+						// 	->andWhere(['status' => 27])
+						// 	->one();
+						// if ($modelMasterSn === null){
+						// 	// tidak ada di master SN
+      //                       OutboundProductionDetailSetItemSn::deleteAll(['id' => $newIdSn]);
+						// 	return 'Serial number: '.$modelSn->serial_number.' tidak terdaftar dalam sistem';
+						// }
 
-						$modelMasterSn->last_transaction = $this->last_transaction.$modelDetail->idOutboundProd->idInstructionProd->whOrigin->nama_warehouse;
-						$modelMasterSn->condition = $modelSn->condition;
-						$modelMasterSn->save();
-						$this->createLogmastersn($modelMasterSn);
+						// $modelMasterSn->last_transaction = $this->last_transaction.$modelDetail->idOutboundProd->idInstructionProd->whOrigin->nama_warehouse;
+						// $modelMasterSn->condition = $modelSn->condition;
+						// $modelMasterSn->save();
+						// $this->createLogmastersn($modelMasterSn);
 						// simpan data di mastersn
+						// $newIdSn[] = $modelSn->id;
 
 
-						$newIdSn[] = $modelSn->id;
 						$row++;
 					}
 
 					if ($maxQtyGood == $qtyGood &&
-						$maxQtyNotGood == $qtyNotGood &&
-						$maxQtyReject == $qtyReject &&
+						// $maxQtyNotGood == $qtyNotGood &&
+						// $maxQtyReject == $qtyReject &&
 						$maxQtyGoodDismantle == $qtyGoodDismantle &&
-						$maxQtyNotGoodDismantle == $qtyNotGoodDismantle){
+						$maxQtyGoodRecond == $qtyGoodRecond){
 							$modelDetail->status_listing = 41;
 							$modelDetail->save();
 					}else{
