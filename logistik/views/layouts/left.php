@@ -220,16 +220,18 @@
 
 				array_push($arrItemsChild, ['label' => 'Repair Outbound', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);
 			}
-
+			// if(Yii::$app->user->can('/outbound-production/index') || Yii::$app->user->can('/outbound-production/indexprintsj') || Yii::$app->user->can('/outbound-production/indexapprove') || Yii::$app->user->can('/outbound-production/indeoveriew') || Yii::$app->user->can('/outbound-production/indexlog')) 
+			// {
+				$arrItemsChildChild = [];
 				// ## OUTBOUND Produksi
-				// array_push($arrItemsChildChild, ['label' => yii::t('app','Tag SN'), 'icon' => 'plus', 'url' => ['/outbound-produksi/index']]);
-				// array_push($arrItemsChildChild, ['label' => yii::t('app','Print SJ'), 'icon' => 'check-square-o', 'url' => ['/outbound-produksi/indexprintsj']]);
-				// array_push($arrItemsChildChild, ['label' => yii::t('app','Approval'), 'icon' => 'check-square-o', 'url' => ['/outbound-produksi/indexapprove']]);
-				// array_push($arrItemsChildChild, ['label' => yii::t('app','Overview'), 'icon' => 'check-square-o', 'url' => ['/outbound-produksi/indexapprove']]);
-				// array_push($arrItemsChildChild, ['label' => yii::t('app','Log History'), 'icon' => 'check-square-o', 'url' => ['/outbound-produksi/indexapprove']]);
+				array_push($arrItemsChildChild, ['label' => yii::t('app','Tag SN'), 'icon' => 'plus', 'url' => ['/outbound-production/index']]);
+				array_push($arrItemsChildChild, ['label' => yii::t('app','Print SJ'), 'icon' => 'check-square-o', 'url' => ['/outbound-production/indexprintsj']]);
+				array_push($arrItemsChildChild, ['label' => yii::t('app','Approval'), 'icon' => 'check-square-o', 'url' => ['/outbound-production/indexapprove']]);
+				array_push($arrItemsChildChild, ['label' => yii::t('app','Overview'), 'icon' => 'check-square-o', 'url' => ['/outbound-production/indeoveriew']]);
+				array_push($arrItemsChildChild, ['label' => yii::t('app','Log History'), 'icon' => 'check-square-o', 'url' => ['/outbound-production/indexlog']]);
 
-				// array_push($arrItemsChild, ['label' => 'Produksi', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);
-
+				array_push($arrItemsChild, ['label' => 'Produksi', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);
+			// }
     			## OUTBOUND Grf
 			if(Yii::$app->user->can('/outbound-grf/index') || Yii::$app->user->can('/outbound-grf/indexprintsj')|| Yii::$app->user->can('/outbound-grf/indexapprove')) 
 			{

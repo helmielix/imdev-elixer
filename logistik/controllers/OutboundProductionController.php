@@ -6,13 +6,16 @@ use Yii;
 use common\models\OutboundProduction;
 use common\models\OutboundProductionDetail;
 use common\models\OutboundProductionDetailSn;
+use common\models\OutboundProductionDetailSetItem;
 use common\models\SearchOutboundProduction;
 use common\models\SearchOutboundProductionDetail;
 use common\models\SearchOutboundProductionDetailSn;
 use common\models\InstructionProduction;
 use common\models\InstructionProductionDetail;
+use common\models\InstructionProductionDetailSetItem;
 use common\models\SearchInstructionProductionDetail;
 use common\models\MasterSn;
+use common\models\MasterItemIm;
 use common\models\LogMasterSn;
 use common\models\UploadForm;
 use common\models\Reference;
@@ -197,35 +200,60 @@ class OutboundProductionController extends Controller
 		$this->layout = 'blank';
 		if ($act == 'view'){
 			// create OutboundProduction
-			$modelInstruction = InstructionPruduction::findOne($id);
+			$modelInstruction = InstructionProduction::findOne($id);
 			$model = new OutboundProduction();
 
-			$model->id_instruction_wh = $modelInstruction->id;
+			$model->id_instruction_production = $modelInstruction->id;
 			$model->status_listing = 43; // Partially Uploaded
 			$model->id_modul = $this->id_modul;
 
-			$model->save();
+			// $model->save();
+			if(!$model->save())return print_r($model->getErrors());
 
 			// create OutboundProductionDetail
-			$modelInstructionDetail = InstructionProductionDetail::find()->andWhere(['id_instruction_wh' => $id])->all();
+			$modelInstructionDetail = InstructionProductionDetail::find()->andWhere(['id_instruction_production' => $id])->all();
 			foreach($modelInstructionDetail as $value){
 				$modelDetail = new OutboundProductionDetail();
 
-				$modelDetail->id_outbound_pro		= $value->id_instruction_wh;
+				$modelDetail->id_outbound_production		= $value->id_instruction_production;
 				$modelDetail->id_item_im			= $value->id_item_im;
-				$modelDetail->req_good				= $value->req_good;
-				$modelDetail->req_not_good			= $value->req_not_good;
-				$modelDetail->req_reject			= $value->req_reject;
-				$modelDetail->req_good_dismantle	= $value->req_good_dismantle;
-				$modelDetail->req_not_good_dismantle= $value->req_not_good_dismantle;
-				$modelDetail->status_listing		= ($value->idMasterItemIm->sn_type == 1) ? 999 : 41;
-
+				$modelDetail->qty				= $value->qty;
 
 				if (!$modelDetail->save()){
 					$error = $modelDetail->getErrors();
 					$model->delete();
 					return Displayerror::pesan($error);
 				}
+
+				$modelInstructionDetailItem = InstructionProductionDetailSetItem::find()->andWhere(['id_instruction_production_detail'=>$value->id])->all();
+
+				foreach ($modelInstructionDetailItem as $val) {
+					$modelMasterItem = MasterItemIm::findOne($val->id_item_set);
+
+					$modelDetailItem = new OutboundProductionDetailSetItem();
+					$modelDetailItem->id_outbound_production_detail = $modelDetail->id;
+					$modelDetailItem->id_item_set = $val->id_item_set;
+					$modelDetailItem->req_good = $val->req_good;
+					$modelDetailItem->req_dis_good = $val->req_dis_good;
+					$modelDetailItem->req_good_recond = $val->req_good_recond;
+					$modelDetailItem->total = $val->total;
+					$modelDetailItem->sn_type = $modelMasterItem->sn_type;
+
+					if (!$modelDetailItem->save()){
+						$error = $modelDetail->getErrors();
+						$model->delete();
+						return Displayerror::pesan($error);
+					}
+				}
+
+				// $modelDetail->req_not_good			= $value->req_not_good;
+				// $modelDetail->req_reject			= $value->req_reject;
+				// $modelDetail->req_good_dismantle	= $value->req_good_dismantle;
+				// $modelDetail->req_not_good_dismantle= $value->req_not_good_dismantle;
+				// $modelDetail->status_listing		= ($value->idMasterItemIm->sn_type == 1) ? 999 : 41;
+
+
+				
 			}
 
 
@@ -236,7 +264,7 @@ class OutboundProductionController extends Controller
 		$searchModel = new SearchOutboundProductionDetail();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
 
-		Yii::$app->session->set('idOutboundWh', $id);
+		Yii::$app->session->set('idOutboundProd', $id);
 
         return $this->render('create', [
 			'model' => $model,
@@ -254,7 +282,7 @@ class OutboundProductionController extends Controller
 		$searchModel = new SearchOutboundProductionDetail();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
 
-		Yii::$app->session->set('idOutboundWh', $id);
+		Yii::$app->session->set('idOutboundProd', $id);
 
         return $this->render('create', [
 			'model' => $model,
@@ -274,7 +302,7 @@ class OutboundProductionController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_instruction_wh]);
+            return $this->redirect(['view', 'id' => $model->id_instruction_production]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -288,7 +316,7 @@ class OutboundProductionController extends Controller
 		if ($model->status_listing == 3){
 			$model->status_listing = 2;
 		}else{
-			$modelOutboundWhDetail = OutboundProductionDetail::find()->where(['id_outbound_pro'=> $id])->asArray()->all();
+			$modelOutboundWhDetail = OutboundProductionDetail::find()->where(['id_outbound_production'=> $id])->asArray()->all();
 			$cekStatus = 1;
 			foreach($modelOutboundWhDetail as $key => $value){
 				if($value['status_listing'] != 41){
@@ -324,7 +352,7 @@ class OutboundProductionController extends Controller
 			// $model->driver = $_POST['OutboundProduction']['driver'];
 			// $model->forwarder = $_POST['OutboundProduction']['forwarder'];
 			// $model->plate_number = $_POST['OutboundProduction']['plate_number'];
-			$model->no_sj = substr($model->idInstructionWh->instruction_number, 0, 4).'/SJ-Jakarta-Div1/'.date('m/Y');
+			$model->no_sj = substr($model->idInstructionProd->instruction_number, 0, 4).'/SJ-Jakarta-Div1/'.date('m/Y');
 			$model->status_listing = 22;
 
 			$model->save();
@@ -361,7 +389,7 @@ class OutboundProductionController extends Controller
 			$model->published_date = date('Y-m-d');
 
 			// change all SN to INTRANSIT
-            $modeldetailsn = OutboundProductionDetailSn::find()->joinWith('idOutboundProDetail')->andWhere(['id_outbound_pro' => $model->id_instruction_wh])->all();
+            $modeldetailsn = OutboundProductionDetailSn::find()->joinWith('idOutboundProDetail')->andWhere(['id_outbound_production' => $model->id_instruction_production])->all();
 			// foreach( $model->OutboundProductionDetails->OutboundProductionDetailSns as $modelsn){
 			foreach( $modeldetailsn as $modelsn){
 				if (is_string($modelsn->serial_number)){
@@ -404,8 +432,8 @@ class OutboundProductionController extends Controller
 	}
 
 	public function actionRestore($idOutboundProDetail, $id){
-		// OutboundProductionDetailSn::deleteAll('id_outbound_pro_detail = '.$idOutboundProDetail);
-		$modeldetailsn = OutboundProductionDetailSn::find()->andWhere(['id_outbound_pro_detail' => $idOutboundProDetail])->all();
+		// OutboundProductionDetailSn::deleteAll('id_outbound_production_detail = '.$idOutboundProDetail);
+		$modeldetailsn = OutboundProductionDetailSn::find()->andWhere(['id_outbound_production_detail' => $idOutboundProDetail])->all();
 		foreach($modeldetailsn as $modelsn){
 			if ( is_string($modelsn->serial_number) ){
 				$where = ['serial_number' => $modelsn->serial_number];
@@ -425,7 +453,7 @@ class OutboundProductionController extends Controller
 		$model->status_listing = 999;
 		$model->save();
 
-        $modelOutbound = $model->idOutboundWh;
+        $modelOutbound = $model->idOutboundProd;
         $modelOutbound->status_listing = 43;
         $modelOutbound->save();
 
@@ -452,7 +480,7 @@ class OutboundProductionController extends Controller
 					if(isset($datas[0][0])){
 						$datas = $datas[0];
 					}
-					//OutboundProductionDetailSn::deleteAll('id_outbound_pro_detail = '.Yii::$app->session->get('idOutboundProductionDetail'));
+					//OutboundProductionDetailSn::deleteAll('id_outbound_production_detail = '.Yii::$app->session->get('idOutboundProductionDetail'));
 					$row = 2;
 					$periksa = "\nplease check on row ";
 					$reqCol = [
@@ -470,7 +498,7 @@ class OutboundProductionController extends Controller
 					$maxQtyNotGoodDismantle = $modelDetail->req_not_good_dismantle;
 
 					//get quantity already upload
-					$modelSn = OutboundProductionDetailSn::find()->andWhere(['id_outbound_pro_detail' => $id]);
+					$modelSn = OutboundProductionDetailSn::find()->andWhere(['id_outbound_production_detail' => $id]);
 					$qtyGood 			= $modelSn->andWhere(['condition' => 'good'])->count();
 					$qtyNotGood 		= $modelSn->andWhere(['condition' => 'not good'])->count();
 					$qtyReject 			= $modelSn->andWhere(['condition' => 'reject'])->count();
@@ -493,7 +521,7 @@ class OutboundProductionController extends Controller
 
 						$modelSn = new OutboundProductionDetailSn();
 
-						$modelSn->id_outbound_pro_detail = $id;
+						$modelSn->id_outbound_production_detail = $id;
 						$modelSn->serial_number = (string)$data['SERIAL_NUMBER'];
 						$modelSn->mac_address = (string)$data['MAC_ADDRESS'];
 						$modelSn->condition = strtolower($data['CONDITION']);
@@ -567,7 +595,7 @@ class OutboundProductionController extends Controller
 							return 'Serial number: '.$modelSn->serial_number.' tidak terdaftar dalam sistem';
 						}
 
-						$modelMasterSn->last_transaction = $this->last_transaction.$modelDetail->idOutboundWh->idInstructionWh->whOrigin->nama_warehouse;
+						$modelMasterSn->last_transaction = $this->last_transaction.$modelDetail->idOutboundProd->idInstructionProd->whOrigin->nama_warehouse;
 						$modelMasterSn->condition = $modelSn->condition;
 						$modelMasterSn->save();
 						$this->createLogmastersn($modelMasterSn);
@@ -590,7 +618,7 @@ class OutboundProductionController extends Controller
 						$modelDetail->save();
 					}
 
-					// $modelOutboundWhDetail = OutboundProductionDetail::find()->where(['id_outbound_pro'=> $modelDetail->id_outbound_pro])->asArray()->all();
+					// $modelOutboundWhDetail = OutboundProductionDetail::find()->where(['id_outbound_production'=> $modelDetail->id_outbound_production])->asArray()->all();
 					// $cekStatus = 1;
 					// foreach($modelOutboundWhDetail as $key => $value){
 					// 	if($value['status_listing'] != 41){
@@ -599,7 +627,7 @@ class OutboundProductionController extends Controller
 					// }
                     //
 					// if($cekStatus == 1){
-					// 	$modelOutbound = $this->findModel(\Yii::$app->session->get('idOutboundWh'));
+					// 	$modelOutbound = $this->findModel(\Yii::$app->session->get('idOutboundProd'));
 					// 	$modelOutbound->status_listing = 42;
 					// 	$modelOutbound->save();
 					// }
@@ -733,7 +761,7 @@ class OutboundProductionController extends Controller
 			'master_item_im.im_code',
 			'master_item_im.name as item_name',
 			'master_item_im.brand',
-		])->where(['id_outbound_pro' => $id])->all();
+		])->where(['id_outbound_production' => $id])->all();
 
 		return $this->render('viewprintpdf', [
 				'model' => $model,

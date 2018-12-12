@@ -91,8 +91,8 @@ function getFilterStatus() {
                 'buttons'=>[
                     'view' => function ($url, $model) {
                         if(Yii::$app->controller->action->id == 'index' && !isset($model->status_listing)){
-                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-plus"></span>', '#viewinstruction?id='.$model->id_instruction_wh.'&header=Create_Tag_SN', [
-                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/viewinstruction','id' => $model->id_instruction_wh]), 'header'=> yii::t('app','Create Tag SN')
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-plus"></span>', '#viewinstruction?id='.$model->id_instruction_production.'&header=Create_Tag_SN', [
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/viewinstruction','id' => $model->id_instruction_production]), 'header'=> yii::t('app','Create Tag SN')
                             ]);
                         }
 						else {
@@ -112,9 +112,9 @@ function getFilterStatus() {
 									$viewurl = 'viewprintsj';
 									$header = '';
 								}
-	                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-'.$icon.'"></span>', '#'.$viewurl.'?id='.$model->id_instruction_wh.
+	                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-'.$icon.'"></span>', '#'.$viewurl.'?id='.$model->id_instruction_production.
 								'&header='.$headerlnk, [
-	                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/'.$viewurl, 'id' => $model->id_instruction_wh]), 'header'=> yii::t('app',$header)
+	                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/'.$viewurl, 'id' => $model->id_instruction_production]), 'header'=> yii::t('app',$header)
 	                                ]);
 							}
 							if(Yii::$app->controller->action->id == 'indexapprove') {
@@ -126,9 +126,9 @@ function getFilterStatus() {
 							}
 
 							$headerlnk = str_replace(' ', '_', $header);
-                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id_instruction_wh.
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id_instruction_production.
 							'&header='.$headerlnk, [
-                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/'.$viewurl, 'id' => $model->id_instruction_wh]), 'header'=> yii::t('app',$header)
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/'.$viewurl, 'id' => $model->id_instruction_production]), 'header'=> yii::t('app',$header)
                                 ]);
                         }
                     },
@@ -160,29 +160,29 @@ function getFilterStatus() {
 			],
             'instruction_number',
 
-			[
-				'attribute' => 'delivery_target_date',
-				'value'  => 'delivery_target_date',
-				'format' => 'date',
-				'filter' => DatePicker::widget([
-					'model' => $searchModel,
-					'attribute' => 'delivery_target_date',
-					'clientOptions' => [
-						'autoclose' => true,
-						'format' => 'yyyy-mm-dd',
-					],
-				]),
-			],
-			[
-				'attribute' => 'wh_origin',
-				'value' => 'idInstructionWh.whOrigin.nama_warehouse',
-				'visible' => $this->context->action->id == 'index',
-			],
+			// [
+			// 	'attribute' => 'delivery_target_date',
+			// 	'value'  => 'delivery_target_date',
+			// 	'format' => 'date',
+			// 	'filter' => DatePicker::widget([
+			// 		'model' => $searchModel,
+			// 		'attribute' => 'delivery_target_date',
+			// 		'clientOptions' => [
+			// 			'autoclose' => true,
+			// 			'format' => 'yyyy-mm-dd',
+			// 		],
+			// 	]),
+			// ],
+			// [
+			// 	'attribute' => 'wh_origin',
+			// 	'value' => 'idInstructionWh.whOrigin.nama_warehouse',
+			// 	'visible' => $this->context->action->id == 'index',
+			// ],
 
-			[
-				'attribute' => 'wh_destination',
-				'value' => 'idInstructionWh.whDestination.nama_warehouse',
-			],
+			// [
+			// 	'attribute' => 'wh_destination',
+			// 	'value' => 'idInstructionWh.whDestination.nama_warehouse',
+			// ],
             [
 				'attribute' => 'created_date',
 				'value'  => 'created_date',

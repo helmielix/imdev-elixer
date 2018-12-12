@@ -1,6 +1,6 @@
 <?php
 
-namespace divisitiga\models;
+namespace common\models;
 
 use Yii;
 
@@ -31,10 +31,10 @@ class OutboundProductionDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_outbound_production', 'id_item_im', 'qty', 'sn'], 'required'],
+            [['id_outbound_production', 'id_item_im', 'qty'], 'required'],
             [['id_outbound_production', 'id_item_im', 'qty', 'sn'], 'default', 'value' => null],
             [['id_outbound_production', 'id_item_im', 'qty', 'sn'], 'integer'],
-            [['id_item_im'], 'exist', 'skipOnError' => true, 'targetClass' => ItemIm::className(), 'targetAttribute' => ['id_item_im' => 'id']],
+            // [['id_item_im'], 'exist', 'skipOnError' => true, 'targetClass' => ItemIm::className(), 'targetAttribute' => ['id_item_im' => 'id']],
         ];
     }
 
@@ -55,8 +55,18 @@ class OutboundProductionDetail extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getItemIm()
+    // public function getItemIm()
+    // {
+    //     return $this->hasOne(ItemIm::className(), ['id' => 'id_item_im']);
+    // }
+
+    public function getIdParameterMasterItem()
     {
-        return $this->hasOne(ItemIm::className(), ['id' => 'id_item_im']);
+        return $this->hasOne(ParameterMasterItem::className(), ['id' => 'id_item_im']);
+    }
+
+    public function getStatusReference()
+    {
+        return $this->hasOne(StatusReference::className(), ['id' => 'status_listing']);
     }
 }

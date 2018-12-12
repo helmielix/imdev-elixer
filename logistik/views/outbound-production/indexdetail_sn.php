@@ -55,88 +55,88 @@ function getFilterStatus() {
 			[
 				'attribute' => 'name',
 				// 'value' => 'idMasterItemImDetail.idMasterItemIm.name',
-				'value' => 'idMasterItemIm.name',
+				'value' => 'idParameterMasterItem.idMasterItemIm.name',
 			],
 			[
 				'attribute' => 'id_item_im',
 				// 'value' => 'idMasterItemImDetail.idMasterItemIm.im_code',
-				'value' => 'idMasterItemIm.im_code',
+				'value' => 'idParameterMasterItem.idMasterItemIm.im_code',
 			],
 			[
 				'attribute' => 'brand',
 				// 'value' => 'idMasterItemImDetail.idMasterItemIm.brand',
-				'value' => 'idMasterItemIm.referenceBrand.description',
+				'value' => 'idParameterMasterItem.idMasterItemIm.referenceBrand.description',
 			],
-			'req_good',
-			'req_not_good',
-			'req_reject',
-			'req_good_dismantle',
-			'req_not_good_dismantle',
+			// 'req_good',
+			// 'req_not_good',
+			// 'req_reject',
+			// 'req_good_dismantle',
+			// 'req_not_good_dismantle',
 			[
 				'attribute' => 'sn_type',
 				// 'value' => 'idMasterItemImDetail.idMasterItemIm.referenceSn.description',
-				'value' => 'idMasterItemIm.referenceSn.description',
+				'value' => 'idParameterMasterItem.idMasterItemIm.referenceSn.description',
 				'filter' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => 'sn_type'])->all(), 'id_grouping', 'description'),
 			],
-			[
-                'attribute' => 'status_listing',
-                'format' => 'raw',
-                'value' => function ($dataProvider) {
-					if($dataProvider->status_listing == 999){
-						return "<span class='label' style='background-color:{$dataProvider->statusReference->status_color}' >Not Yet Uploaded</span>";
-					}else{
-						return "<span class='label' style='background-color:{$dataProvider->statusReference->status_color}' >{$dataProvider->statusReference->status_listing}</span>";
-					}
-                },
-				'filter' => getFilterStatus(),
-				'visible' => $this->context->action->id == 'create' || $this->context->action->id == 'restore',
-            ],
+			// [
+   //              'attribute' => 'status_listing',
+   //              'format' => 'raw',
+   //              'value' => function ($dataProvider) {
+			// 		if($dataProvider->status_listing == 999){
+			// 			return "<span class='label' style='background-color:{$dataProvider->statusReference->status_color}' >Not Yet Uploaded</span>";
+			// 		}else{
+			// 			return "<span class='label' style='background-color:{$dataProvider->statusReference->status_color}' >{$dataProvider->statusReference->status_listing}</span>";
+			// 		}
+   //              },
+			// 	'filter' => getFilterStatus(),
+			// 	'visible' => $this->context->action->id == 'create' || $this->context->action->id == 'restore',
+   //          ],
 
-			[
-                'class' => 'yii\grid\ActionColumn',
-                'template'=>'{create} {view} {restore}',
-                'buttons'=>[
-                    'create' => function ($url, $model) {
-                        if($model->status_listing == 999 || $model->status_listing == 43){
-                            return Html::a('<span style="margin:0px 2px;" class="label label-success">Upload SN</span>', '#', [
-                                'title' => Yii::t('app', 'upload'), 'class' => 'viewButton', 'value'=> Url::to([$this->context->id.'/uploadsn', 'id' => $model->id, 'idOutboundWh' => $model->id_outbound_wh]), 'idOutboundWh' => $model->id_outbound_wh, 'header'=> yii::t('app','Upload SN')
-                            ]);
-                        }
-                    },
+			// [
+   //              'class' => 'yii\grid\ActionColumn',
+   //              'template'=>'{create} {view} {restore}',
+   //              'buttons'=>[
+   //                  'create' => function ($url, $model) {
+   //                      if($model->status_listing == 999 || $model->status_listing == 43){
+   //                          return Html::a('<span style="margin:0px 2px;" class="label label-success">Upload SN</span>', '#', [
+   //                              'title' => Yii::t('app', 'upload'), 'class' => 'viewButton', 'value'=> Url::to([$this->context->id.'/uploadsn', 'id' => $model->id, 'idOutboundProd' => $model->id_outbound_production]), 'idOutboundProd' => $model->id_outbound_production, 'header'=> yii::t('app','Upload SN')
+   //                          ]);
+   //                      }
+   //                  },
 
-                    'view' => function ($url, $model) {
-                        if(($model->status_listing == 41 || $model->status_listing == 43) && ($this->context->action->id != 'viewprintsj' && $this->context->action->id != 'exportpdf')){
-							// if ($model->idMasterItemImDetail->idMasterItemIm->sn_type == 2){
-							if ($model->idMasterItemIm->sn_type == 2){
-								return '';
-							}
-                            return Html::a('<span style="margin:0px 2px;" class="label label-info">View</span>', '#', [
-                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/viewdetailsn', 'idOutboundProDetail' => $model->id]), 'header'=> yii::t('app','Detail Serial Number')
-                            ]);
-                        }
-                    },
+   //                  'view' => function ($url, $model) {
+   //                      if(($model->status_listing == 41 || $model->status_listing == 43) && ($this->context->action->id != 'viewprintsj' && $this->context->action->id != 'exportpdf')){
+			// 				// if ($model->idMasterItemImDetail->idMasterItemIm->sn_type == 2){
+			// 				if ($model->idMasterItemIm->sn_type == 2){
+			// 					return '';
+			// 				}
+   //                          return Html::a('<span style="margin:0px 2px;" class="label label-info">View</span>', '#', [
+   //                              'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/viewdetailsn', 'idOutboundProDetail' => $model->id]), 'header'=> yii::t('app','Detail Serial Number')
+   //                          ]);
+   //                      }
+   //                  },
 
-					'restore' => function ($url, $model){
-						if ( $this->context->action->id != 'create' && $this->context->action->id != 'restore' ){
-							return '';
-						}
-						if(($model->status_listing == 41 || $model->status_listing == 43) && ($this->context->action->id != 'viewprintsj' && $this->context->action->id != 'exportpdf')){
-							$count = OutboundWhTransferDetailSn::find()->andWhere(['id_outbound_wh_detail' => $model->id])->count();
-							// if ($model->idMasterItemImDetail->idMasterItemIm->sn_type == 2){
-							if ($model->idMasterItemIm->sn_type == 2){
-								return '';
-							}
-							if ($count == 0){
-								return '';
-							}
-                            return Html::a('<span style="margin:0px 2px;" class="label label-danger"> <i class="fa fa-undo fa-flip-horizontal"></i> </span>', '#', [
-                                'title' => Yii::t('app', 'restore'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/restore', 'idOutboundProDetail' => $model->id, 'id' => $model->id_outbound_wh]), 'header'=> yii::t('app','Create Tag SN')
-                            ]);
-                        }
-					},
-                ],
-				'visible' => ($this->context->action->id != 'exportpdf' && $this->context->action->id != 'viewprintsj') && ($this->context->action->id == 'create' || $this->context->action->id == 'restore'),
-            ],
+			// 		'restore' => function ($url, $model){
+			// 			if ( $this->context->action->id != 'create' && $this->context->action->id != 'restore' ){
+			// 				return '';
+			// 			}
+			// 			if(($model->status_listing == 41 || $model->status_listing == 43) && ($this->context->action->id != 'viewprintsj' && $this->context->action->id != 'exportpdf')){
+			// 				$count = OutboundWhTransferDetailSn::find()->andWhere(['id_outbound_production_detail' => $model->id])->count();
+			// 				// if ($model->idMasterItemImDetail->idMasterItemIm->sn_type == 2){
+			// 				if ($model->idMasterItemIm->sn_type == 2){
+			// 					return '';
+			// 				}
+			// 				if ($count == 0){
+			// 					return '';
+			// 				}
+   //                          return Html::a('<span style="margin:0px 2px;" class="label label-danger"> <i class="fa fa-undo fa-flip-horizontal"></i> </span>', '#', [
+   //                              'title' => Yii::t('app', 'restore'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/restore', 'idOutboundProDetail' => $model->id, 'id' => $model->id_outbound_production]), 'header'=> yii::t('app','Create Tag SN')
+   //                          ]);
+   //                      }
+			// 		},
+   //              ],
+			// 	'visible' => ($this->context->action->id != 'exportpdf' && $this->context->action->id != 'viewprintsj') && ($this->context->action->id == 'create' || $this->context->action->id == 'restore'),
+   //          ],
 
         ],
     ]); ?>
@@ -172,7 +172,7 @@ function getFilterStatus() {
 			?>
 			<?php 
 				if($idbutton == 'exportButton'){
-					echo Html::button(Yii::t('app',$actionName), ['class' => 'btn btn-success printButton','value'=>Url::to(['outbound-wh-transfer/exportsj', 'id' => $model->id_instruction_wh])]) ;	
+					echo Html::button(Yii::t('app',$actionName), ['class' => 'btn btn-success printButton','value'=>Url::to(['outbound-wh-transfer/exportsj', 'id' => $model->id_instruction_production])]) ;	
 				}else{
 					echo Html::button(Yii::t('app',$actionName), ['id'=>$idbutton,'class' => 'btn btn-success']);
 				}
@@ -190,7 +190,7 @@ function getFilterStatus() {
 	$('#createButton').click(function () {
         $('#modal').modal('show')
             .find('#modalContent')
-            .load('<?php echo Url::to([$this->context->id.'/create','id'=>Yii::$app->session->get('idOutboundWh')]) ;?>');
+            .load('<?php echo Url::to([$this->context->id.'/create','id'=>Yii::$app->session->get('idOutboundProd')]) ;?>');
         $('#modalHeader').html('<h3> Create Tag SN </h3>');
     });
     $('#previousButton').click(function () {
@@ -217,7 +217,7 @@ function getFilterStatus() {
 		var hot = $('#handover_time').val();
 		console.log(hot);
 		// return false;
-        window.open("<?php echo Url::to([$this->context->id.'/exportsj', 'id' => $model->id_instruction_wh]) ?>", "_blank");
+        window.open("<?php echo Url::to([$this->context->id.'/exportsj', 'id' => $model->id_instruction_production]) ?>", "_blank");
 
 		/*
 		var button = $(this);
@@ -228,14 +228,14 @@ function getFilterStatus() {
 		data.append( 'time', $( '#handover_time' ).val() );
 
 		$.ajax({
-			url: '<?php echo Url::to([$this->context->id.'/savehandovertime', 'id' => $model->id_instruction_wh]) ;?>',
+			url: '<?php echo Url::to([$this->context->id.'/savehandovertime', 'id' => $model->id_instruction_production]) ;?>',
 			type: 'post',
 			data: data,
 			processData: false,
 			contentType: false,
 			success: function (response) {
 				if(response == 'success') {
-					window.open("<?php echo Url::to([$this->context->id.'/exportpdf', 'id' => $model->id_instruction_wh]) ?>", "_blank");
+					window.open("<?php echo Url::to([$this->context->id.'/exportpdf', 'id' => $model->id_instruction_production]) ?>", "_blank");
 				} else {
 					alert('error with message: ' + response.pesan);
 				}
