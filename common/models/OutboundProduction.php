@@ -28,7 +28,7 @@ use yii\behaviors\BlameableBehavior;
  */
 class OutboundProduction extends \yii\db\ActiveRecord
 {
-    public $instruction_number, $file;
+    public $instruction_number, $file, $id, $name;
 
     public static function tableName()
     {

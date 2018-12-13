@@ -68,6 +68,16 @@ class InstructionProductionController extends Controller
         return $this->render('index', $this->listIndex('input'));
     }
 
+    public function actionIndexdeclare()
+    {
+        return $this->render('indexdeclare', $this->listIndex('input_declare'));
+    }
+
+    public function actionIndexapprovedeclare()
+    {
+        return $this->render('indexdeclare', $this->listIndex('approve_declare'));
+    }
+
 	public function actionIndexapprove()
     {
         return $this->render('index', $this->listIndex('approve'));
@@ -128,6 +138,28 @@ class InstructionProductionController extends Controller
 		$dataProvider =  $searchModel->searchByParent(Yii::$app->request->post(), $id);
 
 		return $this->render('viewdetail', [
+			'par' => 'viewdetail',
+			'model' => $model,
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+		]);
+	}
+
+	public function actionViewdetailDeclare($id){
+		$this->layout = 'blank';
+		$model = InstructionProduction::find()->select([
+													'instruction_production.id',
+													'instruction_production.instruction_number',
+													'instruction_production.target_produksi',
+													'instruction_production.id_warehouse',
+													'outbound_production.no_sj',
+												])
+											  ->joinWith('idOutboundProduction')
+											  ->one();
+		$searchModel = new SearchInstructionProductionDetail();
+		$dataProvider =  $searchModel->search(Yii::$app->request->post(), $id);
+
+		return $this->render('viewdetail_declare', [
 			'par' => 'viewdetail',
 			'model' => $model,
 			'searchModel' => $searchModel,
@@ -207,6 +239,89 @@ class InstructionProductionController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionCreateDeclare($id = null){
+    	$this->layout = 'blank';
+    	$model = new InstructionProduction();
+        if ($model->load(Yii::$app->request->post())) {
+        	$id = $_POST['InstructionProduction']['instruction_number'];
+        	
+        	$model = $this->findModel($id);
+        	$model->status_declare = 7;
+        	Yii::$app->session->set('idInstProd', $model->id);
+			if (!$model->save()){
+				return Displayerror::pesan($model->getErrors());
+			}
+
+			
+			 $this->createLog($model);
+			return 'success';
+        } else {
+            return $this->render('create_declare', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionCreateDeclareDetail($id = NULL){
+    	$this->layout = 'blank';
+    	if($id == NULL) $id = Yii::$app->session->get('idInstProd');
+
+		if (Yii::$app->request->isPost){
+
+			$data_im_code   = Yii::$app->request->post('im_code');
+			$data_qty    = Yii::$app->request->post('qtydeclare');
+			// $data_r_dis_good = Yii::$app->request->post('rgooddismantle');
+			// $data_r_good_recon  = Yii::$app->request->post('rgoodrec');
+
+			if (count($data_im_code) == 0){
+				return json_encode(['status' => 'success']);
+			}
+			$cek = 1;
+			foreach($data_im_code as $key => $value){
+				// if($data_r_good[$key] == '')
+				if($data_qty[$key] == '' && $data_qty[$key] == 0 ){
+					continue;
+				}
+				$values = explode(';',$value);
+
+				$model = InstructionProductionDetail::findOne($values[0]);
+				
+				$model->qty_declare			= ($data_qty[$key] == '') ? 0 : $data_qty[$key];
+				
+
+				$overStock = 1;
+				$pesan = [];
+				if($model->qty_declare > $model->qty){
+					$pesan[] = $model->getAttributeLabel('qty_declare')." is more than Request for IM Code ".$values[1];
+					$overStock = 0;
+				}
+
+				if($model->qty_declare != $model->qty){
+					$cek++;
+				}
+
+				if ($overStock == 0)
+					return json_encode(['status' => 'error', 'id' => $values[0], 'pesan' => implode("\n",$pesan)]);
+
+				if(!$model->save()){
+					$error = $model->getErrors();
+					$error[0] = ['for IM Code '.$values[1]];
+					return json_encode(['status' => 'error', 'id' => $values[0], 'pesan' => Displayerror::pesan($error)]);
+				}
+			}
+
+			if($cek == 1){
+				$model = InstructionProduction::findOne($id);
+				$model->status_declare = 1;
+				$model->save();
+			}
+
+			return json_encode(['status' => 'success']);
+			// return 'success';
+
+		}
     }
 
     /**

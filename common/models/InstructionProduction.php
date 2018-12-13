@@ -29,7 +29,7 @@ use yii\behaviors\BlameableBehavior;
  */
 class InstructionProduction extends \yii\db\ActiveRecord
 {
-    public $file;
+    public $file, $no_sj;
     public static function tableName()
     {
         return 'instruction_production';
@@ -100,12 +100,23 @@ class InstructionProduction extends \yii\db\ActiveRecord
         return $this->hasOne(Modul::className(), ['id' => 'id_modul']);
     }
 
+
+    public function getIdOutboundProduction()
+    {
+        return $this->hasOne(OutboundProduction::className(), ['id_instruction_production' => 'id']);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getStatusReference()
     {
         return $this->hasOne(StatusReference::className(), ['id' => 'status_listing']);
+    }
+
+    public function getStatusDeclare()
+    {
+        return $this->hasOne(StatusReference::className(), ['id' => 'status_declare']);
     }
 
     /**

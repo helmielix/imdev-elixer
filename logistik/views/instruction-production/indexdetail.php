@@ -21,6 +21,7 @@ $this->registerJs(
 	  // $(event.target).initializeMyPlugin()
 	// })
 ");
+$datasession = Yii::$app->session->get('detailinstruction');
 ?>
 <div id="fragmentpjax" class="hidden">
 hellooo world
@@ -37,12 +38,12 @@ hellooo world
 			'id' => 'pjaxindexdetail',
 			'timeout' => false, 
 			'enablePushState' => false,			
-			'clientOptions' => ['method' => 'POST', 'backdrop' => false, 
+			'clientOptions' => ['method' => 'GET', 'backdrop' => false, 
 			"container" => "#pjaxindexdetail"
 			],
 		]); ?>
     <?= GridView::widget([
-        'id' => 'gridViewindexdetail',
+        'id' => 'gridViewcreatedetail',
         'dataProvider' => $dataProvider,
 		'floatHeader'=>true,
 		'floatOverflowContainer' => true,
@@ -83,16 +84,42 @@ hellooo world
 			// 'target_produksi',
             [
                 'attribute' => 'id_item_im',
+                'format' => 'raw',
+                'value' => function ($model){
+                    return $model->idParameterMasterItem->idMasterItemIm->im_code . Html::hiddenInput('im_code[]', $model->id.';'.$model->idParameterMasterItem->idMasterItemIm->im_code, ['class' => 'im_code']);
+                },
+            ],
+            [
+                'attribute' => 'id_item_im',
                 'label' => 'Target Produksi',
                 'value' => 'idParameterMasterItem.idMasterItemIm.name'
             ],
 
-			[
-				'attribute' => 'id_item_im',
-                'label' => "IM Code",
-				'value' => 'idParameterMasterItem.idMasterItemIm.im_code',
-			],
+			// [
+			// 	'attribute' => 'id_item_im',
+   //              'label' => "IM Code",
+			// 	'value' => 'idParameterMasterItem.idMasterItemIm.im_code',
+			// ],
             'qty',
+            [
+                'label' => 'Qty. Declare',
+                'format' => 'raw',
+                'value' => function ($model) use ($datasession)
+                {
+                    $out = '<div class="col-xs-12">';
+                    $out .= '</div>';
+                    $val = '';
+                    if (isset($datasession[$model->id]['qtydeclare'])){
+                        $val = $datasession[$model->id]['qtydeclare'];
+                    }
+                    $out    = Html::textInput('qtydeclare[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'qtydeclare']);
+                    return $out;
+                },
+                'contentOptions' => ['class' => 'bg-danger'],
+                'headerOptions' => ['class' => 'kartik-sheet-style'],
+                'mergeHeader' => true,
+                'vAlign' => 'middle',
+            ],
 			// 'req_good',
 			// 'req_not_good',
 			// 'req_reject',
@@ -101,7 +128,7 @@ hellooo world
     ]); ?>
 	<?php yii\widgets\Pjax::end() ?>
     <p>        
-		<?php if(Yii::$app->controller->action->id == 'indexdetail'){
+		<?php if(Yii::$app->controller->action->id == 'indexdetail' || Yii::$app->controller->action->id == 'viewdetail-declare'){
 			echo Html::button(Yii::t('app','Previous'), ['id'=>'previousButton','class' => 'btn btn-primary']); 
         
 		echo Html::button(Yii::t('app','Submit Instruction'), ['id'=>'submitButton','class' => 'btn btn-success']); }?>		
