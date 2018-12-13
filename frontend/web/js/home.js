@@ -3,7 +3,7 @@ initHome = function() {
 	var viewportHeight = $(window).height();
 	var xcenter = (viewportWidth/2) - 50;
 	var ycenter = (viewportHeight/2) - 30;
-	t=0.5;
+	t=0.2;
 	$('.homeButtonContainer').css('left',((viewportWidth/2)-60)+'px');
 	$('.homeButtonContainer').css('top',((viewportHeight/2)-60)+'px');
 	var maxDiv = $('.homeButtonContainer').length ;
@@ -18,7 +18,7 @@ initHome = function() {
 	},800);
 	
 	function moveit() {
-		var r = 53;
+		var r = 80;
 		var index;
 		$( ".homeButtonContainer" ).each(function() {
 			index = $(this).index('.homeButtonContainer');
