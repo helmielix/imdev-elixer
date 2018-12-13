@@ -92,6 +92,13 @@ use kartik\select2\Select2;
 				'allowClear' => true
 			],
 		]) ?>
+		<?= $form->field( $model, 'uom' )->widget(Select2::classname(), [
+			'data' => ArrayHelper :: map ( Reference :: find()->andWhere(['ilike' ,'table_relation' , 'uom'])->all(), 'id','description'),
+			'options' => ['placeholder' => 'Select Uom'],
+			'pluginOptions' => [
+				'allowClear' => true
+			],
+		]) ?>
 		
 		<?php if (!$model->isNewRecord):?>
 		<?= $form->field($model, 'im_code')->textInput(['disabled' => true]) ?>

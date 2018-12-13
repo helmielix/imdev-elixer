@@ -64,6 +64,7 @@ class DashboardLogistikController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$arrFilter = ['or','1=0'];
 		$isAddFilter = false;
+		// INBOUND PO
 		if(Yii::$app->user->can('/inbound-po/index')) {
 			array_push($arrFilter,['ilike','table_source','INBOUND PO Revision']);
 		}
@@ -79,8 +80,33 @@ class DashboardLogistikController extends Controller
 		if(Yii::$app->user->can('/inbound-po/indextagsn')) {
 			array_push($arrFilter,['and',['in','id_warehouse',$arrIdWarehouse],['ilike','table_source','INBOUND PO TAG SN']]);			
 		}
+		// INBOUND PO
+		// WH TRANSFER
+		// WH TRANSFER INSTRUCTION
+		if(Yii::$app->user->can('/instruction-wh-transfer/indexapprove')) {
+			array_push($arrFilter,['ilike','table_source','INSTRUCTION WH TRANSFER Approval']);
+		}
+		if(Yii::$app->user->can('/instruction-wh-transfer/indexapprove')) {
+			array_push($arrFilter,['ilike','table_source','INSTRUCTION WH TRANSFER Report from WH']);
+		}
+		if(Yii::$app->user->can('/instruction-wh-transfer/indexapprove')) {
+			array_push($arrFilter,['ilike','table_source','INSTRUCTION WH TRANSFER Need Revise']);
+		}
+		// WH TRANSFER OUTBOUND
+		if(Yii::$app->user->can('/outbound-wh-transfer/index')) { // untuk data yg belum ada di outbound
+			array_push($arrFilter,['and',['in','id_warehouse',$arrIdWarehouse],['ilike','table_source','OUTBOUND WH TRANSFER TAG SN']]);
+		}
+		if(Yii::$app->user->can('/outbound-wh-transfer/index')) { // untuk data yg sudah ada di outbound (51)
+			array_push($arrFilter,['and',['in','id_warehouse',$arrIdWarehouse],['ilike','table_source','OUTBOUND WH TRANSFER TAG SN ']]);
+		}
+		if(Yii::$app->user->can('/outbound-wh-transfer/indexprintsj')) {
+			array_push($arrFilter,['and',['in','id_warehouse',$arrIdWarehouse],['ilike','table_source','OUTBOUND WH TRANSFER Print SJ']]);
+		}
+		if(Yii::$app->user->can('/outbound-wh-transfer/indexapprove')) {
+			array_push($arrFilter,['and',['in','id_warehouse',$arrIdWarehouse],['ilike','table_source','OUTBOUND WH TRANSFER Approval']]);
+		}
 
-		
+		// WH TRANSFER	
 		
 			
 		$dataProvider->query->andFilterWhere($arrFilter);
