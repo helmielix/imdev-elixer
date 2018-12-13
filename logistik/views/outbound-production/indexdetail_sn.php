@@ -84,10 +84,16 @@ function getFilterStatus() {
                 'template'=>'{update}',
                 'buttons'=>[
                    'update' => function ($url, $model) {
-                        return Html::a('<span style="margin:0px 2px" class="label label-success">Tag SN</span>', '#', [
+                   	if($model->idParameterMasterItem->idMasterItemIm->type == 46){
+                   		return Html::a('<span style="margin:0px 2px" class="label label-success">QTY Cond</span>', '#', [
+                            'title' => Yii::t('app', 'update'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/create-item-qtycond', 'id'=> $model->id]), 'header'=> yii::t('app','Update Detail Warehouse Transfers Instruction')
+                        ]);
+                   	}else{
+						return Html::a('<span style="margin:0px 2px" class="label label-success">Tag SN</span>', '#', [
                             'title' => Yii::t('app', 'update'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/create-item-sn', 'id'=> $model->id]), 'header'=> yii::t('app','Update Detail Warehouse Transfers Instruction')
                         ]);
-                    },
+					}
+                   	},
                 ],
             ],
 			// [
@@ -184,7 +190,7 @@ function getFilterStatus() {
 			?>
 			<?php 
 				if($idbutton == 'exportButton'){
-					echo Html::button(Yii::t('app',$actionName), ['class' => 'btn btn-success printButton','value'=>Url::to(['outbound-wh-transfer/exportsj', 'id' => $model->id_instruction_production])]) ;	
+					echo Html::button(Yii::t('app',$actionName), ['class' => 'btn btn-success printButton','value'=>Url::to(['outbound-production/exportsj', 'id' => $model->id_instruction_production])]) ;	
 				}else{
 					echo Html::button(Yii::t('app',$actionName), ['id'=>$idbutton,'class' => 'btn btn-success']);
 				}

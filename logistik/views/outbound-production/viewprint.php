@@ -10,7 +10,7 @@ use kartik\time\TimePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\OutboundWhTransfer */
 
-$this->title = $model->id_instruction_wh;
+$this->title = $model->id_instruction_production;
 $this->params['breadcrumbs'][] = ['label' => 'Outbound Wh Transfers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -29,51 +29,54 @@ $this->params['breadcrumbs'][] = $this->title;
 				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
 				'attributes' => [
 					
-					'idInstructionWh.instruction_number',
+					'idInstructionProduction.instruction_number',
 					'published_date:date',
 		            [
-		            	'attribute' => 'wh_destination',
-		            	'value' => $model->idInstructionWh->whDestination->nama_warehouse
+		            	'attribute' => 'id_warehouse',
+		            	'value' => $model->idInstructionProduction->idWarehouse->nama_warehouse
 		            ],
 					
-					[
-						'label' => 'Forwarder',
-						'value' => function ($model){
-							if ( is_numeric($model->forwarder) ){
-								return $model->forwarder0->description;
-							}else{
-								return '-';
-							}
+					// [
+					// 	'label' => 'Forwarder',
+					// 	'value' => function ($model){
+					// 		if ( is_numeric($model->forwarder) ){
+					// 			return $model->forwarder0->description;
+					// 		}else{
+					// 			return '-';
+					// 		}
 							
-						},
-					],
-					'plate_number',
-					'driver',
+					// 	},
+					// ],
+					[
+		            	'attribute' => 'pic',
+		            	'value' => $model->idLabor->nama
+		            ],
+					// 'driver',
 					'print_time',
-					[
-						'attribute' => 'handover_time',
-						'format' => 'raw',
-						'value' => function($model){
-							return '................';
+					// [
+					// 	'attribute' => 'handover_time',
+					// 	'format' => 'raw',
+					// 	'value' => function($model){
+					// 		return '................';
 							
-							if ( $this->context->action->id == 'viewprintsj' ){
-								return TimePicker::widget([
-									'name' => 'handover_time',
-									'size' => 'sm',
-									'options' => [
-										'id' => 'handover_time',
-									],
-									'pluginOptions' => [
-										'minuteStep' => 1,
-										'showSeconds' => true,
-										'showMeridian' => false
-									]
-								]);
-							}else{
-								return $model->handover_time;
-							}
-						},
-					],
+					// 		if ( $this->context->action->id == 'viewprintsj' ){
+					// 			return TimePicker::widget([
+					// 				'name' => 'handover_time',
+					// 				'size' => 'sm',
+					// 				'options' => [
+					// 					'id' => 'handover_time',
+					// 				],
+					// 				'pluginOptions' => [
+					// 					'minuteStep' => 1,
+					// 					'showSeconds' => true,
+					// 					'showMeridian' => false
+					// 				]
+					// 			]);
+					// 		}else{
+					// 			return $model->handover_time;
+					// 		}
+					// 	},
+					// ],
 				],
 			]) ?>
 		</div>
@@ -128,7 +131,7 @@ $('#submitremarkButton').click(function(){
 		return false;
 	}
 	
-	if (selectedAction == 'reviseverify') url = '<?php echo Url::to([$this->context->id.'/reviseoutbound', 'id' => $model->id_instruction_wh]) ;?>';
+	if (selectedAction == 'reviseverify') url = '<?php echo Url::to([$this->context->id.'/reviseoutbound', 'id' => $model->id_instruction_production]) ;?>';
 	
 	var button = $(this);
 	button.prop('disabled', true);
@@ -260,7 +263,7 @@ $('#submitSjButton').click(function () {
 		data.append( 'OutboundWhTransfer[forwarder]', $( '#outboundwhtransfer-forwarder' ).val() );
 		data.append( 'OutboundWhTransfer[driver]', $( '#outboundwhtransfer-driver' ).val() );
 		$.ajax({
-            url: '<?php echo Url::to([$this->context->id.'/submitsj', 'id' => $model->id_instruction_wh]) ;?>',
+            url: '<?php echo Url::to([$this->context->id.'/submitsj', 'id' => $model->id_instruction_production]) ;?>',
             type: 'post',
             data: data,
             processData: false,

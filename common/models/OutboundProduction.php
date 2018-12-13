@@ -28,7 +28,7 @@ use yii\behaviors\BlameableBehavior;
  */
 class OutboundProduction extends \yii\db\ActiveRecord
 {
-    public $instruction_number;
+    public $instruction_number, $file;
 
     public static function tableName()
     {
@@ -60,7 +60,7 @@ class OutboundProduction extends \yii\db\ActiveRecord
         return [
             [['id_instruction_production',], 'required'],
             [['id_instruction_production',  'forwarder', 'status_listing'], 'default', 'value' => null],
-            [['id_instruction_production',  'forwarder', 'status_listing'], 'integer'],
+            [['id_instruction_production',  'forwarder', 'status_listing','pic'], 'integer'],
             [['created_date', 'updated_date'], 'safe'],
             [['revision_remark', 'plate_number'], 'string'],
             [['no_sj', 'driver', 'file_attachment'], 'string', 'max' => 255],
@@ -128,5 +128,10 @@ class OutboundProduction extends \yii\db\ActiveRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    public function getIdLabor()
+    {
+        return $this->hasOne(Labor::className(), ['nik' => 'pic']);
     }
 }

@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 use common\models\Reference;
 use common\models\StatusReference;
-use common\models\OutboundWhTransferDetailSn;
+use common\models\OutboundProductionDetailSetItemSn;
 use yii\widgets\DetailView;
 
 $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\JqueryAsset::className()]]);
@@ -130,11 +130,15 @@ function getFilterStatus() {
                 'template'=>'{create} {view} {restore}',
                 'buttons'=>[
                     'create' => function ($url, $model) {
-                        // if($model->status_listing == 999 || $model->status_listing == 43){
+                        if($model->status_listing == 999 || $model->status_listing == 43){
                             return Html::a('<span style="margin:0px 2px;" class="label label-success">Upload SN</span>', '#', [
                                 'title' => Yii::t('app', 'upload'), 'class' => 'viewButton', 'value'=> Url::to([$this->context->id.'/uploadsn', 'id' => $model->id, 'idOutboundProdDetail' => $model->id_outbound_production_detail]), 'header'=> yii::t('app','Upload SN')
                             ]);
-                        // }
+                        }else{
+                        	return Html::a('<span style="margin:0px 2px" class="label label-success">Tag SN</span>', '#', [
+                            'title' => Yii::t('app', 'update'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/create-item-sn', 'id'=> $model->id]), 'header'=> yii::t('app','Update Detail Warehouse Transfers Instruction')
+                        ]);
+                        }
                     },
 
                     'view' => function ($url, $model) {
@@ -150,11 +154,11 @@ function getFilterStatus() {
                     },
 
 					'restore' => function ($url, $model){
-						if ( $this->context->action->id != 'create' && $this->context->action->id != 'restore' ){
+						if ( $this->context->action->id != 'create-item-sn' && $this->context->action->id != 'restore' ){
 							return '';
 						}
 						if(($model->status_listing == 41 || $model->status_listing == 43) && ($this->context->action->id != 'viewprintsj' && $this->context->action->id != 'exportpdf')){
-							$count = OutboundWhTransferDetailSn::find()->andWhere(['id_outbound_production_detail' => $model->id])->count();
+							$count = OutboundProductionDetailSetItemSn::find()->andWhere(['id_outbound_production_detail_set_item' => $model->id])->count();
 							// if ($model->idMasterItemImDetail->idMasterItemIm->sn_type == 2){
 							if ($model->idMasterItemIm->sn_type == 2){
 								return '';
@@ -163,7 +167,7 @@ function getFilterStatus() {
 								return '';
 							}
                             return Html::a('<span style="margin:0px 2px;" class="label label-danger"> <i class="fa fa-undo fa-flip-horizontal"></i> </span>', '#', [
-                                'title' => Yii::t('app', 'restore'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/restore', 'idOutboundProDetail' => $model->id, 'id' => $model->id_outbound_production_detail]), 'header'=> yii::t('app','Create Tag SN')
+                                'title' => Yii::t('app', 'restore'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/restore', 'idOutboundProDetailSetItem' => $model->id, 'id' => $model->id_outbound_production_detail]), 'header'=> yii::t('app','Create Tag SN')
                             ]);
                         }
 					},

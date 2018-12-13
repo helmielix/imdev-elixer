@@ -122,7 +122,7 @@ class OutboundProductionController extends Controller
 	private function detailView($id){
 		$model = $this->findModel($id);
 
-		Yii::$app->session->set('idOutProduction', $id);
+		Yii::$app->session->set('idOutboundProd', $id);
 
 		$searchModel = new SearchOutboundProductionDetail();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
@@ -367,13 +367,24 @@ class OutboundProductionController extends Controller
 		// }
 
         if ($model->load(Yii::$app->request->post())) {
+        	if (isset($_FILES['file'])) {
+				if (isset($_FILES['file']['size'])) {
+					if($_FILES['file']['size'] != 0) {
+						$model->file = $_FILES['file'];
+						$filename = $_FILES['file']['name'];
+						$filepath = 'uploads/OUTPROD/';
+					}
+				}
+			}
 			// $model->driver = $_POST['OutboundProduction']['driver'];
 			// $model->forwarder = $_POST['OutboundProduction']['forwarder'];
 			// $model->plate_number = $_POST['OutboundProduction']['plate_number'];
-			$model->no_sj = substr($model->idInstructionProd->instruction_number, 0, 4).'/SJ-Jakarta-Div1/'.date('m/Y');
+			$model->no_sj = substr($model->idInstructionProduction->instruction_number, 0, 4).'/SJ-Jakarta-Div1/'.date('m/Y');
 			$model->status_listing = 22;
-
-			$model->save();
+			$model->file_attachment = $filepath.$model->id_instruction_production.'/'.$filename;
+			if(!$model->save())return print_r($model->getErrors());
+			// $model->save();
+			// $model->save();
 			return 'success';
         }
     }
@@ -407,20 +418,20 @@ class OutboundProductionController extends Controller
 			$model->published_date = date('Y-m-d');
 
 			// change all SN to INTRANSIT
-            $modeldetailsn = OutboundProductionDetailSn::find()->joinWith('idOutboundProDetail')->andWhere(['id_outbound_production' => $model->id_instruction_production])->all();
-			// foreach( $model->OutboundProductionDetails->OutboundProductionDetailSns as $modelsn){
-			foreach( $modeldetailsn as $modelsn){
-				if (is_string($modelsn->serial_number)){
-					$where = ['serial_number' => $modelsn->serial_number];
-				}else{
-					$where = ['mac_address' => $modelsn->mac_address];
-				}
-				$modelMasterSn = MasterSn::find()->andWhere($where)->andWhere(['status' => 27])->one();
-				$modelMasterSn->last_transaction = 'INTRANSIT';
-				$modelMasterSn->save();
-				$this->createLogmastersn($modelMasterSn);
+   //          $modeldetailsn = OutboundProductionDetailSn::find()->joinWith('idOutboundProDetail')->andWhere(['id_outbound_production' => $model->id_instruction_production])->all();
+			// // foreach( $model->OutboundProductionDetails->OutboundProductionDetailSns as $modelsn){
+			// foreach( $modeldetailsn as $modelsn){
+			// 	if (is_string($modelsn->serial_number)){
+			// 		$where = ['serial_number' => $modelsn->serial_number];
+			// 	}else{
+			// 		$where = ['mac_address' => $modelsn->mac_address];
+			// 	}
+			// 	$modelMasterSn = MasterSn::find()->andWhere($where)->andWhere(['status' => 27])->one();
+			// 	$modelMasterSn->last_transaction = 'INTRANSIT';
+			// 	$modelMasterSn->save();
+			// 	$this->createLogmastersn($modelMasterSn);
 
-			}
+			// }
             
             $model->save();
 
@@ -449,34 +460,34 @@ class OutboundProductionController extends Controller
 
 	}
 
-	public function actionRestore($idOutboundProDetail, $id){
+	public function actionRestore($idOutboundProDetailSetItem, $id){
 		// OutboundProductionDetailSn::deleteAll('id_outbound_production_detail = '.$idOutboundProDetail);
-		$modeldetailsn = OutboundProductionDetailSn::find()->andWhere(['id_outbound_production_detail' => $idOutboundProDetail])->all();
+		$modeldetailsn = OutboundProductionDetailSetItemSn::find()->andWhere(['id_outbound_production_detail_set_item' => $idOutboundProDetailSetItem])->all();
 		foreach($modeldetailsn as $modelsn){
 			if ( is_string($modelsn->serial_number) ){
 				$where = ['serial_number' => $modelsn->serial_number];
 			}else{
 				$where = ['mac_address' => $modelsn->mac_address];
 			}
-			$modelMasterSn = MasterSn::find()->andWhere($where)->andWhere(['status' => 27])->one();
-			$modelMasterSn->last_transaction = $modelMasterSn->prev_last_transaction;
-			$modelMasterSn->condition = $modelMasterSn->last_condition;
-			$modelMasterSn->save();
-			$this->createLogmastersn($modelMasterSn);
+			// $modelMasterSn = MasterSn::find()->andWhere($where)->andWhere(['status' => 27])->one();
+			// $modelMasterSn->last_transaction = $modelMasterSn->prev_last_transaction;
+			// $modelMasterSn->condition = $modelMasterSn->last_condition;
+			// $modelMasterSn->save();
+			// $this->createLogmastersn($modelMasterSn);
 
 			$modelsn->delete();
 		}
 
-		$model = OutboundProductionDetail::findOne($idOutboundProDetail);
+		$model = OutboundProductionDetailSetItem::findOne($idOutboundProDetailSetItem);
 		$model->status_listing = 999;
 		$model->save();
 
-        $modelOutbound = $model->idOutboundProd;
+        $modelOutbound = $model->idOutboundProductionDetail;
         $modelOutbound->status_listing = 43;
         $modelOutbound->save();
 
 
-		return $this->actionCreate($id);
+		return $this->actionCreateItemSn($id);
 	}
 
 	public function actionUploadsn($id){
@@ -770,7 +781,7 @@ class OutboundProductionController extends Controller
 		$dataprovider->sort = false;
 		$arrayreturn['dataProvider'] = $dataprovider;
 
-		$modelDetail = OutboundProductionDetail::find()->joinWith('idMasterItemIm')->select([
+		$modelDetail = OutboundProductionDetail::find()->joinWith('idParameterMasterItem.idMasterItemIm')->select([
 			'outbound_production_detail.id_item_im',
 			'outbound_production_detail.req_good',
 			'outbound_production_detail.req_not_good',

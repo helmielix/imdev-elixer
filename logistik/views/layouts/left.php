@@ -54,6 +54,8 @@
 					array_push($arrItemsChildChild, ['label' => yii::t('app','Input'), 'icon' => 'plus', 'url' => ['/instruction-production/index']]);
 				if(Yii::$app->user->can('/instruction-production/indexapprove'))
 					array_push($arrItemsChildChild, ['label' => yii::t('app','Approve'), 'icon' => 'plus', 'url' => ['/instruction-production/indexapprove']]);
+				if(Yii::$app->user->can('/instruction-production/indexdeclare'))
+					array_push($arrItemsChildChild, ['label' => yii::t('app','Input Declare'), 'icon' => 'plus', 'url' => ['/instruction-production/indexdeclare']]);
 				if(Yii::$app->user->can('/instruction-production/indextagsn'))
 					array_push($arrItemsChildChild, ['label' => yii::t('app','Tag SN'), 'icon' => 'check-square-o', 'url' => ['/instruction-production/indextagsn']]);
 				if(Yii::$app->user->can('/instruction-production/indexlog'))
