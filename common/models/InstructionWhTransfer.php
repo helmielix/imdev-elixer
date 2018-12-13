@@ -55,7 +55,7 @@ class InstructionWhTransfer extends \yii\db\ActiveRecord
             [['wh_origin'], 'exist', 'skipOnError' => true, 'targetClass' => Warehouse::className(), 'targetAttribute' => ['wh_origin' => 'id']],
       			[['wh_destination'], 'compare', 'operator' => '!=', 'compareAttribute' => 'wh_origin'],
       			[['file'], 'file', 'extensions' => 'pdf,jpg', 'maxSize'=>1024*1024*5],
-      			[['file'], 'required', 'on'=>'create'],
+      			// [['file'], 'required', 'on'=>'create'],
       			// [['delivery_target_date'], 'date', 'format' => 'php:Y-m-d', 'max' => date('Y-m-d')],
         ];
     }

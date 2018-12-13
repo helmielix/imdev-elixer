@@ -215,6 +215,16 @@ $('#submitButton').click(function () {
 	
 });
 $('#submitSjButton').click(function () {
+		var form = $('#createForm');
+	   	data = form.data("yiiActiveForm");
+	   	$.each(data.attributes, function() {
+	   		this.status = 3;
+	   	});
+	   	form.yiiActiveForm("validate");
+	   	if (form.find('.has-error').length) {	   	
+	   		return false;
+	   	}
+
 		var button = $(this);
 		// var myForm = document.getElementById('createForm');
 		button.prop('disabled', true);
@@ -223,7 +233,8 @@ $('#submitSjButton').click(function () {
         data = new FormData();
 		data.append( 'OutboundWhTransfer[plate_number]', $( '#outboundwhtransfer-plate_number' ).val() );
 		data.append( 'OutboundWhTransfer[forwarder]', $( '#outboundwhtransfer-forwarder' ).val() );
-		data.append( 'OutboundWhTransfer[driver]', $( '#outboundwhtransfer-driver' ).val() );
+		data.append( 'OutboundWhTransfer[driver]', $( '#outboundwhtransfer-driver' ).val() );		
+		
 		$.ajax({
             url: '<?php echo Url::to([$this->context->id.'/submitsj', 'id' => $model->id_instruction_wh]) ;?>',
             type: 'post',

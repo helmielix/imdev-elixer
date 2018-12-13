@@ -6,6 +6,7 @@ use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use common\models\Reference;
+use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\OutboundWhTransfer */
@@ -18,6 +19,8 @@ if ($this->context->action->id == 'viewapprove'){
 
 ?>
 <div class="outbound-wh-transfer-form">
+
+    <?php if($this->context->action->id != 'viewapprove' &&  (Yii::$app->request->get('show') == 'form')){ ?>
 
     <?php $form = ActiveForm::begin([
         'enableClientValidation' => true,
@@ -50,5 +53,43 @@ if ($this->context->action->id == 'viewapprove'){
     <?= $form->field($model, 'driver')->textInput(['maxlength' => true, 'class' => 'input-sm form-control', 'disabled' => $disable]) ?>
 
     <?php ActiveForm::end(); ?>
+
+    <?php }else{ ?>
+
+    <?= DetailView::widget([
+        'model' => $model,
+        'options' => ['class' => 'small table table-striped table-bordered detail-view'],
+        'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
+        'attributes' => [
+            
+            [
+                'attribute' => 'forwarder',
+                'value' => function($model){
+                    if(is_numeric($model->forwarder)){
+                        return Reference::findOne($model->forwarder)->description;
+                    }
+                },
+            ],
+            'plate_number',
+            'driver',
+            // [
+            //     'attribute' => 'no_sj',
+            //     'visible' => is_string($model->no_sj),
+            // ],
+            // 'idInstructionWh.instruction_number',
+            // 'idInstructionWh.delivery_target_date:date',
+            // [
+            //     'attribute' => 'wh_origin',
+            //     'value' => $model->idInstructionWh->whOrigin->nama_warehouse
+            // ],
+            // [
+            //     'attribute' => 'wh_destination',
+            //     'value' => $model->idInstructionWh->whDestination->nama_warehouse
+            // ],
+            // 'idInstructionWh.grf_number',
+        ],
+    ]) ?>
+
+    <?php } ?>
 
 </div>

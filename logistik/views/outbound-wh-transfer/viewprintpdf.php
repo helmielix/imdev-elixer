@@ -20,7 +20,8 @@ $this->registerCss('
   body { margin: 1.6cm; font-size: 10px; height: 100%}
   table { page-break-after:auto }
   tr    { page-break-inside:avoid; page-break-after:auto }
-  td    { page-break-inside:avoid; page-break-after:auto }
+  td    { page-break-inside:avoid; page-break-after:auto; font-size: 8px; }
+  th    { font-size:8px }
   thead { display:table-header-group }
   tfoot { display:table-footer-group }
 }
@@ -173,7 +174,7 @@ $bilangan = new Terbilang;
                             <th rowspan="2" style="text-align:center;">NO</th>
                             <th rowspan="2" style="text-align:center;">Kode Material</th>
                             <th rowspan="2" style="text-align:center;">Deskripsi</th>
-                            <th colspan="4" style="text-align:center;">QTY Per Kondisi</th>
+                            <th colspan="7" style="text-align:center;">QTY Per Kondisi</th>
                             <th rowspan="2" style="text-align:center;">Total QTY</th>
                             <th rowspan="2" style="text-align:center;">UOM</th>
                             <th rowspan="2" style="text-align:center;">Remark</th>
@@ -183,6 +184,9 @@ $bilangan = new Terbilang;
                             <th>Not Good</th>
                             <th>Dismantled</th>
                             <th>Rejected</th>
+                            <th>Revocation</th>
+                            <th>Good Recondition</th>
+                            <th>Good for Recondition</th>
                         </tr>
 
                     </thead>
@@ -196,15 +200,18 @@ $bilangan = new Terbilang;
 							// $priceview = number_format($price,0,".",",");
 							// $totalview = number_format($modelDetail[$i]['po_amount'],0,".",",");
 							// $qtyview   = number_format($modelDetail[$i]['pr_quantity'],0,".",",");
-                            $totalQty = $modelDetail[$i]['req_good'] + $modelDetail[$i]['req_not_good'] + $modelDetail[$i]['req_reject'] + $modelDetail[$i]['req_good_dismantle'];
+                            $totalQty = $modelDetail[$i]['req_good'] + $modelDetail[$i]['req_not_good'] + $modelDetail[$i]['req_reject'] + $modelDetail[$i]['req_dismantle'] + $modelDetail[$i]['req_revocation'] + $modelDetail[$i]['req_good_rec'] + $modelDetail[$i]['req_good_for_recond'];
                             echo "<tr style='page-break-inside:avoid; page-break-after:auto'>";
                             echo "<td style='page-break-inside:avoid; page-break-after:auto'>$j</td>
                             <td style='page-break-inside:avoid; page-break-after:auto'>{$modelDetail[$i]['im_code']}</td>
                             <td style='page-break-inside:avoid; page-break-after:auto'>{$modelDetail[$i]['item_name']}</td>
                             <td style='page-break-inside:avoid; page-break-after:auto'>{$modelDetail[$i]['req_good']}</td>
                             <td style='page-break-inside:avoid; page-break-after:auto'>{$modelDetail[$i]['req_not_good']}</td>
-                            <td style='page-break-inside:avoid; page-break-after:auto'>{$modelDetail[$i]['req_good_dismantle']}</td>
+                            <td style='page-break-inside:avoid; page-break-after:auto'>{$modelDetail[$i]['req_dismantle']}</td>
                             <td style='page-break-inside:avoid; page-break-after:auto'>{$modelDetail[$i]['req_reject']}</td>
+                            <td style='page-break-inside:avoid; page-break-after:auto'>{$modelDetail[$i]['req_revocation']}</td>
+                            <td style='page-break-inside:avoid; page-break-after:auto'>{$modelDetail[$i]['req_good_rec']}</td>
+                            <td style='page-break-inside:avoid; page-break-after:auto'>{$modelDetail[$i]['req_good_for_recond']}</td>
                             <td style='page-break-inside:avoid; page-break-after:auto'>{$totalQty}</td>
                             <td style='page-break-inside:avoid; page-break-after:auto'></td>
                             <td style='page-break-inside:avoid; page-break-after:auto'></td>

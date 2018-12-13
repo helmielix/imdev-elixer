@@ -30,6 +30,10 @@ use yii\helpers\ArrayHelper;
 use common\widgets\Displayerror;
 use common\widgets\Email;
 use common\widgets\Numbertoroman;
+use yii\helpers\Url;
+
+use common\models\UserWarehouse;
+use common\models\Warehouse;
 
 /**
  * InstructionWhTransferController implements the CRUD actions for InstructionWhTransfer model.
@@ -135,8 +139,19 @@ class InstructionWhTransferController extends Controller
 	public function actionViewreport($id){
 		$this->layout = 'blank';
 
+		$arrIdWarehouse = [];
+        if (Yii::$app->user->identity->id == 5){
+            $modelUserWarehouse = Warehouse::find()->select('id as id_warehouse')->asArray()->all();
+        }else{
+            $modelUserWarehouse = UserWarehouse::find()->select('id_warehouse')->where(['id_user'=>Yii::$app->user->identity->id])->asArray()->all();
+        }
+
+        foreach ($modelUserWarehouse as $key => $value) {
+        	array_push($arrIdWarehouse, $value['id_warehouse']);
+        }
+
 		$searchModel = new SearchInboundWhTransfer();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $this->id_modul,'verifydetail', $id);
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $this->id_modul,'verifydetail', $id, $arrIdWarehouse);
 
 		$model = InboundWhTransfer::find()->select([
 					'outbound_wh_transfer.id_instruction_wh as id_outbound_wh',
@@ -197,7 +212,7 @@ class InstructionWhTransferController extends Controller
     {
 		$this->layout = 'blank';
         $model = new InstructionWhTransfer();
-		$model->scenario = 'create';
+		// $model->scenario = 'create';
 		$model->id_modul = $this->id_modul;
 		$newidinst = InstructionWhTransfer::find()->andWhere(['and',['like', 'instruction_number', '%/'.date('Y'), false],['id_modul' => $model->id_modul]])->count();
 		if ($newidinst == 0){
@@ -215,6 +230,7 @@ class InstructionWhTransferController extends Controller
 
 			$model->status_listing = 7;
 
+			$filepath = '';
 			if (isset($_FILES['file'])) {
 				if (isset($_FILES['file']['size'])) {
 					if($_FILES['file']['size'] != 0) {
@@ -227,17 +243,19 @@ class InstructionWhTransferController extends Controller
 
 			if (!$model->save()){
 				return Displayerror::pesan($model->getErrors());
+			}elseif ($filepath != '') {			
+				$model->file_attachment = $filepath.$model->id.'/'.$filename;
+				$model->save();
+				if (!file_exists($filepath.$model->id.'/')) {
+					mkdir($filepath.$model->id.'/', 0777, true);
+				}
+				move_uploaded_file($_FILES['file']['tmp_name'], $model->file_attachment);
 			}
-			$model->file_attachment = $filepath.$model->id.'/'.$filename;
-			$model->save();
+
 
 			Yii::$app->session->set('idInstWhTr', $model->id);
 
-			if (!file_exists($filepath.$model->id.'/')) {
-				mkdir($filepath.$model->id.'/', 0777, true);
-			}
-			move_uploaded_file($_FILES['file']['tmp_name'], $model->file_attachment);
-			// $this->createLog($model);
+			$this->createLog($model);
 
             return 'success';
         } else {
@@ -369,8 +387,8 @@ class InstructionWhTransferController extends Controller
 					$datareject 		 = $data_r_reject[$key] - $session['update'][$values[0]]['rreject'];
 					$datadismantle 		 = $data_r_dismantle[$key] - $session['update'][$values[0]]['rdismantle'];
 					$datarevocation 	 = $data_r_revocation[$key] - $session['update'][$values[0]]['rrevocation'];
-					$datagood_rec 		 = $data_r_good_rec[$key] - $session['update'][$values[0]]['rgood_rec'];
-					$datagood_for_recond = $data_r_good_for_recond[$key] - $session['update'][$values[0]]['rgood_for_recond'];
+					$datagood_rec 		 = $data_r_good_rec[$key] - $session['update'][$values[0]]['rgoodrec'];
+					$datagood_for_recond = $data_r_good_for_recond[$key] - $session['update'][$values[0]]['rgoodforrecond'];
 				}else{
 					$datagood 			 = $data_r_good[$key];
 					$datanotgood 		 = $data_r_notgood[$key];
@@ -581,8 +599,8 @@ class InstructionWhTransferController extends Controller
 				$model->s_reject			+= $session[$id]['update'][$id]['rreject'];
 				$model->s_dismantle			+= $session[$id]['update'][$id]['rdismantle'];
 				$model->s_revocation		+= $session[$id]['update'][$id]['rrevocation'];
-				$model->s_good_rec 			+= $session[$id]['update'][$id]['rgood_rec'];
-				$model->s_good_for_recond	+= $session[$id]['update'][$id]['rgood_for_recond'];
+				$model->s_good_rec 			+= $session[$id]['update'][$id]['rgoodrec'];
+				$model->s_good_for_recond	+= $session[$id]['update'][$id]['rgoodforrecond'];
 			}
 			// return var_dump($model);
 			$arr['s_good'] 			  = $model->s_good;
@@ -608,47 +626,47 @@ class InstructionWhTransferController extends Controller
 		// $model->rem_revocation = $model->idMasterItemImDetail->s_revocation + $model->req_revocation;
 
 		$idMasterItemImDetail = MasterItemImDetail::find()->andWhere(['and', ['id_master_item_im' => $model->id_item_im], ['id_warehouse' => $model->idInstructionWh->wh_origin]])->one();
-		if ($model->load(Yii::$app->request->post())) {
+		// if ($model->load(Yii::$app->request->post())) {
 
-			$data['rem_good'] 			 = $idMasterItemImDetail->s_good + $model->req_good;
-			$data['rem_not_good'] 		 = $idMasterItemImDetail->s_not_good + $model->req_not_good;
-			$data['rem_reject'] 		 = $idMasterItemImDetail->s_reject + $model->req_reject;
-			$data['rem_dismantle'] 		 = $idMasterItemImDetail->s_dismantle + $model->req_dismantle;
-			$data['rem_revocation'] 	 = $idMasterItemImDetail->s_revocation + $model->req_revocation;
-			$data['rem_good_rec'] 		 = $idMasterItemImDetail->s_good_rec + $model->req_good_rec;
-			$data['rem_good_for_recond'] = $idMasterItemImDetail->s_good_for_recond + $model->req_good_for_recond;
+		// 	$data['rem_good'] 			 = $idMasterItemImDetail->s_good + $model->req_good;
+		// 	$data['rem_not_good'] 		 = $idMasterItemImDetail->s_not_good + $model->req_not_good;
+		// 	$data['rem_reject'] 		 = $idMasterItemImDetail->s_reject + $model->req_reject;
+		// 	$data['rem_dismantle'] 		 = $idMasterItemImDetail->s_dismantle + $model->req_dismantle;
+		// 	$data['rem_revocation'] 	 = $idMasterItemImDetail->s_revocation + $model->req_revocation;
+		// 	$data['rem_good_rec'] 		 = $idMasterItemImDetail->s_good_rec + $model->req_good_rec;
+		// 	$data['rem_good_for_recond'] = $idMasterItemImDetail->s_good_for_recond + $model->req_good_for_recond;
 
-			$json = $data;
-			if ($model->req_good > $idMasterItemImDetail->s_good + $model->req_good){
-				$json['pesan'] = $model->getAttributeLabel('req_good').' must be less than "'.$model->getAttributeLabel('rem_good').'".';
-				return json_encode($json);
-			}
-			if ($model->req_not_good > $idMasterItemImDetail->s_not_good + $model->req_not_good){
-				$json['pesan'] = $model->getAttributeLabel('req_not_good').' must be less than "'.$model->getAttributeLabel('s_not_good').'".';
-				return json_encode($json);
-			}
-			if ($model->req_reject > $idMasterItemImDetail->s_reject + $model->req_reject){
-				$json['pesan'] = $model->getAttributeLabel('req_reject').' must be less than "'.$model->getAttributeLabel('s_reject').'".';
-				return json_encode($json);
-			}
-			if ($model->req_dismantle > $idMasterItemImDetail->s_dismantle + $model->req_dismantle){
-				$json['pesan'] = $model->getAttributeLabel('req_dismantle').' must be less than "'.$model->getAttributeLabel('s_dismantle').'".';
-				return json_encode($json);
-			}
-			if ($model->req_revocation > $idMasterItemImDetail->s_revocation + $model->req_revocation){
-				$json['pesan'] = $model->getAttributeLabel('rem_revocation').' already change, and '.$model->getAttributeLabel('req_revocation').' is more than current stock';
-				return json_encode($json);
-			}
+		// 	$json = $data;
+		// 	if ($model->req_good > $idMasterItemImDetail->s_good + $model->req_good){
+		// 		$json['pesan'] = $model->getAttributeLabel('req_good').' must be less than "'.$model->getAttributeLabel('rem_good').'".';
+		// 		return json_encode($json);
+		// 	}
+		// 	if ($model->req_not_good > $idMasterItemImDetail->s_not_good + $model->req_not_good){
+		// 		$json['pesan'] = $model->getAttributeLabel('req_not_good').' must be less than "'.$model->getAttributeLabel('s_not_good').'".';
+		// 		return json_encode($json);
+		// 	}
+		// 	if ($model->req_reject > $idMasterItemImDetail->s_reject + $model->req_reject){
+		// 		$json['pesan'] = $model->getAttributeLabel('req_reject').' must be less than "'.$model->getAttributeLabel('s_reject').'".';
+		// 		return json_encode($json);
+		// 	}
+		// 	if ($model->req_dismantle > $idMasterItemImDetail->s_dismantle + $model->req_dismantle){
+		// 		$json['pesan'] = $model->getAttributeLabel('req_dismantle').' must be less than "'.$model->getAttributeLabel('s_dismantle').'".';
+		// 		return json_encode($json);
+		// 	}
+		// 	if ($model->req_revocation > $idMasterItemImDetail->s_revocation + $model->req_revocation){
+		// 		$json['pesan'] = $model->getAttributeLabel('rem_revocation').' already change, and '.$model->getAttributeLabel('req_revocation').' is more than current stock';
+		// 		return json_encode($json);
+		// 	}
 
-			if (!$model->save()){
-				$json['pesan'] = Displayerror::pesan($model->getErrors());
-				return json_encode($json);
-				// return Displayerror::pesan($model->getErrors());
-			}
-			// $this->createLog($model);
-			return json_encode(['pesan' => 'success']);
-			// return 'success';
-        } else {
+		// 	if (!$model->save()){
+		// 		$json['pesan'] = Displayerror::pesan($model->getErrors());
+		// 		return json_encode($json);
+		// 		// return Displayerror::pesan($model->getErrors());
+		// 	}
+		// 	// $this->createLog($model);
+		// 	return json_encode(['pesan' => 'success']);
+		// 	// return 'success';
+  //       } else {
 
 			// set session for update
 			Yii::$app->session->remove('detailinstruction');
@@ -658,6 +676,8 @@ class InstructionWhTransferController extends Controller
 			$data[$idMasterItemImDetail->id]['rreject'] = $model->req_reject;
 			$data[$idMasterItemImDetail->id]['rdismantle'] = $model->req_dismantle;
 			$data[$idMasterItemImDetail->id]['rrevocation'] = $model->req_revocation;
+			$data[$idMasterItemImDetail->id]['rgoodrec'] = $model->req_good_rec;
+			$data[$idMasterItemImDetail->id]['rgoodforrecond'] = $model->req_good_for_recond;
 			$data[$idMasterItemImDetail->id]['update'] = $data;
 
 			Yii::$app->session->set('detailinstruction', $data);
@@ -674,29 +694,37 @@ class InstructionWhTransferController extends Controller
             // return $this->render('_formdetail', [
                 // 'model' => $model,
             // ]);
-        }
+        // }
 	}
 
 	public function actionSubmit($id){
 		$model = InstructionWhTransfer::findOne($id);
 		$modelDetail = InstructionWhTransferDetail::find()->andWhere(['id_instruction_wh' => $id])->count();
+		$sendmail = false;
 		if ($modelDetail > 0){
 			if($model->status_listing == 2 || $model->status_listing == 3){
 				$model->status_listing = 2;
 			}else{
 				$model->status_listing = 1;
 			}
+			$sendmail = true;
 		}else{
 			$model->status_listing = 7;
 		}
 
 		if (!$model->save()){
-
 			return Displayerror::pesan($model->getErrors());
 		}
 
 		Yii::$app->session->remove('idInstWhTr');
 		$this->createLog($model);
+		if ($sendmail) {
+			// sendmail untuk status 1 atau 2
+			$arrAuth = ['/instruction-wh-transfer/indexapprove'];
+		    $header = 'Alert Approve Instruction Warehouse Transfer';
+	        $subject = 'This document is waiting your approval. Please click this link document : '.Url::base(true).'instruction-wh-transfer/indexapprove#viewapprove?id='.$model->id.'&header=Approve_INSTRUCTION_WH';
+	        Email::sendEmail($arrAuth,$header,$subject);
+		}
 		return 'success';
 	}
 
@@ -833,6 +861,10 @@ class InstructionWhTransferController extends Controller
 
 			if ($model->save()){
 				 $this->createLog($model);
+				$arrAuth = ['/outbound-wh-transfer/index'];
+                $header = 'Tagging SN Warehouse Transfer';
+                $subject = 'This document is ready for tagging SN. Please click this link document : '.Url::base(true).'/outbound-wh-transfer/index#view?id='.$model->id.'&header=Detail_Material_Warehouse';
+                Email::sendEmail($arrAuth,$header,$subject,$model->wh_origin);
 				return 'success';
 			}
 
@@ -851,7 +883,11 @@ class InstructionWhTransferController extends Controller
 				$model->revision_remark = $_POST['InstructionWhTransfer']['revision_remark'];
 				if($model->save()) {
 					// $this->createLog($model);
-					 $this->createLog($model);
+					$this->createLog($model);
+					$arrAuth = ['/instruction-wh-transfer/index'];
+	                $header = 'Alert Need Revise Warehouse Transfer';
+	                $subject = 'This document is waiting your revise. Please click this link document : '.Url::base(true).'/instruction-wh-transfer/index#view?id='.$model->id.'&header=Detail_Material_Warehouse';
+	                Email::sendEmail($arrAuth,$header,$subject,$model->wh_origin);
 
 					return 'success';
 				} else {

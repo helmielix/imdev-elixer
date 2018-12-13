@@ -22,7 +22,7 @@ $this->registerJs(
 
 function getFilterStatus() {
 	if(Yii::$app->controller->action->id == 'create'){
-		$sl = ArrayHelper::map( StatusReference::find()->andWhere(['id' => [41, 43]])->all(), 'id', 'status_listing' );
+		$sl = ArrayHelper::map( StatusReference::find()->andWhere(['id' => [42, 48]])->all(), 'id', 'status_listing' );
 		$sl[999] = 'Not Yet Uploaded';
 		return $sl;
 
@@ -67,11 +67,34 @@ function getFilterStatus() {
 				// 'value' => 'idMasterItemImDetail.idMasterItemIm.brand',
 				'value' => 'idMasterItemIm.referenceBrand.description',
 			],
-			'req_good',
-			'req_not_good',
-			'req_reject',
-			'req_good_dismantle',
-			'req_not_good_dismantle',
+			[
+				'attribute' => 'req_good',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'req_not_good',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'req_reject',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'req_dismantle',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'req_revocation',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'req_good_rec',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'req_good_for_recond',
+				'enableSorting' => false,
+			],			
 			[
 				'attribute' => 'sn_type',
 				// 'value' => 'idMasterItemImDetail.idMasterItemIm.referenceSn.description',
@@ -97,7 +120,7 @@ function getFilterStatus() {
                 'template'=>'{create} {view} {restore}',
                 'buttons'=>[
                     'create' => function ($url, $model) {
-                        if($model->status_listing == 999 || $model->status_listing == 43){
+                        if($model->status_listing == 999 || $model->status_listing == 48){
                             return Html::a('<span style="margin:0px 2px;" class="label label-success">Upload SN</span>', '#', [
                                 'title' => Yii::t('app', 'upload'), 'class' => 'viewButton', 'value'=> Url::to([$this->context->id.'/uploadsn', 'id' => $model->id, 'idOutboundWh' => $model->id_outbound_wh]), 'idOutboundWh' => $model->id_outbound_wh, 'header'=> yii::t('app','Upload SN')
                             ]);
@@ -105,7 +128,7 @@ function getFilterStatus() {
                     },
 
                     'view' => function ($url, $model) {
-                        if(($model->status_listing == 41 || $model->status_listing == 43) && ($this->context->action->id != 'viewprintsj' && $this->context->action->id != 'exportpdf')){
+                        if(($model->status_listing == 42 || $model->status_listing == 48) && ($this->context->action->id != 'viewprintsj' && $this->context->action->id != 'exportpdf')){
 							// if ($model->idMasterItemImDetail->idMasterItemIm->sn_type == 2){
 							if ($model->idMasterItemIm->sn_type == 2){
 								return '';
@@ -120,7 +143,7 @@ function getFilterStatus() {
 						if ( $this->context->action->id != 'create' && $this->context->action->id != 'restore' ){
 							return '';
 						}
-						if(($model->status_listing == 41 || $model->status_listing == 43) && ($this->context->action->id != 'viewprintsj' && $this->context->action->id != 'exportpdf')){
+						if(($model->status_listing == 42 || $model->status_listing == 48) && ($this->context->action->id != 'viewprintsj' && $this->context->action->id != 'exportpdf')){
 							$count = OutboundWhTransferDetailSn::find()->andWhere(['id_outbound_wh_detail' => $model->id])->count();
 							// if ($model->idMasterItemImDetail->idMasterItemIm->sn_type == 2){
 							if ($model->idMasterItemIm->sn_type == 2){
@@ -129,13 +152,13 @@ function getFilterStatus() {
 							if ($count == 0){
 								return '';
 							}
-                            return Html::a('<span style="margin:0px 2px;" class="label label-danger"> <i class="fa fa-undo fa-flip-horizontal"></i> </span>', '#', [
+                            return Html::a('<span style="margin:0px 2px;" class="label label-danger"> <!--<i class="fa fa-undo fa-flip-horizontal"></i>-->Reset </span>', '#', [
                                 'title' => Yii::t('app', 'restore'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/restore', 'idOutboundWhDetail' => $model->id, 'id' => $model->id_outbound_wh]), 'header'=> yii::t('app','Create Tag SN')
                             ]);
                         }
 					},
                 ],
-				'visible' => ($this->context->action->id != 'exportpdf' && $this->context->action->id != 'viewprintsj') && ($this->context->action->id == 'create' || $this->context->action->id == 'restore'),
+				'visible' => ($this->context->action->id != 'exportpdf' && $this->context->action->id != 'viewprintsj') && ($this->context->action->id == 'create' || $this->context->action->id == 'restore' || $this->context->action->id == 'view' || $this->context->action->id == 'viewapprove'),
             ],
 
         ],
@@ -153,8 +176,16 @@ function getFilterStatus() {
 					$idbutton = 'submitButton';
 				break;
 				case 'view':
-					$actionName = 'Submit';
-					$idbutton = 'submitSjButton';
+					if (Yii::$app->request->get('show') == 'form') {
+						$actionName = 'Submit';
+						$idbutton = 'submitSjButton';
+					}else{
+						$actionName = 'Create';
+						if (is_numeric($model->forwarder)) {
+							$actionName = 'Update';
+						}
+						$idbutton = 'updateSjButton';
+					}
 				break;
 				case 'viewprintsj':
 					$actionName = 'Print PDF';
@@ -168,13 +199,20 @@ function getFilterStatus() {
 					$actionName = 'Input Tag SN';
 					$idbutton = 'createButton';
 				break;
+				case 'viewoverview':
+					$idbutton = '';
+				break;
 			}
 			?>
 			<?php 
 				if($idbutton == 'exportButton'){
 					echo Html::button(Yii::t('app',$actionName), ['class' => 'btn btn-success printButton','value'=>Url::to(['outbound-wh-transfer/exportsj', 'id' => $model->id_instruction_wh])]) ;	
 				}else{
-					echo Html::button(Yii::t('app',$actionName), ['id'=>$idbutton,'class' => 'btn btn-success']);
+					if (Yii::$app->controller->action->id == 'viewoverview') {
+						echo '';
+					}else{
+						echo Html::button(Yii::t('app',$actionName), ['id'=>$idbutton,'class' => 'btn btn-success']);
+					}
 				}
 			?>
 
@@ -198,6 +236,12 @@ function getFilterStatus() {
             .find('#modalContent')
             .load('<?php echo Url::to([$this->context->id.'/update','id'=>Yii::$app->session->get('idInstWhTr')]) ;?>');
         $('#modalHeader').html('<h3> Detail Instruksi Warehouse Transfer </h3>');
+    });
+    $('#updateSjButton').click(function () {
+        $('#modal').modal('show')
+            .find('#modalContent')
+            .load('<?php echo Url::to([$this->context->id.'/view','id'=>Yii::$app->session->get('idInstWhTr'), 'show' => 'form']) ;?>');
+        $('#modalHeader').html('<h3> Create Surat Jalan </h3>');
     });
 
     	$('.printButton').printPage({

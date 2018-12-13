@@ -14,6 +14,7 @@ use common\models\InstructionWhTransferDetail;
 use common\models\SearchInstructionWhTransferDetail;
 use common\models\MasterSn;
 use common\models\LogMasterSn;
+use common\models\LogOutboundWhTransfer;
 use common\models\UploadForm;
 use common\models\Reference;
 use common\models\UserWarehouse;
@@ -31,7 +32,7 @@ use yii\helpers\ArrayHelper;
 
 use common\widgets\Displayerror;
 use common\widgets\Email;
-
+use yii\helpers\Url;
 use kartik\mpdf\Pdf;
 
 /**
@@ -42,13 +43,15 @@ class OutboundWhTransferController extends Controller
     private $id_modul = 1;
 	private $last_transaction = 'TAG SN OUTBOUND WH ';
     public function behaviors()
+
+    
     {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
-                    'downloadfile' => ['POST'],
+                    'downloadfile' => ['POST'],                    
                 ],
             ],
         ];
@@ -108,6 +111,27 @@ class OutboundWhTransferController extends Controller
         ]);
 	}
 
+	public function actionIndexoverview(){
+		// $arrIdWarehouse = $this->getIdWarehouse();
+		$arrIdWarehouse = [];
+		if (Yii::$app->user->identity->id == 5) {
+			$arrIdWarehouse = ArrayHelper::getColumn(Warehouse::find()->all(),'id');
+		}else{
+			$modelUserWarehouse = UserWarehouse::find()->select('id_warehouse')->where(['id_user'=>Yii::$app->user->identity->id])->asArray()->all();
+			foreach ($modelUserWarehouse as $key => $value) {
+	        	array_push($arrIdWarehouse, $value['id_warehouse']);
+	        }
+		}
+
+		$searchModel = new SearchOutboundWhTransfer();
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'overview', $arrIdWarehouse);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+	}
+
     /**
      * Displays a single OutboundWhTransfer model.
      * @param integer $id
@@ -116,6 +140,7 @@ class OutboundWhTransferController extends Controller
 
 	private function detailView($id){
 		$model = $this->findModel($id);
+		$model->scenario = 'view';
 
 		Yii::$app->session->set('idInstWhTr', $id);
 
@@ -137,6 +162,13 @@ class OutboundWhTransferController extends Controller
     }
 
 	public function actionViewapprove($id)
+    {
+		$this->layout = 'blank';
+
+		return $this->render('view', $this->detailView($id));
+    }
+
+    public function actionViewoverview($id)
     {
 		$this->layout = 'blank';
 
@@ -196,41 +228,44 @@ class OutboundWhTransferController extends Controller
     {
 		$this->layout = 'blank';
 		if ($act == 'view'){
-			// create OutboundWhTransfer
-			$modelInstruction = InstructionWhTransfer::findOne($id);
-			$model = new OutboundWhTransfer();
+			$cek = OutboundWhTransfer::find()->andWhere(['id_instruction_wh' => $id])->exists();
+			if (!$cek) {
+				// create OutboundWhTransfer
+				$modelInstruction = InstructionWhTransfer::findOne($id);
+				$model = new OutboundWhTransfer();
 
-			$model->id_instruction_wh = $modelInstruction->id;
-			$model->status_listing = 43; // Partially Uploaded
-			$model->id_modul = $this->id_modul;
+				$model->id_instruction_wh = $modelInstruction->id;
+				$model->status_listing = 51; // New Instruction
+				$model->id_modul = $this->id_modul;
 
-			$model->save();
+				$model->save();
 
-			// create OutboundWhTransferDetail
-			$modelInstructionDetail = InstructionWhTransferDetail::find()->andWhere(['id_instruction_wh' => $id])->all();
-			foreach($modelInstructionDetail as $value){
-				$modelDetail = new OutboundWhTransferDetail();
+				// create OutboundWhTransferDetail
+				$modelInstructionDetail = InstructionWhTransferDetail::find()->andWhere(['id_instruction_wh' => $id])->all();
+				foreach($modelInstructionDetail as $value){
+					$modelDetail = new OutboundWhTransferDetail();
 
-				$modelDetail->id_outbound_wh		= $value->id_instruction_wh;
-				$modelDetail->id_item_im			= $value->id_item_im;
-				$modelDetail->req_good				= $value->req_good;
-				$modelDetail->req_not_good			= $value->req_not_good;
-				$modelDetail->req_revocation			= $value->req_revocation;
-				$modelDetail->req_dismantle	= $value->req_dismantle;
-				$modelDetail->req_revocation= $value->req_revocation;
-				$modelDetail->req_revocation1= $value->req_revocation1;
-				$modelDetail->req_revocation2= $value->req_revocation2;
-				$modelDetail->status_listing		= ($value->idMasterItemIm->sn_type == 1) ? 999 : 41;
+					$modelDetail->id_outbound_wh		= $value->id_instruction_wh;
+					$modelDetail->id_item_im			= $value->id_item_im;
+					$modelDetail->req_good				= $value->req_good;
+					$modelDetail->req_not_good			= $value->req_not_good;
+					$modelDetail->req_reject			= $value->req_reject;
+					$modelDetail->req_dismantle			= $value->req_dismantle;
+					$modelDetail->req_revocation		= $value->req_revocation;
+					$modelDetail->req_good_rec 			= $value->req_good_rec;
+					$modelDetail->req_good_for_recond	= $value->req_good_for_recond;
+					$modelDetail->status_listing		= ($value->idMasterItemIm->sn_type == 1) ? 999 : 42;
 
 
-				if (!$modelDetail->save()){
-					$error = $modelDetail->getErrors();
-					$model->delete();
-					return Displayerror::pesan($error);
+					if (!$modelDetail->save()){
+						$error = $modelDetail->getErrors();
+						$model->delete();
+						return Displayerror::pesan($error);
+					}
 				}
+			// if $cek	
 			}
-
-
+		//if $act
 		}
 
         $model = $this->findModel($id);
@@ -290,27 +325,57 @@ class OutboundWhTransferController extends Controller
 		if ($model->status_listing == 3){
 			$model->status_listing = 2;
 		}else{
-			$modelOutboundWhDetail = OutboundWhTransferDetail::find()->where(['id_outbound_wh'=> $id])->asArray()->all();
-			$cekStatus = 1;
+			$modelOutboundWhDetail = OutboundWhTransferDetail::find()->joinWith('idMasterItemIm')->where(['id_outbound_wh'=> $id])
+					// ->andWhere(['sn_type' => 1])
+					->all();
+			$arrTagsn = [];
+			$cekStatus = 0;
+			$totaldetail = 0; 
 			foreach($modelOutboundWhDetail as $key => $value){
-				if($value['status_listing'] != 41){
-					$cekStatus++;
-				}
+				// semua detail
+				// $totaldetail++;
+				// if($value->status_listing == 42){
+				// 	$cekStatus++;
+				// }
+				if ( !in_array($value->status_listing, $arrTagsn) ) {
+	                array_push($arrTagsn, $value->status_listing);
+	            }
 			}
 
-			if($cekStatus == 1){
-				$modelOutbound = $this->findModel($id);
-				$modelOutbound->status_listing = 42;
-				$modelOutbound->save();
-			}else{
-                $modelOutbound = $this->findModel($id);
-				$modelOutbound->status_listing = 43;
-				$modelOutbound->save();
+			// if($cekStatus == $totaldetail){
+			// // if(count($modelOutboundWhDetail) == $totaldetail){
+			// 	$modelOutbound = $this->findModel($id);
+			// 	$modelOutbound->status_listing = 42; //tag inputted
+			// 	$modelOutbound->save();
+			// }else{
+   //              $modelOutbound = $this->findModel($id);
+   //              if ( $cekStatus > 0 ) {
+			// 		$modelOutbound->status_listing = 43; //partially uploaded (sudah ada SN yg diupload)
+   //              }
+			// 	$modelOutbound->save();
+   //          }
+
+            $modelOutbound = $this->findModel($id);
+            if ( in_array(999, $arrTagsn) && count($arrTagsn) == 1 ) {
+            	// all 999 semua item berSN belum diupload
+            	$modelOutbound->status_listing = 51; //new instruction
+            }elseif ( in_array(42, $arrTagsn) && count($arrTagsn) == 1 ) {
+            	// all 42 registered
+            	$modelOutbound->status_listing = 42; //tag inputted
+            }else{
+            	$modelOutbound->status_listing = 48; //partially tag uploaded
             }
+            $modelOutbound->save();
+
+
 		}
 
 		$model->save();
-
+		$this->createLog($model);
+		$arrAuth = ['/outbound-wh-transfer/indexprintsj'];
+        $header = 'Alert Create Surat Jalan';
+        $subject = 'This document is ready for create "Surat Jalan". Please click this link document : '.Url::base(true).'/outbound-wh-transfer/indexprintsj#view?id='.$model->id_instruction_wh.'&header=Detail_OUTBOUND_';
+        Email::sendEmail($arrAuth,$header,$subject,$model->idInstructionWh->wh_origin);
 		return 'success';
 	}
 
@@ -330,6 +395,11 @@ class OutboundWhTransferController extends Controller
 			$model->status_listing = 22;
 
 			$model->save();
+			$this->createLog($model);
+			$arrAuth = ['/outbound-wh-transfer/indexapprove'];
+        	$header = 'Alert Approval Surat Jalan';
+        	$subject = 'This document is waiting your approval. Please click this link document : '.Url::base(true).'/outbound-wh-transfer/indexapprove#viewapprove?id='.$model->id_instruction_wh.'&header=Detail_OUTBOUND';
+        	Email::sendEmail($arrAuth,$header,$subject,$model->idInstructionWh->wh_origin);
 			return 'success';
         }
     }
@@ -348,12 +418,17 @@ class OutboundWhTransferController extends Controller
 			$model->revision_remark = Yii::$app->request->post('InstructionWhTransfer')['revision_remark'];
 
 			$model->save();
+			$arrAuth = ['/instruction-wh-transfer/index'];
+        	$header = 'Alert Need Revise Instruction Warehouse Transfer';
+        	$subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/instruction-wh-transfer/index#view?id='.$model->id.'&header=Detail_INSTRUCTION';
+        	Email::sendEmail($arrAuth,$header,$subject);
 
 			return 'success';
 		}else{
 			return 'Please insert Revision Remark';
 		}
 	}
+
 
 	public function actionApprove($id){
 		$model = $this->findModel($id);
@@ -379,7 +454,8 @@ class OutboundWhTransferController extends Controller
 			}
             
             $model->save();
-
+            $this->createLog($model);
+           
 			return 'success';
 		}else{
 			return 'failed';
@@ -428,7 +504,7 @@ class OutboundWhTransferController extends Controller
 		$model->save();
 
         $modelOutbound = $model->idOutboundWh;
-        $modelOutbound->status_listing = 43;
+        $modelOutbound->status_listing = 51; // dijadikan new instruction sebelum klik submit
         $modelOutbound->save();
 
 
@@ -468,20 +544,20 @@ class OutboundWhTransferController extends Controller
 					$maxQtyGood 			= $modelDetail->req_good;
 					$maxQtyNotGood 			= $modelDetail->req_not_good;
 					$maxQtyReject 			= $modelDetail->req_revocation;
-					$maxQtyDismantle 	= $modelDetail->req_dismantle;
-					$maxQtyRevocation = $modelDetail->req_revocation;
-					$maxQtyRevocation1 = $modelDetail->req_revocation1;
-					$maxQtyRevocation2 = $modelDetail->req_revocation2;
+					$maxQtyDismantle 		= $modelDetail->req_dismantle;
+					$maxQtyRevocation 		= $modelDetail->req_revocation;
+					$maxQtyGoodRec 			= $modelDetail->req_good_rec;
+					$maxQtyGoodforRecond 	= $modelDetail->req_good_for_recond;
 
 					//get quantity already upload
 					$modelSn = OutboundWhTransferDetailSn::find()->andWhere(['id_outbound_wh_detail' => $id]);
 					$qtyGood 			= $modelSn->andWhere(['condition' => 'good'])->count();
 					$qtyNotGood 		= $modelSn->andWhere(['condition' => 'not good'])->count();
 					$qtyReject 			= $modelSn->andWhere(['condition' => 'reject'])->count();
-					$qtyDismantle 	= $modelSn->andWhere(['condition' => 'dismantle'])->count();
-					$qtyRevocation= $modelSn->andWhere(['condition' => 'revocation'])->count();
-					$qtyRevocation1= $modelSn->andWhere(['condition' => 'revocation1'])->count();
-					$qtyRevocation2= $modelSn->andWhere(['condition' => 'revocation2'])->count();
+					$qtyDismantle 		= $modelSn->andWhere(['condition' => 'dismantle'])->count();
+					$qtyRevocation 		= $modelSn->andWhere(['condition' => 'revocation'])->count();
+					$qtyGoodRec 		= $modelSn->andWhere(['condition' => 'good recondition'])->count();
+					$qtyGoodforRecond 	= $modelSn->andWhere(['condition' => 'good for recondition'])->count();
 
 					$newIdSn = [];
 					foreach ($datas as $key => $data) {
@@ -520,11 +596,11 @@ class OutboundWhTransferController extends Controller
 							case 'revocation':
 								$qtyRevocation++;
 							break;
-							case 'revocation1':
-								$qtyRevocation1++;
+							case 'good recondition':
+								$qtyGoodRec++;
 							break;
-							case 'revocation2':
-								$qtyRevocation2++;
+							case 'good for recondition':
+								$qtyGoodforRecond++;
 							break;
 						}
 
@@ -549,12 +625,12 @@ class OutboundWhTransferController extends Controller
 							$maxErr = 'Quantity Revocation cannot be more than '. $maxQtyRevocation;
 						}
 
-						if ($qtyRevocation1 > $maxQtyRevocation1){
-							$maxErr = 'Quantity Revocation1 cannot be more than '. $maxQtyRevocation1;
+						if ($qtyGoodRec > $maxQtyGoodRec){
+							$maxErr = 'Quantity Good Recondition cannot be more than '. $maxQtyGoodRec;
 						}
 
-						if ($qtyRevocation2 > $maxQtyRevocation2){
-							$maxErr = 'Quantity Revocation2 cannot be more than '. $maxQtyRevocation2;
+						if ($qtyGoodforRecond > $maxQtyGoodforRecond){
+							$maxErr = 'Quantity Good for Recondition cannot be more than '. $maxQtyGoodforRecond;
 						}
 
 						if ($maxErr != ''){
@@ -570,6 +646,7 @@ class OutboundWhTransferController extends Controller
 							$error['line'] = [$periksa.$row];
 							return Displayerror::pesan($modelSn->getErrors());
 						}
+						$newIdSn[] = $modelSn->id;
 
 						// simpan data di mastersn
 						if ( is_string( $modelSn->serial_number ) ){
@@ -579,12 +656,14 @@ class OutboundWhTransferController extends Controller
 						}
 						$modelMasterSn = MasterSn::find()
 							->andWhere($where)
+							->andWhere(['id_warehouse' => $modelDetail->idOutboundWh->idInstructionWh->wh_origin]) // ambil masterSN dari wh asal
+							->andWhere(['condition' => $modelSn->condition])
 							->andWhere(['status' => 27])
 							->one();
 						if ($modelMasterSn === null){
 							// tidak ada di master SN
                             OutboundWhTransferDetailSn::deleteAll(['id' => $newIdSn]);
-							return 'Serial number: '.$modelSn->serial_number.' tidak terdaftar dalam sistem';
+							return 'Serial number: '.$modelSn->serial_number.' dengan kondisi '.$data['CONDITION'].', tidak terdaftar dalam sistem';
 						}
 
 						$modelMasterSn->last_transaction = $this->last_transaction.$modelDetail->idOutboundWh->idInstructionWh->whOrigin->nama_warehouse;
@@ -594,7 +673,7 @@ class OutboundWhTransferController extends Controller
 						// simpan data di mastersn
 
 
-						$newIdSn[] = $modelSn->id;
+						
 						$row++;
 					}
 
@@ -603,19 +682,19 @@ class OutboundWhTransferController extends Controller
 						$maxQtyReject == $qtyReject &&
 						$maxQtyDismantle == $qtyDismantle &&
 						$maxQtyRevocation == $qtyRevocation &&
-						$maxQtyRevocation1 == $qtyRevocation1 &&
-						$maxQtyRevocation2 == $qtyRevocation2){
-							$modelDetail->status_listing = 41;
+						$maxQtyGoodRec == $qtyGoodRec &&
+						$maxQtyGoodforRecond == $qtyGoodforRecond){
+							$modelDetail->status_listing = 42;
 							$modelDetail->save();
 					}else{
-						$modelDetail->status_listing = 43;
+						$modelDetail->status_listing = 48; // partially tag uploaded
 						$modelDetail->save();
 					}
 
 					// $modelOutboundWhDetail = OutboundWhTransferDetail::find()->where(['id_outbound_wh'=> $modelDetail->id_outbound_wh])->asArray()->all();
 					// $cekStatus = 1;
 					// foreach($modelOutboundWhDetail as $key => $value){
-					// 	if($value['status_listing'] != 41){
+					// 	if($value['status_listing'] != 42){
 					// 		$cekStatus++;
 					// 	}
 					// }
@@ -639,7 +718,7 @@ class OutboundWhTransferController extends Controller
 
 	public function actionDownloadfile($id, $relation = ''){
 		if ($id == 'template' || $id == 'templatemac'){
-			$file = Yii::getAlias('@webroot') . '/uploads/TemplateInputSN.xlsx';
+			$file = Yii::getAlias('@webroot') . '/uploads/TEMPLATE/TemplateInputSN.xlsx';
 			$fileOut7 = Yii::getAlias('@webroot') . '/uploads/TemplateInputSN.xlsx';
 			if (file_exists($file)) {
 				// modify file before download
@@ -738,12 +817,47 @@ class OutboundWhTransferController extends Controller
 		}
 	}
 
-	public function actionExportsj($id){
+	public function actionExportsn($id)
+	{
+		$model = OutboundWhTransferDetail::findOne($id);
+
+		$searchModel = new SearchOutboundWhTransferDetailSn();
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
+        $dataProvider->sort = false;
+        $dataProvider->pagination = false;
+        $searchModel = null;
+		
+        $pdf = new Pdf([
+            // 'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
+            'content' => $this->renderPartial('viewdetailsn', [
+	            'model' => $model,
+				'searchModel' => $searchModel,
+	            'dataProvider' => $dataProvider,
+	        ]),
+            'filename'=> 'Detail_SN_'.$model->idMasterItemIm->im_code.'.pdf',
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'options' => [
+                'title' => 'Detail SN '.$model->idMasterItemIm->im_code,
+
+            ],
+            'methods' => [
+                'SetHeader' => ['Detail Serial Number'],
+                'SetFooter' => ['|Page {PAGENO}|'],
+            ]
+        ]);
+        return $pdf->render();
+	}
+
+	public function actionExportsj($id, $detailsn = null){
+		
 		$this->layout = 'blank';
 		$arrayreturn = $this->detailView($id);
 		$model = $arrayreturn['model'];
 		$dataprovider = $arrayreturn['dataProvider'];
 		$dataprovider->sort = false;
+		$dataprovider->pagination = false;
 		$arrayreturn['dataProvider'] = $dataprovider;
 
 		$modelDetail = OutboundWhTransferDetail::find()->joinWith('idMasterItemIm')->select([
@@ -752,8 +866,8 @@ class OutboundWhTransferController extends Controller
 			'outbound_wh_transfer_detail.req_not_good',
 			'outbound_wh_transfer_detail.req_dismantle',
 			'outbound_wh_transfer_detail.req_revocation',
-			'outbound_wh_transfer_detail.req_revocation1',
-			'outbound_wh_transfer_detail.req_revocation2',
+			'outbound_wh_transfer_detail.req_good_rec',
+			'outbound_wh_transfer_detail.req_good_for_recond',
 			'master_item_im.im_code',
 			'master_item_im.name as item_name',
 			'master_item_im.brand',
@@ -767,17 +881,18 @@ class OutboundWhTransferController extends Controller
 	}
 
 	public function actionExportpdf($id) {
-
+		
 		$arrayreturn = $this->detailView($id);
 		$model = $arrayreturn['model'];
 		$dataprovider = $arrayreturn['dataProvider'];
 		$dataprovider->sort = false;
+		$dataprovider->pagination = false;
 		$arrayreturn['dataProvider'] = $dataprovider;
 
 		// return $this->render('viewprintpdf', $arrayreturn);
 
         $pdf = new Pdf([
-            'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
+            // 'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
             'content' => $this->renderPartial('viewprint', $arrayreturn),
             'filename'=> 'Surat_jalan.pdf',
             'format' => Pdf::FORMAT_A4,
@@ -802,6 +917,7 @@ class OutboundWhTransferController extends Controller
         $searchModel = new SearchInstructionWhTransferDetail();
         $dataprovider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
 		$dataprovider->sort = false;
+		$dataprovider->pagination = false;
 
 		$arrayreturn['model'] = $model;
 		$arrayreturn['dataProvider'] = $dataprovider;
@@ -864,5 +980,15 @@ class OutboundWhTransferController extends Controller
 			return Displayerror::pesan($modelLog->getErrors());
 		}
 		
+	}
+
+	private function createLog($model)
+	{
+		$modelLog = new LogOutboundWhTransfer();
+        $modelLog->setAttributes($model->attributes);
+		if(!$modelLog->save()){
+			throw new NotFoundHttpException(Displayerror::pesan($modelLog->getErrors()));
+			return Displayerror::pesan($modelLog->getErrors());
+		}
 	}
 }

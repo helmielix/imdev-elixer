@@ -16,7 +16,7 @@ class SearchInboundWhTransfer extends InboundWhTransfer
     public function rules()
     {
         return [
-            [['id_outbound_wh', 'created_by', 'status_listing', 'updated_by',  'id_modul', 'wh_destination', 'sn_type', 'qty_detail', 'delta', 'req_qty', 'status_tagsn', 'qty_good', 'qty_not_good', 'qty_reject', 'qty_good_dismantle', 'qty_not_good_dismantle', 'status_retagsn', 'status_report', 'id_inbound_detail'], 'integer'],
+            [['id_outbound_wh', 'created_by', 'status_listing', 'updated_by',  'id_modul', 'wh_destination', 'sn_type', 'qty_detail', 'delta', 'req_qty', 'status_tagsn', 'qty_good', 'qty_not_good', 'qty_reject', 'qty_dismantle', 'qty_revocation', 'qty_good_rec', 'qty_good_for_recond', 'status_retagsn', 'status_report', 'id_inbound_detail'], 'integer'],
             [['no_sj', 'plate_number','revision_remark', 'instruction_number', 'delivery_target_date', 'wh_origin',
 			'item_name', 'im_code', 'brand', 'arrival_date'], 'safe'],
         ];
@@ -87,7 +87,7 @@ class SearchInboundWhTransfer extends InboundWhTransfer
 				'inbound_wh_transfer_detail.status_listing',
 				// 'inbound_wh_transfer_detail.id_outbound_wh_detail',
 				'outbound_wh_transfer_detail.id as id_outbound_wh_detail',
-				new \yii\db\Expression('req_good + req_not_good + req_reject + req_good_dismantle + req_not_good_dismantle as req_qty'),
+				new \yii\db\Expression('req_good + req_not_good + req_reject + req_dismantle + req_revocation + req_good_rec + req_good_for_recond as req_qty'),
 			]);
 
 			$query->andFilterWhere(['outbound_wh_transfer_detail.id_outbound_wh' => $id]);
@@ -105,7 +105,7 @@ class SearchInboundWhTransfer extends InboundWhTransfer
 				'inbound_wh_transfer.created_date',
 				'inbound_wh_transfer.updated_date',
 			]);
-            $query->andFilterWhere(['inbound_wh_transfer.status_listing' => [1, 41, 5  ] ])
+            $query->andFilterWhere(['inbound_wh_transfer.status_listing' => [1, 31  ] ])
 					->andFilterWhere(['inbound_wh_transfer.status_tagsn' => [999, 41, 1, 43] ])
 					->andWhere(['instruction_wh_transfer.wh_destination' => $id_warehouse ])
                 // ->orderBy(['inbound_wh_transfer.updated_date' => SORT_DESC])
@@ -121,6 +121,7 @@ class SearchInboundWhTransfer extends InboundWhTransfer
 				'inbound_wh_transfer.status_listing',
 				'inbound_wh_transfer.status_tagsn',
 				'inbound_wh_transfer.status_retagsn',
+				'inbound_wh_transfer.arrival_date',
 				'inbound_wh_transfer.created_date',
 				'inbound_wh_transfer.updated_date',
 			]);
@@ -172,8 +173,10 @@ class SearchInboundWhTransfer extends InboundWhTransfer
 					'inbound_wh_transfer_detail.qty_good',
 					'inbound_wh_transfer_detail.qty_not_good',
 					'inbound_wh_transfer_detail.qty_reject',
-					'inbound_wh_transfer_detail.qty_good_dismantle',
-					'inbound_wh_transfer_detail.qty_not_good_dismantle',
+					'inbound_wh_transfer_detail.qty_dismantle',
+					'inbound_wh_transfer_detail.qty_revocation',
+					'inbound_wh_transfer_detail.qty_good_for_recond',
+					'inbound_wh_transfer_detail.qty_good_rec',
 					'master_item_im.name as item_name',
 					'master_item_im.im_code',
 					// 'master_item_im.brand',
@@ -222,8 +225,8 @@ class SearchInboundWhTransfer extends InboundWhTransfer
 					// 'inbound_wh_transfer_detail.id_outbound_wh_detail',
 					'outbound_wh_transfer_detail.id as id_outbound_wh_detail',
 					'inbound_wh_transfer_detail.id_inbound_wh',
-					new \yii\db\Expression("req_good + req_not_good + req_reject + req_good_dismantle + req_not_good_dismantle as req_qty"),
-					new \yii\db\Expression("(req_good + req_not_good + req_reject + req_good_dismantle + req_not_good_dismantle) - inbound_wh_transfer_detail.qty as delta"),
+					new \yii\db\Expression("req_good + req_not_good + req_reject + req_dismantle + req_revocation + req_good_rec + req_good_for_recond as req_qty"),
+					new \yii\db\Expression("(req_good + req_not_good + req_reject + req_dismantle + req_revocation + req_good_rec + req_good_for_recond) - inbound_wh_transfer_detail.qty as delta"),
 
 				]);
 			$query->andFilterWhere(['not in','inbound_wh_transfer_detail.status_report', [999, 36] ]);
@@ -276,8 +279,8 @@ class SearchInboundWhTransfer extends InboundWhTransfer
             'desc' => ['master_item_im.sn_type' => SORT_DESC],
         ];
 		$dataProvider->sort->attributes['req_qty'] = [
-            'asc' => ['(req_good + req_not_good + req_reject + req_good_dismantle + req_not_good_dismantle)' => SORT_ASC],
-            'desc' => ['(req_good + req_not_good + req_reject + req_good_dismantle + req_not_good_dismantle)' => SORT_DESC],
+            'asc' => ['(req_good + req_not_good + req_reject + req_dismantle + req_revocation + req_good_rec + req_good_for_recond)' => SORT_ASC],
+            'desc' => ['(req_good + req_not_good + req_reject + req_dismantle + req_revocation + req_good_rec + req_good_for_recond)' => SORT_DESC],
         ];
 		$dataProvider->sort->attributes['qty_detail'] = [
             'asc' => ['inbound_wh_transfer_detail.qty' => SORT_ASC],
@@ -295,17 +298,17 @@ class SearchInboundWhTransfer extends InboundWhTransfer
             'asc' => ['inbound_wh_transfer_detail.qty_reject' => SORT_ASC],
             'desc' => ['inbound_wh_transfer_detail.qty_reject' => SORT_DESC],
         ];
-		$dataProvider->sort->attributes['qty_good_dismantle'] = [
-            'asc' => ['inbound_wh_transfer_detail.qty_good_dismantle' => SORT_ASC],
-            'desc' => ['inbound_wh_transfer_detail.qty_good_dismantle' => SORT_DESC],
+		$dataProvider->sort->attributes['qty_dismantle'] = [
+            'asc' => ['inbound_wh_transfer_detail.qty_dismantle' => SORT_ASC],
+            'desc' => ['inbound_wh_transfer_detail.qty_dismantle' => SORT_DESC],
         ];
-		$dataProvider->sort->attributes['qty_not_good_dismantle'] = [
-            'asc' => ['inbound_wh_transfer_detail.qty_not_good_dismantle' => SORT_ASC],
-            'desc' => ['inbound_wh_transfer_detail.qty_not_good_dismantle' => SORT_DESC],
+		$dataProvider->sort->attributes['qty_revocation'] = [
+            'asc' => ['inbound_wh_transfer_detail.qty_revocation' => SORT_ASC],
+            'desc' => ['inbound_wh_transfer_detail.qty_revocation' => SORT_DESC],
         ];
 		$dataProvider->sort->attributes['delta'] = [
-            'asc' => ['((req_good + req_not_good + req_reject + req_good_dismantle + req_not_good_dismantle) - inbound_wh_transfer_detail.qty)' => SORT_ASC],
-            'desc' => ['((req_good + req_not_good + req_reject + req_good_dismantle + req_not_good_dismantle) - inbound_wh_transfer_detail.qty)' => SORT_DESC],
+            'asc' => ['((req_good + req_not_good + req_reject + req_dismantle + req_revocation + req_good_rec + req_good_for_recond) - inbound_wh_transfer_detail.qty)' => SORT_ASC],
+            'desc' => ['((req_good + req_not_good + req_reject + req_dismantle + req_revocation + req_good_rec + req_good_for_recond) - inbound_wh_transfer_detail.qty)' => SORT_DESC],
         ];
 		$dataProvider->sort->attributes['status_sn_need_approve'] = [
             'asc' => ['status_sn_need_approve' => SORT_DESC],
@@ -327,7 +330,7 @@ class SearchInboundWhTransfer extends InboundWhTransfer
         }
 
 		if ( is_numeric($this->delta) ){
-			$query->andFilterWhere(['((req_good + req_not_good + req_reject + req_good_dismantle + req_not_good_dismantle) - inbound_wh_transfer_detail.qty)' => $this->delta]);
+			$query->andFilterWhere(['((req_good + req_not_good + req_reject + req_dismantle + req_revocation + req_good_rec + req_good_for_recond) - inbound_wh_transfer_detail.qty)' => $this->delta]);
 		}
 
 		if ( isset($this->delta) ) {
@@ -360,15 +363,17 @@ class SearchInboundWhTransfer extends InboundWhTransfer
             'status_retagsn' => $this->status_retagsn,
             'inbound_wh_transfer_detail.status_report' => $this->status_report,
             'master_item_im.sn_type' => $this->sn_type,
-            '(req_good + req_not_good + req_reject + req_good_dismantle + req_not_good_dismantle)' => $this->req_qty,
+            '(req_good + req_not_good + req_reject + req_dismantle + req_revocation + req_good_rec + req_good_for_recond)' => $this->req_qty,
             'inbound_wh_transfer_detail.qty' => $this->qty_detail,
             // 'date(updated_date)' => $this->updated_date,
             // 'id_modul' => $this->id_modul,
 			'qty_good' => $this->qty_good,
 			'qty_not_good' => $this->qty_not_good,
 			'qty_reject' => $this->qty_reject,
-			'qty_good_dismantle' => $this->qty_good_dismantle,
-			'qty_not_good_dismantle' => $this->qty_not_good_dismantle,
+			'qty_dismantle' => $this->qty_dismantle,
+			'qty_revocation' => $this->qty_revocation,
+			'qty_good_rec' => $this->qty_good_rec,
+			'qty_good_for_recond' => $this->qty_good_for_recond,
         ]);
 
         $query->andFilterWhere(['ilike', 'outbound_wh_transfer.no_sj', $this->no_sj])

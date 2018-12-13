@@ -33,7 +33,7 @@ $datasession = Yii::$app->session->get('detailinbound');
 			'attributes' => [
 				[
 					'attribute' => 'no_sj',
-					'label' => 'No. Surat Jalan'
+					'label' => 'Nomor Surat Jalan'
 				],
 				'instruction_number',
 				[
@@ -41,7 +41,7 @@ $datasession = Yii::$app->session->get('detailinbound');
 					'value' => function($model){
 						return Warehouse::findOne($model->wh_destination)->nama_warehouse;
 					},
-					'label' => 'Warehouse Origin'
+					'label' => 'Warehouse Asal'
 				],
 				[
 					'attribute' => 'forwarder',
@@ -128,13 +128,13 @@ $datasession = Yii::$app->session->get('detailinbound');
 						$val = $model->qty_detail;
 					}
 					// return $model->status_listing;
-					return $val;
+					// return $val;
 					// if($model->status_listing==36){
 					// 	return $val.Html::hiddenInput('im_code[]', $model->id_item_im.';'.$model->im_code.';'.$model->id_detail.';'.$model->id_outbound_wh_detail, ['class' => 'im_code']);
 
 					// }else{
-					// 	$out = Html::textInput('req_qty[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'qty_detail', 'qtydetail' => $model->qty_detail]);
-					// 	return $out.Html::hiddenInput('im_code[]', $model->id_item_im.';'.$model->im_code.';'.$model->id_detail.';'.$model->id_outbound_wh_detail, ['class' => 'im_code']);
+						$out = $val.Html::hiddenInput('req_qty[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'qty_detail', 'qtydetail' => $model->qty_detail]);
+						return $out.Html::hiddenInput('im_code[]', $model->id_item_im.';'.$model->im_code.';'.$model->id_detail.';'.$model->id_outbound_wh_detail, ['class' => 'im_code']);
 					// }
 				},
 			],
@@ -164,9 +164,9 @@ $datasession = Yii::$app->session->get('detailinbound');
 	<?php Pjax::end(); ?>
 
 	<p>
-		<?php if(Yii::$app->controller->action->id == 'viewinbound' && $model->revision_remark == '')
-            //echo Html::button(Yii::t('app','Report to IC'), ['id'=>'reportButton','class' => 'btn btn-warning']); ?>
-		<?php if(Yii::$app->controller->action->id == 'viewinbound' && $model->status_listing == '')
+		<?php if(Yii::$app->controller->action->id == 'viewinbound' && $model->revision_remark == '' && $model->status_listing != 1)
+            echo Html::button(Yii::t('app','Report to IC'), ['id'=>'reportButton','class' => 'btn btn-warning']); ?>
+		<?php if(Yii::$app->controller->action->id == 'viewinbound' && $model->status_listing == '52')
             echo Html::button(Yii::t('app','Input Inbound'), ['id'=>'inputButton','class' => 'btn btn-success']); ?>
         <?php if(Yii::$app->controller->action->id == 'viewinbound' && ($model->status_listing == 31 || $model->status_listing == 50))
             echo Html::button(Yii::t('app','Update'), ['id'=>'updateButton','class' => 'btn btn-primary']); ?>
@@ -310,7 +310,7 @@ $datasession = Yii::$app->session->get('detailinbound');
     });
 
 	$('#submitButton').click(function () {
-		var resp = confirm("Do you want to revise this item?");
+        var resp = confirm("Do you want to report item that not received?");
 
 
         if (resp == true) {
@@ -318,24 +318,24 @@ $datasession = Yii::$app->session->get('detailinbound');
             console.log(selectedAction);
             var form = $('#gridViewdetail-container');
             data = new FormData();
-			form.find('input:hidden, input:text')
-				.each(function(){
-					name = $(this).attr('name');
-					val = $(this).val();
-					data.append(name, val);
-				});
-			if ( $( '#inboundwhtransfer-revision_remark' ).val() == '' ){
-				alert('Revision remark can not be blank');
-				return false;
-			}
+            form.find('input:hidden, input:text')
+                .each(function(){
+                    name = $(this).attr('name');
+                    val = $(this).val();
+                    data.append(name, val);
+                });
+            if ( $( '#inboundwhtransfer-revision_remark' ).val() == '' ){
+                alert('Revision remark can not be blank');
+                return false;
+            }
             data.append( 'InboundWhTransfer[revision_remark]', $( '#inboundwhtransfer-revision_remark' ).val() );
 
             url = '<?php echo Url::to(['/inbound-wh-transfer/reporttoic', 'id' => $model->id_outbound_wh]) ;?>';
             console.log(url);
             if (!form.find('.has-error').length) {
-				var button = $(this);
-				button.prop('disabled', true);
-				button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
+                var button = $(this);
+                button.prop('disabled', true);
+                button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
 
                 $.ajax({
                     url: url,
@@ -351,11 +351,11 @@ $datasession = Yii::$app->session->get('detailinbound');
                             alert('error with message: ' + response);
                         }
                     },
-					complete: function () {
-						button.prop('disabled', false);
-						$('#spinRefresh').remove();
-					},
-				});
+                    complete: function () {
+                        button.prop('disabled', false);
+                        $('#spinRefresh').remove();
+                    },
+                });
             };
         } else {
             return false;

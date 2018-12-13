@@ -81,24 +81,31 @@ $this->registerCss('
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 				'enableSorting' => false,
-				// 'value' => function ($model) use ($datasession){
-				// 	if(isset($datasession[$model->id]['update'])){
-				// 		$model->s_good += $datasession[$model->id]['rgood'];
-				// 	}
-				// 	return $model->s_good;
-				// },
+				'value' => function ($model) use ($datasession){
+					// digunakan saat update detail, untuk menambah stock dengan request dalam tampilan awal
+					// untuk perhitungan remaining
+					if(isset($datasession[$model->id]['update'])){
+						$model->s_good += $datasession[$model->id]['rgood'];
+					}
+					return $model->s_good;
+				},
 			],
 			[
-				'attribute' => 's_not_good',
-				// 'value' => function($model){
-				// 	return $model->s_not_good;
-				// },
+				'attribute' => 's_not_good',				
 				'format' => 'raw',
 				'contentOptions' => ['class' => 'bg-success'],
 				'headerOptions' => ['class' => 'kartik-sheet-style'],
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 				'enableSorting' => false,
+				'value' => function ($model) use ($datasession){
+					// digunakan saat update detail, untuk menambah stock dengan request dalam tampilan awal
+					// untuk perhitungan remaining
+					if(isset($datasession[$model->id]['update'])){
+						$model->s_not_good += $datasession[$model->id]['rnotgood'];
+					}
+					return $model->s_not_good;
+				},
 			],
 			[
 				'attribute' => 's_reject',
@@ -107,6 +114,14 @@ $this->registerCss('
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 				'enableSorting' => false,
+				'value' => function ($model) use ($datasession){
+					// digunakan saat update detail, untuk menambah stock dengan request dalam tampilan awal
+					// untuk perhitungan remaining
+					if(isset($datasession[$model->id]['update'])){
+						$model->s_reject += $datasession[$model->id]['rreject'];
+					}
+					return $model->s_reject;
+				},
 			],
 			[
 				'attribute' => 's_dismantle',
@@ -115,6 +130,14 @@ $this->registerCss('
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 				'enableSorting' => false,
+				'value' => function ($model) use ($datasession){
+					// digunakan saat update detail, untuk menambah stock dengan request dalam tampilan awal
+					// untuk perhitungan remaining
+					if(isset($datasession[$model->id]['update'])){
+						$model->s_dismantle += $datasession[$model->id]['rdismantle'];
+					}
+					return $model->s_dismantle;
+				},
 			],
 			[
 				'attribute' => 's_revocation',
@@ -123,6 +146,14 @@ $this->registerCss('
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 				'enableSorting' => false,
+				'value' => function ($model) use ($datasession){
+					// digunakan saat update detail, untuk menambah stock dengan request dalam tampilan awal
+					// untuk perhitungan remaining
+					if(isset($datasession[$model->id]['update'])){
+						$model->s_revocation += $datasession[$model->id]['rrevocation'];
+					}
+					return $model->s_revocation;
+				},
 			],
 			[
 				'attribute' => 's_good_rec',
@@ -131,6 +162,14 @@ $this->registerCss('
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 				'enableSorting' => false,
+				'value' => function ($model) use ($datasession){
+					// digunakan saat update detail, untuk menambah stock dengan request dalam tampilan awal
+					// untuk perhitungan remaining
+					if(isset($datasession[$model->id]['update'])){
+						$model->s_good_rec += $datasession[$model->id]['rgoodrec'];
+					}
+					return $model->s_good_rec;
+				},
 			],
 			[
 				'attribute' => 's_good_for_recond',
@@ -139,6 +178,14 @@ $this->registerCss('
 				'mergeHeader' => true,
 				'vAlign' => 'middle',
 				'enableSorting' => false,
+				'value' => function ($model) use ($datasession){
+					// digunakan saat update detail, untuk menambah stock dengan request dalam tampilan awal
+					// untuk perhitungan remaining
+					if(isset($datasession[$model->id]['update'])){
+						$model->s_good_for_recond += $datasession[$model->id]['rgoodforrecond'];
+					}
+					return $model->s_good_for_recond;
+				},
 			],
 			
 			[
@@ -149,6 +196,7 @@ $this->registerCss('
 					$out = '<div class="col-xs-12">';
 					$out .= '</div>';
 					$val = '';
+					// untuk menyimpan data request jika ada sorting/filtering pada tampilan
 					if (isset($datasession[$model->id]['rgood'])){
 						$val = $datasession[$model->id]['rgood'];
 					}
@@ -169,6 +217,7 @@ $this->registerCss('
 					$out = '<div class="col-xs-12">';
 					$out .= '</div>';
 					$val = '';
+					// untuk menyimpan data request jika ada sorting/filtering pada tampilan
 					if (isset($datasession[$model->id]['rnotgood'])){
 						$val = $datasession[$model->id]['rnotgood'];
 					}
@@ -189,6 +238,7 @@ $this->registerCss('
 					$out = '<div class="col-xs-12">';
 					$out .= '</div>';
 					$val = '';
+					// untuk menyimpan data request jika ada sorting/filtering pada tampilan
 					if (isset($datasession[$model->id]['rreject'])){
 						$val = $datasession[$model->id]['rreject'];
 					}
@@ -209,6 +259,7 @@ $this->registerCss('
 					$out = '<div class="col-xs-12">';
 					$out .= '</div>';
 					$val = '';
+					// untuk menyimpan data request jika ada sorting/filtering pada tampilan
 					if (isset($datasession[$model->id]['rdismantle'])){
 						$val = $datasession[$model->id]['rdismantle'];
 					}
@@ -229,6 +280,7 @@ $this->registerCss('
 					$out = '<div class="col-xs-12">';
 					$out .= '</div>';
 					$val = '';
+					// untuk menyimpan data request jika ada sorting/filtering pada tampilan
 					if (isset($datasession[$model->id]['rrevocation'])){
 						$val = $datasession[$model->id]['rrevocation'];
 					}
@@ -249,6 +301,7 @@ $this->registerCss('
 					$out = '<div class="col-xs-12">';
 					$out .= '</div>';
 					$val = '';
+					// untuk menyimpan data request jika ada sorting/filtering pada tampilan
 					if (isset($datasession[$model->id]['rgoodrec'])){
 						$val = $datasession[$model->id]['rgoodrec'];
 					}
@@ -269,6 +322,7 @@ $this->registerCss('
 					$out = '<div class="col-xs-12">';
 					$out .= '</div>';
 					$val = '';
+					// untuk menyimpan data request jika ada sorting/filtering pada tampilan
 					if (isset($datasession[$model->id]['rgoodforrecond'])){
 						$val = $datasession[$model->id]['rgoodforrecond'];
 					}
@@ -416,13 +470,14 @@ $this->registerCss('
 
 <script>
 	// $('.input-sm').on('blur', function(){
-	$('table').on('blur', '.input-sm', function(){
+	$('#pjaxcreatedetail').on('blur', '.input-sm', function(){
 		var input = $(this);
 		var currentRow = input.closest("tr"); 
 		
 		
 		data_im = input.attr('dataim');
 		var val = input.val();
+		
 		switch(data_im){
 			default:
 				col = 6;

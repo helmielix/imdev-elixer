@@ -6,9 +6,11 @@ use yii\widgets\Pjax;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use kartik\select2\Select2;
 use dosamigos\datepicker\DatePicker;
 use kartik\export\ExportMenu;
 use common\models\StatusReference;
+use common\models\User;
 
 $this->title = Yii::t('app','Warehouse Transfer');
 // if(Yii::$app->controller->action->id == 'index')
@@ -20,7 +22,7 @@ $this->registerJsFile('@commonpath/js/jquery.printPage.js',['depends' => [\yii\w
 
 function getFilterStatus() {
 	if(Yii::$app->controller->action->id == 'index'){
-		$filter = ArrayHelper::map(StatusReference::find()->andWhere(['id' => [43, 42]])->all(), 'id', 'status_listing');
+		$filter = ArrayHelper::map(StatusReference::find()->andWhere(['id' => [48, 42]])->all(), 'id', 'status_listing');
 		$filter[999] = 'New Instruction';
 		return $filter;
 	}
@@ -38,15 +40,18 @@ function getFilterStatus() {
 			// 4 => 'Verified'
 		// ];
 	if(Yii::$app->controller->action->id == 'indexoverview')
-		return [
-			1 => 'Inputted',
-			2 => 'Revised',
-			3 => 'Need Revise',
-			39 => 'Need Revise by IM',
-			5 => 'Approved',
-			4 => 'Verified',
-			6 => 'Rejected',
-		];
+		$filter = ArrayHelper::map(StatusReference::find()->andWhere(['id' => [48, 42, 3, 22, 25]])->all(), 'id', 'status_listing');
+		$filter[999] = 'New Instruction';
+		return $filter;
+		// return [
+		// 	1 => 'Inputted',
+		// 	2 => 'Revised',
+		// 	3 => 'Need Revise',
+		// 	// 39 => 'Need Revise by IM',
+		// 	5 => 'Approved',
+		// 	4 => 'Verified',
+		// 	6 => 'Rejected',
+		// ];
 } ;
 ?>
 <?php Modal::begin([
@@ -73,6 +78,7 @@ function getFilterStatus() {
 			};
             if(Yii::$app->controller->action->id == 'indexprintsj'){echo 'List Print Surat Jalan';};
             if(Yii::$app->controller->action->id == 'indexapprove'){echo 'List Approval Surat Jalan';};
+            if(Yii::$app->controller->action->id == 'indexoverview'){echo 'List Overview Surat Jalan';};
         ?>
 		</h3>
 
@@ -96,13 +102,17 @@ function getFilterStatus() {
                             ]);
                         }
 						else {
+							$icon = 'eye-open';
                             if(Yii::$app->controller->action->id == 'index') {
 								$viewurl = 'viewoutbound';
 								$header = 'Detail Outbound Warehouse Transfer';
+								if ($model->status_listing == 51) { // new instruction belum submit
+									$icon = 'plus';
+								}
 							}
                             if(Yii::$app->controller->action->id == 'indexprintsj') {
 								$viewurl = 'view';
-								$header = 'Create Surat Jalan';
+								$header = 'Detail Surat Jalan';
 								$headerlnk = str_replace(' ', '_', $header);
 								$icon = 'eye-open';
 								if ($model->status_listing == 42){ // tag inputted
@@ -113,8 +123,8 @@ function getFilterStatus() {
 									$header = '';
 								}
 	                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-'.$icon.'"></span>', '#'.$viewurl.'?id='.$model->id_instruction_wh.
-								'&header='.$headerlnk, [
-	                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/'.$viewurl, 'id' => $model->id_instruction_wh]), 'header'=> yii::t('app',$header)
+								'&show=detail&header='.$headerlnk, [
+	                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/'.$viewurl, 'id' => $model->id_instruction_wh, 'show' => 'detail']) , 'header'=> yii::t('app',$header)
 	                                ]);
 							}
 							if(Yii::$app->controller->action->id == 'indexapprove') {
@@ -123,10 +133,11 @@ function getFilterStatus() {
 							}
                             if(Yii::$app->controller->action->id == 'indexoverview'){
 								$viewurl = 'viewoverview';
+								$header = 'Detail Outbound Warehouse Transfer';
 							}
 
 							$headerlnk = str_replace(' ', '_', $header);
-                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id_instruction_wh.
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-'.$icon.'"></span>', '#'.$viewurl.'?id='.$model->id_instruction_wh.
 							'&header='.$headerlnk, [
                                 'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/'.$viewurl, 'id' => $model->id_instruction_wh]), 'header'=> yii::t('app',$header)
                                 ]);
@@ -140,7 +151,11 @@ function getFilterStatus() {
                 'value' => function ($searchModel) {
                 	if ($searchModel->status_listing){
 	                    if ($searchModel->status_listing == 42) {
-	                        return "<span class='label' style='background-color:red' >{$searchModel->statusReference->status_listing}</span>";
+	                    	$color = 'blue';
+	                    	if($this->context->action->id == 'indexprintsj'){
+	                    		$color = 'red';
+	                    	}
+	                        return "<span class='label' style='background-color:{$color}' >{$searchModel->statusReference->status_listing}</span>";
 						} else if ($this->context->action->id == 'indexapprove'){
 							if ($searchModel->status_listing == 22) $searchModel->status_listing = 1;
 							if ($searchModel->status_listing == 25) $searchModel->status_listing = 5;
@@ -183,6 +198,23 @@ function getFilterStatus() {
 				'attribute' => 'wh_destination',
 				'value' => 'idInstructionWh.whDestination.nama_warehouse',
 			],
+			[
+            	'attribute' => 'updated_by',
+            	'label' => 'Last Updated',
+            	'value' => function($model){
+            		if (is_numeric($model->updated_by)) {
+            			return User::findOne($model->updated_by)->name;
+            		}
+            	},
+            	'filter' => Select2::widget([
+	                'model' => $searchModel,
+	                'attribute' => 'updated_by',
+	                'data' => ArrayHelper::map(User::find()->all(), 'id', 'name'),
+	                'options' => ['placeholder' => 'Last Updated'],
+	                'pluginOptions' => [
+        				'allowClear' => true],
+	            ]),
+            ],
             [
 				'attribute' => 'created_date',
 				'value'  => 'created_date',

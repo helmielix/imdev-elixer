@@ -27,7 +27,7 @@ use yii\behaviors\BlameableBehavior;
  */
 class InboundWhTransfer extends \yii\db\ActiveRecord
 {
-    public $no_sj, $wh_origin, $wh_destination, $id_item_im, $item_name, $im_code, $req_good, $brand, $arrived_good, $qty, $orafin_code, $id_inbound_detail, $grouping, $sn_type, $id_inbound_wh, $instruction_number, $plate_number, $driver, $req_qty, $qty_detail, $id_detail, $qty_good, $qty_not_good, $qty_reject, $qty_good_dismantle, $qty_not_good_dismantle, $status_sn_need_approve, $id_outbound_wh_detail, $status_report, $delta;
+    public $no_sj, $wh_origin, $wh_destination, $id_item_im, $item_name, $im_code, $req_good, $brand, $arrived_good, $qty, $orafin_code, $id_inbound_detail, $grouping, $sn_type, $id_inbound_wh, $instruction_number, $plate_number, $driver, $req_qty, $qty_detail, $id_detail, $qty_good, $qty_not_good, $qty_reject, $qty_dismantle, $qty_revocation, $qty_good_rec, $qty_good_for_recond, $status_sn_need_approve, $id_outbound_wh_detail, $status_report, $delta;
 
     public static function tableName()
     {
@@ -58,7 +58,7 @@ class InboundWhTransfer extends \yii\db\ActiveRecord
     {
         return [
             [['id_outbound_wh',  'id_modul'], 'required'],
-			[['arrival_date',], 'required', 'on' => 'update'],
+			[['arrival_date',], 'required', 'on' => 'input_arrival'],
             [['id_outbound_wh', 'created_by', 'updated_by', 'status_listing', 'id_modul'], 'integer'],
             [['arrival_date', 'production_date', 'created_date', 'updated_date'], 'safe'],
             [['revision_remark'], 'string'],
@@ -81,18 +81,19 @@ class InboundWhTransfer extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
             'status_listing' => 'Status Listing',
             'status_tagsn' => 'Status',
-            'arrival_date' => 'Arrival Date',
+            'arrival_date' => 'Tanggal Datang',
             'production_date' => 'Production Date',
             'created_date' => 'Created Date',
             'updated_date' => 'Updated Date',
             'revision_remark' => 'Revision Remark',
             'id_modul' => 'Id Modul',
 			'no_sj' => 'Nomor Surat Jalan',
-			'wh_origin' => 'WH Origin',
+			'wh_origin' => 'Warehouse Asal',
 			'qty_detail' => 'QTY Terima',
 			'status_sn_need_approve' => 'Status Tag SN',
 			'status_retagsn' => 'Status',
 			'status_report' => 'Status',
+            'instruction_number' => 'Nomor Instruksi',
         ];
     }
 

@@ -14,7 +14,7 @@ class SearchInstructionWhTransfer extends InstructionWhTransfer
     public function rules()
     {
         return [
-            [['id', 'created_by', 'updated_by', 'status_listing'], 'integer'],
+            [['id', 'created_by', 'updated_by', 'status_listing','updated_by'], 'integer'],
             [['delivery_target_date', 'file_attachment', 'created_date', 'updated_date', 'grf_number', 'instruction_number', 'wh_destination', 'wh_origin'], 'safe'],
         ];
     }
@@ -66,6 +66,7 @@ class SearchInstructionWhTransfer extends InstructionWhTransfer
                         'wh_destination',
                         'created_date',                        
                         'updated_date'  ,
+                        'updated_by'  ,
                     ],
                     'defaultOrder' => ['created_date'=>SORT_DESC]
                 ],			
@@ -83,7 +84,7 @@ class SearchInstructionWhTransfer extends InstructionWhTransfer
         $query->andFilterWhere([
             'id' => $this->id,
             'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
+            'instruction_wh_transfer.updated_by' => $this->updated_by,
             'instruction_wh_transfer.status_listing' => $this->status_listing,
             // 'wh_destination' => $this->wh_destination,
             'date(delivery_target_date)' => $this->delivery_target_date,

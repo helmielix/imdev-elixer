@@ -57,6 +57,10 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
 							}
 						},
 		            ],
+		            [
+		            	'attribute' => 'revision_remark',
+		            	'visible' => $model->revision_remark!='',
+		            ],
 				],
 			]) ?>
 		</div>

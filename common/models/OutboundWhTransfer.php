@@ -48,6 +48,7 @@ class OutboundWhTransfer extends \yii\db\ActiveRecord
     {
         return [
             [['id_instruction_wh', 'id_modul'], 'required'],
+            [['forwarder', 'plate_number', 'driver'], 'required', 'on' => 'view'],
             [['id_instruction_wh', 'created_by', 'status_listing', 'updated_by', 'forwarder', 'id_modul'], 'integer'],
             [['created_date', 'updated_date'], 'safe'],
             [['revision_remark'], 'string'],
@@ -74,7 +75,7 @@ class OutboundWhTransfer extends \yii\db\ActiveRecord
             'status_listing' => 'Status Listing',
             'updated_by' => 'Updated By',
             'forwarder' => 'Forwarder',
-            'no_sj' => 'Surat Jalan Number',
+            'no_sj' => 'Nomor Surat Jalan',
             'plate_number' => 'Plate Number',
             'created_date' => 'Created Date',
             'updated_date' => 'Updated Date',

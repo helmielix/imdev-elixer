@@ -14,8 +14,8 @@ use Yii;
  * @property integer $req_not_good
  * @property integer $status_listing
  * @property integer $req_reject
- * @property integer $req_good_dismantle
- * @property integer $req_not_good_dismantle
+ * @property integer $req_dismantle
+ * @property integer $req_revocation
  *
  * @property MasterItemIm $idItemIm
  * @property OutboundWhTransfer $idOutboundWh
@@ -37,7 +37,7 @@ class OutboundWhTransferDetail extends \yii\db\ActiveRecord
     {
         return [
             [['id_outbound_wh', 'id_item_im', 'status_listing'], 'required'],
-            [['id_outbound_wh', 'id_item_im', 'req_good', 'req_not_good', 'status_listing', 'req_reject', 'req_good_dismantle', 'req_not_good_dismantle'], 'integer'],
+            [['id_outbound_wh', 'id_item_im', 'req_good', 'req_not_good', 'status_listing', 'req_reject', 'req_dismantle', 'req_revocation', 'req_good_for_recond', 'req_good_rec'], 'integer'],
             // [['id_item_im'], 'exist', 'skipOnError' => true, 'targetClass' => MasterItemImDetail::className(), 'targetAttribute' => ['id_item_im' => 'id']],
             [['id_item_im'], 'exist', 'skipOnError' => true, 'targetClass' => MasterItemIm::className(), 'targetAttribute' => ['id_item_im' => 'id']],
             [['id_outbound_wh'], 'exist', 'skipOnError' => true, 'targetClass' => OutboundWhTransfer::className(), 'targetAttribute' => ['id_outbound_wh' => 'id_instruction_wh']],
@@ -57,8 +57,10 @@ class OutboundWhTransferDetail extends \yii\db\ActiveRecord
             'req_not_good' => 'Request Not Good',
             'status_listing' => 'Status Listing',
             'req_reject' => 'Request Reject',
-            'req_good_dismantle' => 'Request Good Dismantle',
-            'req_not_good_dismantle' => 'Request Not Good Dismantle',
+            'req_dismantle' => 'Request Dismantle',
+            'req_revocation' => 'Request Revocation',
+            'req_good_for_recond' => 'Request Good for Recondition',
+            'req_good_rec' => 'Request Good Recondition',
         ];
     }
 
