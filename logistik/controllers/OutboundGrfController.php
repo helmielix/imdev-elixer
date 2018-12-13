@@ -68,10 +68,31 @@ class OutboundGrfController extends Controller
         ]);
     }
 
+    public function actionIndexreg()
+    {
+        $searchModel = new SearchOutboundGrf();
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'regtagsn');
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     public function actionIndexprintsj()
     {
         $searchModel = new SearchOutboundGrf();
         $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'printsj');
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionIndexregprintsj()
+    {
+        $searchModel = new SearchOutboundGrf();
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'regprintsj');
 
         return $this->render('index', [
             'searchModel' => $searchModel,

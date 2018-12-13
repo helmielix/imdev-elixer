@@ -7,6 +7,9 @@ use yii\bootstrap\Modal;
 use yii\helpers\Url;
 use dosamigos\datepicker\DatePicker;
 use kartik\export\ExportMenu;
+use yii\helpers\ArrayHelper;
+
+use common\models\Reference;
 
 $this->title = Yii::t('app','Good Request Form');
 // if(Yii::$app->controller->action->id == 'index') 
@@ -46,6 +49,11 @@ function getFilterStatus() {
 			6 => 'Rejected',
 		];
 } ;
+
+function getFilterGrf(){
+    $list = ArrayHelper::map(Reference::find()->where(['table_relation'=>'grf_type'])->all(),'id', 'description');
+    return $list;
+}
 ?>
 <?php Modal::begin([
 		'header'=>'<h3 id="modalHeader"></h3>',
@@ -65,15 +73,16 @@ function getFilterStatus() {
         </div>
 		<h3>
         <?php
-            // if(Yii::$app->controller->action->id == 'index'){
-				echo 'List Good Request Form';
+            if(Yii::$app->controller->action->id == 'indexothers')echo 'List Input Good Request Form';
+            if(Yii::$app->controller->action->id == 'indexothersverify')echo 'List Verification Good Request Form';
+            if(Yii::$app->controller->action->id == 'indexothersapprove')echo 'List Approval Good Request Form';
 			// };
             // if(Yii::$app->controller->action->id == 'indexapprove'){echo 'List Inbound PO Approval';};
         ?>
 		</h3>
 		<div class="row">
 			<div class="col-sm-12">
-				<p class="pull-right">
+				<p>
 					<?php if (Yii::$app->controller->action->id == 'indexothers') { ?>
 						<?=  Html::a('Create', '#create?header=Create Good Request Form', ['class' => 'btn btn-success', 'id' => 'createModal', 'value'=>Url::to(['grf/createothers']), 'header'=> yii::t('app','Create Good Request Form')]) ; ?>
 					<?php } ?>
@@ -126,7 +135,13 @@ function getFilterStatus() {
                 'filter' => getFilterStatus()
             ],
             'grf_number',
-            'grf_type',
+            [
+                'attribute' => 'grf_type',
+                'value' => function($model){
+                    return $model->grfType->description;
+                },
+                'filter' => getFilterGrf(),
+            ],
             [
             	'attribute' => 'wo_number',
             	//'value' => 'whDestination.nama_warehouse'

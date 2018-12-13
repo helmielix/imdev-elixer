@@ -1,12 +1,15 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 use dosamigos\datepicker\DatePicker;
 use kartik\export\ExportMenu;
+
+use common\models\Reference;
 
 $this->title = Yii::t('app','Good Request Form');
 // if(Yii::$app->controller->action->id == 'index') 
@@ -46,6 +49,10 @@ function getFilterStatus() {
 			6 => 'Rejected',
 		];
 } ;
+function getFilterGrf(){
+    $list = ArrayHelper::map(Reference::find()->where(['table_relation'=>'grf_type'])->all(),'id', 'description');
+    return $list;
+}
 ?>
 <?php Modal::begin([
 		'header'=>'<h3 id="modalHeader"></h3>',
@@ -65,10 +72,9 @@ function getFilterStatus() {
         </div>
 		<h3>
         <?php
-            // if(Yii::$app->controller->action->id == 'index'){
-				echo 'List Good Request Form';
-			// };
-            // if(Yii::$app->controller->action->id == 'indexapprove'){echo 'List Inbound PO Approval';};
+           if(Yii::$app->controller->action->id == 'index')echo 'List Input Good Request Form';
+           if(Yii::$app->controller->action->id == 'indexverify')echo 'List Verification Good Request Form';
+           if(Yii::$app->controller->action->id == 'indexapprove')echo 'List Approval Good Request Form';
         ?>
 		</h3>
 		<div class="row">
@@ -126,7 +132,13 @@ function getFilterStatus() {
                 'filter' => getFilterStatus()
             ],
             'grf_number',
-            'grf_type',
+            [
+                'attribute' => 'grf_type',
+                'value' => function($model){
+                    return $model->grfType->description;
+                },
+                'filter' => getFilterGrf(),
+            ],
             [
             	'attribute' => 'wo_number',
             	//'value' => 'whDestination.nama_warehouse'

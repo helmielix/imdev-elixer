@@ -249,6 +249,21 @@
 				array_push($arrItemsChild, ['label' => 'Peminjaman', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);
 			}
 
+			## OUTBOUND Grf Regular
+    			$arrItemsChildChild = [];
+			if(Yii::$app->user->can('/outbound-grf/indexreg') || Yii::$app->user->can('/outbound-grf/indexprintsj')|| Yii::$app->user->can('/outbound-grf/indexapprove')) 
+			{
+    			if(Yii::$app->user->can('/outbound-grf/indexreg'))
+					array_push($arrItemsChildChild, ['label' => yii::t('app','Tag SN'), 'icon' => 'plus', 'url' => ['/outbound-grf/indexreg']]);
+				// if(Yii::$app->user->can('/outbound-grf/indexprintsj'))
+				// 	array_push($arrItemsChildChild, ['label' => yii::t('app','Print SJ'), 'icon' => 'check-square-o', 'url' => ['/outbound-grf/indexprintsj']]);
+				// if(Yii::$app->user->can('/outbound-grf/indexapprove'))
+				// 	array_push($arrItemsChildChild, ['label' => yii::t('app','Approve SJ'), 'icon' => 'check-square-o', 'url' => ['/outbound-grf/indexapprove']]);
+				
+
+				array_push($arrItemsChild, ['label' => 'Grf', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);
+			}
+
 			if(count($arrItemsChild) >= 1)
 			{
     			array_push($arrItemsParent, ['label' => 'Outbound ', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChild]);

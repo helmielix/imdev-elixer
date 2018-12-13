@@ -23,48 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attributes' => [
 					'grf_number',
 					'wo_number',
-		            [
-		            	'attribute'=>'grf_type',
-		            	'value'=>function($model){
-		            		if($model->grfType)return $model->grfType->description;
-		            	}
-		            ],
-		            [
-		            	'attribute'=>'requestor',
-		            	'value'=>function($model){
-		            		if($model->requestorName)return $model->requestorName->description;
-		            	}
-		            ],
-		            [
-		            	'attribute'=>'id_division',
-		            	'label' => 'Division',
-		            	'value'=>function($model){
-		            		if($model->idDivision)return $model->idDivision->nama;
-		            	}
-		            ],
-
-		            [
-		            	'attribute'=>'id_region',
-		            	'value'=>function($model){
-		            		if($model->idRegion)return $model->idRegion->name;
-		            	}
-		            ],
-
-				],
-			]) ?>
-		</div>
-		<div class="col-sm-6">
-			<?= DetailView::widget([
-				'model' => $model,
-				'options' => ['class' => 'small table table-striped table-bordered detail-view'],
-				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
-				'attributes' => [	
-		            [
-		            	'attribute'=>'pic',
-		            	'value'=>function($model){
-		            		if($model->picName)return $model->picName->nama;
-		            	}
-		            ],
 					[
 		                'attribute'=>'file_attachment_1',
 		                'format'=>'raw',
@@ -113,6 +71,37 @@ $this->params['breadcrumbs'][] = $this->title;
 							}
 						},
 		            ], 
+		            [
+		            	'attribute'=>'grf_type',
+		            	'value'=>function($model){
+		            		if($model->grfType)return $model->grfType->description;
+		            	}
+		            ],
+		            
+
+				],
+			]) ?>
+		</div>
+		<div class="col-sm-6">
+			<?= DetailView::widget([
+				'model' => $model,
+				'options' => ['class' => 'small table table-striped table-bordered detail-view'],
+				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
+				'attributes' => [	
+					[
+		            	'attribute'=>'id_division',
+		            	'label' => 'Division',
+		            	'value'=>function($model){
+		            		if($model->idDivision)return $model->idDivision->nama;
+		            	}
+		            ],
+
+		            [
+		            	'attribute'=>'pic',
+		            	'value'=>function($model){
+		            		if($model->picName)return $model->picName->nama;
+		            	}
+		            ],
 					
 					'purpose',
 					[
@@ -124,12 +113,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 			]) ?>
 		</div>
-		<!-- <div class="col-sm-12">
-			<?php if(Yii::$app->controller->action->id == 'view' && $model->status_listing != 6)
+		 <div class="col-sm-12">
+			<?php if((Yii::$app->controller->action->id == 'view' || Yii::$app->controller->action->id == 'viewothers') && $model->status_listing != 6)
 				echo Html::button(Yii::t('app','Update'), ['id'=>'updateButton','class' => 'btn btn-primary']); ?>
 			<?php if(Yii::$app->controller->action->id == 'view' && ($model->status_listing == 1 || $model->status_listing == 6 || $model->status_listing == 7))
 				echo Html::button(Yii::t('app','Delete'), ['id'=>'deleteButton','class' => 'btn btn-danger']); ?>
-		</div> -->
+		</div> 
 	</div>
 	
 	<hr>

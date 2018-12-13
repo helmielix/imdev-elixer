@@ -85,14 +85,25 @@ use kartik\depdrop\DepDrop;
         'allowClear' => true],
         ]) ?>
 
-    <?= $form->field($model, 'pic')->widget(Select2::classname(), [
+    <?= $form->field($model, 'team_leader')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Labor::find()->all(), 'nik','nama'),
         'language' => 'en',
         // form-control select2-hidden-accessible
-        'options' => ['placeholder' => 'Select '.$model->getAttributeLabel('id_region'), 'class' => 'input-sm'],
+        'options' => ['placeholder' => 'Select Leader', 'class' => 'input-sm'],
         'pluginOptions' => [
         'allowClear' => true],
         ]) ?>
+
+    <?= $form->field($model, 'team_name')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(Reference::find()->where(['table_relation'=>'team_name'])->all(), 'id','description'),
+        'language' => 'en',
+        // form-control select2-hidden-accessible
+        'options' => ['placeholder' => 'Select Team', 'class' => 'input-sm'],
+        'pluginOptions' => [
+        'allowClear' => true],
+        ]) ?>
+
+
 	
     <?= $form->field($model, 'file1')->fileInput() ?>
 

@@ -99,7 +99,7 @@ function getFilterStatus() {
                 'template'=>'{view}',
                 'buttons'=>[
                      'view' => function ($url, $model) {
-                        if(Yii::$app->controller->action->id == 'index' && !isset($model->status_listing)){
+                        if(Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'indexreg'  && !isset($model->status_listing)){
                             return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-plus"></span>', '#viewinstruction?id='.$model->id_instruction_grf.'&header=Create_Tag_SN', [
                                 'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/viewinstruction','id' => $model->id_instruction_grf]), 'header'=> yii::t('app','Create Tag SN')
                             ]);
@@ -109,7 +109,23 @@ function getFilterStatus() {
                                 $viewurl = 'create';
                                 $header = 'Create Tag SN';
                             }
+                            if(Yii::$app->controller->action->id == 'indexreg') {
+                                $viewurl = 'create';
+                                $header = 'Create Tag SN';
+                            }
                             if(Yii::$app->controller->action->id == 'indexprintsj') {
+                                $viewurl = 'view';
+                                $header = 'Create Surat Jalan';
+                                $headerlnk = str_replace(' ', '_', $header);
+                                $icon = 'eye-open';
+                                if ($model->status_listing == 42){ // tag inputted
+                                    $icon = 'plus';
+                                }
+                                if ($model->status_listing == 25){ // ready to print
+                                    $viewurl = 'viewprintsj';
+                                    $header = '';
+                                } 
+                            if(Yii::$app->controller->action->id == 'indexregprintsj') {
                                 $viewurl = 'view';
                                 $header = 'Create Surat Jalan';
                                 $headerlnk = str_replace(' ', '_', $header);
