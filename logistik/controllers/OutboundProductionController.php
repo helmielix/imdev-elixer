@@ -208,6 +208,7 @@ class OutboundProductionController extends Controller
 			$model->id_instruction_production = $modelInstruction->id;
 			$model->status_listing = 43; // Partially Uploaded
 			$model->id_modul = $this->id_modul;
+			$model->id_warehouse = $this->id_warehouse;
 
 			// $model->save();
 			if(!$model->save())return print_r($model->getErrors());
