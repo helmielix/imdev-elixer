@@ -570,7 +570,7 @@ class InboundPoController extends Controller
 					$this->createLog($model);
 					$arrAuth = ['/inbound-po/index'];
 	                $header = 'Alert Need Revise INBOUND PO';
-	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/index#view?id='.$model->id.'&header=Detail_BUSDEV_BAS';
+	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/index#view?id='.$model->id.'&header=Detail_INBOUND_PO';
 	                Email::sendEmail($arrAuth,$header,$subject);
 					return 'success';
 				} else {
@@ -588,52 +588,16 @@ class InboundPoController extends Controller
     {  		
 		$model = InboundPoDetail::findOne($idInboundPoDetail);
 		
-		// $modelMasterItem = MasterItemIm::findOne($model->id_item_im);
-		// $modelMasterItem->stock_qty = $modelMasterItem->stock_qty - $model->qty;
-		// $modelMasterItem->save();
+		$modelMasterItem = MasterItemIm::findOne($model->id_item_im);
+		$modelMasterItem->stock_qty = $modelMasterItem->stock_qty - $model->qty;
+		$modelMasterItem->save();
 		
-
-        // InboundPoDetailSn::deleteAll('id_inbound_po_detail = '.$idInboundPoDetail);
-        $modelMasterItemDetail = MasterItemImDetail::find();
-        // menggunakan variable reference
-        $where = ['and', ['id_warehouse' => $model->idInboundPo->id_warehouse], ['id_master_item_im' => &$id_item_im]];
-
-
-		if ($model->status_stock == 1) {
-			// data sudah pernah menambah stock
-	        $modeldetailSn = InboundPoDetailSn::find()->andWhere(['id_inbound_po_detail' => $idInboundPoDetail])->all();
-	        
-	        foreach ($modeldetailSn as $key => $modelSn){
-	        	// menyesuaikan stock
-	            $id_item_im = $modelSn->idInboundPoDetail->id_item_im;
-				$columnstock = 's_'.str_replace(' ', '_', $modelSn->condition);
-				$modelstock = $modelMasterItemDetail->andWhere($where)->one();
-				$modelstock->{$columnstock} -= 1;
-				$modelstock->save();
-
-				// menghapus SN yang pernah terinput
-				if ( is_string($modelSn->serial_number) ){
-    				$wheresn = ['serial_number' => $modelSn->serial_number];
-    			}else{
-    				$wheresn = ['mac_address' => $modelSn->mac_address];
-    			}
-    			$modelMasterSn = MasterSn::find()->andWhere($wheresn)->andWhere(['status' => 27])->one();
-    			if($modelMasterSn !== null){
-	    			$modelMasterSn->status = 13;
-					$this->createLogsn($modelMasterSn);
-	    			$modelMasterSn->delete();
-    			}
-
-    			$modelSn->delete();
-
-			}
-	
-		}        
-
+        InboundPoDetailSn::deleteAll('id_inbound_po_detail = '.$idInboundPoDetail);
+		
+		
 		$modelInbounPO = InboundPo::findOne($model->id_inbound_po);
 		\Yii::$app->session->set('idInboundPo', $model->id_inbound_po);
         $model->status_listing = 999;
-        $model->status_stock = 0;
         $model->qty_good = 0;
         $model->qty_not_good = 0;
         $model->qty_reject = 0;
@@ -974,6 +938,8 @@ class InboundPoController extends Controller
 				if($quantities[$key] == '' && $quantities[$key] == 0){
 					continue;
 				}
+				
+
 				// return print_r($quantities[$key]);
 				$model = new InboundPoDetail();
 				$model->id_inbound_po = \Yii::$app->session->get('idInboundPo');
@@ -1067,13 +1033,16 @@ class InboundPoController extends Controller
 			InboundPoDetail::deleteAll('id_inbound_po = :id_inbound_po AND orafin_code = :orafin_code', [':id_inbound_po' => $idInboundPo, ':orafin_code' => $orafinCode]);
 			
 			foreach($quantities as $key  => $data){
+				if($key == '' && $key == 0){
+					continue;
+				}
 				// return print_r($quantities[$key]);
 				$model = new InboundPoDetail();
 				$model->id_inbound_po = \Yii::$app->session->get('idInboundPo');
 				$model->orafin_code = $orafinCode;
 				$model->qty_rr = $maxQty;
 				if($key == 0){
-					$sumQty = $quantities[$key];
+					$sumQty = '';
 				}else{
 					$sumQty = $sumQty + $quantities[$key];
 				}
