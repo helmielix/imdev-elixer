@@ -12,11 +12,11 @@ use common\models\OutboundProduction;
  */
 class SearchOutboundProduction extends OutboundProduction
 {
-    public $instruction_number, $delivery_target_date, $wh_destination, $wh_origin;
+    public $instruction_number, $delivery_target_date, $wh_destination, $wh_origin, $id_modul;
     public function rules()
     {
         return [
-            [['id_instruction_wh', 'driver', 'created_by', 'status_listing', 'updated_by', 'forwarder', 'id_modul'], 'integer'],
+            [['id_instruction_production', 'driver', 'created_by', 'status_listing', 'updated_by', 'forwarder', 'id_modul'], 'integer'],
             [['no_sj', 'plate_number', 'created_date', 'updated_date', 'revision_remark', 'instruction_number', 'delivery_target_date', 'wh_destination', 'wh_origin'], 'safe'],
         ];
     }
@@ -33,36 +33,36 @@ class SearchOutboundProduction extends OutboundProduction
 
     public function search($params, $id_modul, $action, $id_warehouse){
         $query = OutboundProduction::find();
-		$query->joinWith('idInstructionWh', true, 'FULL JOIN')
-        ->leftJoin('warehouse wori', 'instruction_wh_transfer.wh_origin = wori.id')
-        ->leftJoin('warehouse wdest', 'instruction_wh_transfer.wh_destination = wdest.id');
+		$query->joinWith('idInstructionProduction', true, 'FULL JOIN');
+        // ->leftJoin('warehouse wori', 'instruction_production.wh_origin = wori.id')
+        // ->leftJoin('warehouse wdest', 'instruction_production.wh_destination = wdest.id');
 		$query->select([
-			'instruction_wh_transfer.instruction_number',
-			'instruction_wh_transfer.delivery_target_date',
-			'instruction_wh_transfer.wh_destination',
-			'instruction_wh_transfer.id as id_instruction_wh',
-			'outbound_wh_transfer.status_listing',
-			'outbound_wh_transfer.no_sj',
-			'outbound_wh_transfer.created_date',
-			'outbound_wh_transfer.updated_date',
+			'instruction_production.instruction_number',
+			// 'instruction_production.delivery_target_date',
+			'instruction_production.id_warehouse',
+			'instruction_production.id as id_instruction_production',
+			'outbound_production.status_listing',
+			'outbound_production.no_sj',
+			'outbound_production.created_date',
+			'outbound_production.updated_date',
 		]);
 
 		if($action == 'tagsn'){
-			$query	->andFilterWhere(['instruction_wh_transfer.status_listing' => 5])
-					->andFilterWhere(['instruction_wh_transfer.id_modul' => $id_modul])
-					->andWhere(['outbound_wh_transfer.status_listing' => null])
-					->orFilterWhere(['and',['outbound_wh_transfer.id_modul' => $id_modul],['not in', 'outbound_wh_transfer.status_listing', [5, 25, 22]]])
-					->andWhere(['instruction_wh_transfer.wh_origin' => $id_warehouse])
+			$query	->andFilterWhere(['instruction_production.status_listing' => 5])
+					->andFilterWhere(['instruction_production.id_modul' => $id_modul])
+					->andWhere(['outbound_production.status_listing' => null])
+					->orFilterWhere(['and',['outbound_production.id_modul' => $id_modul],['not in', 'outbound_production.status_listing', [5, 25, 22]]])
+					// ->andWhere(['instruction_production.wh_origin' => $id_warehouse])
 					;
 		}else if($action == 'printsj'){
-			$query	->andFilterWhere(['outbound_wh_transfer.status_listing' => [42, 2, 22, 25, 1]]);
-			$query	->andFilterWhere(['outbound_wh_transfer.id_modul' => $id_modul]);
-			$query	->andWhere(['instruction_wh_transfer.wh_origin' => $id_warehouse]);
+			$query	->andFilterWhere(['outbound_production.status_listing' => [42, 2, 22, 25, 1]]);
+			$query	->andFilterWhere(['outbound_production.id_modul' => $id_modul]);
+			// $query	->andWhere(['instruction_production.wh_origin' => $id_warehouse]);
 			
 		}else if($action == 'approve'){
-			$query	->andFilterWhere(['outbound_wh_transfer.status_listing' => [22, 25]]);
-			$query	->andFilterWhere(['outbound_wh_transfer.id_modul' => $id_modul]);
-			$query	->andWhere(['instruction_wh_transfer.wh_origin' => $id_warehouse]);
+			$query	->andFilterWhere(['outbound_production.status_listing' => [22, 25]]);
+			$query	->andFilterWhere(['outbound_production.id_modul' => $id_modul]);
+			// $query	->andWhere(['instruction_production.wh_origin' => $id_warehouse]);
 		}
 
 		$dataProvider = $this->_search($params, $query);
@@ -79,20 +79,20 @@ class SearchOutboundProduction extends OutboundProduction
         ]);
 
 		$dataProvider->sort->attributes['instruction_number'] = [
-            'asc' => ['instruction_wh_transfer.instruction_number' => SORT_ASC],
-            'desc' => ['instruction_wh_transfer.instruction_number' => SORT_DESC],
+            'asc' => ['instruction_production.instruction_number' => SORT_ASC],
+            'desc' => ['instruction_production.instruction_number' => SORT_DESC],
         ];
 		$dataProvider->sort->attributes['delivery_target_date'] = [
-            'asc' => ['instruction_wh_transfer.delivery_target_date' => SORT_ASC],
-            'desc' => ['instruction_wh_transfer.delivery_target_date' => SORT_DESC],
+            'asc' => ['instruction_production.delivery_target_date' => SORT_ASC],
+            'desc' => ['instruction_production.delivery_target_date' => SORT_DESC],
         ];
 		$dataProvider->sort->attributes['wh_destination'] = [
-            'asc' => ['instruction_wh_transfer.wh_destination' => SORT_ASC],
-            'desc' => ['instruction_wh_transfer.wh_destination' => SORT_DESC],
+            'asc' => ['instruction_production.wh_destination' => SORT_ASC],
+            'desc' => ['instruction_production.wh_destination' => SORT_DESC],
         ];
 		$dataProvider->sort->attributes['wh_origin'] = [
-            'asc' => ['instruction_wh_transfer.wh_origin' => SORT_ASC],
-            'desc' => ['instruction_wh_transfer.wh_origin' => SORT_DESC],
+            'asc' => ['instruction_production.wh_origin' => SORT_ASC],
+            'desc' => ['instruction_production.wh_origin' => SORT_DESC],
         ];
 
         $this->load($params);
@@ -104,23 +104,23 @@ class SearchOutboundProduction extends OutboundProduction
         }
 
 		if ($this->status_listing == 999) {
-            $query->andFilterWhere(['instruction_wh_transfer.status_listing' => 5])
-                ->andWhere(['outbound_wh_transfer.status_listing' => null]);
+            $query->andFilterWhere(['instruction_production.status_listing' => 5])
+                ->andWhere(['outbound_production.status_listing' => null]);
         }else {
-            $query->andFilterWhere(['outbound_wh_transfer.status_listing' => $this->status_listing,]);
+            $query->andFilterWhere(['outbound_production.status_listing' => $this->status_listing,]);
         }
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_instruction_wh' => $this->id_instruction_wh,
+            'id_instruction_production' => $this->id_instruction_production,
             'driver' => $this->driver,
-            'outbound_wh_transfer.created_by' => $this->created_by,
-            'outbound_wh_transfer.updated_by' => $this->updated_by,
+            'outbound_production.created_by' => $this->created_by,
+            'outbound_production.updated_by' => $this->updated_by,
             'forwarder' => $this->forwarder,
-            'date(outbound_wh_transfer.created_date)' => $this->created_date,
-            'date(outbound_wh_transfer.updated_date)' => $this->updated_date,
+            'date(outbound_production.created_date)' => $this->created_date,
+            'date(outbound_production.updated_date)' => $this->updated_date,
             'date(delivery_target_date)' => $this->delivery_target_date,
-            'outbound_wh_transfer.id_modul' => $this->id_modul,
+            'outbound_production.id_modul' => $this->id_modul,
         ]);
 
         $query->andFilterWhere(['ilike', 'no_sj', $this->no_sj])

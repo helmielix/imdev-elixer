@@ -15,11 +15,11 @@ class SearchOutboundProductionDetail extends OutboundProductionDetail
     /**
      * @inheritdoc
      */
-	public $sn_type, $name, $brand;
+	public $sn_type, $name, $brand ;
     public function rules()
     {
         return [
-            [['id', 'id_outbound_pro', 'sn_type', 'req_good', 'req_not_good', 'status_listing', 'req_reject', 'req_good_dismantle', 'req_not_good_dismantle'], 'integer'],
+            [['id', 'id_outbound_production', 'sn_type',  ], 'integer'],
 			[[ 'name', 'brand', 'id_item_im'], 'safe'],
         ];
     }
@@ -36,9 +36,9 @@ class SearchOutboundProductionDetail extends OutboundProductionDetail
 
     public function search($params, $id){
         // $query = OutboundProductionDetail::find()->joinWith('idMasterItemImDetail.idMasterItemIm');
-        $query = OutboundProductionDetail::find()->joinWith(['idMasterItemIm.referenceBrand']);
+        $query = OutboundProductionDetail::find()->joinWith(['idParameterMasterItem.idMasterItemIm.referenceBrand']);
 
-		$query->andWhere(['id_outbound_pro' => $id]);
+		$query->andWhere(['id_outbound_production' => $id]);
 
 		$dataProvider = $this->_search($params, $query);
 
@@ -76,20 +76,20 @@ class SearchOutboundProductionDetail extends OutboundProductionDetail
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_outbound_pro' => $this->id_outbound_pro,
+            'id_outbound_production' => $this->id_outbound_production,
             // 'id_item_im' => $this->id_item_im,
-            'status_listing' => $this->status_listing,
-            'req_good' => $this->req_good,
-            'req_not_good' => $this->req_not_good,
-            'req_reject' => $this->req_reject,
-            'req_good_dismantle' => $this->req_good_dismantle,
-            'req_not_good_dismantle' => $this->req_not_good_dismantle,
-            'master_item_im.sn_type' => $this->sn_type,
+            // 'status_listing' => $this->status_listing,
+            // 'req_good' => $this->req_good,
+            // 'req_not_good' => $this->req_not_good,
+            // 'req_reject' => $this->req_reject,
+            // 'req_good_dismantle' => $this->req_good_dismantle,
+            // 'req_not_good_dismantle' => $this->req_not_good_dismantle,
+            // 'master_item_im.sn_type' => $this->sn_type,
         ]);
 
 		$query->andFilterWhere(['ilike' , 'master_item_im.im_code', $this->id_item_im]);
-		$query->andFilterWhere(['ilike' , 'master_item_im.name', $this->name]);
-		$query->andFilterWhere(['ilike' , 'reference.description', $this->brand]);
+		// $query->andFilterWhere(['ilike' , 'master_item_im.name', $this->name]);
+		// $query->andFilterWhere(['ilike' , 'reference.description', $this->brand]);
 
 
         return $dataProvider;

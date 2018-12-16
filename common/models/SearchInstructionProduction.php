@@ -29,13 +29,37 @@ class SearchInstructionProduction extends InstructionProduction
     }
 
     public function search($params, $id_modul, $action){
-  		$query = InstructionProduction::find()->andWhere(['id_modul' => $id_modul]);
+  		$query = InstructionProduction::find()->andWhere(['instruction_production.id_modul' => $id_modul]);
 
   		if($action == 'input'){
   			$query	->andFilterWhere(['instruction_production.status_listing' => [ 1,2,3,6,7 ]]);
   		}else if($action == 'approve'){
-  			$query	->andFilterWhere(['instruction_production.status_listing' => [ 1,5 ]]);
-  		}
+  			$query	->andFilterWhere(['instruction_production.status_listing' => [ 1,2,5 ]]);
+  		}else if($action == 'input_declare'){
+        $query  ->joinWith('idOutboundProduction')
+                ->select([
+                    'instruction_production.status_declare',
+                    'instruction_production.instruction_number',
+                    'instruction_production.target_produksi',
+                    'instruction_production.id_warehouse',
+                    'instruction_production.created_date',
+                    'instruction_production.updated_date',
+                    'outbound_production.no_sj',
+                ]);
+        $query  ->andFilterWhere(['instruction_production.status_declare' => [ 1,2,3 ]]);
+      }else if($action == 'approve_declare'){
+        $query  ->joinWith('idOutboundProduction')
+                ->select([
+                    'instruction_production.status_declare',
+                    'instruction_production.instruction_number',
+                    'instruction_production.target_produksi',
+                    'instruction_production.id_warehouse',
+                    'instruction_production.created_date',
+                    'instruction_production.updated_date',
+                    'outbound_production.no_sj',
+                ]);
+        $query  ->andFilterWhere(['instruction_production.status_declare' => [ 1,2,5 ]]);
+      }
 
   		$dataProvider = $this->_search($params, $query);
 

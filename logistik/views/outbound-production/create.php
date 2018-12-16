@@ -20,16 +20,39 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
 			<?= DetailView::widget([
 				'model' => $model,
 				'options' => ['class' => 'small table table-striped table-bordered detail-view'],
+				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
 				'attributes' => [
-					'idInstructionWh.instruction_number',
-					'idInstructionWh.delivery_target_date:date',
+					'instruction_number',
 					[
-		            	'attribute' => 'wh_origin',
-		            	'value' => $model->idInstructionWh->whOrigin->nama_warehouse
-		            ],
-		            [
-		            	'attribute' => 'wh_destination',
-		            	'value' => $model->idInstructionWh->whDestination->nama_warehouse
+						'label' => 'Estimasi Produksi',
+						'value' => function($model){
+							return $model->idInstructionProduction->target_produksi;
+						},
+						'format' => 'date',
+					],
+					// 'target_produksi:date',
+					[
+						'label' => 'Location',
+						'value' => function($model){
+							return $model->idInstructionProduction->idWarehouse->nama_warehouse;
+						}
+					],
+					// 'id_warehouse',
+					[
+		                'label'=>'File Attachment',
+		                'format'=>'raw',
+						'value' => function($searchModel){
+							if ($this->context->action->id == 'exportpdf' || $this->context->action->id == 'exportinstruction'){
+								return basename($searchModel->file_attachment);
+							}else{
+								return Html::a(basename($searchModel->file_attachment), ['downloadfile','id' => $searchModel->id_instruction_production, 'relation' => 'instruction'], $options = ['target'=>'_blank', 'data' => [
+				                        'method' => 'post',
+				                        'params' => [
+				                            'data' => 'file_attachment',
+				                        ]
+				                    ]]);
+							}
+						},
 		            ],
 				],
 			]) ?>
@@ -40,23 +63,19 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
 				'options' => ['class' => 'small table table-striped table-bordered detail-view'],
 				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
 				'attributes' => [
-					'idInstructionWh.grf_number',
 					[
-		                'attribute'=>'idInstructionWh.file_attachment',
-		                'format'=>'raw',
-						'value' => function($searchModel){
-							if ($this->context->action->id == 'exportpdf'){
-								return basename($searchModel->idInstructionWh->file_attachment);
-							}else{
-								return Html::a(basename($searchModel->idInstructionWh->file_attachment), ['downloadfile','id' => $searchModel->idInstructionWh->id, 'relation' => 'instruction'], $options = ['target'=>'_blank', 'data' => [
-				                        'method' => 'post',
-				                        'params' => [
-				                            'data' => 'file_attachment',
-				                        ]
-				                    ]]);
-							}
-						},
-		            ],
+						'label' => 'Inputted By IC',
+						'value' => function($model){
+							return $model->idInstructionProduction->created_by;
+						}
+					],
+					[
+						'label' => 'Approved By IC',
+						'value' => function($model){
+							return $model->idInstructionProduction->updated_by;
+						}
+					],
+					// 'file_attachment',
 				],
 			]) ?>
 		</div>
@@ -74,7 +93,7 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
 				<?= Html::checkBox('macAddressCheckbox', '', ['id' => 'checkboxMacaddr']) ?>
 			</label>
 			<?= Html::a(Yii::t('app','Download Template'), [$this->context->id.'/downloadfile', 'id'=>'template'], ['id'=>'templateButton','class' => 'btn btn-primary btn-sm', 'data-method' => 'post']) ?>
-			<?= Html::a(Yii::t('app','Print Instruction'), [$this->context->id.'/exportinstruction', 'id'=>$model->id_instruction_wh], ['id'=>'instructionButton','class' => 'btn btn-primary btn-sm', 'data-method' => 'post', 'target' => '_blank']) ?>
+			<?= Html::a(Yii::t('app','Print Instruction'), [$this->context->id.'/exportinstruction', 'id'=>$model->id_instruction_production], ['id'=>'instructionButton','class' => 'btn btn-primary btn-sm', 'data-method' => 'post', 'target' => '_blank']) ?>
 			<div class="small text-danger">Check "Mac Address" for Template with Mac Address Column</div>
 		</div>
 	</div>
@@ -134,7 +153,7 @@ $('#submitButton').click(function () {
 	button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
 
 	$.ajax({
-		url: '<?php echo Url::to([$this->context->id.'/submitsn', 'id' => $model->id_instruction_wh]) ;?>',
+		url: '<?php echo Url::to([$this->context->id.'/submitsn', 'id' => $model->id_instruction_production]) ;?>',
 		type: 'post',
 		processData: false,
 		contentType: false,

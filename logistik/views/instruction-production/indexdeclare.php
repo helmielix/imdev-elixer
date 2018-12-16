@@ -67,9 +67,9 @@ function getFilterStatus() {
 		</h3>
 		<div class="row">
 			<div class="col-sm-12">
-				<p class="pull-right">
-					<?php if (Yii::$app->controller->action->id == 'index') { ?>
-						<?=  Html::a('Create', '#create?header=Create Instruksi Warehouse Transfer', ['class' => 'btn btn-success', 'id' => 'createModal', 'value'=>Url::to(['instruction-production/create']), 'header'=> yii::t('app','Create Instruksi Warehouse Transfer')]) ; ?>
+				<p>
+					<?php if (Yii::$app->controller->action->id == 'indexdeclare') { ?>
+						<?=  Html::a('Create', '#create?header=Create Instruksi Warehouse Transfer', ['class' => 'btn btn-success', 'id' => 'createModal', 'value'=>Url::to(['instruction-production/create-declare']), 'header'=> yii::t('app','Create Instruksi Warehouse Transfer')]) ; ?>
 					<?php } ?>
 				</p>
 			</div>
@@ -91,27 +91,26 @@ function getFilterStatus() {
                     'view' => function ($url, $model) {
                          if(Yii::$app->controller->action->id == 'index' && isset($model->status_listing)){
                             return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#view?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
-                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-wh-transfer/view','id' => $model->id]), 'header'=> yii::t('app','Detail Material GRF Vendor IKO')
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-production/view','id' => $model->id]), 'header'=> yii::t('app','Detail Material GRF Vendor IKO')
                             ]);
                         }
 						else {
-                            if(Yii::$app->controller->action->id == 'index') $viewurl = 'view';
-                            if(Yii::$app->controller->action->id == 'indexlog') $viewurl = 'viewlog';
-                            if(Yii::$app->controller->action->id == 'indexapprove') $viewurl = 'viewapprove';
+                            if(Yii::$app->controller->action->id == 'indexdeclare') $viewurl = 'viewdeclare';
+                            if(Yii::$app->controller->action->id == 'indexapprovedeclare') $viewurl = 'viewapprovedeclare';
                             if(Yii::$app->controller->action->id == 'indexoverview') $viewurl = 'viewoverview';
                             return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
-                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-wh-transfer/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app','Detail Inbound PO')
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['instruction-production/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app','Detail Inbound PO')
                                 ]);
                         }
                     },
                 ],
 			],
 			[
-          'attribute' => 'status_listing',
+          'attribute' => 'status_declare',
           'format' => 'raw',
           'value' => function ($searchModel) {
-              if ($searchModel->status_listing) {
-                  return "<span class='label' style='background-color:{$searchModel->statusReference->status_color}' >{$searchModel->statusReference->status_listing}</span>";
+              if ($searchModel->status_declare) {
+                  return "<span class='label' style='background-color:{$searchModel->statusDeclare->status_color}' >{$searchModel->statusDeclare->status_listing}</span>";
               } else {
                   return "<span class='label' style='background-color:grey'>Open RR</span>";
               }
@@ -119,6 +118,7 @@ function getFilterStatus() {
           'filter' => getFilterStatus()
       ],
       'instruction_number',
+      'no_sj',
       'target_produksi:date',
       'id_warehouse',
 

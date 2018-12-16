@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
-
+use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model divisisatu\models\InstructionWhTransfer */
 
@@ -21,45 +21,43 @@ $this->params['breadcrumbs'][] = $this->title;
 				'options' => ['class' => 'small table table-striped table-bordered detail-view'],
 				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
 				'attributes' => [
-					'instruction_number',
-					'target_produksi:date',
 					[
-						'attribute' => 'id_warehouse',
+						'attribute' => 'id_item_im',
+						'label' => 'Target Produksi',
 						'value' => function($model){
-							return $model->idWarehouse->nama_warehouse;
+							return $model->idParameterMasterItem->idMasterItemIm->name;
 						}
 					],
-					// 'id_warehouse',
+					
 					[
-		                'attribute'=>'file_attachment',
-		                'format'=>'raw',
-						'value' => function($searchModel){
-							if ($this->context->action->id == 'exportpdf' || $this->context->action->id == 'exportinstruction'){
-								return basename($searchModel->file_attachment);
-							}else{
-								return Html::a(basename($searchModel->file_attachment), ['downloadfile','id' => $searchModel->id, 'relation' => 'instruction'], $options = ['target'=>'_blank', 'data' => [
-				                        'method' => 'post',
-				                        'params' => [
-				                            'data' => 'file_attachment',
-				                        ]
-				                    ]]);
-							}
-						},
-		            ],
+						'label' => 'IM Code',
+						// 'attribute' => 'id_warehouse',
+						'value' => function($model){
+							return $model->idParameterMasterItem->idMasterItemIm->im_code;
+						}
+					],
+					'qty'
+					// 'id_warehouse',
+					// [
+		   //              'attribute'=>'file_attachment',
+		   //              'format'=>'raw',
+					// 	'value' => function($searchModel){
+					// 		if ($this->context->action->id == 'exportpdf' || $this->context->action->id == 'exportinstruction'){
+					// 			return basename($searchModel->file_attachment);
+					// 		}else{
+					// 			return Html::a(basename($searchModel->file_attachment), ['downloadfile','id' => $searchModel->id, 'relation' => 'instruction'], $options = ['target'=>'_blank', 'data' => [
+				 //                        'method' => 'post',
+				 //                        'params' => [
+				 //                            'data' => 'file_attachment',
+				 //                        ]
+				 //                    ]]);
+					// 		}
+					// 	},
+		   //          ],
 				],
 			]) ?>
 		</div>
-		<div class="col-sm-6">
-			<?= DetailView::widget([
-				'model' => $model,
-				'options' => ['class' => 'small table table-striped table-bordered detail-view'],
-				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
-				'attributes' => [
-					'created_by',
-					// 'file_attachment',
-				],
-			]) ?>
-		</div>
+		
 		<div class="col-sm-12">
 			<?php if(Yii::$app->controller->action->id == 'view' && $model->status_listing != 6)
 				echo Html::button(Yii::t('app','Update'), ['id'=>'updateButton','class' => 'btn btn-primary']); ?>
@@ -71,14 +69,48 @@ $this->params['breadcrumbs'][] = $this->title;
 	<hr>
 	
 	<h3>Detail Warehouse Transfers Instruction</h3>
-	<?= $this->render('indexdetail', [
-		'model' => $model,
-        'searchModel' => $searchModel,
+	<?= GridView::widget([
         'dataProvider' => $dataProvider,
-    ]) ?>
+        // 'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'kartik\grid\SerialColumn'],
+            
+		      'im_code',
+		      'name',
+		      [
+		      	'attribute' => 'brand',
+		      	'value' => function($model){
+		      		if($model->referenceBrand)
+		      		return $model->referenceBrand->description;
+		      	}
+		      ],
+		      [
+		      	'attribute' => 'sn_type',
+		      	'value' => function($model){
+		      		if($model->referenceSn)
+		      		return $model->referenceSn->description;
+		      	}
+		      ],
+		      [
+		      	'attribute' => 'uom',
+		      	'value' => function($model){
+		      		if($model->referenceUom)
+		      		return $model->referenceUom->description;
+		      	}
+		      ],
+		      'req_good',
+		      'req_dis_good',
+		      'req_good_recond',
+
+
+
+
+        	],
+    ]); ?>
 	
 	<?php if($this->context->action->id != 'view'){ ?>
 	<p> 
+		<?= Html::button(Yii::t('app','Previous'), ['id'=>'previousButton','class' => 'btn btn-success']);  ?>
         <?php if((Yii::$app->controller->action->id == 'viewapprove' && $model->status_listing != 5))
             echo Html::button(Yii::t('app','Reject'), ['id'=>'rejectButton','class' => 'btn btn-danger']); ?>
         <?php if((Yii::$app->controller->action->id == 'viewapprove' && $model->status_listing != 5) || 
@@ -123,6 +155,26 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <script>
+	<?php 
+	$qString = Yii::$app->request->queryString;
+	$val = explode("&",$qString);
+	$id = null;
+	
+	if ($val[1] == 'par=viewdetail'){
+		$goto = '/view';
+		$id = Yii::$app->session->get('idInstProd');
+	}else{
+		$goto = '/indexdetail';
+	}
+	?>
+	$('#previousButton').click(function () {
+		// alert('<?php echo $val[1]?>');
+        $('#modal').modal('show')
+            .find('#modalContent')
+            .load('<?php echo Url::to([$this->context->id.$goto,'id'=>$id]) ;?>');
+        $('#modalHeader').html('<h3> Create Inbound PO </h3>');
+    });
+
 $('#revisionButton').click(function(){
 	var resp = confirm("Do you want to revise this item?");
 	

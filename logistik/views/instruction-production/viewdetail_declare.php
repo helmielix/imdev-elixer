@@ -22,30 +22,13 @@ $this->params['breadcrumbs'][] = $this->title;
 				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
 				'attributes' => [
 					'instruction_number',
-					'target_produksi:date',
 					[
-						'attribute' => 'id_warehouse',
-						'value' => function($model){
-							return $model->idWarehouse->nama_warehouse;
-						}
+						'attribute' => 'no_sj',
+						'label' => 'Nomor Surat Jalan',
 					],
-					// 'id_warehouse',
-					[
-		                'attribute'=>'file_attachment',
-		                'format'=>'raw',
-						'value' => function($searchModel){
-							if ($this->context->action->id == 'exportpdf' || $this->context->action->id == 'exportinstruction'){
-								return basename($searchModel->file_attachment);
-							}else{
-								return Html::a(basename($searchModel->file_attachment), ['downloadfile','id' => $searchModel->id, 'relation' => 'instruction'], $options = ['target'=>'_blank', 'data' => [
-				                        'method' => 'post',
-				                        'params' => [
-				                            'data' => 'file_attachment',
-				                        ]
-				                    ]]);
-							}
-						},
-		            ],
+					'target_produksi:date',
+					
+					
 				],
 			]) ?>
 		</div>
@@ -55,8 +38,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'options' => ['class' => 'small table table-striped table-bordered detail-view'],
 				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
 				'attributes' => [
-					'created_by',
-					// 'file_attachment',
+					[
+						'attribute' => 'id_warehouse',
+						'value' => function($model){
+							return $model->idWarehouse->nama_warehouse;
+						}
+					],
 				],
 			]) ?>
 		</div>
@@ -123,6 +110,73 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <script>
+	<?php 
+	$qString = Yii::$app->request->queryString;
+	$id = null;
+	
+	// if ($qString == 'par=indexdetail'){
+	// 	$goto = '/indexdetail';
+	// }else{
+		$goto = '/indexdeclare';
+		$id = Yii::$app->session->get('idInstProd');
+	// }
+	?>
+	$('.instruction-wh-transfer-detail-index').on('mousedown', '#submitButton', function (e) {
+		e.preventDefault();
+        var form = $('#gridViewcreatedetail-container');
+		data = new FormData();
+		form.find('input:hidden, input:text')
+			.each(function(){
+				name = $(this).attr('name');
+				val = $(this).val();
+				data.append(name, val);
+			});
+		
+		var button = $(this);
+		button.prop('disabled', true);
+        button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
+		
+		$('#errorSummary').addClass('hidden');
+		$('#ulerrorSummary li').remove();
+		$('tr[data-key').removeClass('info');
+		
+		$.ajax({
+            url: '<?php echo Url::to([$this->context->id.'/create-declare-detail', 'id' => Yii::$app->session->get('idInstProd')]) ;?>',
+            type: 'post',
+            data: data,
+            processData: false,
+            contentType: false,
+			dataType: 'json',
+            success: function (response) {
+                if(response.status == 'success') {
+                    $('#modal').modal('hide');
+                } else {
+					pesan = response.pesan;
+					pesan = pesan.split('\n');
+					$('#errorSummary').addClass('alert-danger').removeClass('hidden');
+					for(i = 0; i < pesan.length; i++){
+						$('#ulerrorSummary').append('<li>'+pesan[i]+'</li>');
+					}
+					$('tr[data-key='+response.id+']').addClass('info');
+                    alert('error with message: ' + response.pesan);
+                }
+            },
+            error: function (xhr, getError) {
+                if (typeof getError === "object" && getError !== null) {
+                    error = $.parseJSON(getError.responseText);
+                    getError = error.message;
+                }
+                if (xhr.status != 302) {
+                    alert("System recieve error with code: "+xhr.status);
+                }
+            },
+            complete: function () {
+                button.prop('disabled', false);
+                $('#spinRefresh').remove();
+            },
+        });
+    });
+
 $('#revisionButton').click(function(){
 	var resp = confirm("Do you want to revise this item?");
 	

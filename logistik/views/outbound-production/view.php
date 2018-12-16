@@ -6,9 +6,9 @@ use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\OutboundWhTransfer */
+/* @var $model common\models\OutboundProduction */
 
-$this->title = $model->id_instruction_wh;
+$this->title = $model->id_instruction_production;
 $this->params['breadcrumbs'][] = ['label' => 'Outbound Wh Transfers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -26,17 +26,17 @@ $this->params['breadcrumbs'][] = $this->title;
 						'attribute' => 'no_sj',
 						'visible' => is_string($model->no_sj),
 					],
-					'idInstructionWh.instruction_number',
-					'idInstructionWh.delivery_target_date:date',
-					[
-		            	'attribute' => 'wh_origin',
-		            	'value' => $model->idInstructionWh->whOrigin->nama_warehouse
-		            ],
+					'idInstructionProduction.instruction_number',
+					// 'idInstructionProduction.delivery_target_date:date',
+					// [
+		   //          	'attribute' => 'wh_origin',
+		   //          	'value' => $model->idInstructionProduction->whOrigin->nama_warehouse
+		   //          ],
 		            [
-		            	'attribute' => 'wh_destination',
-		            	'value' => $model->idInstructionWh->whDestination->nama_warehouse
+		            	'attribute' => 'id_warehouse',
+		            	'value' => $model->idInstructionProduction->idWarehouse->nama_warehouse
 		            ],
-					'idInstructionWh.grf_number',
+					// 'idInstructionProduction.grf_number',
 				],
 			]) ?>
 		</div>
@@ -93,14 +93,14 @@ $('#submitremarkButton').click(function(){
 		return false;
 	}
 	
-	if (selectedAction == 'reviseverify') url = '<?php echo Url::to([$this->context->id.'/reviseoutbound', 'id' => $model->id_instruction_wh]) ;?>';
+	if (selectedAction == 'reviseverify') url = '<?php echo Url::to([$this->context->id.'/reviseoutbound', 'id' => $model->id_instruction_production]) ;?>';
 	
 	var button = $(this);
 	button.prop('disabled', true);
 	button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
 	
 	data = new FormData();
-    data.append( 'OutboundWhTransfer[revision_remark]', $( '#revision_remark' ).val() );
+    data.append( 'OutboundProduction[revision_remark]', $( '#revision_remark' ).val() );
 	
 	$.ajax({
 		url: url,
@@ -181,12 +181,11 @@ $('#submitButton').click(function () {
    	if (!form.find('.has-error').length) {
 		data = new FormData();
 		
-		data.append( 'OutboundWhTransfer[forwarder]', $( '#outboundwhtransfer-forwarder' ).val() );
-		data.append( 'OutboundWhTransfer[plate_number]', $( '#outboundwhtransfer-plate_number' ).val() );
-		data.append( 'OutboundWhTransfer[driver]', $( '#outboundwhtransfer-driver' ).val() );
+		data.append( 'OutboundProduction[pic]', $( '#outboundproduction-pic' ).val() );
+		data.append( 'file', $( '#outboundproduction-file' )[0].files[0] );
 		
 		$.ajax({
-		url: '<?php echo Url::to([$this->context->id.'/submit', 'id' => Yii::$app->session->get('idOutProduction')]) ;?>',
+		url: '<?php echo Url::to([$this->context->id.'/submit', 'id' => Yii::$app->session->get('idOutboundProd')]) ;?>',
 		type: 'post',
 		processData: false,
 		contentType: false,
@@ -221,11 +220,10 @@ $('#submitSjButton').click(function () {
         button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
 		// $('#modal').modal('hide').delay(1500);
         data = new FormData();
-		data.append( 'OutboundWhTransfer[plate_number]', $( '#outboundwhtransfer-plate_number' ).val() );
-		data.append( 'OutboundWhTransfer[forwarder]', $( '#outboundwhtransfer-forwarder' ).val() );
-		data.append( 'OutboundWhTransfer[driver]', $( '#outboundwhtransfer-driver' ).val() );
+		data.append( 'OutboundProduction[pic]', $( '#outboundproduction-pic' ).val() );
+		data.append( 'file', $( '#outboundproduction-file' )[0].files[0] );
 		$.ajax({
-            url: '<?php echo Url::to([$this->context->id.'/submitsj', 'id' => $model->id_instruction_wh]) ;?>',
+            url: '<?php echo Url::to([$this->context->id.'/submitsj', 'id' => $model->id_instruction_production]) ;?>',
             type: 'post',
             data: data,
             processData: false,

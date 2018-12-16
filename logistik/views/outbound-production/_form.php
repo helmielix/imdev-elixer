@@ -6,6 +6,7 @@ use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use common\models\Reference;
+use common\models\Labor;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\OutboundWhTransfer */
@@ -36,18 +37,30 @@ if ($this->context->action->id == 'viewapprove'){
         'requiredCssClass' => 'requiredField'
     ]); ?>  
 
-    <?= $form->field($model, 'forwarder')->widget(Select2::classname(), [
-		'data' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => ['forwarder']])->all(), 'id','description'),
+    <?= $form->field($model, 'pic')->widget(Select2::classname(), [
+		'data' => ArrayHelper::map(Labor::find()->all(), 'nik','nama'),
 		'language' => 'en',
 		// form-control select2-hidden-accessible
-		'options' => ['placeholder' => 'Select '.$model->getAttributeLabel('forwarder'), 'class' => 'input-sm', 'disabled' => $disable],
+		'options' => ['placeholder' => 'Select ..', 'class' => 'input-sm', 'disabled' => $disable],
 		'pluginOptions' => [
 		'allowClear' => true],
 		]) ?>
 
-    <?= $form->field($model, 'plate_number')->textInput(['maxlength' => true, 'class' => 'input-sm form-control', 'disabled' => $disable]) ?>
+    <?= $form->field($model, 'file')->fileInput() ?>
 
-    <?= $form->field($model, 'driver')->textInput(['maxlength' => true, 'class' => 'input-sm form-control', 'disabled' => $disable]) ?>
+    <div class="form-group">
+        <label class='control-label col-sm-4'> </label>
+        <div class='col-sm-6'>
+            <?php if (Yii::$app->controller->action->id == 'update') {
+                echo Html::a(basename($model->file_attachment), ['downloadfile','id' => $model->id], $options = ['target'=>'_blank', 'data' => [
+                        'method' => 'post',
+                        'params' => [
+                            'data' => 'file_attachment',
+                        ]
+                    ]]);
+            } ?>
+        </div>
+    </div>
 
     <?php ActiveForm::end(); ?>
 

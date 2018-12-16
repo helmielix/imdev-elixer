@@ -1,9 +1,10 @@
 <?php
 
-namespace divisitiga\models;
+namespace common\models;
 
 use Yii;
-
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 /**
  * This is the model class for table "outbound_production".
  *
@@ -15,7 +16,7 @@ use Yii;
  * @property string $created_date
  * @property string $updated_date
  * @property string $revision_remark
- * @property string $no_surat_jalan
+ * @property string $no_sj
  * @property string $plate_number
  * @property string $driver
  * @property string $file_attachment
@@ -27,12 +28,28 @@ use Yii;
  */
 class OutboundProduction extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+    public $instruction_number, $file, $id, $name;
+
     public static function tableName()
     {
         return 'outbound_production';
+    }
+
+    public function behaviors()
+    {
+      return [
+        'timestamp' => [
+          'class' => TimestampBehavior::className(),
+          'createdAtAttribute' => 'created_date',
+          'updatedAtAttribute' => 'updated_date',
+          'value' => new \yii\db\Expression('NOW()'),
+        ],
+        'blameable' => [
+          'class' => BlameableBehavior::className(),
+          'createdByAttribute' => 'created_by',
+          'updatedByAttribute' => 'updated_by',
+        ],
+      ];
     }
 
     /**
@@ -41,12 +58,12 @@ class OutboundProduction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_instruction_production', 'created_by', 'updated_by', 'forwarder', 'created_date', 'no_surat_jalan', 'plate_number'], 'required'],
-            [['id_instruction_production', 'created_by', 'updated_by', 'forwarder', 'status_listing'], 'default', 'value' => null],
-            [['id_instruction_production', 'created_by', 'updated_by', 'forwarder', 'status_listing'], 'integer'],
+            [['id_instruction_production',], 'required'],
+            [['id_instruction_production',  'forwarder', 'status_listing'], 'default', 'value' => null],
+            [['id_instruction_production',  'forwarder', 'status_listing','pic'], 'integer'],
             [['created_date', 'updated_date'], 'safe'],
             [['revision_remark', 'plate_number'], 'string'],
-            [['no_surat_jalan', 'driver', 'file_attachment'], 'string', 'max' => 255],
+            [['no_sj', 'driver', 'file_attachment'], 'string', 'max' => 255],
             [['id_instruction_production'], 'unique'],
             [['forwarder'], 'exist', 'skipOnError' => true, 'targetClass' => Reference::className(), 'targetAttribute' => ['forwarder' => 'id']],
             [['status_listing'], 'exist', 'skipOnError' => true, 'targetClass' => StatusReference::className(), 'targetAttribute' => ['status_listing' => 'id']],
@@ -69,7 +86,7 @@ class OutboundProduction extends \yii\db\ActiveRecord
             'created_date' => 'Created Date',
             'updated_date' => 'Updated Date',
             'revision_remark' => 'Revision Remark',
-            'no_surat_jalan' => 'No Surat Jalan',
+            'no_sj' => 'No Surat Jalan',
             'plate_number' => 'Plate Number',
             'driver' => 'Driver',
             'file_attachment' => 'File Attachment',
@@ -84,10 +101,15 @@ class OutboundProduction extends \yii\db\ActiveRecord
         return $this->hasOne(Reference::className(), ['id' => 'forwarder']);
     }
 
+    public function getIdInstructionProduction()
+    {
+        return $this->hasOne(InstructionProduction::className(), ['id' => 'id_instruction_production']);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStatusListing()
+    public function getStatusReference()
     {
         return $this->hasOne(StatusReference::className(), ['id' => 'status_listing']);
     }
@@ -106,5 +128,10 @@ class OutboundProduction extends \yii\db\ActiveRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    public function getIdLabor()
+    {
+        return $this->hasOne(Labor::className(), ['nik' => 'pic']);
     }
 }
