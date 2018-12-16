@@ -4,11 +4,13 @@ namespace grflost\controllers;
 
 use Yii;
 use common\models\Grf;
+use common\models\LogGrf;
 use common\models\GrfDetail;
 use common\models\Reference;
 use common\models\OutboundGrf;
 use common\models\MasterItemIm;
 use common\models\SearchGrf;
+use common\models\SearchLogGrf;
 use common\models\SearchOutboundGrf;
 use common\models\SearchGrfDetail;
 use common\models\SearchMasterItemIm;
@@ -23,6 +25,7 @@ use common\widgets\Email;
 use common\models\MkmMasterItem;
 use kartik\mpdf\Pdf;
 use yii\helpers\Json;
+use yii\helpers\Url;
 
 
 /**
@@ -92,6 +95,36 @@ class GrfController extends Controller
         return $this->render('index', $this->listIndex('approve'));
     }
 
+	public function actionIndexoverview()
+    {
+        return $this->render('index', $this->listIndex('overview'));
+    }
+
+    public function actionIndexlog()
+    {
+        $this->layout = 'map';
+        $searchModel = new SearchLogGrf();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,'log');
+
+        return $this->render('indexlog', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionIndexotherslog()
+    {
+        $this->layout = 'map';
+        $searchModel = new SearchLogGrf();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,'logothers');
+
+        return $this->render('indexlog', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
 	public function actionIndexothers()
     {
         return $this->render('indexothers', $this->listIndex('inputothers'));
@@ -100,6 +133,10 @@ class GrfController extends Controller
     public function actionIndexothersverify()
     {
         return $this->render('indexothers', $this->listIndex('verifyothers'));
+    }
+    public function actionIndexothersoverview()
+    {
+        return $this->render('indexothers', $this->listIndex('overviewothers'));
     }
 
     public function actionIndexothersapprove()
@@ -209,6 +246,12 @@ class GrfController extends Controller
 		$this->layout = 'blank';
 		return $this->render('view', $this->detailView($id));
 	}
+	public function actionViewoverview($id)
+    {
+		$this->layout = 'blank';
+
+		return $this->render('view', $this->detailView($id));
+    }
 
 	public function actionViewothers($id){
 		$this->layout = 'blank';
@@ -227,6 +270,22 @@ class GrfController extends Controller
 		Yii::$app->session->set('idGrf', $id);
 		return $this->render('view', $this->detailViewothers($id));
 	}
+	 public function actionViewlog($id)
+    {
+        $this->layout = 'blank';        
+        if (($model = LogGrf::findOne($id)) === null) {            
+            throw new NotFoundHttpException('The requested page does not exist.');
+        } 
+
+        $searchModel = new SearchGrfDetail();
+       	$dataProvider = $searchModel->search(Yii::$app->request->post(), $id);
+        return $this->render('viewlog', [
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+
+    }
 
     /**
      * Creates a new Grf model.
@@ -240,6 +299,7 @@ class GrfController extends Controller
 		$model->id_modul = $this->id_modul;
 		$model->id_warehouse = 2;
 		$model->status_return = 31;
+		$model->id_division = Yii::$app->user->identity->id_division;
 		$newidinst = Grf::find()->andWhere(['and',['like', 'grf_number', '%/'.date('Y'), false],['id_modul' => $model->id_modul]])->count() + 1;
 		$newidinstexist = Grf::find()->andWhere(['and',['grf_number' => $newidinst],['id_modul' => $model->id_modul]])->exists();
 		$newidinst++;
@@ -327,6 +387,7 @@ class GrfController extends Controller
 		$model->id_modul = $this->id_modul;
 		$model->id_warehouse = 2;
 		$model->status_return = 31;
+		$model->id_division = Yii::$app->user->identity->id_division;
 		$newidinst = Grf::find()->andWhere(['and',['like', 'grf_number', '%/'.date('Y'), false],['id_modul' => $model->id_modul]])->count() + 1;
 		$newidinstexist = Grf::find()->andWhere(['and',['grf_number' => $newidinst],['id_modul' => $model->id_modul]])->exists();
 		$newidinst++;
@@ -459,7 +520,7 @@ class GrfController extends Controller
 		
 	  	if ((Yii::$app->request->isPost)) {
 			
-			$data_item_code  = Yii::$app->request->post('orafin_code');
+			$data_item_code  = Yii::$app->request->post('item_code');
 			$data_qty_request  = Yii::$app->request->post('qty_request');
 			$data_qty_return  = Yii::$app->request->post('qty_return');
 			// $data_im_code  = Yii::$app->request->post('im_code');
@@ -511,10 +572,10 @@ class GrfController extends Controller
 		}
 		
 		$modelDetail = GrfDetail::find()->select(['orafin_code'])->where(['id_grf' => $idGrf])->all();
-		$orafinCode = ArrayHelper::map($modelDetail, 'orafin_code', 'orafin_code');
+		$orafin_code = ArrayHelper::map($modelDetail, 'item_code', 'item_code');
 		
 		$searchModel = new SearchMasterItemIm();
-        $dataProvider = $searchModel->searchMasterOrafin(Yii::$app->request->post(), $orafinCode);
+        $dataProvider = $searchModel->searchMasterOrafin(Yii::$app->request->getQueryParams());
 
         return $this->render('createdetail', [
         	'idGrf' => $idGrf,
@@ -585,35 +646,40 @@ class GrfController extends Controller
  //        }
 	// }
 	
-	public function actionUpdatedetail($id=null){
-		$this->layout = 'blank';
-		$data_id  = Yii::$app->request->post('id');
-		$data_qty_return = Yii::$app->request->post('qty_return');
-		$data_status_return = Yii::$app->request->post('status_return');
-		$model = GrfDetail::findOne($data_id[0]);
-		$model->qty_return = $data_qty_return[0]; 
-		$model->status_return = $data_status_return[0];
-		Yii::$app->session->set('idGrf', $model->id_grf);
-		
-		if ( $model->qty_request == $model->qty_return ){
-				$model->status_return = 36;
-			}else{
-				$model->status_return = 31;
-			}
-		// return print_r($model);
-		if (Yii::$app->request->post()) {
-			
-			if (!$model->save()){
-				return Displayerror::pesan($model->getErrors());
-			}			
-			
-			return 'success';
-        } else {
-            return $this->render('_formdetail', [
-                'model' => $model,
-            ]);
+	public function actionUpdatedetail($id)
+    {
+        $this->layout = 'blank';
+        $modelDetail = GrfDetail::find()->andWhere(['id' => $id])->one();        
+
+        $id   = $modelDetail->orafin_code;
+        $val  = $modelDetail->qty_request;
+
+        $data[$id] = $val;
+
+       	Yii::$app->session->set('idGrf', $model->id_grf);
+
+        $searchModel = new SearchMkmMasterItem();
+        $dataProvider = $searchModel->searchByCreateDetailItem(Yii::$app->request->getQueryParams(), $modelDetail->orafin_code);
+
+        return $this->render('_formdetail', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionDeletedetail($id)
+    {
+        $model = IkoGrfVendorDetail::findOne($id);
+        Yii::$app->session->remove('idGrf');
+        if ($model === null){
+            $this->layout = 'blank';
+            return $this->render('view', $this->detailView(Yii::$app->session->get($this->sessionGrfName)));
         }
-	}
+        
+        $cacheModel = $model;
+        if ($model->delete()){                        
+            return $this->actionIndexdetail();            
+        }
+    }
 	
 	public function actionSubmit($id){
 		$model = Grf::findOne($id);
@@ -631,8 +697,12 @@ class GrfController extends Controller
 		if (!$model->save()){
 			return Displayerror::pesan($model->getErrors());
 		}
-		
+		$this->createLog($model);
 		Yii::$app->session->remove('idGrf');
+		$arrAuth = ['/grf/indexverify'];
+        $header = 'Alert Verify GRF ';
+        $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/grf/indexverify#viewverify?id='.$model->id.'&header=Detail_Good_Request_Form';
+        Email::sendEmail($arrAuth, $header, $subject);
 		return 'success';
 	}
 
@@ -644,6 +714,11 @@ class GrfController extends Controller
             $model->verified_by = Yii::$app->user->identity->id;
 
             if ($model->save()) {
+            	$this->createLog($model);
+            	$arrAuth = ['/grf/indexapprove'];
+                $header = 'Alert Approval IKO GRF Vendor ';
+                $subject = 'This document is waiting your approval. Please click this link document : '.Url::base(true).'/grf/indexapprove#viewapprove?id='.$model->id.'&header=Detail_Good_Request_Form';
+                Email::sendEmail($arrAuth, $header, $subject);
                 return 'success';
             } 
         }else{
@@ -658,6 +733,7 @@ class GrfController extends Controller
 			$model->status_listing = 5;
 			$model->approved_by = Yii::$app->user->identity->id;
 			if ($model->save()){
+				// $this->createLog($model);
 				return 'success';
 			}
 			
@@ -675,7 +751,7 @@ class GrfController extends Controller
 				$model->status_listing = 3;
 				$model->revision_remark = $_POST['Grf']['revision_remark'];
 				if($model->save()) {
-					// $this->createLog($model);
+					$this->createLog($model);
 
 					return 'success';
 				} else {
@@ -698,9 +774,12 @@ class GrfController extends Controller
 				$model->status_listing = 6;
 				$model->revision_remark = $_POST['Grf']['revision_remark'];
 				if($model->save()) {
-                     // $this->createLog($model);
+                     $this->createLog($model);
 				 //    $arrAuth = ['/finance-invoice/index'];				
-
+				 $arrAuth = ['/grf/index'];
+                $header = 'Alert Need Revise  GRF  ';
+                $subject = 'This document is waiting your revise. Please click this link document : '.Url::base(true).'/grf/index#view?id='.$model->id.'&header=Detail_Good_Request_Form';
+                Email::sendEmail($arrAuth, $header, $subject);
 					return 'success';
 				} else {
 					return Displayerror::pesan($model->getErrors());
@@ -727,6 +806,7 @@ class GrfController extends Controller
 
         return $this->redirect(['index']);
     }
+
 
     public function actionDownloadfile($id, $modul = null, $relation = '', $upload = false) {
 		$request = Yii::$app->request;
@@ -872,5 +952,11 @@ class GrfController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+     protected function createLog($model)
+    {
+        $modelLog = new LogGrf();
+        $modelLog->setAttributes($model->attributes);
+        $modelLog->save();
     }
 }

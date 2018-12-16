@@ -17,7 +17,7 @@ class SearchMasterItemIm extends MasterItemIm
     {
         return [
             [['id', 'created_by', 'updated_by', 'status', 'type', 'qty_request', 'qty_good', 'qty_noot_good', 'qty_reject','qty_dismantle_good','qty_good_rec','asset_barcode'], 'integer'],
-            [['sn_type','name', 'brand', 'created_date', 'updated_date', 'im_code', 'orafin_code', 'grouping', 'warna', 'orafin_code', 'name'], 'safe'],
+            [['sn_type','name', 'brand', 'created_date', 'updated_date', 'im_code', 'orafin_code', 'grouping', 'warna', 'orafin_code', 'name','item_code', 'item_desc'], 'safe'],
         ];
     }
 
@@ -105,7 +105,7 @@ class SearchMasterItemIm extends MasterItemIm
         $query = GrfDetail::find()->joinWith('idOrafinCode.referenceSn')
         ->joinWith('idGrf.idInGrf.idInstructionGrfDetail')
         ->select([
-            'master_item_im.im_code',
+            'master_item_im.orafin_code as im_code',
             'master_item_im.id',
             'master_item_im.grouping as grouping',
             'master_item_im.brand as brand',
@@ -116,11 +116,12 @@ class SearchMasterItemIm extends MasterItemIm
             'reference.description as description',
             'grf_detail.qty_request',
             'instruction_grf_detail.qty_good',
-            'instruction_grf_detail.qty_noot_good',
+            'instruction_grf_detail.qty_not_good',
             'instruction_grf_detail.qty_reject',
-            'instruction_grf_detail.qty_dismantle_good',
-            'instruction_grf_detail.qty_dismantle_ng',
+            'instruction_grf_detail.qty_dismantle',
+            'instruction_grf_detail.qty_revocation',
             'instruction_grf_detail.qty_good_rec',
+            'instruction_grf_detail.qty_good_for_recond',
             // 'master_item_im.type as type',
             // 'master_item_im.req_good_qty as req_good_qty',
 
@@ -132,7 +133,7 @@ class SearchMasterItemIm extends MasterItemIm
         return $dataProvider;
     }
 	
-	public function searchByCreateDetailItem($params, $idwarehouse, $idMasterItemIm = null)
+	public function searchByCreateDetailItem($params, $idwarehouse, $idMasterItemIm = null, $idOrafinGrf = null)
     {		
 		$query = MasterItemIm::find()->joinWith('masterItemImDetails');
 		$query->joinWith(['referenceWarna refwarna', 'referenceBrand refbrand', 'referenceType reftype', 'referenceGrouping refgrouping']);
@@ -156,6 +157,10 @@ class SearchMasterItemIm extends MasterItemIm
 		if ($idMasterItemIm != null){
 			$query->andWhere(['in' , 'master_item_im_detail.id', $idMasterItemIm]);
 		}
+
+        if ($idOrafinGrf != null){
+            $query->andWhere(['in' , 'master_item_im.id', $idOrafinGrf]);
+        }
 		
 		$query->andWhere(['master_item_im_detail.id_warehouse' => $idwarehouse]);
         
@@ -198,12 +203,12 @@ class SearchMasterItemIm extends MasterItemIm
         // return $dataProvider;
 	}
 
-    public function searchMasterOrafin($params, $orafinCode = null){
+    public function searchMasterOrafin($params, $orafin_code = null){
         
-        $query = MasterItemIm::find()->select('distinct(orafin_code), name');
+        $query = MkmMasterItem::find()->select('distinct(item_code), item_desc');
         
-        if ($orafinCode != null){
-            $query->andWhere(['not in' , 'orafin_code', $orafinCode]);
+        if ($orafin_code != null){
+            $query->andWhere(['not in' , 'item_code', $orafin_code]);
         }
         
         $dataProvider = new ActiveDataProvider([
@@ -231,8 +236,8 @@ class SearchMasterItemIm extends MasterItemIm
         //     'sn_type' => $this->sn_type,
         // ]);
 
-        $query->andFilterWhere(['ilike', 'orafin_code', $this->orafin_code])
-            ->andFilterWhere(['ilike', 'name', $this->name]);
+        $query->andFilterWhere(['ilike', 'item_code', $this->item_code])
+            ->andFilterWhere(['ilike', 'item_desc', $this->item_desc]);
 
         return $dataProvider;
     }

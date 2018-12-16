@@ -1,0 +1,238 @@
+<div class="workorder-view">
+
+
+    <table id="w0" class="table table-striped table-bordered detail-view"><tr><th>Region</th><td>Surabaya</td></tr>
+<tr><th>City</th><td>Kab. Gresik</td></tr>
+<tr><th>District</th><td>Driyorejo</td></tr>
+<tr><th>Subdistrict</th><td>Tanjungan</td></tr>
+<tr><th>ID</th><td>49</td></tr>
+<tr><th>Wo Date</th><td>May 24, 2018</td></tr>
+<tr><th>Wo Number</th><td>WO/CIPRO/1805-00049</td></tr>
+<tr><th>Work Name</th><td>Jointer</td></tr>
+<tr><th>Property Name</th><td></td></tr>
+<tr><th>Installation Date</th><td>May 24, 2018</td></tr>
+<tr><th>Revision Remark</th><td>ewadgf frls,</td></tr></table>
+    <h4> <b> Team Leader </b> </h4>
+
+    <table id="w1" class="table table-striped table-bordered detail-view"><tr><th>ID</th><td>13</td></tr>
+<tr><th>Leader</th><td>ayu azizah</td></tr>
+<tr><th>NIK</th><td>260420183</td></tr></table>
+    <h4> <b> List Member </b> </h4>
+
+    <div id="w2" class="grid-view"><div class="summary">Showing <b>1-1</b> of <b>1</b> item.</div>
+<table class="table table-striped table-bordered"><thead>
+<tr><th>#</th><th>ID Cipro Team</th><th>NIK</th><th>Name</th></tr>
+</thead>
+<tbody>
+<tr data-key="21"><td>1</td><td>13</td><td>2140310007</td><td>Ari Priam Budiman</td></tr>
+</tbody></table>
+</div>
+    <h4> <b> Material Needs </b> </h4>
+
+    <div id="w3" style="overflow-x:scroll"><div class="summary">Showing <b>1-1</b> of <b>1</b> item.</div>
+<table class="table table-striped table-bordered"><thead>
+<tr><th>#</th><th>Material</th><th>Needed</th><th>UOM</th></tr>
+</thead>
+<tbody>
+<tr data-key="49"><td>1</td><td>TERMINAL BOX (TB ) - INCL ACCESSORIES (RO126-57.004.857)</td><td>4</td><td>Set</td></tr>
+</tbody></table>
+</div>
+    <h4> <b> Tools Needs </b> </h4>
+
+    <div id="w4" class="grid-view"><div class="summary">Showing <b>1-1</b> of <b>1</b> item.</div>
+<table class="table table-striped table-bordered"><thead>
+<tr><th>#</th><th>Tool</th><th>Needed</th></tr>
+</thead>
+<tbody>
+<tr data-key="50"><td>1</td><td>Sekop</td><td>2</td></tr>
+</tbody></table>
+</div>
+    <h4> <b> Transport Needs </b> </h4>
+
+    <div id="w5" class="grid-view"><div class="summary">Showing <b>1-1</b> of <b>1</b> item.</div>
+<table class="table table-striped table-bordered"><thead>
+<tr><th>#</th><th>Transport</th><th>Plat Number</th><th>Fuel</th><th>Driver</th></tr>
+</thead>
+<tbody>
+<tr data-key="39"><td>1</td><td>Buldoser</td><td>B 4 J</td><td>5.00</td><td>Nobita - 3223281305950003</td></tr>
+</tbody></table>
+</div>
+    <div id="xpjax" data-pjax-container="" data-pjax-push-state data-pjax-timeout="1000">    <p>
+                                                                		 		
+
+    </p>
+    <form id="submitForm" class="form-horizontal" action="/corporate/web/cipro-work-order/exportxls?id=49&amp;module=GRF" method="post" style="display:none;">
+<input type="hidden" name="_csrf-corporate" value="WmUtaDFJRF8NDFceeDAqPTMIS1h4CnE8PFwYDXk9EQsiPFcfaxECLA==">
+        <br />
+        <div class="form-group field-ciproworkorder-revision_remark">
+<label class="control-label col-sm-1" for="ciproworkorder-revision_remark">Revision Remark</label>
+<div class="col-sm-6">
+<textarea id="ciproworkorder-revision_remark" class="form-control" name="CiproWorkOrder[revision_remark]" rows="5">ewadgf frls,</textarea>
+
+<div class="help-block help-block-error "></div>
+</div>
+</div>        <button type="button" id="submitButton" class="btn btn-primary">Submit Remark</button>    </form></div></div>
+
+<script>
+    $('#updateButton').click(function () {
+        $('#modal').modal('show')
+            .find('#modalContent')
+            .load('/corporate/web/cipro-work-order/update?id=49');
+        $('#modalHeader').html('<h3> Update Workorder Cipro</h3>');
+    });
+	
+	$('#exportXlsButton').click(function () {
+         window.open("/corporate/web/cipro-work-order/exportxls?id=49&module=GRF", "_blank");
+    });
+
+	$('#exportButton').click(function () {
+         window.open("/corporate/web/cipro-work-order/exportpdf?id=49", "_blank");
+    });
+
+    $('#verifyButton').click(function () {
+        var button = $(this);
+        button.prop('disabled', true);
+        $.ajax({
+            url: '/corporate/web/cipro-work-order/verify?id=49',
+            type: 'post',
+            success: function (response) {
+            	if(response == 'success') {
+            	   $('#modal').modal('hide');
+            	} else {
+            	   alert('error with message: ' + response);
+            	}
+            },
+            error: function (xhr, getError) {
+            	if (typeof getError === "object" && getError !== null) {
+            		error = $.parseJSON(getError.responseText);
+            		getError = error.message;
+            	}
+            	if (xhr.status != 302) {
+            		alert("System recieve error with code: "+xhr.status);
+            	}
+            },
+            complete: function () {
+                button.prop('disabled', false);
+            },
+        });
+    });
+    $('#approveButton').click(function () {
+        var button = $(this);
+        button.prop('disabled', true);
+        $.ajax({
+            url: '/corporate/web/cipro-work-order/approve?id=49',
+            type: 'post',
+            success: function (response) {
+            	if(response == 'success') {
+            	   $('#modal').modal('hide');
+            	} else {
+            	   alert('error with message: ' + response);
+            	}
+            },
+            error: function (xhr, getError) {
+            	if (typeof getError === "object" && getError !== null) {
+            		error = $.parseJSON(getError.responseText);
+            		getError = error.message;
+            	}
+            	if (xhr.status != 302) {
+            		alert("System recieve error with code: "+xhr.status);
+            	}
+            },
+            complete: function () {
+            	button.prop('disabled', false);
+            },
+        });
+    });
+    $('#revisevButton').click(function () {
+        selectedAction = 'reviseverify';
+        $('#submitForm').show();
+    });
+    $('#reviseaButton').click(function () {
+        selectedAction = 'reviseapprove';
+        $('#submitForm').show();
+    });
+    $('#rejectvButton').click(function () {
+        selectedAction = 'rejectverify';
+        $('#submitForm').show();
+    });
+    $('#rejectaButton').click(function () {
+        selectedAction = 'rejectapprove';
+        $('#submitForm').show();
+    });
+    $('#deleteButton').click(function () {
+        var resp = confirm("Do you want to delete this item?");
+        if (resp == true) {
+            $.ajax({
+                url: '/corporate/web/cipro-work-order/delete?id=49',
+                type: 'post',
+                success: function (response) {
+                    if(response == 'success'){
+                        $('#modal').modal('hide');
+                        setPopupAlert('Data has been deleted.');
+                    } else {
+                        alert('error with message: ' + response);
+                    }
+                }
+            });
+        } else {
+            return false;
+        }
+    });
+    $('#submitButton').click(function () {
+        if (selectedAction == 'reviseverify' || selectedAction == 'reviseapprove') {
+            var resp = confirm("Do you want to revise this item?");
+        } else if (selectedAction == 'rejectverify' || selectedAction == 'rejectapprove'){
+            var resp = confirm("Do you want to reject this item?");
+        }
+
+        if (resp == true) {
+            console.log(selectedAction);
+            var form = $('#submitForm');
+            data = form.data("yiiActiveForm");
+            $.each(data.attributes, function() {
+                this.status = 3;
+            });
+            form.yiiActiveForm("validate");
+
+            if (selectedAction == 'reviseverify') url = '/corporate/web/cipro-work-order/reviseverify?id=49';
+            if (selectedAction == 'reviseapprove') url = '/corporate/web/cipro-work-order/reviseapprove?id=49';
+            if (selectedAction == 'rejectverify') url = '/corporate/web/cipro-work-order/rejectverify?id=49';
+            if (selectedAction == 'rejectapprove') url = '/corporate/web/cipro-work-order/rejectapprove?id=49';
+            if (!form.find('.has-error').length) {
+
+                data = new FormData();
+                data.append( 'CiproWorkOrder[REVISION_REMARK]', $( '#ciproworkorder-revision_remark' ).val() );
+                var button = $(this);
+                button.prop('disabled', true);
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                    	if(response == 'success') {
+                    	   $('#modal').modal('hide');
+                    	} else {
+                    	   alert('error with message: ' + response);
+                    	}
+                    },
+                    error: function (xhr, getError) {
+                    	if (typeof getError === "object" && getError !== null) {
+                    		error = $.parseJSON(getError.responseText);
+                    		getError = error.message;
+                    	}
+                    	if (xhr.status != 302) {
+                    		alert("System recieve error with code: "+xhr.status);
+                    	}
+                    },
+                    complete: function () {
+                    	button.prop('disabled', false);
+                    },
+                });
+            };
+        } else {
+            return false;
+        }
+    });
+</script>

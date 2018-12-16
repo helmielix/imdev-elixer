@@ -65,14 +65,14 @@ class SearchGrf extends Grf
 
         
         if($action == 'input'){
-            $query  ->andFilterWhere(['grf.status_listing' => [1]]);
+            $query  ->andFilterWhere(['grf.status_listing' => [1,2,3,6,7,39]]);
         }else if($action == 'verify'){
               $query->andFilterWhere(['or',['=','grf.status_listing', 1],['=','grf.status_listing', 4], ['=','grf.status_listing', 2]]);
         } else if ($action == 'approve'){
             $query->andFilterWhere(['or',['=','grf.status_listing', 4],['=','grf.status_listing', 5]]);
         }
         else if($action == 'inputothers'){
-              $query->andFilterWhere(['or',['=','grf.status_listing', 1],['=','grf.status_listing', 3], ['=','grf.status_listing', 2]])
+             $query  ->andFilterWhere(['grf.status_listing' => [1,2,3,6,7,39]])
                     ->andFilterWhere(['source'=>'others']);
         }else if($action == 'verifyothers'){
               $query->andFilterWhere(['or',['=','grf.status_listing', 1],['=','grf.status_listing', 4], ['=','grf.status_listing', 2]])
@@ -80,6 +80,17 @@ class SearchGrf extends Grf
         }else if ($action == 'approveothers'){
             $query->andFilterWhere(['or',['=','grf.status_listing', 4],['=','grf.status_listing', 5]])
             ->andFilterWhere(['source'=>'others']);
+        }else if($action == 'overview') {
+            $query->andFilterWhere(['!=','grf.status_listing', 13])
+            // ->andWhere(['in','id_warehouse',$idWarehouse])
+            // ->orderBy(['inbound_po.updated_date' => SORT_DESC])
+            ;
+        }else if($action == 'overviewothers') {
+            $query->andFilterWhere(['!=','grf.status_listing', 13])
+                  ->andFilterWhere(['source'=>'others']);
+            // ->andWhere(['in','id_warehouse',$idWarehouse])
+            // ->orderBy(['inbound_po.updated_date' => SORT_DESC])
+            
         }
         
         $dataProvider = $this->_search($params, $query);
@@ -116,7 +127,7 @@ class SearchGrf extends Grf
             'date(created_date)' => $this->created_date,
             'date(updated_date)' => $this->updated_date,
             'updated_by' => $this->updated_by,
-            'status_listing' => $this->status_listing,
+            'grf.status_listing' => $this->status_listing,
             'status_return' => $this->status_return,
             'pic' => $this->pic,
             'id_region' => $this->id_region,

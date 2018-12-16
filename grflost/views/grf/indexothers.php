@@ -27,18 +27,18 @@ function getFilterStatus() {
             6 => 'Rejected',
             7 => 'Drafted',
         ];
-    if(Yii::$app->controller->action->id == 'indexverify')
+    if(Yii::$app->controller->action->id == 'indexothersverify')
         return [
             1 => 'Inputted',
             2 => 'Revised',
             4 => 'Verified',
         ];
-    if(Yii::$app->controller->action->id == 'indexapprove')
+    if(Yii::$app->controller->action->id == 'indexothersapprove')
         return [
             5 => 'Approved',
             4 => 'Verified'
         ];
-	if(Yii::$app->controller->action->id == 'indexoverview')
+	if(Yii::$app->controller->action->id == 'indexothersoverview')
 		return [
 			1 => 'Inputted',
 			2 => 'Revised',
@@ -93,7 +93,7 @@ function getFilterGrf(){
     </div>
 
 	
-<?php Pjax::begin(['id' => 'pjax', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'POST']]) ?>
+<?php \yii\widgets\Pjax::begin(['id' => 'pjax',]); ?>
 	<?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,

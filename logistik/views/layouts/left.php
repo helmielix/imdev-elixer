@@ -178,13 +178,32 @@
 
 
 				//Inbound Grf PEMINJAMAN
-				if(Yii::$app->user->can('/inbound-grf/index')) 
+				if(Yii::$app->user->can('/inbound-grf/index') || Yii::$app->user->can('/inbound-grf/indexoverview') || Yii::$app->user->can('/inbound-grf/indexlog')) 
 				{
 				$arrItemsChildChild = [];
-					if(Yii::$app->user->can('/inbound-wh-transfer/index'))
+					if(Yii::$app->user->can('/inbound-grf/index'))
 						array_push($arrItemsChildChild, ['label' => yii::t('app','Tag SN'), 'icon' => 'plus', 'url' => ['/inbound-grf/index']]);
+					if(Yii::$app->user->can('/inbound-grf/indexoverview'))
+						array_push($arrItemsChildChild, ['label' => yii::t('app','Overview'), 'icon' => 'list', 'url' => ['/inbound-grf/indexoverview']]);
+					if(Yii::$app->user->can('/inbound-grf/indexlog'))
+						array_push($arrItemsChildChild, ['label' => yii::t('app','Log History'), 'icon' => 'list', 'url' => ['/inbound-grf/indexlog']]);
 				
 				array_push($arrItemsChild, ['label' => 'Peminjaman', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);
+				}
+
+
+				//Inbound Grf Reguler
+				if(Yii::$app->user->can('/inbound-grf/indexreg') || Yii::$app->user->can('/inbound-grf/indexregoverview') ||Yii::$app->user->can('/inbound-grf/indexreglog')) 
+				{
+				$arrItemsChildChild = [];
+					if(Yii::$app->user->can('/inbound-grf/indexreg'))
+						array_push($arrItemsChildChild, ['label' => yii::t('app','Tag SN'), 'icon' => 'plus', 'url' => ['/inbound-grf/indexreg']]);
+					if(Yii::$app->user->can('/inbound-grf/indexregoverview'))
+						array_push($arrItemsChildChild, ['label' => yii::t('app','Overview'), 'icon' => 'list', 'url' => ['/inbound-grf/indexregoverview']]);
+					if(Yii::$app->user->can('/inbound-grf/indexreglog'))
+						array_push($arrItemsChildChild, ['label' => yii::t('app','Log History'), 'icon' => 'list', 'url' => ['/inbound-grf/indexreglog']]);
+				
+				array_push($arrItemsChild, ['label' => 'Grf', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);
 				}
 
 			if(count($arrItemsChild) >=1 ){
@@ -250,16 +269,19 @@
 			}
 
 			## OUTBOUND Grf Regular
-    			$arrItemsChildChild = [];
-			if(Yii::$app->user->can('/outbound-grf/indexreg') || Yii::$app->user->can('/outbound-grf/indexprintsj')|| Yii::$app->user->can('/outbound-grf/indexapprove')) 
+    		$arrItemsChildChild = [];
+			if(Yii::$app->user->can('/outbound-grf/indexreg') || Yii::$app->user->can('/outbound-grf/indexregprintsj')|| Yii::$app->user->can('/outbound-grf/indexregapprove')) 
 			{
     			if(Yii::$app->user->can('/outbound-grf/indexreg'))
 					array_push($arrItemsChildChild, ['label' => yii::t('app','Tag SN'), 'icon' => 'plus', 'url' => ['/outbound-grf/indexreg']]);
-				// if(Yii::$app->user->can('/outbound-grf/indexprintsj'))
-				// 	array_push($arrItemsChildChild, ['label' => yii::t('app','Print SJ'), 'icon' => 'check-square-o', 'url' => ['/outbound-grf/indexprintsj']]);
-				// if(Yii::$app->user->can('/outbound-grf/indexapprove'))
-				// 	array_push($arrItemsChildChild, ['label' => yii::t('app','Approve SJ'), 'icon' => 'check-square-o', 'url' => ['/outbound-grf/indexapprove']]);
-				
+				if(Yii::$app->user->can('/outbound-grf/indexregprintsj'))
+					array_push($arrItemsChildChild, ['label' => yii::t('app','Print SJ'), 'icon' => 'check-square-o', 'url' => ['/outbound-grf/indexregprintsj']]);
+				if(Yii::$app->user->can('/outbound-grf/indexregapprove'))
+					array_push($arrItemsChildChild, ['label' => yii::t('app','Approve SJ'), 'icon' => 'check-square-o', 'url' => ['/outbound-grf/indexregapprove']]);
+				if(Yii::$app->user->can('/outbound-grf/indexregoverview'))	
+					array_push($arrItemsChildChild, ['label' => yii::t('app','Overview'), 'icon' => 'list', 'url' => ['/outbound-grf/indexregoverview']]);
+				if(Yii::$app->user->can('/outbound-grf/indexreglog'))	
+					array_push($arrItemsChildChild, ['label' => yii::t('app','Log History'), 'icon' => 'list', 'url' => ['/outbound-grf/indexreglog']]);
 
 				array_push($arrItemsChild, ['label' => 'Grf', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);
 			}

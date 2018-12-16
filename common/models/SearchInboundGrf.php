@@ -85,6 +85,14 @@ class SearchInboundGrf extends InboundGrf
 
         if($action == 'ikr'){
             $query  ->andFilterWhere(['outbound_grf.status_listing' => 25])
+                    ->andFilterWhere(['grf.grf_type' => 20])
+                    ->andFilterWhere(['outbound_grf.id_modul' => $id_modul])
+                    ->andWhere(['inbound_grf.status_listing' => null])
+                    ->orFilterWhere(['and',['inbound_grf.id_modul' => $id_modul],['not in', 'inbound_grf.status_listing', [5, 25, 22]]])
+                    ;
+        }if($action == 'regikr'){
+            $query  ->andFilterWhere(['outbound_grf.status_listing' => 25])
+                    ->andFilterWhere(['grf.grf_type' => 19])
                     ->andFilterWhere(['outbound_grf.id_modul' => $id_modul])
                     ->andWhere(['inbound_grf.status_listing' => null])
                     ->orFilterWhere(['and',['inbound_grf.id_modul' => $id_modul],['not in', 'inbound_grf.status_listing', [5, 25, 22]]])

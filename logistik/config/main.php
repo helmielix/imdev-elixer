@@ -62,6 +62,9 @@ return [
         'allowActions' => [
 			'site/*',
 			'gii/*',
+            'instruction-grf/currentstock',
+            'instruction-grf/setsessiondetail',
+            'instruction-grf/revisegrf',
         ]
     ],
     'params' => $params,

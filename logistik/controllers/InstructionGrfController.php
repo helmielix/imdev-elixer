@@ -5,9 +5,11 @@ namespace logistik\controllers;
 use Yii;
 use common\models\Grf;
 use common\models\InstructionGrf;
+use common\models\LogInstructionGrf;
 use common\models\InstructionGrfDetail;
 use common\models\GrfDetail;
 use common\models\SearchInstructionGrf;
+use common\models\SearchLogInstructionGrf;
 use common\models\SearchInstructionGrfDetail;
 use common\models\SearchInstructionGrfDetailSn;
 use common\models\SearchGrfDetail;
@@ -66,7 +68,7 @@ class InstructionGrfController extends Controller
 
 		$this->layout = 'blank';
 		$searchModel = new SearchGrfDetail();
-        $dataProvider = $searchModel->search(Yii::$app->request->post(), Yii::$app->session->get('idInstructionGrf'));
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), Yii::$app->session->get('idGrf'));
 
         return $this->render('indexdetail', [
             'searchModel' => $searchModel,
@@ -178,57 +180,234 @@ class InstructionGrfController extends Controller
     public function actionCreate($id, $act = null)
     {
         $this->layout = 'blank';
-        $modelGrf = Grf::findOne($id);
+        $modelGrf = Grf::findOne($id);        
         $model = new InstructionGrf();
         $model->id = $modelGrf->id;
         $model->status_listing = 43;
         $model->status_return = $modelGrf->status_return;
         $model->id_modul = $this->id_modul;
-        $model->grf_number = $modelGrf->grf_number;
-        $model->wo_number = $modelGrf->wo_number;
-        $model->grf_type = $modelGrf->grf_type;
-        $model->requestor = $modelGrf->requestor;
-        $model->id_division = $modelGrf->id_division;
-        $model->id_region = $modelGrf->id_region;
-        $model->pic = $modelGrf->pic;
-        $model->purpose = $modelGrf->purpose;
-        $model->file_attachment_1 = $modelGrf->file_attachment_1;
-        $model->file_attachment_2 = $modelGrf->file_attachment_2;
-        $model->file_attachment_3 = $modelGrf->file_attachment_3;
-        $model->file_attachment_3 = $modelGrf->file_attachment_3;
-        // $model->id_warehouse = $modelGrf->id_warehouse;
-        $modelGrf->created_date = date('Y-m-d', strtotime("+7 days"));
-        $model->date_of_return = $modelGrf->created_date;
-        $model->team_leader = $modelGrf->team_leader;
-        $model->team_name = $modelGrf->team_name;
-        // return print_r($idOutboundWh);
-       if ($model->load(Yii::$app->request->post())) {
-       		$model->status_listing = 1;
-        if (!$model->save()){
-				return Displayerror::pesan($model->getErrors());
-			}
-			
-			
-			$model->save();
-			
-			Yii::$app->session->set('idInstructionGrf', $model->id);
-        // Yii::$app->session->set('idInstructionGrf',$modelGrf->id);
-        // // $model = $this->findModel($id);
+        // $model->id_grf = $modelGrf->id;
 
-        // if($model->save()){
-				
-				// $this->createLog($model);
-				return 'success';
-			}else{
-				return $this->render('create', [
+        // $model->wo_number = $modelGrf->wo_number;
+        // $model->grf_type = $modelGrf->grf_type;
+        // $model->requestor = $modelGrf->requestor;
+        // $model->id_division = $modelGrf->id_division;
+        // $model->id_region = $modelGrf->id_region;
+        // $model->pic = $modelGrf->pic;
+        // $model->purpose = $modelGrf->purpose;
+        // $model->file_attachment_1 = $modelGrf->file_attachment_1;
+        // $model->file_attachment_2 = $modelGrf->file_attachment_2;
+        // $model->file_attachment_3 = $modelGrf->file_attachment_3;
+        
+        // $model->id_warehouse = $modelGrf->id_warehouse;
+        // $modelGrf->created_date = date('Y-m-d', strtotime("+7 days"));
+        // $model->date_of_return = $modelGrf->created_date;
+        // $model->team_leader = $modelGrf->team_leader;
+        // $model->team_name = $modelGrf->team_name;
+        // return print_r($idOutboundWh);
+
+
+        if ($model->load(Yii::$app->request->post())) {
+       		$model->status_listing = 1;
+            if (!$model->save()){
+    			return Displayerror::pesan($model->getErrors());
+    		}
+    			
+    			
+    		Yii::$app->session->set('idGrf', $model->id);
+            // Yii::$app->session->set('idInstructionGrf',$modelGrf->id);
+            // $model = $this->findModel($id);
+
+                
+            $this->createLog($model);
+            return 'success';
+        }else{
+            return $this->render('create', [
                 'model' => $model,
                 'modelGrf' => $modelGrf,
-            	]);
-        	}
+            ]);
+        }
 
     }
 
-   public function actionCreatedetail($orafinCode = NULL){
+    public function actionCreatedetail($orafinCode){
+        $this->layout = 'blank';
+        $id = Yii::$app->session->get('idGrf');
+
+        if (Yii::$app->request->isPost && empty(Yii::$app->request->post('SearchMasterItemIm'))){
+
+            $data_im_code         = Yii::$app->request->post('im_code');
+            $data_r_good          = Yii::$app->request->post('rgood');
+            $data_r_notgood       = Yii::$app->request->post('rnotgood');
+            $data_r_reject        = Yii::$app->request->post('rreject');
+            $data_r_dismantle     = Yii::$app->request->post('rdismantle');
+            $data_r_revocation    = Yii::$app->request->post('rrevocation');
+            $data_r_good_for_recond  = Yii::$app->request->post('rgoodforrecond');
+            $data_r_good_rec      = Yii::$app->request->post('rgoodrec');
+
+            if (count($data_im_code) == 0){
+                return json_encode(['status' => 'success']);
+            }
+
+            foreach($data_im_code as $key => $value){
+
+                if( ($data_r_good[$key] == '' && $data_r_notgood[$key] == '' && $data_r_reject[$key] == '' && $data_r_dismantle[$key] == '' && $data_r_revocation[$key] == '' && $data_r_good_rec[$key] == '' && $data_r_good_for_recond[$key] == '') ||
+                    ($data_r_good[$key] == 0 && $data_r_notgood[$key] == 0 && $data_r_reject[$key] == 0 && $data_r_dismantle[$key] == 0 && $data_r_revocation[$key] == 0 && $data_r_good_rec[$key] == 0 && $data_r_good_for_recond[$key] == 0)){
+                    continue;
+                }
+                $data_r_good[$key]              = ($data_r_good[$key] == '') ? 0 : $data_r_good[$key];
+                $data_r_notgood[$key]           = ($data_r_notgood[$key] == '') ? 0 : $data_r_notgood[$key];
+                $data_r_reject[$key]            = ($data_r_reject[$key] == '') ? 0 : $data_r_reject[$key];
+                $data_r_dismantle[$key]         = ($data_r_dismantle[$key] == '') ? 0 : $data_r_dismantle[$key];
+                $data_r_revocation[$key]        = ($data_r_revocation[$key] == '') ? 0 : $data_r_revocation[$key];
+                $data_r_good_rec[$key]          = ($data_r_good_rec[$key] == '') ? 0 : $data_r_good_rec[$key];
+                $data_r_good_for_recond[$key]   = ($data_r_good_for_recond[$key] == '') ? 0 : $data_r_good_for_recond[$key];
+
+                $values = explode(';',$value);
+
+                $modelitemim = MasterItemIm::find()->joinWith('masterItemImDetails')->andWhere(['master_item_im_detail.id' => $values[0]])->one();
+
+                $modelcek = InstructionGrfDetail::find()->andWhere(['and',['id_item_im' => $modelitemim->id], ['id_instruction_grf' => $id]]);
+                $oldreq_good = 0;
+                $oldreq_not_good = 0;
+                $oldreq_reject = 0;
+                $oldreq_dismantle = 0;
+                $oldreq_revocation = 0;
+                $oldreq_good_rec = 0;
+                $oldreq_good_for_recond = 0;
+                if ( $modelcek->count() == 0 ){
+                    $model = new InstructionGrfDetail();
+                }else{
+                    $model = $modelcek->one();
+                    $oldreq_good                = $model->qty_good;
+                    $oldreq_not_good            = $model->qty_not_good;
+                    $oldreq_reject              = $model->qty_reject;
+                    $oldreq_dismantle           = $model->qty_dismantle;
+                    $oldreq_revocation          = $model->qty_revocation;
+                    $oldreq_good_rec            = $model->qty_good_rec;
+                    $oldreq_good_for_recond     = $model->qty_good_for_recond;
+                }
+
+                $modelMasterItem = MasterItemImDetail::findOne($values[0]);
+                $overStock = 1;
+                $pesan = [];
+                // return var_dump( Yii::$app->session->get('detailinstruction')[$values[0]]['update'][$values[0]] );
+                $session = Yii::$app->session->get('detailinstruction')[$values[0]];
+                if ( isset($session['update']) ){
+                    $datagood            = $data_r_good[$key] - $session['update'][$values[0]]['rgood'];
+                    $datanotgood         = $data_r_notgood[$key] - $session['update'][$values[0]]['rnotgood'];
+                    $datareject          = $data_r_reject[$key] - $session['update'][$values[0]]['rreject'];
+                    $datadismantle       = $data_r_dismantle[$key] - $session['update'][$values[0]]['rdismantle'];
+                    $datarevocation      = $data_r_revocation[$key] - $session['update'][$values[0]]['rrevocation'];
+                    $datagood_rec        = $data_r_good_rec[$key] - $session['update'][$values[0]]['rgoodrec'];
+                    $datagood_for_recond = $data_r_good_for_recond[$key] - $session['update'][$values[0]]['rgoodforrecond'];
+                }else{
+                    $datagood            = $data_r_good[$key];
+                    $datanotgood         = $data_r_notgood[$key];
+                    $datareject          = $data_r_reject[$key];
+                    $datadismantle       = $data_r_dismantle[$key];
+                    $datarevocation      = $data_r_revocation[$key];
+                    $datagood_rec        = $data_r_good_rec[$key];
+                    $datagood_for_recond = $data_r_good_for_recond[$key];
+                }
+
+                if($datagood > $modelMasterItem->s_good){
+                    $pesan[] = $model->getAttributeLabel('req_good')." is more than Stock for IM Code ".$values[1];
+                    $overStock = 0;
+                }
+                if($datanotgood > $modelMasterItem->s_not_good){
+                    $pesan[] = $model->getAttributeLabel('req_not_good')." is more than Stock for IM Code ".$values[1];
+                    $overStock = 0;
+                }
+                if($datareject > $modelMasterItem->s_reject){
+                    $pesan[] = $model->getAttributeLabel('req_reject')." is more than Stock for IM Code ".$values[1];
+                    $overStock = 0;
+                }
+                if($datadismantle > $modelMasterItem->s_dismantle){
+                    $pesan[] = $model->getAttributeLabel('req_dismantle')." is more than Stock for IM Code ".$values[1];
+                    $overStock = 0;
+                }
+                if($datarevocation > $modelMasterItem->s_revocation){
+                    $pesan[] = $model->getAttributeLabel('req_revocation')." is more than Stock for IM Code ".$values[1];
+                    $overStock = 0;
+                }
+                if($datagood_rec > $modelMasterItem->s_good_rec){
+                    $pesan[] = $model->getAttributeLabel('req_good_rec')." is more than Stock for IM Code ".$values[1];
+                    $overStock = 0;
+                }
+                if($datagood_for_recond > $modelMasterItem->s_good_for_recond){
+                    $pesan[] = $model->getAttributeLabel('req_good_for_recond')." is more than Stock for IM Code ".$values[1];
+                    $overStock = 0;
+                }
+
+                if ($overStock == 0){
+                    return json_encode(['status' => 'error', 'id' => $values[0], 'pesan' => implode("\n",$pesan)]);
+                }
+
+                $model->id_instruction_grf       = $id;
+                // $model->id_item_im               = $values[0];
+                $model->id_item_im              = $modelitemim->id;
+                $model->qty_good                = $data_r_good[$key];
+                $model->qty_not_good            = $data_r_notgood[$key];
+                $model->qty_reject              = $data_r_reject[$key];
+                $model->qty_dismantle           = $data_r_dismantle[$key];
+                $model->qty_revocation          = $data_r_revocation[$key];
+                $model->qty_good_rec            = $data_r_good_rec[$key];
+                $model->qty_good_for_recond     = $data_r_good_for_recond[$key];
+
+                $newRec = false;
+                if ( !$model->isNewRecord ){
+
+                    if ( !isset($session['update']) ){
+                        $model->qty_good                += $oldreq_good;
+                        $model->qty_not_good            += $oldreq_not_good;
+                        $model->qty_reject              += $oldreq_reject;
+                        $model->qty_dismantle           += $oldreq_dismantle;
+                        $model->qty_revocation          += $oldreq_revocation;
+                        $model->qty_good_rec            += $oldreq_good_rec;
+                        $model->qty_good_for_recond     += $oldreq_good_for_recond;
+                        // return "$oldreq_good, $oldreq_not_good, $oldreq_reject, $oldreq_dismantle, $oldreq_revocation";
+                    }
+
+                }else{
+                    $newRec = true;
+                }
+
+                if(!$model->save()){
+                    $error = $model->getErrors();
+                    $error[0] = ['for IM Code '.$values[1]];
+                    return json_encode(['status' => 'error', 'id' => $values[0], 'pesan' => Displayerror::pesan($error)]);
+                }
+
+                if ( $newRec ){
+                    $this->changestock($model, 'minus');
+                }
+            }
+
+            Yii::$app->session->remove('detailinstruction');
+            return json_encode(['status' => 'success']);
+            // return 'success';
+
+        }
+
+        $modelInstruction = $this->findModel($id);
+        $modelGrfDetail = GrfDetail::find()->andWhere(['orafin_code' => $orafinCode])->andWhere(['id_grf' => $id])->one();
+        $modelDetail = MasterItemIm::find()->andWhere(['orafin_code' => $orafinCode])->all();
+        $idItemIm = ArrayHelper::map($modelDetail, 'id', 'id');
+        // $modelitem = MasterItemIm::find()->andWhere([''])
+        // $idItemIm = [$orafinCode];
+
+        $searchModel = new SearchMasterItemIm();
+        $dataProvider = $searchModel->searchByCreateDetailItem(Yii::$app->request->getQueryParams(), $modelInstruction->id_warehouse, null, $idItemIm);
+
+        return $this->render('createdetailinstruksi', [
+            'model' => $modelGrfDetail,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+   public function actionCreatedetail1($orafinCode = NULL){
 		$this->layout = 'blank';
 		$id = Yii::$app->session->get('idGrf');		
 		
@@ -378,7 +557,7 @@ class InstructionGrfController extends Controller
 
         }
 		
-		$modelInstruction = $this->findModel($id);
+		// $modelInstruction = $this->findModel($id);
 		$modelDetail = GrfDetail::find()->select(['orafin_code'])->andWhere(['id_grf' => $id])->all();
         // $modelDetail->orafin_code = $orafinCode;
 		$orafinCode = ArrayHelper::map($modelDetail, 'orafin_code', 'orafin_code');
@@ -396,17 +575,17 @@ class InstructionGrfController extends Controller
 
 	public function actionSetsessiondetail(){
 		if (Yii::$app->request->isPost){
-			$data = Yii::$app->session->get('detailinstruction');
-			
-			$id   = Yii::$app->request->post('id');
-			$val  = Yii::$app->request->post('val');
-			$type = Yii::$app->request->post('type');
-			
-			$data[$id][$type] = $val;
-			
-			Yii::$app->session->set('detailinstruction', $data);
-			return var_dump($data);
-		}
+            $data = Yii::$app->session->get('detailinstruction');
+
+            $id   = Yii::$app->request->post('id');
+            $val  = Yii::$app->request->post('val');
+            $type = Yii::$app->request->post('type');
+
+            $data[$id][$type] = $val;
+
+            Yii::$app->session->set('detailinstruction', $data);
+            return var_dump($data);
+        }
 	}
 
     public function actionCurrentstock(){
@@ -417,20 +596,22 @@ class InstructionGrfController extends Controller
             $session = Yii::$app->session->get('detailinstruction');
 
             if ( isset($session[$id]['update']) ){
-                $model->s_good              += $session[$id]['update'][$id]['qtygood'];
-                $model->s_not_good          += $session[$id]['update'][$id]['qtynootgood'];
-                $model->s_reject            += $session[$id]['update'][$id]['qtyreject'];
-                $model->s_good_dismantle    += $session[$id]['update'][$id]['qtydismantlegood'];
-                $model->s_not_good_dismantle+= $session[$id]['update'][$id]['qtydismantleng'];
-                $model->s_not_good_rec      += $session[$id]['update'][$id]['qtygoodrec'];
+                $model->s_good              += $session[$id]['update'][$id]['rgood'];
+                $model->s_not_good          += $session[$id]['update'][$id]['rnotgood'];
+                $model->s_reject            += $session[$id]['update'][$id]['rreject'];
+                $model->s_dismantle         += $session[$id]['update'][$id]['rdismantle'];
+                $model->s_revocation        += $session[$id]['update'][$id]['rrevocation'];
+                $model->s_good_rec          += $session[$id]['update'][$id]['rgoodrec'];
+                $model->s_good_for_recond   += $session[$id]['update'][$id]['rgoodforrecond'];
             }
             // return var_dump($model);
-            $arr['s_good'] = $model->s_good;
-            $arr['s_not_good'] = $model->s_not_good;
-            $arr['s_reject'] = $model->s_reject;
-            $arr['s_good_dismantle'] = $model->s_good_dismantle;
-            $arr['s_not_good_dismantle'] = $model->s_not_good_dismantle;
-            $arr['s_good_rec'] = $model->s_good_rec;
+            $arr['s_good']            = $model->s_good;
+            $arr['s_not_good']        = $model->s_not_good;
+            $arr['s_reject']          = $model->s_reject;
+            $arr['s_dismantle']       = $model->s_dismantle;
+            $arr['s_revocation']      = $model->s_revocation;
+            $arr['s_good_rec']        = $model->s_good_rec;
+            $arr['s_good_for_recond'] = $model->s_good_for_recond;
             return json_encode($arr);
         }
     }
@@ -506,12 +687,14 @@ class InstructionGrfController extends Controller
     {
         $this->layout = 'blank';
         $model = $this->findModel($id);
+        $modelGrf = Grf::findOne($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'modelGrf' => $modelGrf,
             ]);
         }
     }
@@ -770,6 +953,37 @@ class InstructionGrfController extends Controller
         }
     }
 
+    public function actionRevisegrf($id)
+    {
+        $model = $this->findModel($id);
+        $modelgrf = $model->idGrf;
+        $modelgrf->status_listing = 3;
+        $modelgrf->save();
+                
+        $foro = false;
+        switch ($modelgrf->source) {
+            case 'Vendor-IKO':
+                $table = 'iko_grf_vendor';
+                $grf_number = $modelgrf->grf_number;
+                $foro = true;
+                break;
+            
+             case 'Inhouse-IKO':
+                $table = 'iko_grf_inhouse';
+                $grf_number = $modelgrf->grf_number;
+                $foro = true;
+                break;
+        }
+        if ($foro) {
+            $command = Yii::$app->dbforo->createCommand("update $table set status_listing = 3 where grf_number = '$grf_number'")->query();
+        }
+
+
+        $model->delete();
+        GrfDetail::deleteAll(['id_grf' => $id]);
+        return "success";
+    }
+
     public function actionRevise($id)
     {
        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -847,18 +1061,20 @@ class InstructionGrfController extends Controller
         
         if ($action == 'add'){
             $modelIm->s_good                = $modelIm->s_good + $model->qty_good;
-            $modelIm->s_not_good            = $modelIm->s_not_good + $model->qty_noot_good;
+            $modelIm->s_not_good            = $modelIm->s_not_good + $model->qty_not_good;
             $modelIm->s_reject              = $modelIm->s_reject + $model->qty_reject;
-            $modelIm->s_good_dismantle      = $modelIm->s_good_dismantle + $model->qty_dismantle_good;
-            $modelIm->s_not_good_dismantle  = $modelIm->s_not_good_dismantle + $model->qty_dismantle_ng;
+            $modelIm->s_dismantle      = $modelIm->s_dismantle + $model->qty_dismantle;
+            $modelIm->s_revocation  = $modelIm->s_revocation + $model->qty_revocation;
             $modelIm->s_good_rec  = $modelIm->s_good_rec + $model->qty_good_rec;
+            $modelIm->s_good_for_recond  = $modelIm->s_good_for_recond + $model->qty_good_for_recond;
         }else{
             $modelIm->s_good                = $modelIm->s_good - $model->qty_good;
-            $modelIm->s_not_good            = $modelIm->s_not_good - $model->qty_noot_good;
+            $modelIm->s_not_good            = $modelIm->s_not_good - $model->qty_not_good;
             $modelIm->s_reject              = $modelIm->s_reject - $model->qty_reject;
-            $modelIm->s_good_dismantle      = $modelIm->s_good_dismantle - $model->qty_dismantle_good;
-            $modelIm->s_not_good_dismantle  = $modelIm->s_not_good_dismantle - $model->qty_dismantle_ng;
+            $modelIm->s_dismantle      = $modelIm->s_dismantle - $model->qty_dismantle;
+            $modelIm->s_revocation  = $modelIm->s_revocation - $model->qty_revocation;
             $modelIm->s_good_rec  = $modelIm->s_good_rec + $model->qty_good_rec;
+            $modelIm->s_good_for_recond  = $modelIm->s_good_for_recond + $model->qty_good_for_recond;
         }
         
         
@@ -951,5 +1167,11 @@ class InstructionGrfController extends Controller
         }
     }
 
+    protected function createLog($model)
+    {
+        $modelLog = new LogInstructionGrf();
+        $modelLog->setAttributes($model->attributes);
+        $modelLog->save();
+    }
 
 }

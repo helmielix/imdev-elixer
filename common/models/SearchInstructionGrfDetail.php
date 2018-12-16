@@ -19,7 +19,7 @@ class SearchInstructionGrfDetail extends InstructionGrfDetail
     public function rules()
     {
         return [
-            [['id', 'id_instruction_grf', 'qty_good', 'qty_noot_good', 'qty_reject', 'qty_dismantle_good', 'qty_dismantle_ng', 'qty_good_rec'], 'integer'],
+            [['id', 'id_instruction_grf', 'qty_good', 'qty_not_good', 'qty_reject', 'qty_dismantle_good', 'qty_dismantle_ng', 'qty_good_rec'], 'integer'],
             [['id_item_im', 'name', 'brand', 'warna', 'sn_type'], 'safe'],
         ];
     }
@@ -102,7 +102,7 @@ class SearchInstructionGrfDetail extends InstructionGrfDetail
             'id' => $this->id,
             'id_instruction_grf' => $this->id_instruction_grf,
             'qty_good' => $this->qty_good,
-            'qty_noot_good' => $this->qty_noot_good,
+            'qty_not_good' => $this->qty_not_good,
             'qty_reject' => $this->qty_reject,
             'qty_dismantle_good' => $this->qty_dismantle_good,
             'qty_dismantle_ng' => $this->qty_dismantle_ng,

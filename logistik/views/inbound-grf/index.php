@@ -99,6 +99,10 @@ function getFilterStatus() {
                                 $viewurl = 'view';
                                 $header = 'Create';
                             }
+                            if(Yii::$app->controller->action->id == 'indexoverview' || Yii::$app->controller->action->id == 'indexregoverview'){
+                                $viewurl = 'viewoverview';
+                                $header = '';
+                            }
                             $headerlnk = str_replace(' ', '_', $header);
                             return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id.
                             '&header='.$headerlnk, [

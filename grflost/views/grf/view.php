@@ -4,7 +4,12 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
-
+use yii\widgets\Pjax;
+use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use common\models\Reference;
+use common\models\Region;
+use common\models\Labor;
 /* @var $this yii\web\View */
 /* @var $model divisisatu\models\InstructionWhTransfer */
 
@@ -88,49 +93,129 @@ $this->params['breadcrumbs'][] = $this->title;
 				'options' => ['class' => 'small table table-striped table-bordered detail-view'],
 				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
 				'attributes' => [	
+                    [
+						'attribute' => 'team_name',
+						'value' => function($model){
+							return $model->teamName->description;
+						},
+						'filter' => Arrayhelper::map(Reference::find()->andWhere(['table_relation' => 'team_name'])->all(), 'id', 'description'),
+					],
 					[
-		            	'attribute'=>'id_division',
-		            	'label' => 'Division',
-		            	'value'=>function($model){
-		            		if($model->idDivision)return $model->idDivision->nama;
-		            	}
-		            ],
-
-		            [
-		            	'attribute'=>'pic',
-		            	'value'=>function($model){
-		            		if($model->picName)return $model->picName->nama;
-		            	}
-		            ],
-					
-					'purpose',
-					[
-						'attribute'=>'id_vendor',
-						'value'=>function($model){
-							if($model->id_vendor)return $model->idVendor->name;
-						}
-					]
+						'attribute' => 'requestor',
+						'value' => function($model){
+							return $model->requestorName->description;
+						},
+						'filter' => Arrayhelper::map(Reference::find()->andWhere(['table_relation' => 'requestor'])->all(), 'id', 'description'),
+					],
+        
+                    [
+                        'attribute' => 'id_region',
+                        'value' => function($model){
+                            return Region::find()->andWhere(['id' => $model->id_region])->one()->name;
+                        },
+                    ],
+                    [
+                        'attribute' => 'team_leader',
+                        'value' => function($model){
+                            return Labor::find()->andWhere(['nik' => $model->team_leader])->one()->nama;
+                        },
+                    ],
+                    
+                    [
+                        'attribute' => 'created_by',
+                        'label' => 'Inputted By',
+                        'value' => function ($model){
+                            if ( is_numeric($model->created_by) ){
+                                return $model->createdBy->name;
+                            }
+                        },                        
+                    ],
+                    [
+                        'attribute' => 'verified_by_grf',
+                        'label' => 'Verified By',
+                        'value' => function ($model){
+                            if ( is_numeric($model->verified_by_grf) ){
+                                return User::findOne($model->verified_by_grf)->name;
+                            }
+                        },
+                        'visible' => ($model->status_listing > 3),
+                    ],
+                    [
+                        'attribute' => 'approved_by_grf',
+                        'label' => 'Verified By',
+                        'value' => function ($model){
+                            if ( is_numeric($model->approved_by_grf) ){
+                                return User::findOne($model->approved_by_grf)->name;
+                            }
+                        },
+                        'visible' => ($model->status_listing > 4),
+                    ],
+                    'purpose:ntext',
 				],
 			]) ?>
 		</div>
-		 <div class="col-sm-12">
-			<?php if((Yii::$app->controller->action->id == 'view' || Yii::$app->controller->action->id == 'viewothers') && $model->status_listing != 6)
-				echo Html::button(Yii::t('app','Update'), ['id'=>'updateButton','class' => 'btn btn-primary']); ?>
-			<?php if(Yii::$app->controller->action->id == 'view' && ($model->status_listing == 1 || $model->status_listing == 6 || $model->status_listing == 7))
-				echo Html::button(Yii::t('app','Delete'), ['id'=>'deleteButton','class' => 'btn btn-danger']); ?>
-		</div> 
 	</div>
 	
-	<hr>
+	 <?php Pjax::begin([
+        'id' => 'pjaxindexdetail',
+        'timeout' => false,
+        'enablePushState' => false,
+        'clientOptions' => ['method' => 'GET', 'backdrop' => false,
+        // "container" => "#pjaxindexdetail"
+        ],
+    ]); ?>
 	
-	<?= $this->render('indexdetail', [
-		'model' => $model,
-        'searchModel' => $searchModel,
+	<?= GridView::widget([
         'dataProvider' => $dataProvider,
-    ]) ?>
+        'filterModel' => $searchModel,
+        'options' => ['style' => 'overflow-x:scroll'],
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+			[
+                'class' => 'yii\grid\ActionColumn',
+                'template'=>'',
+                'buttons'=>[
+                    'delete' => function ($url, $model) {
+                        return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-trash"></span>', '#', [
+                            'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/deletedetail', 'id' => $model->id]), 'header'=> yii::t('app','GRF Detail')
+                        ]);
+                    },
+					
+                    'update' => function ($url, $model) {
+                        return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-pencil"></span>', '#', [
+                            'title' => Yii::t('app', 'update'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/update', 'idDetail'=> $model->id]), 'header'=> yii::t('app','Update Detail Warehouse Transfers Instruction')
+                        ]);
+                    },
+                ],
+            ],
+			
+			[
+				'attribute' => 'orafin_code',
+				'value' => 'orafin_code',
+			],
+			// 'idOrafinCode.item_desc',
+			[
+				'header' => 'Nama Barang',
+				'attribute' => 'item_desc',
+                'value'=> 'idItemCode.item_desc'
+			],
+            [
+                'header' => 'Qty Request',
+                'attribute' => 'qty_request',
+            ],
+
+            
+        ],
+    ]); ?>
+	<?php yii\widgets\Pjax::end() ?>
+
+    <?php \yii\widgets\Pjax::begin(['id' => 'xpjax']); ?>
 	
-	<?php if($this->context->action->id != 'view'){ ?>
 	<p> 
+		<?php if((Yii::$app->controller->action->id == 'view' || Yii::$app->controller->action->id == 'viewothers') && $model->status_listing != 6)
+				echo Html::button(Yii::t('app','Update'), ['id'=>'updateButton','class' => 'btn btn-primary']); ?>
+		<?php if((Yii::$app->controller->action->id == 'view' || Yii::$app->controller->action->id == 'viewothers') && $model->status_listing == 1 || $model->status_listing == 6 || $model->status_listing == 7)
+				echo Html::button(Yii::t('app','Delete'), ['id'=>'deleteButton','class' => 'btn btn-danger']); ?>
         <?php if((Yii::$app->controller->action->id == 'viewapprove' && $model->status_listing != 5) || 
 				(Yii::$app->controller->action->id == 'viewinstruction' && $model->status_listing == 5) || 
 				((Yii::$app->controller->action->id == 'viewothersverify' ||  Yii::$app->controller->action->id == 'viewverify')&& $model->status_listing != 4)
@@ -144,7 +229,6 @@ $this->params['breadcrumbs'][] = $this->title;
             echo Html::button(Yii::t('app','Create'), ['id'=>'createoutButton','class' => 'btn btn-success']); ?>
 		
     </p>
-	<?php } ?>	
 	
 	<?php $form = ActiveForm::begin([
         'enableClientValidation' => true,

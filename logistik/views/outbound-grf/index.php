@@ -105,27 +105,11 @@ function getFilterStatus() {
                             ]);
                         } 
                         else {
-                            if(Yii::$app->controller->action->id == 'index') {
+                            if(Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'indexreg') {
                                 $viewurl = 'create';
                                 $header = 'Create Tag SN';
                             }
-                            if(Yii::$app->controller->action->id == 'indexreg') {
-                                $viewurl = 'create';
-                                $header = 'Create Tag SN';
-                            }
-                            if(Yii::$app->controller->action->id == 'indexprintsj') {
-                                $viewurl = 'view';
-                                $header = 'Create Surat Jalan';
-                                $headerlnk = str_replace(' ', '_', $header);
-                                $icon = 'eye-open';
-                                if ($model->status_listing == 42){ // tag inputted
-                                    $icon = 'plus';
-                                }
-                                if ($model->status_listing == 25){ // ready to print
-                                    $viewurl = 'viewprintsj';
-                                    $header = '';
-                                } 
-                            if(Yii::$app->controller->action->id == 'indexregprintsj') {
+                            if(Yii::$app->controller->action->id == 'indexprintsj' || Yii::$app->controller->action->id == 'indexregprintsj') {
                                 $viewurl = 'view';
                                 $header = 'Create Surat Jalan';
                                 $headerlnk = str_replace(' ', '_', $header);
@@ -142,12 +126,13 @@ function getFilterStatus() {
                                     'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/'.$viewurl, 'id' => $model->id_instruction_grf]), 'header'=> yii::t('app',$header) 
                                     ]);
                             }
-                            if(Yii::$app->controller->action->id == 'indexapprove') {
+                            if(Yii::$app->controller->action->id == 'indexapprove' || Yii::$app->controller->action->id == 'indexregapprove' ) {
                                 $viewurl = 'viewapprove';
                                 $header = 'Approval Surat Jalan';
                             }
-                            if(Yii::$app->controller->action->id == 'indexoverview'){
+                            if(Yii::$app->controller->action->id == 'indexoverview' || Yii::$app->controller->action->id == 'indexregoverview'){
                                 $viewurl = 'viewoverview';
+                                $header = 'Approval Surat Jalan';
                             }
                             
                             $headerlnk = str_replace(' ', '_', $header);

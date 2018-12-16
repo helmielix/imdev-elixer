@@ -11,7 +11,7 @@ use yii\behaviors\BlameableBehavior;
  * @property integer $id
  * @property integer $id_inbound_grf
  * @property integer $qty_good
- * @property integer $qty_noot_good
+ * @property integer $qty_not_good
  * @property integer $qty_reject
  * @property integer $qty_dismantle_good
  * @property integer $qty_dismantle_ng
@@ -36,7 +36,7 @@ class InboundGrfDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_inbound_grf', 'qty_good', 'qty_noot_good', 'qty_reject', 'qty_dismantle_good', 'qty_dismantle_ng', 'qty_good_rec','id_item_im'], 'integer'],
+            [['id_inbound_grf', 'qty_good', 'qty_not_good', 'qty_reject', 'qty_dismantle_good', 'qty_dismantle_ng', 'qty_good_rec','id_item_im'], 'integer'],
             [['id_inbound_grf'], 'exist', 'skipOnError' => true, 'targetClass' => InboundGrf::className(), 'targetAttribute' => ['id_inbound_grf' => 'id']],
         ];
     }
@@ -52,7 +52,7 @@ class InboundGrfDetail extends \yii\db\ActiveRecord
             'id_item_im' => 'IM Code',
             'created_by' => 'Created By',
             'qty_good' => 'Qty Good',
-            'qty_noot_good' => 'Qty Noot Good',
+            'qty_not_good' => 'Qty Noot Good',
             'qty_reject' => 'Qty Reject',
             'qty_dismantle_good' => 'Qty Dismantle Good',
             'qty_dismantle_ng' => 'Qty Dismantle Ng',
@@ -75,15 +75,15 @@ class InboundGrfDetail extends \yii\db\ActiveRecord
             $modelIm->save();
         }
         
-        if(isset($this->oldAttributes['qty_noot_good']) && $this->qty_noot_good != $this->oldAttributes['qty_noot_good']){
+        if(isset($this->oldAttributes['qty_not_good']) && $this->qty_not_good != $this->oldAttributes['qty_not_good']){
             // The attribute is changed. Do something here...
             $modelIm = MasterItemImDetail::findOne($this->id_item_im);
             
             // add old request to stock
-            $modelIm->s_not_good = $modelIm->s_not_good + $this->oldAttributes['qty_noot_good'];
+            $modelIm->s_not_good = $modelIm->s_not_good + $this->oldAttributes['qty_not_good'];
             
             // change stock to the new request
-            $modelIm->s_not_good = $modelIm->s_not_good - $this->qty_noot_good;
+            $modelIm->s_not_good = $modelIm->s_not_good - $this->qty_not_good;
             
             $modelIm->save();
         }

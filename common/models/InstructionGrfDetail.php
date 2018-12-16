@@ -11,10 +11,10 @@ use yii\behaviors\BlameableBehavior;
  * @property integer $id
  * @property integer $id_Instruction_grf
  * @property integer $qty_good
- * @property integer $qty_noot_good
+ * @property integer $qty_not_good
  * @property integer $qty_reject
- * @property integer $qty_dismantle_good
- * @property integer $qty_dismantle_ng
+ * @property integer $qty_dismantle
+ * @property integer $qty_revocation
  * @property integer $qty_good_rec
  *
  * @property InstructionGrf $idInstructionGrf
@@ -36,7 +36,7 @@ class InstructionGrfDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_instruction_grf', 'qty_good', 'qty_noot_good', 'qty_reject', 'qty_dismantle_good', 'qty_dismantle_ng', 'qty_good_rec','id_item_im'], 'integer'],
+            [['id_instruction_grf', 'qty_good', 'qty_not_good', 'qty_reject', 'qty_dismantle', 'qty_revocation', 'qty_good_rec', 'qty_good_for_recond','id_item_im'], 'integer'],
             [['id_instruction_grf'], 'exist', 'skipOnError' => true, 'targetClass' => InstructionGrf::className(), 'targetAttribute' => ['id_instruction_grf' => 'id']],
         ];
     }
@@ -52,11 +52,12 @@ class InstructionGrfDetail extends \yii\db\ActiveRecord
             'id_item_im' => 'IM Code',
             'created_by' => 'Created By',
             'qty_good' => 'Qty Good',
-            'qty_noot_good' => 'Qty Noot Good',
+            'qty_not_good' => 'Qty Noot Good',
             'qty_reject' => 'Qty Reject',
-            'qty_dismantle_good' => 'Qty Dismantle Good',
-            'qty_dismantle_ng' => 'Qty Dismantle Ng',
-            'qty_good_rec' => 'Qty Good Rec',
+            'qty_dismantle' => 'Qty Dismantle Good',
+            'qty_revocation' => 'Qty Dismantle Ng',
+            'qty_good_rec' => 'Qty Good Recondtion',
+            'qty_good_for_recond' => 'Qty Good For Recondition',
         ];
     }
 
@@ -105,28 +106,28 @@ class InstructionGrfDetail extends \yii\db\ActiveRecord
             $modelIm->save();
         }
 
-        if(isset($this->oldAttributes['qty_dismantle_good']) && $this->qty_dismantle_good != $this->oldAttributes['qty_dismantle_good']){
+        if(isset($this->oldAttributes['qty_dismantle']) && $this->qty_dismantle != $this->oldAttributes['qty_dismantle']){
             // The attribute is changed. Do something here...
             // $modelIm = MasterItemImDetail::findOne($this->id_item_im);
 
             // add old request to stock
-            $modelIm->s_good_dismantle = $modelIm->s_good_dismantle + $this->oldAttributes['qty_dismantle_good'];
+            $modelIm->s_dismantle = $modelIm->s_dismantle + $this->oldAttributes['qty_dismantle'];
 
             // change stock to the new request
-            $modelIm->s_good_dismantle = $modelIm->s_good_dismantle - $this->qty_dismantle_good;
+            $modelIm->s_dismantle = $modelIm->s_dismantle - $this->qty_dismantle;
 
             $modelIm->save();
         }
 
-        if(isset($this->oldAttributes['qty_dismantle_ng']) && $this->qty_dismantle_ng != $this->oldAttributes['qty_dismantle_ng']){
+        if(isset($this->oldAttributes['qty_revocation']) && $this->qty_revocation != $this->oldAttributes['qty_revocation']){
             // The attribute is changed. Do something here...
             // $modelIm = MasterItemImDetail::findOne($this->id_item_im);
 
             // add old request to stock
-            $modelIm->s_not_good_dismantle = $modelIm->s_not_good_dismantle + $this->oldAttributes['qty_dismantle_ng'];
+            $modelIm->s_revocation = $modelIm->s_revocation + $this->oldAttributes['qty_revocation'];
 
             // change stock to the new request
-            $modelIm->s_not_good_dismantle = $modelIm->s_not_good_dismantle - $this->qty_dismantle_ng;
+            $modelIm->s_revocation = $modelIm->s_revocation - $this->qty_revocation;
 
             $modelIm->save();
         }
@@ -136,10 +137,23 @@ class InstructionGrfDetail extends \yii\db\ActiveRecord
             // $modelIm = MasterItemImDetail::findOne($this->id_item_im);
 
             // add old request to stock
-            $modelIm->s_not_good_dismantle = $modelIm->s_not_good_dismantle + $this->oldAttributes['qty_good_rec'];
+            $modelIm->s_good_rec = $modelIm->s_good_rec + $this->oldAttributes['qty_good_rec'];
 
             // change stock to the new request
-            $modelIm->s_not_good_dismantle = $modelIm->s_not_good_dismantle - $this->qty_good_rec;
+            $modelIm->s_good_rec = $modelIm->s_good_rec - $this->qty_good_rec;
+
+            $modelIm->save();
+        }
+
+        if(isset($this->oldAttributes['qty_good_for_recond']) && $this->qty_good_for_recond != $this->oldAttributes['qty_good_for_recond']){
+            // The attribute is changed. Do something here...
+            // $modelIm = MasterItemImDetail::findOne($this->id_item_im);
+
+            // add old request to stock
+            $modelIm->s_good_for_recond = $modelIm->s_good_for_recond + $this->oldAttributes['qty_good_for_recond'];
+
+            // change stock to the new request
+            $modelIm->s_good_for_recond = $modelIm->s_good_for_recond - $this->qty_good_for_recond;
 
             $modelIm->save();
         }

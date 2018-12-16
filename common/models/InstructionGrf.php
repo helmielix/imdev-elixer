@@ -44,9 +44,10 @@ class InstructionGrf extends \yii\db\ActiveRecord
             // [['created_by', 'created_date']],
             [['created_by', 'updated_by', 'status_listing', 'status_return','id_warehouse'], 'integer'],
             [['incoming_date', 'updated_date','date_of_return'], 'safe'],
+            [['id_warehouse'], 'required'],
             [['note'], 'string'],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Grf::className(), 'targetAttribute' => ['id' => 'id']],
-            [['status_listing'], 'exist', 'skipOnError' => true, 'targetClass' => StatusReference::className(), 'targetAttribute' => ['status_listing' => 'id']],
+            // [['status_listing'], 'exist', 'skipOnError' => true, 'targetClass' => StatusReference::className(), 'targetAttribute' => ['status_listing' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];

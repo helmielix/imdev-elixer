@@ -50,17 +50,16 @@ $this->registerJs(
             ['class' => 'yii\grid\SerialColumn'],
 			[
                 'class' => 'yii\grid\ActionColumn',
-                'template'=>'{update} {delete}',
+                'template'=>' {delete}',
                 'buttons'=>[
-                    'delete' => function ($url, $model) {
-                        return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-trash"></span>', '#', [
-                            'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/deletedetail', 'id' => $model->id]), 'header'=> yii::t('app','GRF Detail')
+                    'view' => function ($url, $model) {
+                         return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-pencil"></span>', '#updatedetail?id='.$model->id.'&header=Detail_Material_GRF', [
+                            'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/updatedetail', 'id' => $model->id]), 'header'=> yii::t('app','Update Detail Barang')
                         ]);
                     },
-					
-                    'update' => function ($url, $model) {
-                        return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-pencil"></span>', '#', [
-                            'title' => Yii::t('app', 'update'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/updatedetail', 'idDetail'=> $model->id]), 'header'=> yii::t('app','Update Detail Warehouse Transfers Instruction')
+                    'delete' => function ($url, $model) {
+                        return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-trash"></span>', '#', [
+                            'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/deletedetail', 'id' => $model->id]), 'header'=> yii::t('app','Material GRF Vendor')
                         ]);
                     },
                 ],
@@ -73,8 +72,8 @@ $this->registerJs(
 			// 'idOrafinCode.item_desc',
 			[
 				'header' => 'Nama Barang',
-				'attribute' => 'name',
-                'value'=> 'idOrafinCode.name'
+				'attribute' => 'item_desc',
+                'value'=> 'idItemCode.item_desc'
 			],
             [
                 'header' => 'Qty Request',

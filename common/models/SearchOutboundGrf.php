@@ -85,6 +85,7 @@ class SearchOutboundGrf extends OutboundGrf
         
         if($action == 'tagsn'){
             $query  ->andFilterWhere(['instruction_grf.status_listing' => 5])
+                    ->andFilterWhere(['grf.grf_type' => 20])
                     ->andFilterWhere(['instruction_grf.id_modul' => $id_modul])
                     ->andWhere(['outbound_grf.status_listing' => null])
                     ->orFilterWhere(['and',['outbound_grf.id_modul' => $id_modul],['not in', 'outbound_grf.status_listing', [5, 25, 22]]]);
@@ -98,6 +99,27 @@ class SearchOutboundGrf extends OutboundGrf
         // add conditions that should always apply here
         }else if($action == 'approve'){
             $query  ->andFilterWhere(['outbound_grf.status_listing' => [22, 25, 5]]);
+
+        }else if($action == 'regtagsn'){
+            $query  ->andFilterWhere(['instruction_grf.status_listing' => 5])
+                    ->andFilterWhere(['instruction_grf.id_modul' => $id_modul])
+                    ->andFilterWhere(['grf.grf_type' => 19])
+                    ->andWhere(['outbound_grf.status_listing' => null])
+                    ->orFilterWhere(['and',['outbound_grf.id_modul' => $id_modul],['not in', 'outbound_grf.status_listing', [5, 25, 22]]]);
+        }else if($action == 'regprintsj'){
+            $query  ->andFilterWhere(['outbound_grf.status_listing' => [42, 2, 22, 25, 1]]);
+            $query  ->andFilterWhere(['grf.grf_type' => 19]);
+            $query  ->andFilterWhere(['outbound_grf.id_modul' => $id_modul]);
+    
+        }else if($action == 'regapprove'){
+            $query  ->andFilterWhere(['outbound_grf.status_listing' => [22, 25, 5]]);
+            $query  ->andFilterWhere(['grf.grf_type' => 19]);
+        }else if($action == 'overview'){
+            $query  ->andFilterWhere(['outbound_grf.id_modul' => $id_modul]);
+            $query  ->andFilterWhere(['grf.grf_type' => 20]);
+        }else if($action == 'regoverview'){
+            $query  ->andFilterWhere(['outbound_grf.id_modul' => $id_modul]);
+            $query  ->andFilterWhere(['grf.grf_type' => 19]);
         }
        
         $dataProvider = $this->_search($params, $query);

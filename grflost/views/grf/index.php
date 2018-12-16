@@ -17,8 +17,8 @@ $this->title = Yii::t('app','Good Request Form');
 
 $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 // $this->registerJsFile('@commonpath/js/popup_alert.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-
-function getFilterStatus() {
+?>
+<?php   function getFilterStatus() {
 	if(Yii::$app->controller->action->id == 'index')
         return [
             1 => 'Inputted',
@@ -48,8 +48,18 @@ function getFilterStatus() {
 			4 => 'Verified',
 			6 => 'Rejected',
 		];
-} ;
-function getFilterGrf(){
+if(Yii::$app->controller->action->id == 'indexlog')
+        return [
+            1 => 'Inputted',
+            2 => 'Revised',
+            3 => 'Need Revise',
+            39 => 'Need Revise by IM',
+            5 => 'Approved',
+            4 => 'Verified',
+            6 => 'Rejected',
+        ];
+} ;?>
+<?php function getFilterGrf(){
     $list = ArrayHelper::map(Reference::find()->where(['table_relation'=>'grf_type'])->all(),'id', 'description');
     return $list;
 }
@@ -75,6 +85,8 @@ function getFilterGrf(){
            if(Yii::$app->controller->action->id == 'index')echo 'List Input Good Request Form';
            if(Yii::$app->controller->action->id == 'indexverify')echo 'List Verification Good Request Form';
            if(Yii::$app->controller->action->id == 'indexapprove')echo 'List Approval Good Request Form';
+           if(Yii::$app->controller->action->id == 'indexoverview')echo 'List Overview Good Request Form';
+           if(Yii::$app->controller->action->id == 'indexlog')echo 'List Log History Good Request Form';
         ?>
 		</h3>
 		<div class="row">
@@ -90,7 +102,7 @@ function getFilterGrf(){
     </div>
 
 	
-<?php Pjax::begin(['id' => 'pjax', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'POST']]) ?>
+<?php \yii\widgets\Pjax::begin(['id' => 'pjax',]); ?>
 	<?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -102,7 +114,7 @@ function getFilterGrf(){
                 'buttons'=>[
                     'view' => function ($url, $model) {
                          if(Yii::$app->controller->action->id == 'index' && !isset($model->status_listing)){
-                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#view?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#view?id='.$model->id.'&header=Detail_Material_GRF', [
                                 'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/view','id' => $model->id]), 'header'=> yii::t('app','Detail Material GRF Vendor IKO')  
                             ]);
                         } 
@@ -111,6 +123,7 @@ function getFilterGrf(){
                             if(Yii::$app->controller->action->id == 'indexverify') $viewurl = 'viewverify';
                             if(Yii::$app->controller->action->id == 'indexapprove') $viewurl = 'viewapprove';
                             if(Yii::$app->controller->action->id == 'indexoverview') $viewurl = 'viewoverview';
+                            if(Yii::$app->controller->action->id == 'indexlog') $viewurl = 'viewlog';
                              return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id.'&header=Detail_Grf', [
                                         'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app','Detail Busdev Pre-Survey')
                
@@ -124,10 +137,13 @@ function getFilterGrf(){
                 'format' => 'raw',
                 'value' => function ($searchModel) {
                     if ($searchModel->status_listing) {
-                        return "<span class='label' style='background-color:{$searchModel->statusReference->status_color}' >{$searchModel->statusReference->status_listing}</span>";
-                    } else {
-                        return "<span class='label' style='background-color:grey'>Open RR</span>";
+                     if(Yii::$app->controller->action->id == 'indextagsn' && $searchModel->status_listing == 5){
+                            return "<span class='label' style='background-color:red' >New Inbound PO</span>";
+                        }else{                          
+                            return "<span class='label' style='background-color:{$searchModel->statusReference->status_color}' >{$searchModel->statusReference->status_listing}</span>";
+                        }
                     }
+                    
                 },
                 'filter' => getFilterStatus()
             ],
@@ -149,7 +165,7 @@ function getFilterGrf(){
 
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+  <?php Pjax::end(); ?></div>
 
 <script>
 

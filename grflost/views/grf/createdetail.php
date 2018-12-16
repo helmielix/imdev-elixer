@@ -61,7 +61,7 @@ $arrQtyDetail = '';
             ['class' => 'yii\grid\SerialColumn'],			
             
 			[
-				'attribute' => 'orafin_code',
+				'attribute' => 'item_code',
 				'format' => 'raw',
 			],
             [ 
@@ -69,12 +69,12 @@ $arrQtyDetail = '';
                 'label' => '',
                 'value' => function ($model) use ($arrQtyDetail)
                     {
-                        return Html::hiddenInput('orafin_code[]', $model->orafin_code);
+                        return Html::hiddenInput('item_code[]', $model->item_code);
                     },
             ],
             [
-			'attribute'=>'name',
-            'value' =>'name',
+			'attribute'=>'item_desc',
+            'value' =>'item_desc',
             ],
 			[
                 'attribute'=>'qty_request',
@@ -84,8 +84,8 @@ $arrQtyDetail = '';
                     'value' => function ($model) use ($arrQtyDetail)
                     {
                         $style = ['style'=>'width:100%','id'=>'idqtyreq'];
-                       if(Yii::$app->controller->action->id == 'createdetail' && isset($arrQtyDetail[$model->orafin_code][0])){
-                           $model->qty_request = $arrQtyDetail[$model->orafin_code][0];
+                       if(Yii::$app->controller->action->id == 'createdetail' && isset($arrQtyDetail[$model->item_code][0])){
+                           $model->qty_request = $arrQtyDetail[$model->item_code][0];
                        }else {
                            $model->qty_request = null;
                        }
@@ -123,7 +123,7 @@ $arrQtyDetail = '';
         // event.preventDefault();
         $('#modal').modal('show')
             .find('#modalContent')
-            .load('<?php echo Url::to([$this->context->id.'/view','id'=>$idGrf]) ;?>');
+            .load('<?php echo Url::to([$this->context->id.'/indexdetail','id'=>$idGrf]) ;?>');
         $('#modalHeader').html('<h3> Create Inbound PO </h3>');
     });
     
@@ -190,59 +190,59 @@ $arrQtyDetail = '';
         $('#modalHeader').html('<h3> '+ $(this).attr('header') +'</h3>');
     });
 
-    $(document).on("pjax:send", function(e, contents) {
-      // event.stopPropagation();
-        // event.preventDefault();
-        // alert($( '#qty_request' ).val());
-        console.log('klik');
-        var form = $('#createForm');
-        // data = form.data("yiiActiveForm");
-        // $.each(data.attributes, function() {
-            // this.status = 3;
-        // });
-        // form.yiiActiveForm("validate");
-        if (!form.find('.has-error').length) {
-            data = new FormData(form[0]);
+    // $(document).on("pjax:send", function(e, contents) {
+    //   // event.stopPropagation();
+    //     // event.preventDefault();
+    //     // alert($( '#qty_request' ).val());
+    //     console.log('klik');
+    //     var form = $('#createForm');
+    //     // data = form.data("yiiActiveForm");
+    //     // $.each(data.attributes, function() {
+    //         // this.status = 3;
+    //     // });
+    //     // form.yiiActiveForm("validate");
+    //     if (!form.find('.has-error').length) {
+    //         data = new FormData(form[0]);
             
-            // var button = $(this);
-            // button.prop('disabled', true);
-            // button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
+    //         // var button = $(this);
+    //         // button.prop('disabled', true);
+    //         // button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
 
-            $.ajax({
-                url: '<?php echo Url::to([$this->context->id.'/setsessiondetail']) ;?>',
-                type: 'post',
-                data: data,
-                cache: false,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    if(response == 'success') {
-                        //if($( '#financeinvoicedocument-invoice_type' ).val() == 7011){
-                            // $('#modal2').modal('hide');
-                        //  var url = $('#pjax li.active a').attr('href');
-                        //  $.pjax.reload({container:'#pjax', url: url});
-                        // // }else{
-                            // $('#modal').modal('show')
-                            //  .find('#modalContent')
-                            //  .load('<?php echo Url::to(['/inbound-po/indexdetail']) ;?>');
-                            // $('#modalHeader').html('<h3> Inbound PO Detail </h3>');
+    //         $.ajax({
+    //             url: '<?php echo Url::to([$this->context->id.'/setsessiondetail']) ;?>',
+    //             type: 'post',
+    //             data: data,
+    //             cache: false,
+    //             processData: false,
+    //             contentType: false,
+    //             success: function (response) {
+    //                 if(response == 'success') {
+    //                     //if($( '#financeinvoicedocument-invoice_type' ).val() == 7011){
+    //                         // $('#modal2').modal('hide');
+    //                     //  var url = $('#pjax li.active a').attr('href');
+    //                     //  $.pjax.reload({container:'#pjax', url: url});
+    //                     // // }else{
+    //                         // $('#modal').modal('show')
+    //                         //  .find('#modalContent')
+    //                         //  .load('<?php echo Url::to(['/inbound-po/indexdetail']) ;?>');
+    //                         // $('#modalHeader').html('<h3> Inbound PO Detail </h3>');
                             
-                        // }
+    //                     // }
 
-                    } else {
-                        alert('error with message: ' + response);
-                    }
-                },
-                error: function (xhr, getError) {
-                    if (typeof getError === "object" && getError !== null) {
-                        error = $.parseJSON(getError.responseText);
-                        getError = error.message;
-                    }
-                    if (xhr.status != 302) {
-                        alert("System recieve error with code: "+xhr.status);
-                    }
-                },
-            });
-        };
-    })
+    //                 } else {
+    //                     alert('error with message: ' + response);
+    //                 }
+    //             },
+    //             error: function (xhr, getError) {
+    //                 if (typeof getError === "object" && getError !== null) {
+    //                     error = $.parseJSON(getError.responseText);
+    //                     getError = error.message;
+    //                 }
+    //                 if (xhr.status != 302) {
+    //                     alert("System recieve error with code: "+xhr.status);
+    //                 }
+    //             },
+    //         });
+    //     };
+    // })
 </script>

@@ -127,9 +127,9 @@ $this->registerJs(
                 'buttons'=>[
                     'create' => function ($url, $model) {
                         if(!InstructionGrfDetail::find()->where(['and',['id_instruction_grf'=>$model->id_grf]])->exists()){
-                    return Html::a('<span style="margin:0px 2px" class="label label-success">Choose</span>', '#createdetail?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
-                        'title' => Yii::t('app', 'view'), 'class' => 'createsButton', 'value'=>Url::to([$this->context->id.'/createdetail', 'id' => $model->id]), 'header'=> yii::t('app','GRF Detail')
-                        ]);
+                            return Html::a('<span style="margin:0px 2px" class="label label-success">Choose</span>', '#createdetail?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
+                                'title' => Yii::t('app', 'view'), 'class' => 'createsButton', 'value'=>Url::to([$this->context->id.'/createdetail', 'orafinCode' => $model->orafin_code]), 'header'=> yii::t('app','GRF Detail')
+                            ]);
                     }
                 },
                     // 'create' => function ($url, $model) {
@@ -187,7 +187,8 @@ $this->registerJs(
             // $('#modal').modal('hide');
             $('#modal').modal('show')
                 .find('#modalContent')
-                .load('<?php echo Url::to([$this->context->id.'/createdetail','id'=>Yii::$app->session->get('idGrf')]) ;?>');
+                .load($(this).attr('value'))
+                // .load('<?php echo Url::to([$this->context->id.'/createdetail','id'=>Yii::$app->session->get('idGrf')]) ;?>');
             $('#modalHeader').html('<h3>Create Detail Instruction Grf</h3>');
             // event.stopPropagation();
         });
@@ -196,7 +197,7 @@ $this->registerJs(
     $('#previousButton').click(function () {
         $('#modal').modal('show')
             .find('#modalContent')
-            .load('<?php echo Url::to([$this->context->id.'/update','id'=>Yii::$app->session->get('idInstWhTr')]) ;?>');
+            .load('<?php echo Url::to([$this->context->id.'/update','id'=>Yii::$app->session->get('idGrf')]) ;?>');
         $('#modalHeader').html('<h3> Detail Instruksi Warehouse Transfer </h3>');
     });
     
@@ -206,7 +207,7 @@ $this->registerJs(
         button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
         
         $.ajax({
-            url: '<?php echo Url::to([$this->context->id.'/submit', 'id' => Yii::$app->session->get('idInstWhTr')]) ;?>',
+            url: '<?php echo Url::to([$this->context->id.'/submit', 'id' => Yii::$app->session->get('idGrf')]) ;?>',
             type: 'post',
             processData: false,
             contentType: false,
