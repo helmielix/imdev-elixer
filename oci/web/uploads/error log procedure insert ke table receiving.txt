@@ -1,0 +1,26 @@
+
+Procedure XXUFLX_PO_RCV_TRX_INTF compiled
+
+LINE/COL  ERROR
+--------- -------------------------------------------------------------
+12/10     PL/SQL: SQL Statement ignored
+19/26     PL/SQL: ORA-00942: table or view does not exist
+37/10     PL/SQL: SQL Statement ignored
+43/17     PL/SQL: ORA-00942: table or view does not exist
+77/10     PL/SQL: SQL Statement ignored
+79/26     PL/SQL: ORA-00942: table or view does not exist
+82/10     PL/SQL: SQL Statement ignored
+84/43     PL/SQL: ORA-00942: table or view does not exist
+103/10    PL/SQL: Statement ignored
+103/25    PLS-00201: identifier 'RCV_INTERFACE_GROUPS_S.NEXTVAL' must be declared
+106/10    PL/SQL: SQL Statement ignored
+125/46    PLS-00364: loop index variable 'L_HDR_REC' use is invalid
+125/56    PL/SQL: ORA-00984: column not allowed here
+135/13    PL/SQL: SQL Statement ignored
+205/31    PLS-00364: loop index variable 'LINE_REC' use is invalid
+205/40    PL/SQL: ORA-00984: column not allowed here
+223/16    PL/SQL: SQL Statement ignored
+225/32    PL/SQL: ORA-00942: table or view does not exist
+236/13    PL/SQL: Statement ignored
+236/36    PLS-00364: loop index variable 'LINE_REC' use is invalid
+Errors: check compiler log

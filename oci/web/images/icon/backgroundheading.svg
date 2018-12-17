@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="91" height="92" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <g>
+  <title>backgroundheading</title>
+  <ellipse id="svg_1" cy="82.51954" cx="16.18363" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" stroke="#000000" fill="#ffffff"/>
+  <ellipse id="svg_3" cy="82.51954" cx="43.18364" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" stroke="#000000" fill="#ffffff"/>
+  <ellipse id="svg_5" cy="76.19142" cx="6.4805" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" stroke="#000000" fill="#ffffff"/>
+  <ellipse rx="0.42188" id="svg_6" cy="64.37891" cx="54.99614" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" stroke="#000000" fill="#ffffff"/>
+  <polygon fill="#333333" id="svg_10"/>
+  <ellipse fill="#ffffff" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" cx="45.55435" cy="45.9834" id="svg_39" rx="44.19726" ry="44.5957" stroke="#000000"/>
+  <line transform="rotate(-179.801, 45.1268, 46.2449)" id="svg_7" y2="90.74311" x2="45.12677" y1="1.7466" x1="45.12677" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" stroke="#7f7f7f" fill="none"/>
+  <line id="svg_2" transform="rotate(90, 45.1268, 46.2449)" y2="90.74311" x2="45.12677" y1="1.7466" x1="45.12677" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" stroke="#7f7f7f" fill="none"/>
+  <line id="svg_4" transform="rotate(45, 45.3768, 46.2449)" y2="90.74311" x2="45.37677" y1="1.7466" x1="45.37677" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" stroke="#7f7f7f" fill="none"/>
+  <line id="svg_8" transform="rotate(135, 45.1268, 46.2449)" y2="90.74311" x2="45.12677" y1="1.7466" x1="45.12677" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" stroke="#7f7f7f" fill="none"/>
+  <text transform="matrix(0.837838, 0, 0, 0.706422, 7.92568, 0.587156)" xml:space="preserve" text-anchor="middle" font-family="serif" font-size="24" id="svg_9" y="29.870131" x="58.298399" stroke-width="0" stroke="#000000" fill="#000000">A</text>
+  <text id="svg_11" transform="matrix(0.837838, 0, 0, 0.706422, 7.92568, 0.587156)" xml:space="preserve" text-anchor="middle" font-family="serif" font-size="24" y="55.350653" x="78.58872" stroke-width="0" stroke="#000000" fill="#000000">B</text>
+  <text id="svg_12" transform="matrix(0.837838, 0, 0, 0.706422, 7.92568, 0.587156)" xml:space="preserve" text-anchor="middle" font-family="serif" font-size="24" y="88.616893" x="79.782337" stroke-width="0" stroke="#000000" fill="#000000">C</text>
+  <text id="svg_13" transform="matrix(0.837838, 0, 0, 0.706422, 7.92568, 0.587156)" xml:space="preserve" text-anchor="middle" font-family="serif" font-size="24" y="109.850664" x="58.59696" stroke-width="0" stroke="#000000" fill="#000000">D</text>
+  <text id="svg_14" transform="matrix(0.837838, 0, 0, 0.706422, 7.92568, 0.587156)" xml:space="preserve" text-anchor="middle" font-family="serif" font-size="24" y="110.204563" x="31.443838" stroke-width="0" stroke="#000000" fill="#000000">E</text>
+  <text id="svg_15" transform="matrix(0.837838, 0, 0, 0.706422, 7.92568, 0.587156)" xml:space="preserve" text-anchor="middle" font-family="serif" font-size="24" y="86.847422" x="12.048826" stroke-width="0" stroke="#000000" fill="#000000">F</text>
+  <text id="svg_16" transform="matrix(0.837838, 0, 0, 0.706422, 7.92568, 0.587156)" xml:space="preserve" text-anchor="middle" font-family="serif" font-size="24" y="55.704565" x="11.452155" stroke-width="0" stroke="#000000" fill="#000000">G</text>
+  <text id="svg_17" transform="matrix(0.837838, 0, 0, 0.706422, 7.92568, 0.587156)" xml:space="preserve" text-anchor="middle" font-family="serif" font-size="24" y="29.870151" x="32.040975" stroke-width="0" stroke="#000000" fill="#000000">H</text>
+ </g>
+</svg>

@@ -1,0 +1,182 @@
+<div class="materialused-view">
+
+    <table id="w0" class="table table-striped table-bordered detail-view"><tr><th>Wo Date</th><td>May 24, 2018</td></tr>
+<tr><th>Installation Date</th><td>May 24, 2018</td></tr>
+<tr><th>Wo Number</th><td>WO/CIPRO/1805-00047</td></tr>
+<tr><th>Work Name</th><td>Cable</td></tr>
+<tr><th>Property Name</th><td></td></tr>
+<tr><th>Id Planning Cipro Boq P</th><td>18</td></tr>
+<tr><th>Revision Remark</th><td>coba</td></tr></table>
+    <h4> <b> Material Needs </b> </h4>
+
+    <div id="w1" style="overflow-x:scroll"><div class="summary">Showing <b>1-1</b> of <b>1</b> item.</div>
+<table class="table table-striped table-bordered"><thead>
+<tr><th>#</th><th>Material</th><th>Needed</th><th>UOM</th></tr>
+</thead>
+<tbody>
+<tr data-key="57"><td>1</td><td>Cable Drop Wire Fiber Optic Single Core - Type Rounded (RM126-51.008.143)</td><td>200</td><td>Meter</td></tr>
+</tbody></table>
+</div>
+<div id="xpjax" data-pjax-container="" data-pjax-push-state data-pjax-timeout="1000">    <p>
+                <!--  -->
+                                        <!--  -->
+        		
+    </p>
+    <form id="submitForm" class="form-horizontal" action="/corporate/web/cipro-material-wo/exportxls?id=47&amp;module=GRF" method="post" style="display:none;">
+<input type="hidden" name="_csrf-corporate" value="NmkucGVUNEFhAFQGLC1aI18ESEAsFwEiUFAbFS0gYRVOMFQHPwxyMg==">
+        <br />
+        <div class="form-group field-ciproworkorder-revision_remark">
+<label class="control-label col-sm-1" for="ciproworkorder-revision_remark">Revision Remark</label>
+<div class="col-sm-6">
+<textarea id="ciproworkorder-revision_remark" class="form-control" name="CiproWorkOrder[revision_remark]" rows="5">coba</textarea>
+
+<div class="help-block help-block-error "></div>
+</div>
+</div>        <button type="button" id="submitButton" class="btn btn-primary">Submit Remark</button>    </form></div></div>
+
+<script>
+    $('#updateButton').click(function () {
+        $('#modal').modal('show')
+            .find('#modalContent')
+            .load('/corporate/web/cipro-material-wo/indexgrfdetail?idWo=47');
+        $('#modalHeader').html('<h3> Update Material GRF </h3>');
+    });
+	
+	$('#exportXlsButton').click(function () {
+         window.open("/corporate/web/cipro-material-wo/exportxls?id=47&module=GRF", "_blank");
+    });
+
+	$('#exportButton').click(function () {
+        window.open("/corporate/web/cipro-material-wo/exportpdf?id=47", "_blank");
+    });
+
+    $('#verifyButton').click(function () {
+        var button = $(this);
+        button.prop('disabled', true);
+        $.ajax({
+            url: '/corporate/web/cipro-material-wo/verifygrf?id=47',
+            type: 'post',
+            success: function (response) {
+            	if(response == 'successgrf') {
+            	   $('#modal').modal('hide');
+            	} else {
+            	   alert('error with message: ' + response);
+            	}
+            },
+            error: function (xhr, getError) {
+            	if (typeof getError === "object" && getError !== null) {
+            		error = $.parseJSON(getError.responseText);
+            		getError = error.message;
+            	}
+            	if (xhr.status != 302) {
+            		alert("System recieve error with code: "+xhr.status);
+            	}
+            },
+            complete: function () {
+            	button.prop('disabled', false);
+            },
+        });
+    });
+    $('#approveButton').click(function () {
+        var button = $(this);
+        button.prop('disabled', true);
+        $.ajax({
+            url: '/corporate/web/cipro-material-wo/approvegrf?id=47',
+            type: 'post',
+            success: function (response) {
+            	if(response == 'successgrf') {
+            	   $('#modal').modal('hide');
+            	} else {
+            	   alert('error with message: ' + response);
+            	}
+            },
+            error: function (xhr, getError) {
+            	if (typeof getError === "object" && getError !== null) {
+            		error = $.parseJSON(getError.responseText);
+            		getError = error.message;
+            	}
+            	if (xhr.status != 302) {
+            		alert("System recieve error with code: "+xhr.status);
+            	}
+            },
+            complete: function () {
+            	button.prop('disabled', false);
+            },
+        });
+    });
+    $('#reviseButton').click(function () {
+        selectedAction = 'revise';
+        $('#submitForm').show();
+    });
+    $('#rejectButton').click(function () {
+        selectedAction = 'reject';
+        $('#submitForm').show();
+    });
+    $('#deleteButton').click(function () {
+        $.ajax({
+            url: '/corporate/web/cipro-material-wo/delete?id=47',
+            type: 'post',
+            success: function (response) {
+                $('#modal').modal('hide');
+            }
+        });
+    });
+    $('#submitButton').click(function () {
+        if (selectedAction == 'revise') {
+            var resp = confirm("Do you want to revise this item?");
+        } else if (selectedAction == 'reject'){
+            var resp = confirm("Do you want to reject this item?");
+        }
+
+        if (resp == true){
+            console.log('aa');
+            console.log(selectedAction);
+            var form = $('#submitForm');
+            data = form.data("yiiActiveForm");
+            $.each(data.attributes, function() {
+                this.status = 3;
+            });
+            form.yiiActiveForm("validate");
+
+            if (selectedAction == 'revise') url = '/corporate/web/cipro-material-wo/revisegrf?id=47';
+            if (selectedAction == 'reject') url = '/corporate/web/cipro-material-wo/rejectgrf?id=47';
+            if (!form.find('.has-error').length) {
+
+                data = new FormData();
+                data.append( 'CiproWorkOrder[revision_remark]', $( '#ciproworkorder-revision_remark' ).val() );
+                var button = $(this);
+                button.prop('disabled', true);
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            if(response == 'success') {
+                                $('#modal').modal('hide');
+                            } else if(response == 'successgrf') {
+                                $('#modal').modal('hide');
+                            } else {
+                                alert('error with message: ' + response);
+                            }
+                        },
+                        error: function (xhr, getError) {
+                            if (typeof getError === "object" && getError !== null) {
+                                error = $.parseJSON(getError.responseText);
+                                getError = error.message;
+                            }
+                            if (xhr.status != 302) {
+                                alert("System recieve error with code: "+xhr.status);
+                            }
+                        },
+                        complete: function () {
+                            button.prop('disabled', false);
+                        },
+                });
+            };
+        } else {
+            return false;
+        }
+    });
+</script>

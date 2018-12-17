@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="91" height="91" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <g>
+  <title>backgroundladder</title>
+  <line transform="rotate(90, 1.62951, 44.5691)" id="svg_9" fill="none" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="-40.53424" y1="44.56907" x2="43.79324" y2="44.56907" stroke="#000000"/>
+  <ellipse id="svg_5" cy="76.19142" cx="6.4805" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" stroke="#000000" fill="#ffffff"/>
+  <polygon fill="#333333" id="svg_10"/>
+  <line id="svg_3" fill="none" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="1.09073" y1="1.94411" x2="88.41821" y2="1.94411" stroke="#000000"/>
+  <path id="svg_13" d="m-47.327629,20.249981c0,-38.026312 30.80131,-68.827621 68.827629,-68.827621c38.026321,0 68.827629,30.80131 68.827629,68.827621c0,38.026318 -30.801319,68.827625 -68.827629,68.827625c-38.02631,0 -68.827629,-30.801308 -68.827629,-68.827625z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="null" stroke="#000000" fill="none"/>
+  <line fill="none" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="-11.6948" y1="35.69409" x2="82.70374" y2="35.69409" stroke="#ff0000" id="svg_1" transform="rotate(45, 35.5045, 35.6941)"/>
+ </g>
+</svg>
