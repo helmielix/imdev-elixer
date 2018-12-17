@@ -145,6 +145,16 @@ class InstructionProductionController extends Controller
 		]);
 	}
 
+	public function actionViewDeclare($id){
+		$this->layout = 'blank';
+	}
+
+	public function actionViewaprovedeclare($id){
+		$this->layout = 'blank';
+
+		
+	}
+
 	public function actionViewdetailDeclare($id){
 		$this->layout = 'blank';
 		$model = InstructionProduction::find()->select([
