@@ -185,37 +185,73 @@ if ( count($status) > 0 ){
 				'visible' => $this->context->action->id == 'viewreport',
 			],
 			[
-				'label' => 'Adj. Stock Good Dismantle',
+				'label' => 'Adj. Stock Dismantle',
 				'format' => 'raw',
 				'value' => function ($model) use ($datasession)
 				{
 					$val = '';
-					if (isset($datasession[$model->id_inbound_detail]['adjsgooddismantle[]'])){
-						$val = $datasession[$model->id_inbound_detail]['adjsgooddismantle[]'];
+					if (isset($datasession[$model->id_inbound_detail]['adjsdismantle[]'])){
+						$val = $datasession[$model->id_inbound_detail]['adjsdismantle[]'];
 					}
 					$disabled = false;
 					if ($model->sn_type == 1){ // SN
 						$disabled = true;
 					}
-					$out = Html::textInput('adjsgooddismantle[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'adjsgooddismantle', 'disabled' => $disabled]);
+					$out = Html::textInput('adjsdismantle[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'adjsdismantle', 'disabled' => $disabled]);
 					return $out;
 				},
 				'visible' => $this->context->action->id == 'viewreport',
 			],
 			[
-				'label' => 'Adj. Stock Not Good Dismantle',
+				'label' => 'Adj. Stock Revocation',
 				'format' => 'raw',
 				'value' => function ($model) use ($datasession)
 				{
 					$val = '';
-					if (isset($datasession[$model->id_inbound_detail]['adjsnotgooddismantle[]'])){
-						$val = $datasession[$model->id_inbound_detail]['adjsnotgooddismantle[]'];
+					if (isset($datasession[$model->id_inbound_detail]['adjsrevocation[]'])){
+						$val = $datasession[$model->id_inbound_detail]['adjsrevocation[]'];
 					}
 					$disabled = false;
 					if ($model->sn_type == 1){ // SN
 						$disabled = true;
 					}
-					$out = Html::textInput('adjsnotgooddismantle[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'adjsnotgooddismantle', 'disabled' => $disabled]);
+					$out = Html::textInput('adjsrevocation[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'adjsrevocation', 'disabled' => $disabled]);
+					return $out;
+				},
+				'visible' => $this->context->action->id == 'viewreport',
+			],
+			[
+				'label' => 'Adj. Stock Good Recondition',
+				'format' => 'raw',
+				'value' => function ($model) use ($datasession)
+				{
+					$val = '';
+					if (isset($datasession[$model->id_inbound_detail]['adjgoodrec[]'])){
+						$val = $datasession[$model->id_inbound_detail]['adjgoodrec[]'];
+					}
+					$disabled = false;
+					if ($model->sn_type == 1){ // SN
+						$disabled = true;
+					}
+					$out = Html::textInput('adjgoodrec[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'adjgoodrec', 'disabled' => $disabled]);
+					return $out;
+				},
+				'visible' => $this->context->action->id == 'viewreport',
+			],
+			[
+				'label' => 'Adj. Stock Good for Recondition',
+				'format' => 'raw',
+				'value' => function ($model) use ($datasession)
+				{
+					$val = '';
+					if (isset($datasession[$model->id_inbound_detail]['adjgoodforrecond[]'])){
+						$val = $datasession[$model->id_inbound_detail]['adjgoodforrecond[]'];
+					}
+					$disabled = false;
+					if ($model->sn_type == 1){ // SN
+						$disabled = true;
+					}
+					$out = Html::textInput('adjgoodforrecond[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'adjgoodforrecond', 'disabled' => $disabled]);
 					return $out;
 				},
 				'visible' => $this->context->action->id == 'viewreport',
@@ -272,14 +308,15 @@ if ( count($status) > 0 ){
 									var val = 0;
 								}
 
-								iditem = currentRow.find('td:eq(15)').find('.id_detail').val();
+								iditem = currentRow.find('td:eq(17)').find('.id_detail').val();
+								console.log(iditem);
 								iditem = iditem.split(';');
 								var type = select.attr('name');
 								var delta = currentRow.find('td:eq(7)').html();
 
 								deltaadj = delta - val;
 
-								currentRow.find('td:eq(14)').text(deltaadj);
+								currentRow.find('td:eq(16)').text(deltaadj);
 
 								$.ajax({
 									url: '".Url::to([$this->context->id.'/setsessionreport'])."',
@@ -322,6 +359,7 @@ if ( count($status) > 0 ){
 				'template'=>'{report}',
                 'buttons'=>[
                     'report' => function ($url, $model) {
+                    	// return $model->status_report;
 						return Html::hiddenInput('id_detail[]', $model->id_inbound_detail.';'.$model->id_outbound_wh_detail, ['class' => 'id_detail'])
 						.Html::button(Yii::t('app','Report to AMD'), ['id'=>'repButton','class' => 'btn btn-xs btn-warning reportButton', 'sn_type' => $model->sn_type])
 						// Html::a('<span class="label label-warning">Report to AMD</span>', '#', [
@@ -330,6 +368,7 @@ if ( count($status) > 0 ){
 						;
                     },
                 ],
+                'visible' => ($status_report == 5)
 			],
 
 
@@ -360,16 +399,18 @@ if ( count($status) > 0 ){
 		var currentRow = input.closest('tr');
 		var type = input.attr('name');
 
-		iditem = currentRow.find('td:eq(15)').find('.id_detail').val();
+		iditem = currentRow.find('td:eq(17)').find('.id_detail').val();
 		iditem = iditem.split(';');
 
 		adjsgood = currentRow.find('input[name^=adjsgood]').val() || 0;
 		adjsnotgood = currentRow.find('input[name^=adjsnotgood]').val() || 0;
 		adjsreject = currentRow.find('input[name^=adjsreject]').val() || 0;
-		adjsgooddismantle = currentRow.find('input[name^=adjsgooddismantle]').val() || 0;
-		adjsnotgooddismantle = currentRow.find('input[name^=adjsnotgooddismantle]').val() || 0;
+		adjsdismantle = currentRow.find('input[name^=adjsdismantle]').val() || 0;
+		adjsrevocation = currentRow.find('input[name^=adjsrevocation]').val() || 0;
+		adjsgoodrec = currentRow.find('input[name^=adjsgoodrec]').val() || 0;
+		adjsgoodforrecond = currentRow.find('input[name^=adjsgoodforrecond]').val() || 0;
 
-		total = parseInt(adjsgood) + parseInt(adjsnotgood) + parseInt(adjsreject) + parseInt(adjsgooddismantle) + parseInt(adjsnotgooddismantle);
+		total = parseInt(adjsgood) + parseInt(adjsnotgood) + parseInt(adjsreject) + parseInt(adjsdismantle) + parseInt(adjsrevocation) + parseInt(adjsgoodrec) + parseInt(adjsgoodforrecond);
 
 		deltaawal = currentRow.find('td:eq(7)').text();
 
@@ -404,19 +445,21 @@ if ( count($status) > 0 ){
 			},
 			complete: function() {
 				if (input.val() != 0){
-					currentRow.find('td:eq(14)').text(count);
+					currentRow.find('td:eq(16)').text(count);
 				}else{
 					adjsgood = currentRow.find('input[name^=adjsgood]').val() || 0;
 					adjsnotgood = currentRow.find('input[name^=adjsnotgood]').val() || 0;
 					adjsreject = currentRow.find('input[name^=adjsreject]').val() || 0;
-					adjsgooddismantle = currentRow.find('input[name^=adjsgooddismantle]').val() || 0;
-					adjsnotgooddismantle = currentRow.find('input[name^=adjsnotgooddismantle]').val() || 0;
+					adjsdismantle = currentRow.find('input[name^=adjsdismantle]').val() || 0;
+					adjsrevocation = currentRow.find('input[name^=adjsrevocation]').val() || 0;
+					adjsgoodrec = currentRow.find('input[name^=adjsgoodrec]').val() || 0;
+					adjsgoodforrecond = currentRow.find('input[name^=adjsgoodforrecond]').val() || 0;
 
-					total = parseInt(adjsgood) + parseInt(adjsnotgood) + parseInt(adjsreject) + parseInt(adjsgooddismantle) + parseInt(adjsnotgooddismantle);
+					total = parseInt(adjsgood) + parseInt(adjsnotgood) + parseInt(adjsreject) + parseInt(adjsdismantle) + parseInt(adjsrevocation) + parseInt(adjsgoodrec) + parseInt(adjsgoodforrecond);
 
 					count = deltaawal - total;
 
-					currentRow.find('td:eq(14)').text(count);
+					currentRow.find('td:eq(16)').text(count);
 				}
 				button.prop('disabled', false);
 				$('#spinRefresh').remove();
@@ -427,7 +470,7 @@ if ( count($status) > 0 ){
 	});
 
 	// $('.reportButton').click(function () {
-	$('#pjaxviewdetail').on('click', '.reportButton', function(){
+	$('#pjaxviewdetail').on('click', '.reportButton', function(e){
         var button = $(this);
 		button.prop('disabled', true);
         button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');

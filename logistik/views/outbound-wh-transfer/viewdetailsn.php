@@ -40,8 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
 			'req_good',
 			'req_not_good',
 			'req_reject',
-			'req_good_dismantle',
-			'req_not_good_dismantle',
+			'req_dismantle',
+			'req_revocation',
+			'req_good_rec',
+			'req_good_for_recond',
 
         ],
     ]) ?>
@@ -71,8 +73,10 @@ $this->params['breadcrumbs'][] = $this->title;
 						1 => 'Good',
 						2 => 'Not Good',
 						3 => 'Reject',
-						4 => 'Good Dismantle',
-						5 => 'Not Good Dismantle',
+						4 => 'Dismantle',
+						5 => 'Revocation',
+						6 => 'Good Recondition',
+						7 => 'Good for Recondition',
 					],
 			],
 
@@ -80,12 +84,20 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 	<?php \yii\widgets\Pjax::end(); ?>
 
+	<?php if (Yii::$app->controller->action->id == 'viewdetailsn'): ?>
 	<p>
         <?= Html::button(Yii::t('app','Previous'), ['id'=>'previousButton','class' => 'btn btn-success']) ?>
+        <?= Html::button(Yii::t('app','Print'), ['id'=>'printSNButton','class' => 'btn btn-success']) ?>
+
     </p>
+	<?php endif; ?>
 </div>
 <script>
 	<?= '//'.basename(Yii::$app->request->referrer) ?>
+
+	$('#printSNButton').click(function(){
+		window.open("<?php echo Url::to([$this->context->id.'/exportsn', 'id' => $model->id]) ?>", "_blank");
+	});
 
 	$('#previousButton').click(function () {
         $('#modal').modal('show')

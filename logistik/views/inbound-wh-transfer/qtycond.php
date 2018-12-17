@@ -74,6 +74,7 @@ $datasession = Yii::$app->session->get('detailinbound');
 			[
 				'attribute' => 'qty_good',
 				'format' => 'raw',
+				'enableSorting' => false,
 				'value' => function ($model){
 					$val = $model->qty_good;
 					$out = Html::textInput('qty_good', $val, ['class' => 'form-control input-sm', 'id' => 'qty_good']);
@@ -83,6 +84,7 @@ $datasession = Yii::$app->session->get('detailinbound');
 			[
 				'attribute' => 'qty_not_good',
 				'format' => 'raw',
+				'enableSorting' => false,
 				'value' => function ($model){
 					$val = $model->qty_not_good;
 					$out = Html::textInput('qty_not_good', $val, ['class' => 'form-control input-sm', 'id' => 'qty_not_good']);
@@ -92,6 +94,7 @@ $datasession = Yii::$app->session->get('detailinbound');
 			[
 				'attribute' => 'qty_reject',
 				'format' => 'raw',
+				'enableSorting' => false,
 				'value' => function ($model){
 					$val = $model->qty_reject;
 					$out = Html::textInput('qty_reject', $val, ['class' => 'form-control input-sm', 'id' => 'qty_reject']);
@@ -99,20 +102,42 @@ $datasession = Yii::$app->session->get('detailinbound');
 				},
 			],
 			[
-				'attribute' => 'qty_good_dismantle',
+				'attribute' => 'qty_dismantle',
 				'format' => 'raw',
+				'enableSorting' => false,
 				'value' => function ($model){
-					$val = $model->qty_good_dismantle;
-					$out = Html::textInput('qty_good_dismantle', $val, ['class' => 'form-control input-sm', 'id' => 'qty_good_dismantle']);
+					$val = $model->qty_dismantle;
+					$out = Html::textInput('qty_dismantle', $val, ['class' => 'form-control input-sm', 'id' => 'qty_dismantle']);
 					return $out;
 				},
 			],
 			[
-				'attribute' => 'qty_not_good_dismantle',
+				'attribute' => 'qty_revocation',
 				'format' => 'raw',
+				'enableSorting' => false,
 				'value' => function ($model){
-					$val = $model->qty_not_good_dismantle;
-					$out = Html::textInput('qty_not_good_dismantle', $val, ['class' => 'form-control input-sm', 'id' => 'qty_not_good_dismantle']);
+					$val = $model->qty_revocation;
+					$out = Html::textInput('qty_revocation', $val, ['class' => 'form-control input-sm', 'id' => 'qty_revocation']);
+					return $out;
+				},
+			],
+			[
+				'attribute' => 'qty_good_rec',
+				'format' => 'raw',
+				'enableSorting' => false,
+				'value' => function ($model){
+					$val = $model->qty_good_rec;
+					$out = Html::textInput('qty_good_rec', $val, ['class' => 'form-control input-sm', 'id' => 'qty_good_rec']);
+					return $out;
+				},
+			],
+			[
+				'attribute' => 'qty_good_for_recond',
+				'format' => 'raw',
+				'enableSorting' => false,
+				'value' => function ($model){
+					$val = $model->qty_good_for_recond;
+					$out = Html::textInput('qty_good_for_recond', $val, ['class' => 'form-control input-sm', 'id' => 'qty_good_for_recond']);
 					return $out;
 				},
 			],
@@ -120,8 +145,9 @@ $datasession = Yii::$app->session->get('detailinbound');
 			[
 				'label' => 'Delta Qty',
 				'format' => 'raw',
+				'enableSorting' => false,
 				'value' => function ($model){
-					$val = $model->qty - ( $model->qty_good + $model->qty_not_good + $model->qty_reject + $model->qty_good_dismantle + $model->qty_not_good_dismantle);
+					$val = $model->qty - ( $model->qty_good + $model->qty_not_good + $model->qty_reject + $model->qty_dismantle + $model->qty_revocation + $model->qty_good_rec + $model->qty_good_for_recond);
 					$out = Html::textInput('delta_qty', $val, ['class' => 'form-control input-sm', 'delta' => $model->qty, 'id' => 'delta_qty', 'disabled' => true]);
 					return $out;
 				},
@@ -151,17 +177,21 @@ $datasession = Yii::$app->session->get('detailinbound');
 		var qty_good 				= parseInt( $('#qty_good').val() ) || 0;
 		var qty_not_good 			= parseInt( $('#qty_not_good').val() ) || 0;
 		var qty_reject 				= parseInt( $('#qty_reject').val() ) || 0;
-		var qty_good_dismantle 		= parseInt( $('#qty_good_dismantle').val() ) || 0;
-		var qty_not_good_dismantle 	= parseInt( $('#qty_not_good_dismantle').val() ) || 0;
+		var qty_dismantle 			= parseInt( $('#qty_dismantle').val() ) || 0;
+		var qty_revocation 			= parseInt( $('#qty_revocation').val() ) || 0;
+		var qty_good_rec 			= parseInt( $('#qty_good_rec').val() ) || 0;
+		var qty_good_for_recond 	= parseInt( $('#qty_good_for_recond').val() ) || 0;
 
-		selisih = parseInt( delta.attr('delta') ) - (qty_good + qty_not_good + qty_reject + qty_good_dismantle + qty_not_good_dismantle);
+		selisih = parseInt( delta.attr('delta') ) - (qty_good + qty_not_good + qty_reject + qty_dismantle + qty_revocation + qty_good_rec + qty_good_for_recond);
 
 		delta.val(selisih);
 		$('qty_good').val(qty_good);
 		$('qty_not_good').val(qty_not_good);
 		$('qty_reject').val(qty_reject);
-		$('qty_good_dismantle').val(qty_good_dismantle);
-		$('qty_not_good_dismantle').val(qty_not_good_dismantle);
+		$('qty_dismantle').val(qty_dismantle);
+		$('qty_revocation').val(qty_revocation);
+		$('qty_good_rec').val(qty_good_rec);
+		$('qty_good_for_recond').val(qty_good_for_recond);
 
 		if (selisih < 0){
 			alert('Qty is more than Delta');

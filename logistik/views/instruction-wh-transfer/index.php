@@ -5,8 +5,12 @@ use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+use kartik\select2\Select2;
+
 use dosamigos\datepicker\DatePicker;
 use kartik\export\ExportMenu;
+use common\models\User;
 
 $this->title = Yii::t('app','Warehouse Transfer Instruction');
 // if(Yii::$app->controller->action->id == 'index') 
@@ -35,10 +39,12 @@ function getFilterStatus() {
 			1 => 'Inputted',
 			2 => 'Revised',
 			3 => 'Need Revise',
-			39 => 'Need Revise by IM',
+			7 => 'Drafted',
 			5 => 'Approved',
-			4 => 'Verified',
-			6 => 'Rejected',
+			47 => 'Report From WH',
+			// 39 => 'Need Revise by IM',
+			// 4 => 'Verified',
+			// 6 => 'Rejected',
 		];
 } ;
 ?>
@@ -126,7 +132,7 @@ function getFilterStatus() {
 			[
 				'attribute' => 'delivery_target_date',
 				'value'  => 'delivery_target_date',
-				'format' => 'datetime',
+				'format' => 'date',
 				'filter' => DatePicker::widget([
 					'model' => $searchModel,
 					'attribute' => 'delivery_target_date',
@@ -145,6 +151,23 @@ function getFilterStatus() {
             	'attribute' => 'wh_destination',
             	'value' => 'whDestination.nama_warehouse',
 				
+            ],
+            [
+            	'attribute' => 'updated_by',
+            	'label' => 'Last Updated',
+            	'value' => function($model){
+            		if (is_numeric($model->updated_by)) {
+            			return User::findOne($model->updated_by)->name;
+            		}
+            	},
+            	'filter' => Select2::widget([
+	                'model' => $searchModel,
+	                'attribute' => 'updated_by',
+	                'data' => ArrayHelper::map(User::find()->all(), 'id', 'name'),
+	                'options' => ['placeholder' => 'Last Updated'],
+	                'pluginOptions' => [
+        				'allowClear' => true],
+	            ]),
             ],
             [
 				'attribute' => 'created_date',

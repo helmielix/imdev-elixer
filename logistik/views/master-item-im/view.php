@@ -52,6 +52,10 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'type',
 				'value' => $model->referenceType->description,
 			],
+            // [
+            //     'attribute' => 'uom',
+            //     'value' => $model->referenceUom->description,
+            // ],
             [
                 'attribute' => 'status',
                 'value' => function($model){

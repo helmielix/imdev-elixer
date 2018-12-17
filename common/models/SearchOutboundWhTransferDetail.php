@@ -19,7 +19,7 @@ class SearchOutboundWhTransferDetail extends OutboundWhTransferDetail
     public function rules()
     {
         return [
-            [['id', 'id_outbound_wh', 'sn_type', 'req_good', 'req_not_good', 'status_listing', 'req_reject', 'req_good_dismantle', 'req_not_good_dismantle'], 'integer'],
+            [['id', 'id_outbound_wh', 'sn_type', 'req_good', 'req_not_good', 'status_listing', 'req_reject', 'req_dismantle', 'req_revocation', 'req_good_rec', 'req_good_for_recond'], 'integer'],
 			[[ 'name', 'brand', 'id_item_im'], 'safe'],
         ];
     }
@@ -82,8 +82,10 @@ class SearchOutboundWhTransferDetail extends OutboundWhTransferDetail
             'req_good' => $this->req_good,
             'req_not_good' => $this->req_not_good,
             'req_reject' => $this->req_reject,
-            'req_good_dismantle' => $this->req_good_dismantle,
-            'req_not_good_dismantle' => $this->req_not_good_dismantle,
+            'req_dismantle' => $this->req_dismantle,
+            'req_revocation' => $this->req_revocation,
+            'req_good_rec' => $this->req_good_rec,
+            'req_good_for_recond' => $this->req_good_for_recond,
             'master_item_im.sn_type' => $this->sn_type,
         ]);
 

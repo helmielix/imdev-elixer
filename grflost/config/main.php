@@ -45,7 +45,7 @@ return [
 			'enablePrettyUrl' => true,
 			'showScriptName' => false,
 			'rules' => [
-				'' => 'dashboard-grflost/index',                                
+				'' => 'dashboard-grf/index',
 				'<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
 			],
 		],

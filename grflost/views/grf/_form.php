@@ -74,7 +74,7 @@ use kartik\depdrop\DepDrop;
     </div>
     
 
-    <?php $form->field($model, 'division')->fileInput() ?>
+    <?= $form->field($model->idDivision, 'nama')->textInput(['disabled'=>true]) ?>
 
     <?= $form->field($model, 'id_region')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Region::find()->all(), 'id','name'),
@@ -85,14 +85,25 @@ use kartik\depdrop\DepDrop;
         'allowClear' => true],
         ]) ?>
 
-    <?= $form->field($model, 'pic')->widget(Select2::classname(), [
+    <?= $form->field($model, 'team_leader')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Labor::find()->all(), 'nik','nama'),
         'language' => 'en',
         // form-control select2-hidden-accessible
-        'options' => ['placeholder' => 'Select '.$model->getAttributeLabel('id_region'), 'class' => 'input-sm'],
+        'options' => ['placeholder' => 'Select Leader', 'class' => 'input-sm'],
         'pluginOptions' => [
         'allowClear' => true],
         ]) ?>
+
+    <?= $form->field($model, 'team_name')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(Reference::find()->where(['table_relation'=>'team_name'])->all(), 'id','description'),
+        'language' => 'en',
+        // form-control select2-hidden-accessible
+        'options' => ['placeholder' => 'Select Team', 'class' => 'input-sm'],
+        'pluginOptions' => [
+        'allowClear' => true],
+        ]) ?>
+
+
 	
     <?= $form->field($model, 'file1')->fileInput() ?>
 
@@ -190,16 +201,16 @@ $('#createButton').click(function () {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				if(response == 'success') {					
-					$('#modal').modal('show')
-						.find('#modalContent')
-						.load('<?php 
-						$goto = ($model->isNewRecord) ? '/indexdetail' : '/view';
-						echo Url::to([$this->context->id.$goto, 'id' => $model->id]) ;?>');
-					$('#modalHeader').html('<h3>Detail Grf</h3>');
-				} else {
-					alert('error with message: ' + response);
-				}
+                if(response == 'success') {                 
+                    $('#modal').modal('show')
+                        .find('#modalContent')
+                        .load('<?php 
+                        $goto = '/indexdetail';
+                        echo Url::to([$this->context->id.$goto, 'id' => $model->id]) ;?>');
+                    $('#modalHeader').html('<h3>List Detail Barang</h3>');
+                } else {
+                    alert('error with message: ' + response);
+                }
 			},
 			error: function (xhr, getError) {
 				if (typeof getError === "object" && getError !== null) {

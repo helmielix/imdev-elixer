@@ -47,6 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'tgl_sj',
 				'waranty',
                 [
+                    
                     'label' => 'Warehouse Tujuan',
                     'value' => function($model){
                         if($model->idWarehouse){

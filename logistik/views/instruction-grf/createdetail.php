@@ -39,6 +39,7 @@ $this->registerCss('
                     [
         
 		                'attribute' => 'name',
+		                // 'value' => $model->idGrf->idGrfDetail->idOrafinCode->name,
 		                'value' => $model->idGrf->idGrfDetail->idOrafinCode->name,
                     ],
                     
@@ -51,7 +52,8 @@ $this->registerCss('
                     [
 		                'header' => 'SN/Non',
 		                'attribute' => 'sn_type',
-		                'value'=> $model->idGrf->idGrfDetail->idOrafinCode->referenceSn->description,
+		                // 'value'=> $model->idGrf->idGrfDetail->idOrafinCode->referenceSn->description,
+		                'value'=> $model->idGrf->idGrfDetail->im_code,
 		            ],
                 ],
             ]) ?>
@@ -81,11 +83,11 @@ $this->registerCss('
             ['class' => 'yii\grid\SerialColumn'],			
             
 			[
-				'attribute' => 'im_code',
-				'format' => 'raw',
-				'value' => function ($model){
-					return $model->im_code . Html::hiddenInput('im_code[]', $model->id.';'.$model->im_code, ['class' => 'im_code']);
-				},
+				'attribute' => 'orafin_code',
+				// 'format' => 'raw',
+				// 'value' => function ($modelitem){
+				// 	return $modelitem->im_code . Html::hiddenInput('im_code[]', $modelitem->id.';'.$modelitem->im_code, ['class' => 'im_code']);
+				// },
 			],
 			// [
 			// 	'attribute' => 'name',

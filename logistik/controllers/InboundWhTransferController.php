@@ -35,6 +35,7 @@ use common\models\Warehouse;
 
 use common\widgets\Displayerror;
 use common\widgets\Email;
+use yii\helpers\Url;
 /**
  * InboundWhTransferController implements the CRUD actions for InboundWhTransfer model.
  */
@@ -267,7 +268,7 @@ class InboundWhTransferController extends Controller
 		$this->layout = 'blank';
 		$arrIdWarehouse = $this->getIdWarehouse();
 		$searchModel = new SearchInboundWhTransfer();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $this->id_modul,'verifydetail', $id, NULL, $arrIdWarehouse);
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $this->id_modul,'verifydetail', $id, $arrIdWarehouse);
 
 		$model = $this->findModelJoinOutbound($id);
 
@@ -285,7 +286,7 @@ class InboundWhTransferController extends Controller
 		$this->layout = 'blank';
 		$arrIdWarehouse = $this->getIdWarehouse();
 		$searchModel = new SearchInboundWhTransfer();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $this->id_modul,'verifydetail', $id, NULL, $arrIdWarehouse);
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $this->id_modul,'verifydetail', $id, $arrIdWarehouse);
 
 		$model = $this->findModelJoinOutbound($id);
 
@@ -387,8 +388,10 @@ class InboundWhTransferController extends Controller
 				$maxQtyGood 			= $modelOutboundDetail->req_good;
 				$maxQtyNotGood 			= $modelOutboundDetail->req_not_good;
 				$maxQtyReject 			= $modelOutboundDetail->req_reject;
-				$maxQtyGoodDismantle 	= $modelOutboundDetail->req_good_dismantle;
-				$maxQtyNotGoodDismantle = $modelOutboundDetail->req_not_good_dismantle;
+				$maxQtyDismantle 	    = $modelOutboundDetail->req_dismantle;
+                $maxQtyRevocation       = $modelOutboundDetail->req_revocation;
+                $maxQtyGoodRec          = $modelOutboundDetail->req_good_rec;
+				$maxQtyGoodforRecond    = $modelOutboundDetail->req_good_for_recond;
 
 				// prepare modelmasteritem
 				$modelMasterItemDetail = MasterItemImDetail::find();
@@ -399,8 +402,10 @@ class InboundWhTransferController extends Controller
 				$qtyGood 			= $modelSn->andWhere(['condition' => 'good'])->count();
 				$qtyNotGood 		= $modelSn->andWhere(['condition' => 'not good'])->count();
 				$qtyReject 			= $modelSn->andWhere(['condition' => 'reject'])->count();
-				$qtyGoodDismantle 	= $modelSn->andWhere(['condition' => 'good dismantle'])->count();
-				$qtyNotGoodDismantle= $modelSn->andWhere(['condition' => 'not good dismantle'])->count();
+				$qtyDismantle 	    = $modelSn->andWhere(['condition' => 'dismantle'])->count();
+                $qtyRevocation      = $modelSn->andWhere(['condition' => 'revocation'])->count();
+                $qtyGoodRec         = $modelSn->andWhere(['condition' => 'good recondition'])->count();
+				$qtyGoodforRecond   = $modelSn->andWhere(['condition' => 'good for recondition'])->count();
 
 				$newIdSn = [];
 				$retagSn = 0;
@@ -443,14 +448,23 @@ class InboundWhTransferController extends Controller
 							$modelDetail->qty_reject++;
 							$qtyReject++;
 						break;
-						case 'good dismantle':
-							$modelDetail->qty_good_dismantle++;
-							$qtyGoodDismantle++;
+						case 'dismantle':
+							$modelDetail->qty_dismantle++;
+							$qtyDismantle++;
 						break;
-						case 'not good dismantle':
-							$modelDetail->qty_not_good_dismantle++;
-							$qtyNotGoodDismantle++;
+						case 'revocation':
+							$modelDetail->qty_revocation++;
+							$qtyRevocation++;
 						break;
+                        case 'good recondition':
+                            $modelDetail->qty_good_rec++;
+                            $qtyGoodRec++;
+                        break;
+                        case 'good for recondition':
+                            $modelDetail->qty_good_for_recond++;
+                            $qtyGoodforRecond++;
+                        break;
+
 					}				
 
 					$maxErr = '';
@@ -466,13 +480,21 @@ class InboundWhTransferController extends Controller
 						$maxErr = 'Quantity Reject cannot be more than '. $maxQtyReject;
 					}
 
-					if ($qtyGoodDismantle > $maxQtyGoodDismantle){
-						$maxErr = 'Quantity Good Dismantle cannot be more than '. $maxQtyGoodDismantle;
+					if ($qtyDismantle > $maxQtyDismantle){
+						$maxErr = 'Quantity Dismantle cannot be more than '. $maxQtyDismantle;
 					}
 
-					if ($qtyNotGoodDismantle > $maxQtyNotGoodDismantle){
-						$maxErr = 'Quantity Not Good Dismantle cannot be more than '. $maxQtyNotGoodDismantle;
+					if ($qtyRevocation > $maxQtyRevocation){
+						$maxErr = 'Quantity Revocation cannot be more than '. $maxQtyRevocation;
 					}
+
+                    if ($qtyGoodRec > $maxQtyGoodRec){
+                        $maxErr = 'Quantity Good Recondition cannot be more than '. $maxQtyGoodRec;
+                    }
+
+                    if ($qtyGoodforRecond > $maxQtyGoodforRecond){
+                        $maxErr = 'Quantity Good for Recondition cannot be more than '. $maxQtyGoodforRecond;
+                    }
 
 					if ($maxErr != ''){
 						// delete new data only
@@ -491,6 +513,7 @@ class InboundWhTransferController extends Controller
 					$cekSn = OutboundWhTransferDetailSn::find()->andWhere($tocheck)->exists();
 
 					$modelstock = null;
+                    $modelMasterSn = null;
 
 					if (!$cekSn){
 						$retagSn++;
@@ -508,22 +531,31 @@ class InboundWhTransferController extends Controller
 							$modelstock->id_warehouse = $modelDetail->idInboundWh->idOutboundWh->idInstructionWh->wh_destination;
 							$modelstock->id_master_item_im = $modelDetail->id_item_im;
 						}
-						$modelstock->{$columnstock} += 1;
+						// $modelstock->{$columnstock} += 1;
 						// save dibawah
 
                         // simpan data di mastersn
-    					$modelMasterSn = MasterSn::find()->andWhere($tocheck)->andWhere(['status' => 27])->one();
+    					$modelMasterSn = MasterSn::find()->andWhere($tocheck)
+                            ->andWhere(['id_warehouse' => $modelDetail->idInboundWh->idOutboundWh->idInstructionWh->wh_origin]) // ambil masterSN dari wh asal
+                            ->andWhere(['status' => 27])
+                            ->one();
     					if ($modelMasterSn !== null){
                             $modelMasterSn->last_transaction = 'TAG SN INBOUND WH '
                                 .$modelDetail->idInboundWh->idOutboundWh->idInstructionWh->whDestination->nama_warehouse;
                             $modelMasterSn->condition = $model->condition;
                             $modelMasterSn->id_warehouse = $modelDetail->idInboundWh->idOutboundWh->idInstructionWh->wh_destination;
-    					}
+    					}else{
+                            // tidak ada di master SN
+                            InboundWhTransferDetailSn::deleteAll(['id' => $newIdSn]);
+                            return 'Serial number: '.$model->serial_number.' dengan kondisi '.$data['CONDITION'].', tidak terdaftar dalam sistem';
+                        }
                         // save dibawah
+                        // save di submit
     					// simpan data di mastersn
 					}
 					// validasi SN / Mac
 
+                    
                     if(!$model->save()) {
                         InboundWhTransferDetailSn::deleteAll(['id' => $newIdSn]);
                         $error = $model->getErrors();
@@ -531,8 +563,9 @@ class InboundWhTransferController extends Controller
                         return Displayerror::pesan($model->getErrors());
                     }
 
-                    if ($modelstock != null){
-						$modelstock->save();
+                    // if ($modelstock != null){
+                    if ($modelMasterSn != null){
+						// $modelstock->save();
 	                    $modelMasterSn->save();
 						$this->createLogmastersn($modelMasterSn);
                     }
@@ -548,9 +581,9 @@ class InboundWhTransferController extends Controller
 				}
 
 				if ( $maxQty == $qtySn ){
-					$modelDetail->status_tagsn = 41;
+					$modelDetail->status_tagsn = 42; //tag inputted (tag sn sudah melakukan tugasnya, masih mungkin ada barang yang belum diterima)
 				}else{
-					$modelDetail->status_tagsn = 44;
+					$modelDetail->status_tagsn = 44; //tag sn belum selesai
 				}
 
 				$modelDetail->save();
@@ -593,11 +626,13 @@ class InboundWhTransferController extends Controller
 
 		if ( Yii::$app->request->isPost ){
 			$delta = Yii::$app->request->post('delta_qty');
-			$qty_good 		= Yii::$app->request->post('qty_good');
-			$qty_not_good 	= Yii::$app->request->post('qty_not_good');
-			$qty_reject 	= Yii::$app->request->post('qty_reject');
-			$qty_good_dismantle 	= Yii::$app->request->post('qty_good_dismantle');
-			$qty_not_good_dismantle = Yii::$app->request->post('qty_not_good_dismantle');
+			$qty_good 		     = Yii::$app->request->post('qty_good');
+			$qty_not_good 	     = Yii::$app->request->post('qty_not_good');
+			$qty_reject 	     = Yii::$app->request->post('qty_reject');
+			$qty_dismantle 	     = Yii::$app->request->post('qty_dismantle');
+            $qty_revocation      = Yii::$app->request->post('qty_revocation');
+            $qty_good_rec        = Yii::$app->request->post('qty_good_rec');
+			$qty_good_for_recond = Yii::$app->request->post('qty_good_for_recond');
 
 			if ($delta < 0){
 				return 'Qty is more than Delta';
@@ -608,25 +643,33 @@ class InboundWhTransferController extends Controller
 
 			$modelstock = $modelMasterItemDetail->andWhere(['and',['id_warehouse' => $model->idInboundWh->idOutboundWh->idInstructionWh->wh_destination],['id_master_item_im' => $model->id_item_im]])->one();
 			// kurangi data sebelum qtycond
-			$modelstock->s_good	-= $model->qty_good;
-			$modelstock->s_not_good	-= $model->qty_not_good;
-			$modelstock->s_reject	-= $model->qty_reject;
-			$modelstock->s_good_dismantle	-= $model->qty_good_dismantle;
-			$modelstock->s_not_good_dismantle	-= $model->qty_not_good_dismantle;
+            if ($model->status_stock == 1) {
+    			$modelstock->s_good	            -= $model->qty_good;
+    			$modelstock->s_not_good	        -= $model->qty_not_good;
+    			$modelstock->s_reject	        -= $model->qty_reject;
+    			$modelstock->s_dismantle	    -= $model->qty_dismantle;
+                $modelstock->s_revocation       -= $model->qty_revocation;
+                $modelstock->s_good_rec         -= $model->qty_good_rec;
+    			$modelstock->s_good_for_recond	-= $model->qty_good_for_recond;
+            }
 
-			$model->qty_good 		= $qty_good;
-			$model->qty_not_good 	= $qty_not_good;
-			$model->qty_reject 		= $qty_reject;
-			$model->qty_good_dismantle 		= $qty_good_dismantle;
-			$model->qty_not_good_dismantle 	= $qty_not_good_dismantle;
+			$model->qty_good 		        = $qty_good;
+			$model->qty_not_good 	        = $qty_not_good;
+			$model->qty_reject 		        = $qty_reject;
+			$model->qty_dismantle 	        = $qty_dismantle;
+            $model->qty_revocation          = $qty_revocation;
+            $model->qty_good_rec            = $qty_good_rec;
+			$model->qty_good_for_recond 	= $qty_good_for_recond;
 
 			// $modelOutboundDetail = OutboundWhTransferDetail::findOne($model->id_outbound_wh_detail);
 			$modelOutboundDetail = OutboundWhTransferDetail::find()->andWhere(['and',['id_outbound_wh' => $model->id_inbound_wh],['id_item_im' => $model->id_item_im]])->one();
 			$maxQtyGood 			= $modelOutboundDetail->req_good;
 			$maxQtyNotGood 			= $modelOutboundDetail->req_not_good;
 			$maxQtyReject 			= $modelOutboundDetail->req_reject;
-			$maxQtyGoodDismantle 	= $modelOutboundDetail->req_good_dismantle;
-			$maxQtyNotGoodDismantle = $modelOutboundDetail->req_not_good_dismantle;
+			$maxQtyDismantle 	    = $modelOutboundDetail->req_dismantle;
+            $maxQtyRevocation       = $modelOutboundDetail->req_revocation;
+            $maxQtyGoodRec      = $modelOutboundDetail->req_good_rec;
+			$maxQtyGoodforRecond    = $modelOutboundDetail->req_good_for_recond;
 
 			$maxErr = '';
 			if ($qty_good > $maxQtyGood){
@@ -641,29 +684,41 @@ class InboundWhTransferController extends Controller
 				$maxErr = 'Quantity Reject cannot be more than '. $maxQtyReject;
 			}
 
-			if ($qty_good_dismantle > $maxQtyGoodDismantle){
-				$maxErr = 'Quantity Good Dismantle cannot be more than '. $maxQtyGoodDismantle;
+			if ($qty_dismantle > $maxQtyDismantle){
+				$maxErr = 'Quantity Dismantle cannot be more than '. $maxQtyDismantle;
 			}
 
-			if ($qty_not_good_dismantle > $maxQtyNotGoodDismantle){
-				$maxErr = 'Quantity Not Good Dismantle cannot be more than '. $maxQtyNotGoodDismantle;
+			if ($qty_revocation > $maxQtyRevocation){
+				$maxErr = 'Quantity Revocation cannot be more than '. $maxQtyRevocation;
 			}
+
+            if ($qty_good_rec > $maxQtyGoodRec){
+                $maxErr = 'Quantity Good Recondition cannot be more than '. $maxQtyGoodRec;
+            }
+
+            if ($qty_good_for_recond > $maxQtyGoodforRecond){
+                $maxErr = 'Quantity Good for Recondition cannot be more than '. $maxQtyGoodforRecond;
+            }
 
 			if ($maxErr != ''){
 				return $maxErr;
 			}
 
+            
 			$model->save();
 
 			// save stock
 			$modelstock->s_good	+= $model->qty_good;
 			$modelstock->s_not_good	+= $model->qty_not_good;
 			$modelstock->s_reject	+= $model->qty_reject;
-			$modelstock->s_good_dismantle	+= $model->qty_good_dismantle;
-			$modelstock->s_not_good_dismantle	+= $model->qty_not_good_dismantle;
+			$modelstock->s_dismantle	+= $model->qty_dismantle;
+            $modelstock->s_revocation   += $model->qty_revocation;
+            $modelstock->s_good_rec   += $model->qty_good_rec;
+			$modelstock->s_good_for_recond	+= $model->qty_good_for_recond;
 
 			// return var_dump($modelstock);
-			$modelstock->save();
+            // save di submit
+			// $modelstock->save();
 
 			// $modelInboundWhTransferDetail = InboundWhTransferDetail::find()->andWhere(['id_inbound_wh' => $model->id_inbound_wh ])->asArray()->all();
 			// $cekStatus = 1;
@@ -697,31 +752,78 @@ class InboundWhTransferController extends Controller
 
     public function actionSubmitsn($id)
     {
-        $modelInboundWhTransferDetail = InboundWhTransferDetail::find()->andWhere(['id_inbound_wh' => $id ])->asArray()->all();
-        $cekStatus = 1;
-        $cekStatusRegis = 1;
-
+        $modelInboundWhTransferDetail = InboundWhTransferDetail::find()->andWhere(['id_inbound_wh' => $id ])->all();        
+        
+        $arrTagsn = [];
         foreach($modelInboundWhTransferDetail as $key => $value){
-            if ($value['status_tagsn'] != 41){
-            	if($value['status_tagsn'] == 44){
-            		$cekStatusRegis = 2;
-            	}else{
-            		$cekStatusRegis = 1;
-	                $cekStatus++;
-            	}
-            	
+            if ( !in_array($value->status_tagsn, $arrTagsn) ) {
+                array_push($arrTagsn, $value->status_tagsn);
             }
+
+            // save stock
+            if ($value->idItemIm->sn_type == 1 && $value->status_stock == 0) {
+                // SN
+                $modelstock = null;
+                foreach ($value->inboundWhTransferDetailSns as $detailsn) {
+                    // detail SN
+                    if ($detailsn->status_retagsn != 1) {
+                        $columnstock = 's_'.str_replace(' ', '_', $detailsn->condition);
+                        $modelstock = MasterItemImDetail::find()
+                            ->andWhere(['id_warehouse' => $value->idInboundWh->idOutboundWh->idInstructionWh->wh_destination])
+                            ->andWhere(['id_master_item_im' => $value->id_item_im])
+                            ->one();
+                        // return var_dump($modelstock);
+                        if ( $modelstock === null ){
+                            $modelstock = new MasterItemImDetail();
+                            $modelstock->id_warehouse = $value->idInboundWh->idOutboundWh->idInstructionWh->wh_destination;
+                            $modelstock->id_master_item_im = $value->id_item_im;
+                        }
+                        $modelstock->{$columnstock} += 1;
+
+                        $value->status_stock = 1;
+
+                        $modelstock->save();
+                    }
+                }                
+
+            }else if($value->idItemIm->sn_type == 2 && $value->status_stock == 0){
+                // NON SN
+                $modelstock = MasterItemImDetail::find()
+                    ->andWhere(['and',
+                            ['id_warehouse' => $value->idInboundWh->idOutboundWh->idInstructionWh->wh_destination],
+                            ['id_master_item_im' => $value->id_item_im]])
+                    ->one();
+                if ($modelstock !== null) {
+                    // save stock
+                    $modelstock->s_good             += $value->qty_good;
+                    $modelstock->s_not_good         += $value->qty_not_good;
+                    $modelstock->s_reject           += $value->qty_reject;
+                    $modelstock->s_dismantle        += $value->qty_dismantle;
+                    $modelstock->s_revocation       += $value->qty_revocation;
+                    $modelstock->s_good_rec         += $value->qty_good_rec;
+                    $modelstock->s_good_for_recond  += $value->qty_good_for_recond;
+
+                    $modelstock->save();
+                    if (($value->qty_good + $value->qty_not_good + $value->qty_reject + $value->qty_dismantle + $value->qty_revocation + $value->qty_good_rec + $value->qty_good_for_recond) > 0) {
+                        $value->status_stock = 1;
+                    }
+                }
+            }
+
+            
+            $value->save();
+            //end foreach detail
         }
 
         $modelInbound = $this->findModel($id);
-        if($cekStatusRegis == 1){
-			if ($cekStatus == 1){
-	            $modelInbound->status_tagsn = 41;
-	        }else{
-	            $modelInbound->status_tagsn = 43;
-	        }
+        if ( in_array(44, $arrTagsn) && count($arrTagsn) == 1) {
+            // all 44 not registered
+            $modelInbound->status_tagsn = 999;
+        }elseif (in_array(42, $arrTagsn) && count($arrTagsn) == 1) {
+            // all 42 tag inputted
+            $modelInbound->status_tagsn = 41;
         }else{
-        	$modelInbound->status_tagsn = 999;
+            $modelInbound->status_tagsn = 43;
         }
         
         $modelInbound->save();
@@ -792,24 +894,29 @@ class InboundWhTransferController extends Controller
 			$modelstock->s_good	-= $model->qty_good;
 			$modelstock->s_not_good	-= $model->qty_not_good;
 			$modelstock->s_reject	-= $model->qty_reject;
-			$modelstock->s_good_dismantle	-= $model->qty_good_dismantle;
-			$modelstock->s_not_good_dismantle	-= $model->qty_not_good_dismantle;
+			$modelstock->s_dismantle	-= $model->qty_dismantle;
+            $modelstock->s_revocation   -= $model->qty_revocation;
+            $modelstock->s_good_rec   -= $model->qty_good_rec;
+			$modelstock->s_good_for_recond	-= $model->qty_good_for_recond;
 
 			$modelstock->save();
 
 		}
-		$model->qty_good				= 0;
-		$model->qty_not_good			= 0;
-		$model->qty_reject				= 0;
-		$model->qty_good_dismantle		= 0;
-		$model->qty_not_good_dismantle	= 0;
-		$model->status_tagsn			= 44;
+		$model->qty_good			= 0;
+		$model->qty_not_good		= 0;
+		$model->qty_reject			= 0;
+		$model->qty_dismantle		= 0;
+        $model->qty_revocation      = 0;
+        $model->qty_good_rec        = 0;
+		$model->qty_good_for_recond	= 0;
+        $model->status_tagsn        = 44;
+		$model->status_stock		= 0;
 		$model->save();
 
 		$modelInboundWh = $this->findModel($model->id_inbound_wh);
 		\Yii::$app->session->set('idInboundWh', $model->id_inbound_wh);
 
-		$modelInboundWh->status_tagsn = 43;
+		$modelInboundWh->status_tagsn = 999;
 		$modelInboundWh->save();
 
 		return $this->actionViewtagsn($model->id_inbound_wh);
@@ -855,12 +962,18 @@ class InboundWhTransferController extends Controller
 					case 'reject':
 						$model->qty_reject = $modelCondition->total_condition;
 					break;
-					case 'good dismantle':
-						$model->qty_good_dismantle = $modelCondition->total_condition;
+					case 'dismantle':
+						$model->qty_dismantle = $modelCondition->total_condition;
 					break;
-					case 'not good dismantle':
-						$model->qty_not_good_dismantle = $modelCondition->total_condition;
+					case 'revocation':
+						$model->qty_revocation = $modelCondition->total_condition;
 					break;
+                    case 'good recondition':
+                        $model->qty_good_rec = $modelCondition->total_condition;
+                    break;
+                    case 'good for recondition':
+                        $model->qty_good_for_recond = $modelCondition->total_condition;
+                    break;
 				}
 				$model->save();
 			}
@@ -890,7 +1003,7 @@ class InboundWhTransferController extends Controller
         if($model->status_retagsn == 46){
             $model->status_retagsn = 5;
 
-            if ( $model->save()) {
+            if ( $model->validate()) {
 				$this->createLog($model);
 
 				$modelMasterItemDetail = MasterItemImDetail::find();
@@ -899,8 +1012,10 @@ class InboundWhTransferController extends Controller
 					->andWhere(['inbound_wh_transfer.id_outbound_wh' => $id])->andWhere(['is not', 'inbound_wh_transfer_detail_sn.status_retagsn', null])->all();
 				foreach ($modeldetailSn as $key => $modelSn) {
 					$modelSn->status_retagsn = null;
+                    $columnstockdetail = 'qty_'.str_replace(' ', '_', $modelSn->condition);
 					$columnstock = 's_'.str_replace(' ', '_', $modelSn->condition);
 					$newcolumnstock = 'qty_'.str_replace(' ', '_', $modelSn->condition);
+                    // return var_dump($modelSn->id_inbound_wh_detail);
 					if ( $modelSn->new_id_item_im == null ){
 						// hanya ganti SN
 
@@ -910,10 +1025,11 @@ class InboundWhTransferController extends Controller
 
 					}else{
 						// ganti item dan SN
-						$modelinbounddetail = InboundWhTransferDetail::find()->andWhere(['id_inbound_wh' => $modelSn->id_inbound_wh_detail])->one();
+						$modelinbounddetail = InboundWhTransferDetail::find()->andWhere(['id' => $modelSn->id_inbound_wh_detail])->one();
 						$modelinbounddetail->qty -= 1;
-						$modelinbounddetail->{$columnstock} -= 1;
+						$modelinbounddetail->{$columnstockdetail} -= 1;
 						$modelinbounddetail->save();
+                        // TOLONG DIPERIKSA, KARENA ERROR DI BARIS 1042 (BEDA NAMA STOK) QTY JADI -1
 
 						$modeloutbounddetail = OutboundWhTransferDetailSn::find()->andWhere(['serial_number' => $modelSn->old_serial_number])->one();
 						$oldcondition = 's_'.str_replace(' ', '_', $modeloutbounddetail->condition);
@@ -932,7 +1048,7 @@ class InboundWhTransferController extends Controller
 						$modeldetail->id_item_im = $modelnewstock->id;
 						$modeldetail->qty = 1;
 						$modeldetail->status_listing = 36;
-						$modeldetail->status_tagsn = 41;
+						$modeldetail->status_tagsn = 42;
 						$modeldetail->{$newcolumnstock} = 1;
 						$modeldetail->save();
 
@@ -944,6 +1060,8 @@ class InboundWhTransferController extends Controller
 
 					$modelSn->save();
 				}
+
+                $model->save();
 
 
 
@@ -970,8 +1088,8 @@ class InboundWhTransferController extends Controller
 
 			// update data Instruction
 			$modelInstruction = InstructionWhTransfer::findOne($id);
-			$modelInstruction->status_listing = 47;
-			$modelInstruction->save();
+			$modelInstruction->status_listing = 47; // report from wh
+			$modelInstruction->save();            
 
 			return 'success';
 
@@ -989,6 +1107,11 @@ class InboundWhTransferController extends Controller
 		}else{
 			InboundWhTransferDetail::updateAll(['status_report' => 4], ['id_inbound_wh' => $id, 'status_report' => 31]);
 
+
+            $arrAuth = ['/inbound-wh-transfer/indexapprove'];
+            $header = 'Alert Approval Inbound Warehouse Transfer';
+            $subject = 'This document is waiting your approval. Please click this link document : '.Url::base(true).'/inbound-wh-transfer/indexapprove#viewreportapprove?id='.$model->id_outbound_wh.'&header=Detail_INBOUND_WH';
+            Email::sendEmail($arrAuth,$header,$subject,$model->idOutboundWh->idInstructionWh->wh_destination);
 			return 'success';
 
 		}
@@ -1027,7 +1150,7 @@ class InboundWhTransferController extends Controller
 
 			// cek qty kirim
 			$modeloutbounddetail = OutboundWhTransferDetail::find()
-					->select([new \yii\db\Expression('req_good + req_not_good + req_reject + req_good_dismantle + req_not_good_dismantle as req_good')])
+					->select([new \yii\db\Expression('req_good + req_not_good + req_reject + req_dismantle + req_revocation + req_good_rec + req_good_for_recond as req_good')])
 					->andWhere(['id' => $values[3]])
 					->one();
 
@@ -1039,8 +1162,7 @@ class InboundWhTransferController extends Controller
 
 		}
 
-		$model->idOutboundWh->idInstructionWh->status_listing = 47; // report from wh
-		$model->idOutboundWh->idInstructionWh->save(); // report from wh
+		
 
 		$model->save();
 
@@ -1076,10 +1198,10 @@ class InboundWhTransferController extends Controller
 		// for status new received only, insert data to inbound table, then show form to user for change
 		$this->layout = 'blank';
 
-		$model = new InboundWhTransfer();
+		$model = new InboundWhTransfer();        
 		$model->id_outbound_wh = $idOutboundWh;
 		$model->id_modul = 1;
-		$model->status_listing = 50; // new received inbound
+		$model->status_listing = 52; // new received inbound
 
 		// $model->save();
 		if (!$model->save()){
@@ -1121,6 +1243,7 @@ class InboundWhTransferController extends Controller
 		// send email here if needed
 
 		$model = $this->findModelJoinOutbound($model->id_outbound_wh);
+        $model->scenario = 'input_arrival';
 		$searchModel = new SearchInboundWhTransfer();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$this->id_modul,'viewinbounddetail', $model->id_outbound_wh);
 
@@ -1171,7 +1294,7 @@ class InboundWhTransferController extends Controller
 				$pesan = [];
 				// cek if qty is less than already uploaded SN
 				$modelcek = InboundWhTransferDetail::find()
-					->select([new \yii\db\Expression('qty_good + qty_not_good + qty_reject + qty_good_dismantle + qty_not_good_dismantle as qty_good')])
+					->select([new \yii\db\Expression('qty_good + qty_not_good + qty_reject + qty_dismantle + qty_revocation + qty_good_rec + qty_good_for_recond as qty_good')])
 					->andWhere(['id_item_im' => $values[0]])->andWhere(['id_inbound_wh' => $idOutboundWh])->one();
 				if ( $model->qty < $modelcek->qty_good ){
 					$pesan[] = $model->getAttributeLabel('qty')." cannot be less than {$modelcek->qty_good}, for IM Code ".$values[1]."\nThis IM Code already do TAG SN";
@@ -1182,7 +1305,7 @@ class InboundWhTransferController extends Controller
 					$model->status_tagsn = 44; // reset to Not Registered if qty has changed
 
 				$modelOutboundWhTransferDetail = OutboundWhTransferDetail::find()
-					->select([new \yii\db\Expression('req_good + req_not_good + req_reject + req_good_dismantle + req_not_good_dismantle as req_good')])
+					->select([new \yii\db\Expression('req_good + req_not_good + req_reject + req_dismantle + req_revocation + req_good_rec + req_good_for_recond as req_good')])
 					->andWhere(['id' => $values[3]])
 					// ->andWhere(['id_item_im' => $values[0]])
 					// ->andWhere(['id_outbound_wh' => $idOutboundWh])
@@ -1217,7 +1340,7 @@ class InboundWhTransferController extends Controller
 
 			// checking inbound if delta == 0
 			$modelInboundCek = InboundWhTransfer::find()
-				->select([new \yii\db\Expression('SUM(coalesce(req_good + req_not_good + req_reject + req_good_dismantle + req_not_good_dismantle, 0) -
+				->select([new \yii\db\Expression('SUM(coalesce(req_good + req_not_good + req_reject + req_dismantle + req_revocation + req_good_rec + req_good_for_recond, 0) -
 COALESCE(inbound_wh_transfer_detail.qty,0)) AS req_good, sum(COALESCE(inbound_wh_transfer_detail.qty,0)) as qty_good')])
 				// ->joinWith('inboundWhTransferDetails.idItemIm.idMasterItemIm')
 				->joinWith('inboundWhTransferDetails.idItemIm')
@@ -1230,7 +1353,7 @@ COALESCE(inbound_wh_transfer_detail.qty,0)) AS req_good, sum(COALESCE(inbound_wh
 			if ($modelInboundCek->req_good == 0){
 				$modelInbound->status_listing = 1;
 			}elseif ($modelInboundCek->qty_good == 0) {
-				$modelInbound->status_listing = 50;
+				$modelInbound->status_listing = 52;
 			}else{
 				$modelInbound->status_listing = 31;
 			}

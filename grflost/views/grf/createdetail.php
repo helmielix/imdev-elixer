@@ -61,7 +61,7 @@ $arrQtyDetail = '';
             ['class' => 'yii\grid\SerialColumn'],			
             
 			[
-				'attribute' => 'orafin_code',
+				'attribute' => 'item_code',
 				'format' => 'raw',
 			],
             [ 
@@ -69,12 +69,12 @@ $arrQtyDetail = '';
                 'label' => '',
                 'value' => function ($model) use ($arrQtyDetail)
                     {
-                        return Html::hiddenInput('orafin_code[]', $model->orafin_code);
+                        return Html::hiddenInput('item_code[]', $model->item_code);
                     },
             ],
             [
-			'attribute'=>'name',
-            'value' =>'name',
+			'attribute'=>'item_desc',
+            'value' =>'item_desc',
             ],
 			[
                 'attribute'=>'qty_request',
@@ -84,8 +84,8 @@ $arrQtyDetail = '';
                     'value' => function ($model) use ($arrQtyDetail)
                     {
                         $style = ['style'=>'width:100%','id'=>'idqtyreq'];
-                       if(Yii::$app->controller->action->id == 'createdetail' && isset($arrQtyDetail[$model->orafin_code][0])){
-                           $model->qty_request = $arrQtyDetail[$model->orafin_code][0];
+                       if(Yii::$app->controller->action->id == 'createdetail' && isset($arrQtyDetail[$model->item_code][0])){
+                           $model->qty_request = $arrQtyDetail[$model->item_code][0];
                        }else {
                            $model->qty_request = null;
                        }
@@ -123,7 +123,7 @@ $arrQtyDetail = '';
         // event.preventDefault();
         $('#modal').modal('show')
             .find('#modalContent')
-            .load('<?php echo Url::to([$this->context->id.'/view','id'=>$idGrf]) ;?>');
+            .load('<?php echo Url::to([$this->context->id.'/indexdetail','id'=>$idGrf]) ;?>');
         $('#modalHeader').html('<h3> Create Inbound PO </h3>');
     });
     

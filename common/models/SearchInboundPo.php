@@ -14,12 +14,12 @@ use common\models\OrafinRr;
  */
 class SearchInboundPo extends InboundPo
 {
-    
+    public $nama_warehouse;
     public function rules()
     {
         return [
             [['id',  'created_by', 'updated_by', 'status_listing', 'verified_by'], 'integer'],
-            [['created_date', 'updated_date','pr_number','po_number','supplier','tgl_sj','rr_number', 'item_name','im_code','brand','warna','grouping','qty_rr','qty','qty_good','qty_not_good','qty_reject','orafin_name','orafin_code','sn_type','id_inbound', 'type'], 'safe'],
+            [['created_date', 'updated_date','pr_number','po_number','supplier','tgl_sj','rr_number', 'item_name','im_code','brand','warna','grouping','qty_rr','qty','qty_good','qty_not_good','qty_reject','orafin_name','orafin_code','sn_type','id_inbound', 'type','id_warehouse'], 'safe'],
         ];
     }
 
@@ -89,6 +89,7 @@ class SearchInboundPo extends InboundPo
 
         if($action == 'input') {
             $query->andFilterWhere(['or',['=','inbound_po.status_listing', 1],['=','inbound_po.status_listing', 7], ['=','inbound_po.status_listing', 2],['=','inbound_po.status_listing', 3],['=','inbound_po.status_listing', 43]])
+             ->leftJoin('warehouse', 'warehouse.id = inbound_po.id_warehouse')
             // ->orderBy(['inbound_po.updated_date' => SORT_DESC])
             ;
             $dataProvider = $this->_search($params, $query);
@@ -306,6 +307,7 @@ class SearchInboundPo extends InboundPo
         
         $query->andFilterWhere(['ilike', 'rr_number', $this->rr_number])
             ->andFilterWhere(['ilike', 'po_number', $this->po_number])
+            ->andFilterWhere(['ilike', 'warehouse.nama_warehouse', $this->nama_warehouse])
             ->andFilterWhere(['ilike', 'supplier', $this->supplier])
             ->andFilterWhere(['ilike', 'master_item_im.name', $this->item_name])
             ->andFilterWhere(['ilike', 'im_code', $this->im_code])

@@ -69,6 +69,7 @@ $this->registerCssFile('@commonpath/css/jquery-ui_override.css',['depends' => [\
 						'attribute'=>'note',
 						'format' => 'raw',
 						'value'=>function ($searchModel) {
+							// INBOUND PO
 							if($searchModel->table_source == "INBOUND PO Verification") {
 								return $searchModel->note .
 									Html::a('View',Url::to(['inbound-po/indexverify#viewverify','id'=>$searchModel->task]));
@@ -81,7 +82,50 @@ $this->registerCssFile('@commonpath/css/jquery-ui_override.css',['depends' => [\
 							} elseif ($searchModel->table_source == "INBOUND PO Revision"){
 								return $searchModel->note .
 									Html::a('View',Url::to(['inbound-po/index#view','id'=>$searchModel->task]));
+							// INBOUND PO
+							// WH TRANSFER
+							// WH TRANSFER INSTRUCTION
+							} elseif ($searchModel->table_source == "INSTRUCTION WH TRANSFER Approval") {
+								return $searchModel->note .
+									Html::a('View',Url::to(['instruction-wh-transfer/indexapprove#viewapprove','id'=>$searchModel->task,'header'=>'Detail_Instruction_Warehouse_Transfer']));
+							} elseif ($searchModel->table_source == "INSTRUCTION WH TRANSFER Report from WH") {
+								return $searchModel->note .
+									Html::a('View',Url::to(['instruction-wh-transfer/index#viewreport','id'=>$searchModel->task,'header'=>'Detail_Instruction_Warehouse_Transfer']));
+							} elseif ($searchModel->table_source == "INSTRUCTION WH TRANSFER Need Revise") {
+								return $searchModel->note .
+									Html::a('View',Url::to(['instruction-wh-transfer/index#view','id'=>$searchModel->task,'header'=>'Detail_Instruction_Warehouse_Transfer']));
+							// WH TRANSFER OUTBOUND									
+							} elseif ($searchModel->table_source == "OUTBOUND WH TRANSFER TAG SN") { // untuk data yg belum ada di outbound
+								return $searchModel->note .
+									Html::a('View',Url::to(['outbound-wh-transfer/index#viewinstruction','id'=>$searchModel->task,'header'=>'Create_Tag_SN']));
+							} elseif ($searchModel->table_source == "OUTBOUND WH TRANSFER TAG SN ") { // untuk data yg sudah ada di outbound (51)
+								return $searchModel->note .
+									Html::a('View',Url::to(['outbound-wh-transfer/index#viewoutbound','id'=>$searchModel->task,'header'=>'Detail_Outbound_Warehouse_Transfer']));
+							} elseif ($searchModel->table_source == "OUTBOUND WH TRANSFER Print SJ") {
+								return $searchModel->note .
+									Html::a('View',Url::to(['outbound-wh-transfer/indexprintsj#view','id'=>$searchModel->task, 'show' => 'detail','header'=>'Detail_Surat_Jalan']));
+							} elseif ($searchModel->table_source == "OUTBOUND WH TRANSFER Approval") {
+								return $searchModel->note .
+									Html::a('View',Url::to(['outbound-wh-transfer/indexapprove#viewapprove','id'=>$searchModel->task,'header'=>'Approval_Surat_Jalan']));
+							// WH TRANSFER INBOUND
+							} elseif ($searchModel->table_source == "INBOUND WH TRANSFER TAG SN") {
+								return $searchModel->note .
+									Html::a('View',Url::to(['inbound-wh-transfer/index#viewinstruction','id'=>$searchModel->task,'header'=>'Create_Tag_SN']));
+							} elseif ($searchModel->table_source == "INBOUND WH TRANSFER Print SJ") {
+								return $searchModel->note .
+									Html::a('View',Url::to(['inbound-wh-transfer/indexprintsj#view','id'=>$searchModel->task, 'show' => 'detail','header'=>'Detail_Surat_Jalan']));
+							} elseif ($searchModel->table_source == "INBOUND WH TRANSFER Approval") {
+								return $searchModel->note .
+									Html::a('View',Url::to(['inbound-wh-transfer/indexapprove#viewapprove','id'=>$searchModel->task,'header'=>'Approval_Surat_Jalan']));
+							} elseif ($searchModel->table_source == "INBOUND WH TRANSFER Print SJ") {
+								return $searchModel->note .
+									Html::a('View',Url::to(['inbound-wh-transfer/indexprintsj#view','id'=>$searchModel->task, 'show' => 'detail','header'=>'Detail_Surat_Jalan']));
+							} elseif ($searchModel->table_source == "INBOUND WH TRANSFER Approval") {
+								return $searchModel->note .
+									Html::a('View',Url::to(['inbound-wh-transfer/indexapprove#viewapprove','id'=>$searchModel->task,'header'=>'Approval_Surat_Jalan']));
+							// WH TRANSFER
 							}
+
 						},
 						'filter'=>true,
 					],

@@ -47,8 +47,11 @@ class MasterItemIm extends \yii\db\ActiveRecord
      */
     public $qty_request;
 	public $req_good_qty, $item_desc;
-	public $s_good_dismantle, $s_not_good_dismantle, $item_code;
+	public $s_good_dismantle, $s_not_good_dismantle, $item_code, $s_good, $s_not_good, $s_reject;
     public $s_dismantle, $s_revocation, $s_good_for_recond, $s_good_rec;
+
+    public $qty_good_dismantle, $qty_not_good_dismantle, $qty_good, $qty_not_good, $qty_reject;
+    public $qty_dismantle, $qty_revocation, $qty_good_for_recond, $qty_good_rec;
     public static function tableName()
     {
         return 'master_item_im';
@@ -62,8 +65,8 @@ class MasterItemIm extends \yii\db\ActiveRecord
         return [
             [['status', 'name', 'brand', 'im_code', 'orafin_code', 'sn_type', 'grouping', 'warna', 'type'], 'required'],
             [['created_by', 'updated_by', 'status', 'sn_type', 'stock_qty', 's_good', 's_not_good', 's_reject', 's_good_dismantle', 's_not_good_dismantle', 's_dismantle', 's_revocation', 's_good_for_recond', 's_good_rec'], 'integer'],
-            [['created_date', 'updated_date'], 'safe'],
-            [['name', 'brand', 'im_code', 'orafin_code', 'grouping', 'warna', 'type'], 'string', 'max' => 255],
+            [['created_date', 'updated_date','item_code','item_desc'], 'safe'],
+            [['name', 'brand', 'im_code', 'orafin_code', 'grouping', 'warna', 'type','uom'], 'string', 'max' => 255],
             [['status'], 'exist', 'skipOnError' => true, 'targetClass' => StatusReference::className(), 'targetAttribute' => ['status' => 'id']],
         ];
     }
@@ -79,11 +82,13 @@ class MasterItemIm extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
             'status' => 'Status',
             'name' => 'Name',
+            'item_desc' => 'Name tess',
             'brand' => 'Brand',
             'created_date' => 'Created Date',
             'updated_date' => 'Updated Date',
             'im_code' => 'IM Code',
             'orafin_code' => 'Orafin Code',
+            'item_code' => 'Orafin Code tes',
             'sn_type' => 'SN / Non SN',
             'grouping' => 'Grouping',
             'warna' => 'Warna',
@@ -92,6 +97,7 @@ class MasterItemIm extends \yii\db\ActiveRecord
             's_not_good' => 'Stock Not Good',
             's_reject' => 'Stock Reject',
             'type' => 'Type',
+            'uom' => 'Uom',
             's_good_dismantle' => 'Stock Good Dismantle',
             's_not_good_dismantle' => 'Stock Not Good Dismantle',
             's_dismantle' => 'Stock Dismantle',

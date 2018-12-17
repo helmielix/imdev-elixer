@@ -44,7 +44,8 @@ class SearchOutboundWhTransfer extends OutboundWhTransfer
 			'outbound_wh_transfer.status_listing',
 			'outbound_wh_transfer.no_sj',
 			'outbound_wh_transfer.created_date',
-			'outbound_wh_transfer.updated_date',
+            'outbound_wh_transfer.updated_date',
+			'outbound_wh_transfer.updated_by',
 		]);
 
 		if($action == 'tagsn'){
@@ -60,10 +61,16 @@ class SearchOutboundWhTransfer extends OutboundWhTransfer
 			$query	->andWhere(['instruction_wh_transfer.wh_origin' => $id_warehouse]);
 			
 		}else if($action == 'approve'){
-			$query	->andFilterWhere(['outbound_wh_transfer.status_listing' => [22, 25]]);
-			$query	->andFilterWhere(['outbound_wh_transfer.id_modul' => $id_modul]);
-			$query	->andWhere(['instruction_wh_transfer.wh_origin' => $id_warehouse]);
-		}
+            $query  ->andFilterWhere(['outbound_wh_transfer.status_listing' => [22, 25]]);
+            $query  ->andFilterWhere(['outbound_wh_transfer.id_modul' => $id_modul]);
+            $query  ->andWhere(['instruction_wh_transfer.wh_origin' => $id_warehouse]);
+            $query  ->joinWith('idInboundWh');
+            $query  ->andWhere(['inbound_wh_transfer.status_listing' => null]);
+		}else if($action == 'overview'){
+            // $query  ->andFilterWhere(['outbound_wh_transfer.status_listing' => [22, 25]]);
+            $query  ->andFilterWhere(['outbound_wh_transfer.id_modul' => $id_modul]);
+            $query  ->andWhere(['instruction_wh_transfer.wh_origin' => $id_warehouse]);
+        }
 
 		$dataProvider = $this->_search($params, $query);
 
@@ -106,6 +113,7 @@ class SearchOutboundWhTransfer extends OutboundWhTransfer
 		if ($this->status_listing == 999) {
             $query->andFilterWhere(['instruction_wh_transfer.status_listing' => 5])
                 ->andWhere(['outbound_wh_transfer.status_listing' => null]);
+            $query->orFilterWhere(['outbound_wh_transfer.status_listing' => 51]);
         }else {
             $query->andFilterWhere(['outbound_wh_transfer.status_listing' => $this->status_listing,]);
         }

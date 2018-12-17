@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
+use common\models\LaborForo;
+use common\models\Labor;
 
 /* @var $this yii\web\View */
 /* @var $model divisisatu\models\InstructionWhTransfer */
@@ -119,7 +121,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute'=>'team_leader',
                         'value'=> function($model){
-                            if($model->idGrf->teamLeader)return $model->idGrf->teamLeader->nama;
+                            return $model->team_leader;
+                            // $laborcek = Labor::find()->andWhere(['nik' => $model->team_leader])->exists();
+                            // if (!$laborcek) {
+                            //     $labor = LaborForo::find()->andWhere(['nik' => $model->team_leader])->one();
+                            // }else{
+                            //     return Labor::find()->andWhere(['nik' => $model->team_leader])->one()->nama;
+                            // }
+                            // if($model->idGrf->teamLeader)return $model->idGrf->teamLeader->nama;
                         }            
                     ],
                     [

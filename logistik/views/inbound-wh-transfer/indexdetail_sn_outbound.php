@@ -47,11 +47,36 @@ $this->registerJs(
 				// 'value' => 'idMasterItemImDetail.idMasterItemIm.brand',
 				'value' => 'idMasterItemIm.referenceBrand.description',
 			],
-			'req_good',
-			'req_not_good',
-			'req_reject',
-			'req_good_dismantle',
-			'req_not_good_dismantle',
+			[
+				'attribute' => 'req_good',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'req_not_good',				
+				'enableSorting' => false,
+			],
+			[				
+				'attribute' => 'req_reject',				
+				'enableSorting' => false,
+			],
+			[				
+				'attribute' => 'req_dismantle',				
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'req_revocation',				
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'req_good_rec',				
+				'enableSorting' => false,
+			],
+			[				
+				'attribute' => 'req_good_for_recond',
+				'enableSorting' => false,
+			],
+
+			
 			[
 				'attribute' => 'sn_type',
 				// 'value' => 'idMasterItemImDetail.idMasterItemIm.referenceSn.description',

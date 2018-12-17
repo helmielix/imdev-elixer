@@ -14,10 +14,8 @@ use yii\bootstrap\NavBar;
 			<span class="logo-mini"><?= Html::img('@commonpath/images/logo_mnc_play_small.png', $options=['style'=>"height: 46px; width: 46px;"])?></span> 
 			<div class="logo-lg">
 				<?= Html::img('@commonpath/images/logo_mnc_play_large.png', $options=["class"=>"mainLogo"]) ?>
-				<div class="logoText"> 
-					<span class="mainText"> CA </span> 
-					<span class="subText twoline firstline"> Commercial </span>
-					<span class="subText twoline secondline">Acquisition </span> 
+				<div class="logoText" style="padding-top: 10px;"> 
+					<span class="mainText"> GRF </span> 
 				</div>
 			</div>
     </a>

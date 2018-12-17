@@ -36,7 +36,7 @@ use common\models\Vendor;
 class Grf extends \yii\db\ActiveRecord
 {
     public $file1,$file2,$file3, $division;
-    public   $rr_date,  $item_name, $im_code, $grouping, $qty, $sn_type, $id_instruction_grf, $orafin_code, $orafin_name, $id_detail, $id_instruction, $id_instruction_detail, $brand, $warna, $qty_good, $qty_not_good, $qty_reject, $incoming_date, $team_leader, $team_name, $verified_by;
+    public   $rr_date,  $item_name, $im_code, $grouping, $qty, $sn_type, $id_instruction_grf, $orafin_code, $orafin_name, $id_detail, $id_instruction, $id_instruction_detail, $brand, $warna, $qty_good, $qty_not_good, $qty_reject, $incoming_date;
 
     public static function tableName()
     {
@@ -51,9 +51,10 @@ class Grf extends \yii\db\ActiveRecord
         return [
             [[ 'grf_type', 'status_listing', 'pic', 'id_region', 'id_division', 'status_return', 'id_vendor','requestor', 'team_leader', 'team_name'], 'integer'],
             [['purpose'], 'string'],
+
             [['grf_type_des','date_of_return'], 'safe'],
             [['grf_number', 'wo_number', 'file_attachment_1', 'file_attachment_2', 'file_attachment_3'], 'string', 'max' => 255],
-            [['pic'], 'exist', 'skipOnError' => true, 'targetClass' => Labor::className(), 'targetAttribute' => ['pic' => 'nik']],
+            // [['team_leader'], 'exist', 'skipOnError' => true, 'targetClass' => Labor::className(), 'targetAttribute' => ['team_leader' => 'nik']],
             [['grf_type'], 'exist', 'skipOnError' => true, 'targetClass' => Reference::className(), 'targetAttribute' => ['grf_type' => 'id']],
             [['requestor'], 'exist', 'skipOnError' => true, 'targetClass' => Reference::className(), 'targetAttribute' => ['requestor' => 'id']],
             [['id_region'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['id_region' => 'id']],
@@ -121,10 +122,6 @@ class Grf extends \yii\db\ActiveRecord
         return $this->hasOne(Labor::className(), ['nik' => 'team_leader']);
     }
 
-    public function getTeamName()
-    {
-        return $this->hasOne(Reference::className(), ['id' => 'team_name']);
-    }
 
     public function getIdDivision()
     {
@@ -158,6 +155,10 @@ class Grf extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Reference::className(), ['id' => 'grf_type']);
     }
+     public function getTeamName()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'team_name']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -176,7 +177,7 @@ class Grf extends \yii\db\ActiveRecord
     }
     public function getIdGrfDetail()
     {
-        return $this->hasOne(GrfDetail::className(), ['id_grf' => 'id']);
+        return $this->hasMany(GrfDetail::className(), ['id_grf' => 'id']);
     }
      public function getIdWarehouse()
     {

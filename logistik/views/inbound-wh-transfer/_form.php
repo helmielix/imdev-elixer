@@ -77,7 +77,10 @@ $datasession = Yii::$app->session->get('detailinbound');
                                             'autoclose' => true,
                                             'format' => 'yyyy-mm-dd'
                                         ]
-                                ]);
+                                ]).'<div class="has-error form-group hidden" id="arrival_date_error">
+                                <div class="help-block">"Arrival Date" cannot be blank.
+                                </div>
+                                </div>';
                             
                         },
                     ],
@@ -159,7 +162,7 @@ $datasession = Yii::$app->session->get('detailinbound');
     <?php Pjax::end(); ?>
 
     <?php //if(Yii::$app->controller->action->id == 'viewinbound' && $model->revision_remark == '')
-        echo Html::button(Yii::t('app','Report to IC'), ['id'=>'reportButton','class' => 'btn btn-warning']); ?>
+        //echo Html::button(Yii::t('app','Report to IC'), ['id'=>'reportButton','class' => 'btn btn-warning']); ?>
     <?php //if(Yii::$app->controller->action->id == 'viewinbound' && $model->status_listing == '')
         echo Html::button(Yii::t('app','Input Inbound'), ['id'=>'updateButton','class' => 'btn btn-success']); ?>
 
@@ -223,8 +226,21 @@ $datasession = Yii::$app->session->get('detailinbound');
         $.post( '<?= Url::to([$this->context->id.'/setsessiondetail']) ?>', {id: iditem[0], val: val });
     });
 
+    $('#arrival_date-id').change(function(e){
+        if ($(this).val() != '') {
+            $('#arrival_date_error').addClass('hidden');
+        }
+    });
 
-    $('#updateButton').click(function () {
+
+    $('#updateButton').click(function (e) {
+        var arrival_date = $('#arrival_date-id').val();
+        if (arrival_date == '') {
+            $('#arrival_date_error').removeClass('hidden');
+            return false;
+        }
+
+
         var form = $('#gridViewdetail-container');
         data = new FormData();
         data.append('arrival_date', $('#arrival_date-id').val() );

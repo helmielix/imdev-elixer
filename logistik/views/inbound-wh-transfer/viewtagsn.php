@@ -14,6 +14,7 @@ use common\models\StatusReference;
 use common\models\Warehouse;
 use common\models\InboundWhTransferDetailSn;
 use common\models\InboundWhTransferDetail;
+use common\models\OutboundWhTransferDetail;
 
 /* @var $this yii\web\View */
 /* @var $model inbound\models\InboundPo */
@@ -81,7 +82,7 @@ $datasession = Yii::$app->session->get('detailinbound');
 			<label>Mac Address
 				<?= Html::checkBox('macAddressCheckbox', '', ['id' => 'checkboxMacaddr']) ?>
 			</label>
-			<?= Html::a(Yii::t('app','Download Template'), [$this->context->id.'/downloadfile', 'id'=>'template'], ['id'=>'templateButton','class' => 'btn btn-primary btn-sm', 'data-method' => 'post']) ?>
+			<?= Html::a(Yii::t('app','Download Template'), ['outbound-wh-transfer/downloadfile', 'id'=>'template'], ['id'=>'templateButton','class' => 'btn btn-primary btn-sm', 'data-method' => 'post']) ?>
 			<div class="small text-danger">Check "Mac Address" for Template with Mac Address Column</div>
 		</div>
 	</div>
@@ -115,11 +116,35 @@ $datasession = Yii::$app->session->get('detailinbound');
 				'attribute' => 'brand',
 
 			],
-			'qty_good',
-			'qty_not_good',
-			'qty_reject',
-			'qty_good_dismantle',
-			'qty_not_good_dismantle',
+			[
+				'attribute' => 'qty_good',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'qty_not_good',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'qty_reject',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'qty_dismantle',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'qty_revocation',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'qty_good_rec',
+				'enableSorting' => false,
+			],
+			[
+				'attribute' => 'qty_good_for_recond',
+				'enableSorting' => false,
+			],
+			
 			[
 				'attribute' => 'sn_type',
 				'value' => function ($model){
@@ -136,6 +161,13 @@ $datasession = Yii::$app->session->get('detailinbound');
                 },
 				'filter' => ArrayHelper::map(StatusReference::find()->andWhere(['id' => [44, 41] ])->all(), 'id', 'status_listing'),
 
+            ],
+            [
+            	'label' => 'Qty Terima',
+            	'format' => 'raw',
+            	'value' => function($dataProvider){
+            		return $dataProvider->qty_detail;
+            	},
             ],
 			[
                 'class' => 'yii\grid\ActionColumn',
@@ -156,7 +188,7 @@ $datasession = Yii::$app->session->get('detailinbound');
                     },
 
                     'view' => function ($url, $model) {
-                        if(($model->status_tagsn == 41 || $model->status_tagsn == 44)){
+                        if(($model->status_tagsn == 42 /* || $model->status_tagsn == 44 */)){
                             return Html::a('<span style="margin:0px 2px;" class="label label-info">View</span>', '#', [
                                 'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/viewdetailsn', 'idInboundWhDetail' => $model->id_inbound_detail]), 'header'=> yii::t('app','Detail Serial Number')
                             ]);
@@ -164,10 +196,10 @@ $datasession = Yii::$app->session->get('detailinbound');
                     },
 
 					'restore' => function ($url, $model){
-						if(($model->status_tagsn == 41 || $model->status_tagsn == 44)){
+						if(($model->status_tagsn == 42 || $model->status_tagsn == 44)){
 							$count = InboundWhTransferDetailSn::find()->andWhere(['id_inbound_wh_detail' => $model->id_inbound_detail])->count();
 							if ($model->sn_type == 2){
-								$count = InboundWhTransferDetail::find()->select([new \yii\db\Expression('qty_good + qty_not_good + qty_reject + qty_good_dismantle + qty_not_good_dismantle as qty_good')])->andWhere(['id' => $model->id_inbound_detail])->one();
+								$count = InboundWhTransferDetail::find()->select([new \yii\db\Expression('qty_good + qty_not_good + qty_reject + qty_dismantle + qty_revocation + qty_good_rec + qty_good_for_recond as qty_good')])->andWhere(['id' => $model->id_inbound_detail])->one();
 								$count = $count->qty_good;
 							}
 							if ($count == 0){
@@ -203,6 +235,17 @@ $datasession = Yii::$app->session->get('detailinbound');
 
 </div>
 <script>
+	$('#checkboxMacaddr').click(function(){
+		var url = '<?= Url::to(['outbound-wh-transfer/downloadfile']) ?>';
+
+		if ( $('#checkboxMacaddr').is(':checked') ){
+			url = url + '?id=templatemac';
+		}else{
+			url = url + '?id=template';
+		}
+
+		$('#templateButton').attr('href', url);
+	});
 
 	$('#updateButton').click(function () {
         $('#modal').modal('show')

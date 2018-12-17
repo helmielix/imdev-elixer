@@ -1,6 +1,6 @@
 <?php
 
-namespace divisitiga\models;
+namespace common\models;
 
 use Yii;
 
@@ -45,8 +45,8 @@ class LogOutboundWhTransfer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idlog'], 'required'],
-            [['idlog', 'id_instruction_wh', 'created_by', 'updated_by', 'status_listing', 'forwarder', 'id_modul'], 'default', 'value' => null],
+            // [['idlog'], 'required'],
+            [['id_instruction_wh', 'created_by', 'updated_by', 'status_listing', 'forwarder', 'id_modul'], 'default', 'value' => null],
             [['idlog', 'id_instruction_wh', 'created_by', 'updated_by', 'status_listing', 'forwarder', 'id_modul'], 'integer'],
             [['created_date', 'updated_date'], 'safe'],
             [['revision_remark'], 'string'],

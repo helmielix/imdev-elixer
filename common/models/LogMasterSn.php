@@ -52,7 +52,7 @@ class LogMasterSn extends \yii\db\ActiveRecord
         return [
             [['id_warehouse'], 'integer'],
             [['created_date'], 'safe'],
-            [['serial_number', 'mac_address', 'last_transaction'], 'string', 'max' => 255],
+            [['serial_number', 'mac_address', 'last_transaction', 'im_code'], 'string', 'max' => 255],
         ];
     }
 

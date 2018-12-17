@@ -202,6 +202,14 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
 					]),
 				],
 			'supplier',
+            [
+                   'attribute' => 'id_warehouse',
+                   'value' => function($model){
+                        if($model->idWarehouse){
+                            return $model->idWarehouse->nama_warehouse;
+                        }
+                    }
+            ],
             // [
 				// 'label' => 'PR Number',
 				// 'value' => 'idOrafinRr.pr_number'

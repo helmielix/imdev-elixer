@@ -19,6 +19,23 @@ return [
 			]
 		],
 
+		'dbforo' => [
+			'class' => 'yii\db\Connection',
+			 'dsn' => 'pgsql:host=10.9.39.43;dbname=foro',
+			//'dsn' => 'pgsql:host=localhost;dbname=inventory',
+			'username' => 'postgres',
+			//'password' => 'postgres',
+			// 'password' => '@Admin123',
+			   'password' => 'Playmedia@2017',
+			'charset' => 'utf8',
+			'schemaMap' => [
+				'pgsql'=> [
+					'class'=>'yii\db\pgsql\Schema',
+					'defaultSchema' => 'public'
+				]
+			]
+		],
+
         'dbim' => [
             'class' => 'yii\db\Connection',
 			'dsn' => 'mysql:host=10.9.45.10;dbname=incident_manager',

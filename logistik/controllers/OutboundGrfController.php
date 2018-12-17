@@ -22,6 +22,8 @@ use common\models\SearchGrfDetail;
 use common\widgets\Displayerror;
 use common\models\UploadForm;
 use common\models\Reference;
+use common\models\UserWarehouse;
+use common\models\Warehouse;
 
 use PHPExcel;
 use PHPExcel_IOFactory;
@@ -68,6 +70,17 @@ class OutboundGrfController extends Controller
         ]);
     }
 
+    public function actionIndexreg()
+    {
+        $searchModel = new SearchOutboundGrf();
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'regtagsn');
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     public function actionIndexprintsj()
     {
         $searchModel = new SearchOutboundGrf();
@@ -78,10 +91,69 @@ class OutboundGrfController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    public function actionIndexregprintsj()
+    {
+        $searchModel = new SearchOutboundGrf();
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'regprintsj');
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
     
     public function actionIndexapprove(){
         $searchModel = new SearchOutboundGrf();
         $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'approve');
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionIndexregapprove(){
+        $searchModel = new SearchOutboundGrf();
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'regapprove');
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionIndexoverview(){
+        // $arrIdWarehouse = $this->getIdWarehouse();
+        $arrIdWarehouse = [];
+        if (Yii::$app->user->identity->id == 5) {
+            $arrIdWarehouse = ArrayHelper::getColumn(Warehouse::find()->all(),'id');
+        }else{
+            $modelUserWarehouse = UserWarehouse::find()->select('id_warehouse')->where(['id_user'=>Yii::$app->user->identity->id])->asArray()->all();
+            foreach ($modelUserWarehouse as $key => $value) {
+                array_push($arrIdWarehouse, $value['id_warehouse']);
+            }
+        }
+
+        $searchModel = new SearchOutboundGrf();
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'overview', $arrIdWarehouse);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionIndexregoverview(){
+        // $arrIdWarehouse = $this->getIdWarehouse();
+        $arrIdWarehouse = [];
+        if (Yii::$app->user->identity->id == 5) {
+            $arrIdWarehouse = ArrayHelper::getColumn(Warehouse::find()->all(),'id');
+        }else{
+            $modelUserWarehouse = UserWarehouse::find()->select('id_warehouse')->where(['id_user'=>Yii::$app->user->identity->id])->asArray()->all();
+            foreach ($modelUserWarehouse as $key => $value) {
+                array_push($arrIdWarehouse, $value['id_warehouse']);
+            }
+        }
+
+        $searchModel = new SearchOutboundGrf();
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'regoverview', $arrIdWarehouse);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -380,7 +452,7 @@ class OutboundGrfController extends Controller
                 $model->status_listing = 25;
                 $model->published_date = date('Y-m-d');
                 if(!$model->save()){
-                    return print_r($model->getErrors());
+                    return print_r('tes');
                 }
             }
             

@@ -1,0 +1,20 @@
+<div class="netpro-grf-vendor-view">
+
+	<h1 style="text-align:center; display:block; width:100$;">GOOD REQUEST FORM</h1>
+    <table id="w0" class="table table-striped table-bordered detail-view"><tr><th>No IOM / No WO</th><td>100000017</td></tr>
+<tr><th>PIC / Team Leader</th><td>Ervan Dadi</td></tr>
+<tr><th>GRF Date</th><td>Apr 14, 2018</td></tr>
+<tr><th>City</th><td>Kota Jakarta Selatan</td></tr>
+<tr><th>Purpose</th><td></td></tr></table>
+    <h4> <b> GRF Detail </b> </h4>
+
+    <div id="w1" class="grid-view"><div class="summary">Showing <b>1-1</b> of <b>1</b> item.</div>
+<table class="table table-striped table-bordered"><thead>
+<tr><th>#</th><th>Material</th><th>Needed</th><th>UOM</th></tr>
+</thead>
+<tbody>
+<tr data-key="105"><td>1</td><td>Faceplate 2 hole (OM119-06.241.688)</td><td>33</td><td>Each</td></tr>
+</tbody></table>
+</div>
+</div>
+

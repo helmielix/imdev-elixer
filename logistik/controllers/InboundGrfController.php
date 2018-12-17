@@ -25,6 +25,8 @@ use common\models\MasterItemIm;
 use common\models\MasterItemImDetail;
 use common\models\SearchMasterItemIm;
 use yii\helpers\ArrayHelper;
+use common\models\UserWarehouse;
+use common\models\Warehouse;
 
 /**
  * InboundGrfController implements the CRUD actions for InboundGrf model.
@@ -55,6 +57,16 @@ class InboundGrfController extends Controller
     {
         $searchModel = new SearchInboundGrf();
         $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'ikr');
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionIndexreg()
+    {
+        $searchModel = new SearchInboundGrf();
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'regikr');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -109,6 +121,46 @@ class InboundGrfController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'sn');
 
         return $this->render('indexsn', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+      public function actionIndexoverview(){
+        // $arrIdWarehouse = $this->getIdWarehouse();
+        $arrIdWarehouse = [];
+        if (Yii::$app->user->identity->id == 5) {
+            $arrIdWarehouse = ArrayHelper::getColumn(Warehouse::find()->all(),'id');
+        }else{
+            $modelUserWarehouse = UserWarehouse::find()->select('id_warehouse')->where(['id_user'=>Yii::$app->user->identity->id])->asArray()->all();
+            foreach ($modelUserWarehouse as $key => $value) {
+                array_push($arrIdWarehouse, $value['id_warehouse']);
+            }
+        }
+
+        $searchModel = new SearchInboundGrf();
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'overview', $arrIdWarehouse);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionIndexregoverview(){
+        // $arrIdWarehouse = $this->getIdWarehouse();
+        $arrIdWarehouse = [];
+        if (Yii::$app->user->identity->id == 5) {
+            $arrIdWarehouse = ArrayHelper::getColumn(Warehouse::find()->all(),'id');
+        }else{
+            $modelUserWarehouse = UserWarehouse::find()->select('id_warehouse')->where(['id_user'=>Yii::$app->user->identity->id])->asArray()->all();
+            foreach ($modelUserWarehouse as $key => $value) {
+                array_push($arrIdWarehouse, $value['id_warehouse']);
+            }
+        }
+
+        $searchModel = new SearchInboundGrf();
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'regoverview', $arrIdWarehouse);
+
+        return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

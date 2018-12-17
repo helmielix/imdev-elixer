@@ -10,11 +10,19 @@ use common\models\Reference;
 use common\models\Region;
 use common\models\Division;
 use common\models\Labor;
+use common\models\LaborForo;
+
 use common\models\Warehouse;
 
 /* @var $this yii\web\View */
 /* @var $model divisisatu\models\InstructionWhTransfer */
 /* @var $form yii\widgets\ActiveForm */
+$laborcek = Labor::find()->andWhere(['nik' => $model->team_leader])->exists();
+if (!$laborcek) {
+    $labor = ArrayHelper::map(LaborForo::find()->all(), 'nik','name');
+}else{
+    $labor = ArrayHelper::map(Labor::find()->all(), 'nik','nama');
+}
 ?>
 
 <div class="instruction-grf-form">
@@ -36,15 +44,15 @@ use common\models\Warehouse;
         'requiredCssClass' => 'requiredField'
     ]); ?>
     
-    <?= $form->field($model, 'grf_number')->textInput(['disabled' => true]) ?>
+    <?= $form->field($model->idGrf, 'grf_number')->textInput(['disabled' => true]) ?>
 
-    <?= $form->field($model, 'wo_number')->textInput(['disabled' => true]) ?>
+    <?= $form->field($model->idGrf, 'wo_number')->textInput(['disabled' => true]) ?>
 
     <div class="form-group">
         <label class='control-label col-sm-4'>File Attachment 1 </label>
         <div class='col-sm-6'>
             <?php if (Yii::$app->controller->action->id == 'create') {
-                echo Html::a(basename($model->file_attachment_1), ['downloadfile','id' => $model->id], $options = ['target'=>'_blank', 'data' => [
+                echo Html::a(basename($model->idGrf->file_attachment_1), ['downloadfile','id' => $model->idGrf->id], $options = ['target'=>'_blank', 'data' => [
                         'method' => 'post',
                         'params' => [
                             'data' => 'file_attachment_1',
@@ -58,7 +66,7 @@ use common\models\Warehouse;
         <label class='control-label col-sm-4'>File Attachment 2 </label>
         <div class='col-sm-6'>
             <?php if (Yii::$app->controller->action->id == 'create') {
-                echo Html::a(basename($model->file_attachment_2), ['downloadfile','id' => $model->id], $options = ['target'=>'_blank', 'data' => [
+                echo Html::a(basename($model->idGrf->file_attachment_2), ['downloadfile','id' => $model->idGrf->id], $options = ['target'=>'_blank', 'data' => [
                         'method' => 'post',
                         'params' => [
                             'data' => 'file_attachment_2',
@@ -72,7 +80,7 @@ use common\models\Warehouse;
         <label class='control-label col-sm-4' >File Attachment 3 </label>
         <div class='col-sm-6'>
             <?php if (Yii::$app->controller->action->id == 'create') {
-                echo Html::a(basename($model->file_attachment_3), ['downloadfile','id' => $model->id], $options = ['target'=>'_blank', 'data' => [
+                echo Html::a(basename($model->idGrf->file_attachment_3), ['downloadfile','id' => $model->idGrf->id], $options = ['target'=>'_blank', 'data' => [
                         'method' => 'post',
                         'params' => [
                             'data' => 'file_attachment_3',
@@ -82,46 +90,46 @@ use common\models\Warehouse;
         </div>
     </div>
 
-    <?= $form->field($model, 'grf_type')->widget(Select2::classname(), [
+    <?= $form->field($model->idGrf, 'grf_type')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => ['grf_type']])->all(), 'id','description'),
         'language' => 'en',
         // form-control select2-hidden-accessible
-        'options' => ['placeholder' => 'Select '.$model->getAttributeLabel('grf_type'), 'class' => 'input-sm'],
+        'options' => ['placeholder' => 'Select '.$model->idGrf->getAttributeLabel('grf_type'), 'class' => 'input-sm'],
         'pluginOptions' => [
         'disabled' => true],
         ]) ?>
 
-    <?= $form->field($model, 'id_division')->widget(Select2::classname(), [
+    <?= $form->field($model->idGrf, 'id_division')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Division::find()->all(), 'id','nama'),
         'language' => 'en',
         // form-control select2-hidden-accessible
-        'options' => ['placeholder' => 'Select '.$model->getAttributeLabel('id_division'), 'class' => 'input-sm'],
+        'options' => ['placeholder' => 'Select '.$model->idGrf->getAttributeLabel('id_division'), 'class' => 'input-sm'],
         'pluginOptions' => [
         'disabled' => true],
         ]) ?>
 
-    <?= $form->field($model, 'requestor')->widget(Select2::classname(), [
+    <?= $form->field($model->idGrf, 'requestor')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => ['requestor']])->all(), 'id','description'),
         'language' => 'en',
         // form-control select2-hidden-accessible
-        'options' => ['placeholder' => 'Select '.$model->getAttributeLabel('requestor'), 'class' => 'input-sm'],
+        'options' => ['placeholder' => 'Select '.$model->idGrf->getAttributeLabel('requestor'), 'class' => 'input-sm'],
         'pluginOptions' => [
         'disabled' => true],
         ]) ?>
 
      
 
-    <?= $form->field($model, 'id_region')->widget(Select2::classname(), [
+    <?= $form->field($model->idGrf, 'id_region')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Region::find()->all(), 'id','name'),
         'language' => 'en',
         // form-control select2-hidden-accessible
-        'options' => ['placeholder' => 'Select '.$model->getAttributeLabel('id_region'), 'class' => 'input-sm'],
+        'options' => ['placeholder' => 'Select '.$model->idGrf->getAttributeLabel('id_region'), 'class' => 'input-sm'],
         'pluginOptions' => [
         'disabled' => true],
         ]) ?>
 
-    <?= $form->field($model, 'team_leader')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(Labor::find()->all(), 'nik','nama'),
+    <?= $form->field($model->idGrf, 'team_leader')->widget(Select2::classname(), [
+        'data' => $labor,
         'language' => 'en',
         // form-control select2-hidden-accessible
         'options' => ['placeholder' => 'Select Leader', 'class' => 'input-sm'],
@@ -129,7 +137,7 @@ use common\models\Warehouse;
         'disabled' => true],
         ]) ?>
 
-    <?= $form->field($model, 'team_name')->widget(Select2::classname(), [
+    <?= $form->field($model->idGrf, 'team_name')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Reference::find()->where(['table_relation'=>'team_name'])->all(), 'id','description'),
         'language' => 'en',
         // form-control select2-hidden-accessible
@@ -143,7 +151,7 @@ use common\models\Warehouse;
     <?= $form->field($modelGrf->approvedBy, 'username')->textInput(['disabled' => true])->label('GRF Approved By') ?>
 
 
-    <?= $form->field($model, 'purpose')->textInput([ 'disabled' => true]) ?>
+    <?= $form->field($model->idGrf, 'purpose')->textInput([ 'disabled' => true]) ?>
 
     <?= $form->field($model, 'id_warehouse')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Warehouse::find()->all(), 'id','nama_warehouse'),

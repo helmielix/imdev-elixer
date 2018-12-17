@@ -153,7 +153,7 @@ $this->registerJsFile('@commonpath/js/popup_alert.js',['depends' => [\yii\web\Jq
                             if(Yii::$app->controller->action->id == 'index') {
 								$viewurl = 'viewinbound';
 								$header = 'Input Inbound Warehouse Transfer';
-                                if ($model->status_listing == 50){
+                                if ($model->status_listing == 52){
                                     $icon = 'plus';
                                     $viewurl = 'viewoutbound';
                                     $header = 'Data Outbound Warehouse Transfer';

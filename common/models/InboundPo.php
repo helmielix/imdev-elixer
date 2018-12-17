@@ -60,7 +60,7 @@ class InboundPo extends \yii\db\ActiveRecord
         return [
             [[ 'po_number', 'rr_number', 'tgl_sj', 'no_sj', 'id_warehouse'], 'required'],
             [[ 'file'], 'required', 'on' => 'create'],
-            [[ 'created_by', 'updated_by', 'status_listing','verified_by','approved_by'], 'integer'],
+            [[ 'created_by', 'updated_by', 'status_listing','verified_by','approved_by','id_warehouse'], 'integer'],
             [['created_date', 'updated_date'], 'safe'],
             [['file'], 'file', 'extensions' => 'pdf,jpg', 'maxSize'=>1024*1024*5],
             [['status_listing'], 'exist', 'skipOnError' => true, 'targetClass' => StatusReference::className(), 'targetAttribute' => ['status_listing' => 'id']],
@@ -91,6 +91,7 @@ class InboundPo extends \yii\db\ActiveRecord
 			'po_number'=>'PO Number',
 			'pr_number'=>'PR Number',
             'rr_number' => 'RR Number',
+            'nama_warehouse' => 'Warehouse Tujuan',
 			'id_warehouse' => 'Warehouse Penerima',
             'file' => 'File Attachment'
         ];

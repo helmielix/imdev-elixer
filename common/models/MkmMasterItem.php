@@ -30,7 +30,7 @@ use Yii;
  */
 class MkmMasterItem extends \yii\db\ActiveRecord
 {
-    public $qty_request;
+    public $qty_request, $orafin_code, $name;
     public static function tableName()
     {
         return 'mkm_master_item';

@@ -21,6 +21,9 @@ use common\models\OrafinViewMkmPrToPay;
 // $this->registerJsFile('@common/js/btn_modal.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 $listallrr = ArrayHelper::getColumn(InboundPo::find()->andWhere(['!=','status_listing',13])->all(),'rr_number');
+if (Yii::$app->controller->action->id == 'update') {
+					$listallrr ='rr_number';
+				}
 ?>
 
 <div class="inbound-po-form">
@@ -49,7 +52,9 @@ $listallrr = ArrayHelper::getColumn(InboundPo::find()->andWhere(['!=','status_li
 				'pluginOptions' => [
 					'allowClear' => true
 				],
-			]);?>
+
+			]);
+			?>
 			
 			<?php
 				$depdropUnit = [
