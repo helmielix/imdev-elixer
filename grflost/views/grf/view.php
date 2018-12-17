@@ -14,10 +14,10 @@ use common\models\Labor;
 /* @var $model divisisatu\models\InstructionWhTransfer */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Instruction Wh Transfers', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Grf', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="instruction-wh-transfer-view">    
+<div class="grf-view">    
 
 	<div class="row">
 		<div class="col-sm-6">
@@ -93,6 +93,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'options' => ['class' => 'small table table-striped table-bordered detail-view'],
 				'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
 				'attributes' => [	
+					[
+                        'attribute' => 'id_division',
+                        'value' => function($model){
+                            return $model->idDivision->nama;
+                        },
+                    ],
                     [
 						'attribute' => 'team_name',
 						'value' => function($model){
@@ -190,18 +196,26 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 			
 			[
-				'attribute' => 'orafin_code',
-				'value' => 'orafin_code',
-			],
+                'label' => 'Orafin Code',        
+                'attribute' => 'orafin_code',
+                'value' => function($model){
+                    return $model->orafin_code;                  
+                },
+            ],
 			// 'idOrafinCode.item_desc',
 			[
-				'header' => 'Nama Barang',
-				'attribute' => 'item_desc',
-                'value'=> 'idItemCode.item_desc'
-			],
+                'label' => 'Nama Barang',        
+                'attribute' => 'item_desc',
+                'value' => function($model){
+                    return $model->idItemCode->item_desc;                  
+                },
+            ],
             [
-                'header' => 'Qty Request',
+                'label' => 'Qty Request',        
                 'attribute' => 'qty_request',
+                'value' => function($model){
+                    return $model->qty_request;                  
+                },
             ],
 
             
@@ -249,7 +263,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
     ]); ?>
 		<div class="form-group field-instructionwhtransfer-revision_remark">
-			<label class="control-label col-sm-2" for="instructionwhtransfer-revision_remark">Revision Remark</label>
+			<label class="control-label col-sm-2" for="grfr-revision_remark">Revision Remark</label>
 			<div class="col-sm-6">
 			<?= Html::textArea('Grf[revision_remark]','',['rows' => '5', 'class' => 'form-control', 'id' => 'grf-revision_remark']) ?>
 			</div>
@@ -271,7 +285,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				$par = 'view';
 			}
 			echo Url::to([$this->context->id.'/createdetail']) ;?>');
-        $('#modalHeader').html('<h3> Create Detail Instruksi Warehouse Transfer</h3>');
+        $('#modalHeader').html('<h3> Create Detail GRF</h3>');
     });
 
 $('#verifyButton').click(function () {

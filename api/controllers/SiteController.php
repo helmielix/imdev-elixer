@@ -365,7 +365,7 @@ class SiteController extends ActiveController
 		    
     	$model = new Grf();
         if (Yii::$app->request->post()) {
-        	$model->detachBehavior('blameable');
+        	
         	$request = Yii::$app->request->post();
         	$opts = array('http'=>array('header' => "User-Agent:MyAgent/1.0\r\n")); 
         	// return $request;
@@ -381,6 +381,7 @@ class SiteController extends ActiveController
         	}else{
         		$model = new Grf();
         	}
+        	$model->detachBehavior('blameable');
 
 			$model->id_modul = $this->id_modul;
 			$model->id_warehouse = 2;		

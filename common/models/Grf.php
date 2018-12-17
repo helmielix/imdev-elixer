@@ -36,7 +36,7 @@ use common\models\Vendor;
 class Grf extends \yii\db\ActiveRecord
 {
     public $file1,$file2,$file3, $division;
-    public   $rr_date,  $item_name, $im_code, $grouping, $qty, $sn_type, $id_instruction_grf, $orafin_code, $orafin_name, $id_detail, $id_instruction, $id_instruction_detail, $brand, $warna, $qty_good, $qty_not_good, $qty_reject, $incoming_date;
+    public   $rr_date,  $item_name, $im_code, $grouping, $qty, $sn_type, $id_instruction_grf, $orafin_code, $orafin_name, $id_detail, $id_instruction, $id_instruction_detail, $brand, $warna, $qty_good, $qty_not_good, $qty_reject, $incoming_date, $verified_by_grf, $approved_by_grf;
 
     public static function tableName()
     {
@@ -51,13 +51,15 @@ class Grf extends \yii\db\ActiveRecord
         return [
             [[ 'grf_type', 'status_listing', 'pic', 'id_region', 'id_division', 'status_return', 'id_vendor','requestor', 'team_leader', 'team_name'], 'integer'],
             [['purpose'], 'string'],
-
-            [['grf_type_des','date_of_return'], 'safe'],
-            [['grf_number', 'wo_number', 'file_attachment_1', 'file_attachment_2', 'file_attachment_3'], 'string', 'max' => 255],
-            // [['team_leader'], 'exist', 'skipOnError' => true, 'targetClass' => Labor::className(), 'targetAttribute' => ['team_leader' => 'nik']],
+            [['grf_type_des','date_of_return','file_attachment_1', 'file_attachment_2', 'file_attachment_3'], 'safe'],
+            [['grf_type', 'requestor',  'id_region','wo_number' ,'team_leader','team_name'], 'required'],
+            [['grf_number', 'wo_number'], 'string', 'max' => 255],
+            [['pic'], 'exist', 'skipOnError' => true, 'targetClass' => Labor::className(), 'targetAttribute' => ['pic' => 'nik']],
             [['grf_type'], 'exist', 'skipOnError' => true, 'targetClass' => Reference::className(), 'targetAttribute' => ['grf_type' => 'id']],
             [['requestor'], 'exist', 'skipOnError' => true, 'targetClass' => Reference::className(), 'targetAttribute' => ['requestor' => 'id']],
             [['id_region'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['id_region' => 'id']],
+            [['file1', 'file2', 'file3'], 'required', 'on'=>'create'],
+            [['file1', 'file2', 'file3'], 'required', 'on'=>'createothers']
         ];
     }
 
@@ -177,7 +179,7 @@ class Grf extends \yii\db\ActiveRecord
     }
     public function getIdGrfDetail()
     {
-        return $this->hasMany(GrfDetail::className(), ['id_grf' => 'id']);
+        return $this->hasOne(GrfDetail::className(), ['id_grf' => 'id']);
     }
      public function getIdWarehouse()
     {

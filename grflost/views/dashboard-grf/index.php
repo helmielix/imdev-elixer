@@ -69,13 +69,24 @@ $this->registerCssFile('@commonpath/css/jquery-ui_override.css',['depends' => [\
 						'attribute'=>'note',
 						'format' => 'raw',
 						'value'=>function ($searchModel) {
-							// INBOUND PO
+							// GRF ikr
 							if($searchModel->table_source == "GRF Verification") {
 								return $searchModel->note .
 									Html::a('View',Url::to(['grf/indexverify#viewverify','id'=>$searchModel->task]));
 							} elseif ($searchModel->table_source == "GRF Approval"){
 								return $searchModel->note .
 									Html::a('View',Url::to(['grf/indexapprove#viewapprove','id'=>$searchModel->task]));
+							} elseif ($searchModel->table_source == "GRF Revision"){
+								return $searchModel->note .
+									Html::a('View',Url::to(['grf/index#view','id'=>$searchModel->task]));
+							}
+							// Grf Others
+							if($searchModel->table_source == "GRF Verification") {
+								return $searchModel->note .
+									Html::a('View',Url::to(['grf/indexothersverify#viewverify','id'=>$searchModel->task]));
+							} elseif ($searchModel->table_source == "GRF Approval"){
+								return $searchModel->note .
+									Html::a('View',Url::to(['grf/indexothersapprove#viewapprove','id'=>$searchModel->task]));
 							} elseif ($searchModel->table_source == "GRF Revision"){
 								return $searchModel->note .
 									Html::a('View',Url::to(['grf/index#view','id'=>$searchModel->task]));

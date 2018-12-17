@@ -3,10 +3,12 @@
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
 use common\models\MkmMasterItem;
 use common\models\InstructionGrfDetail;
 use common\models\MasterItemIm;
+use common\models\Reference;
 
 $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerJs(
@@ -36,7 +38,7 @@ $this->registerJs(
             'id' => 'pjaxindexdetail',
             'timeout' => false, 
             'enablePushState' => false,         
-            'clientOptions' => ['method' => 'POST', 'backdrop' => false, 
+            'clientOptions' => ['method' => 'GET', 'backdrop' => false, 
             // "container" => "#pjaxindexdetail"
             ],
         ]); ?>
@@ -78,7 +80,7 @@ $this->registerJs(
                     // $item = MkmMasterItem::find()->select(['item_desc'])->andWhere(['item_code' => $model->orafin_code])->one();
                     // return $item->item_desc;
                 // },
-                'value'=> 'idOrafinCode.name'
+                // 'value'=> 'idOrafinCode.name'
             ],
             [
                 'header' => 'Grouping Barang',
@@ -87,7 +89,8 @@ $this->registerJs(
                     // $item = MkmMasterItem::find()->select(['item_desc'])->andWhere(['item_code' => $model->orafin_code])->one();
                     // return $item->item_desc;
                 // },
-               'value'=> 'idOrafinCode.grouping'
+               'value'=> 'idOrafinCode.referenceGrouping.description',
+               'filter' => ArrayHelper::map( Reference::find()->andWhere(['table_relation' => 'grouping'])->all(), 'id', 'description' ),
             ],
             'qty_request',
             [
@@ -100,6 +103,7 @@ $this->registerJs(
                 // },
                 
                 'value'=> 'idOrafinCode.referenceSn.description',
+                'filter' => ArrayHelper::map( Reference::find()->andWhere(['table_relation' => 'sn_type'])->all(), 'id', 'description' ),
             ],
 
             // [
@@ -110,15 +114,35 @@ $this->registerJs(
                 'label' => 'Status',
                 'format' => 'raw',
                 'value' => function($model){
-                    if(InstructionGrfDetail::find()->where(['and',['id_instruction_grf'=>$model->id_grf]])->exists()){
-                        return "<span class='label label-success'  >Closed</span>";
-                    }else if(!MasterItemIm::find()->where(['orafin_code'=>$model->orafin_code])->exists() ){
+                    if(!MasterItemIm::find()->where(['orafin_code'=>$model->orafin_code])->exists() ){
                         return "<span class='label label-danger' >Not Registered</span>";
-                    }       
-                    else{ 
+                    }else{ 
+                        $modeldetail = InstructionGrfDetail::find()
+                            ->select([new \yii\db\Expression('sum(qty_good + qty_not_good + qty_reject + qty_dismantle + qty_revocation + qty_good_rec + qty_good_for_recond) as qty_good')])
+                            ->joinWith('idMasterItemIm')
+                            ->andWhere(['id_instruction_grf' => Yii::$app->session->get('idGrf')])
+                            ->andWhere(['orafin_code' => $model->orafin_code])->one();
+                        if ( isset($modeldetail->qty_good) && $modeldetail->qty_good == $model->qty_request ) {
+                            // return $model;
+                            return "<span class='label label-success'  >Closed</span>";                            
+                        }    
+                        
                         return "<span class='label label-primary'>Open</span>";
                     }
-                }
+                    // if ($modeldetail !== null) {
+                        
+                    // }else{
+                    // }
+
+                    // if(InstructionGrfDetail::find()->where(['and',['id_instruction_grf'=>$model->id_grf]])->exists()){
+                    // }else if(!MasterItemIm::find()->where(['orafin_code'=>$model->orafin_code])->exists() ){
+                    //     return "<span class='label label-danger' >Not Registered</span>";
+                    // }       
+                    // else{ 
+                    //     return "<span class='label label-primary'>Open</span>";
+                    // }
+                },
+                'visible' => (Yii::$app->controller->action->id == 'indexdetail')
             ],
 
             [
@@ -126,12 +150,24 @@ $this->registerJs(
                 'template'=>'{create}',
                 'buttons'=>[
                     'create' => function ($url, $model) {
-                        if(!InstructionGrfDetail::find()->where(['and',['id_instruction_grf'=>$model->id_grf]])->exists()){
+                        $modeldetail = InstructionGrfDetail::find()
+                            ->select([new \yii\db\Expression('sum(qty_good + qty_not_good + qty_reject + qty_dismantle + qty_revocation + qty_good_rec + qty_good_for_recond) as qty_good')])
+                            ->joinWith('idMasterItemIm')
+                            ->andWhere(['orafin_code' => $model->orafin_code])->one();
+                        if ( !isset($modeldetail->qty_good) || $modeldetail->qty_good < $model->qty_request ) {
                             return Html::a('<span style="margin:0px 2px" class="label label-success">Choose</span>', '#createdetail?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
                                 'title' => Yii::t('app', 'view'), 'class' => 'createsButton', 'value'=>Url::to([$this->context->id.'/createdetail', 'orafinCode' => $model->orafin_code]), 'header'=> yii::t('app','GRF Detail')
                             ]);
-                    }
-                },
+                        }
+                        
+                        // return "<span class='label label-primary'>Open</span>";
+
+                        // if(!InstructionGrfDetail::find()->where(['and',['id_instruction_grf'=>$model->id_grf]])->exists()){
+                        //     return Html::a('<span style="margin:0px 2px" class="label label-success">Choose</span>', '#createdetail?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
+                        //         'title' => Yii::t('app', 'view'), 'class' => 'createsButton', 'value'=>Url::to([$this->context->id.'/createdetail', 'orafinCode' => $model->orafin_code]), 'header'=> yii::t('app','GRF Detail')
+                        //     ]);
+                        // }
+                    },
                     // 'create' => function ($url, $model) {
                     //         if(!MasterItemIm::find()->where(['orafin_code'=>$model->orafin_code])->exists() ){
                     //             return "";
@@ -149,6 +185,8 @@ $this->registerJs(
                             
                     // },
                 ],
+                
+                // 'visible' => (Yii::$app->controller->action->id == 'indexdetail')
             ],
             
         ],
@@ -159,7 +197,7 @@ $this->registerJs(
         <?php if(Yii::$app->controller->action->id == 'indexdetail')
             echo Html::button(Yii::t('app','Previous'), ['id'=>'previousButton','class' => 'btn btn-primary']);  ?>
          <?php if(Yii::$app->controller->action->id == 'indexdetail')
-        Html::button(Yii::t('app','Submit Instruction'), ['id'=>'submitButton','class' => 'btn btn-success']); ?>        
+            echo Html::button(Yii::t('app','Submit Instruction'), ['id'=>'submitButton','class' => 'btn btn-success']); ?>        
     </p>
     <?php } ?>
 </div>

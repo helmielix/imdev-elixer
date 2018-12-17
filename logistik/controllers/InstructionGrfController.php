@@ -68,7 +68,7 @@ class InstructionGrfController extends Controller
 
 		$this->layout = 'blank';
 		$searchModel = new SearchGrfDetail();
-        $dataProvider = $searchModel->search(Yii::$app->request->post(), Yii::$app->session->get('idGrf'));
+        $dataProvider = $searchModel->searchByGrfDetail(Yii::$app->request->queryParams, Yii::$app->session->get('idGrf'));
 
         return $this->render('indexdetail', [
             'searchModel' => $searchModel,
@@ -118,7 +118,7 @@ class InstructionGrfController extends Controller
 		$model = $this->findModel($id);
 		
 		$searchModel = new SearchGrfDetail();
-        $dataProvider = $searchModel->search(Yii::$app->request->post(), $id);
+        $dataProvider = $searchModel->searchByGrfDetail(Yii::$app->request->queryParams, $id);
 		
 		// Yii::$app->session->set('idGrf', $model->id);
 		
@@ -183,7 +183,7 @@ class InstructionGrfController extends Controller
         $modelGrf = Grf::findOne($id);        
         $model = new InstructionGrf();
         $model->id = $modelGrf->id;
-        $model->status_listing = 43;
+        $model->status_listing = 53;
         $model->status_return = $modelGrf->status_return;
         $model->id_modul = $this->id_modul;
         // $model->id_grf = $modelGrf->id;
@@ -208,7 +208,7 @@ class InstructionGrfController extends Controller
 
 
         if ($model->load(Yii::$app->request->post())) {
-       		$model->status_listing = 1;
+       		// $model->status_listing = 1;
             if (!$model->save()){
     			return Displayerror::pesan($model->getErrors());
     		}
@@ -371,6 +371,14 @@ class InstructionGrfController extends Controller
 
                 }else{
                     $newRec = true;
+                }
+
+                $modelGrfDetail = GrfDetail::find()->andWhere(['orafin_code' => $orafinCode])->andWhere(['id_grf' => $id])->one();
+                $totalqty = $model->qty_good + $model->qty_not_good + $model->qty_reject + $model->qty_dismantle + $model->qty_revocation + $model->qty_good_rec + $model->qty_good_for_recond;
+
+                if ($totalqty > $modelGrfDetail->qty_request) {
+                	// return "Input Qty melebihi Qty Request.";
+                	return json_encode(['status' => 'error', 'id' => $values[0], 'pesan' => "Input Qty melebihi Qty Request."]);
                 }
 
                 if(!$model->save()){
@@ -612,6 +620,7 @@ class InstructionGrfController extends Controller
             $arr['s_revocation']      = $model->s_revocation;
             $arr['s_good_rec']        = $model->s_good_rec;
             $arr['s_good_for_recond'] = $model->s_good_for_recond;
+            // $arr['req_request'] 	  = array_sum( $session );
             return json_encode($arr);
         }
     }
@@ -688,9 +697,23 @@ class InstructionGrfController extends Controller
         $this->layout = 'blank';
         $model = $this->findModel($id);
         $modelGrf = Grf::findOne($id);
+        $idwarehouse = $model->id_warehouse;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            if ( $idwarehouse != $model->id_warehouse ){
+                $modelcek = InstructionGrfDetail::find()->andWhere(['id_instruction_grf' => $id])->count();
+                if ($modelcek > 0){
+                    return 'Hapus semua item sebelum mengganti Warehouse';
+                }
+            }
+
+            if (!$model->save()){
+                return Displayerror::pesan($model->getErrors());
+            }
+
+            // $this->createLog($model);
+            return 'success';
+            
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -1033,16 +1056,42 @@ class InstructionGrfController extends Controller
 
     }
     public function actionSubmit($id){
-        $model = InstructionGrf::findOne($id);
-        $modelDetail = InstructionGrfDetail::find()->andWhere(['id_instruction_grf' => $id])->count();
-        if ($modelDetail > 0){
+        $model = $this->findModel($id);;
+        $readyverify = 1;
+        $totalqty = 0;
+        // return var_dump($model->idGrf->idGrfDetail);
+        
+        $status = 53;
+        $modelgrfdetail = GrfDetail::find()->andWhere(['id_grf' => $id])->all();
+        foreach ($modelgrfdetail as $grfdetail) {        
+            $modeldetail = InstructionGrfDetail::find()
+                ->select([new \yii\db\Expression('sum(qty_good + qty_not_good + qty_reject + qty_dismantle + qty_revocation + qty_good_rec + qty_good_for_recond) as qty_good')])
+                ->joinWith('idMasterItemIm')
+                ->andWhere(['id_instruction_grf' => Yii::$app->session->get('idGrf')])
+                ->andWhere(['orafin_code' => $grfdetail->orafin_code])->one();
+            if ( !isset($modeldetail->qty_good) || $modeldetail->qty_good < $model->qty_request ) {
+                // ada yg belum closed
+                $readyverify++;
+            }
+            $totalqty += $modeldetail->qty_good;
+	        
+        }
+
+        
+        
+        
+        if ($readyverify == 1){
             if($model->status_listing == 2 || $model->status_listing == 3){
                 $model->status_listing = 2;
             }else{
                 $model->status_listing = 1;
             }
         }else{
-            $model->status_listing = 7;
+            if ($totalqty == 0) {                
+                $model->status_listing = 53; //new grf
+            }else{
+                $model->status_listing = 43; //partial
+            }
         }
         
         if (!$model->save()){
@@ -1090,7 +1139,22 @@ class InstructionGrfController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->status_listing = 13;
+        $model->save();
+        $this->createLog($model);
+
+        foreach($model->getIdInstructionGrfDetail as $modeldetail){
+            $modeldetail->qty_good              = 0;
+            $modeldetail->qty_not_good          = 0;
+            $modeldetail->qty_reject            = 0;
+            $modeldetail->qty_dismantle         = 0;
+            $modeldetail->qty_revocation        = 0;
+            $modeldetail->qty_good_rec          = 0;
+            $modeldetail->qty_good_for_recond   = 0;
+            $modeldetail->save();
+            // update stock at model beforesave
+        }
 
         return $this->redirect(['index']);
     }

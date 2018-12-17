@@ -94,11 +94,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value'=>$model->idGrf->idRegion->name,
                         
                     ],
-                    [
-                        'attribute'=>'pic',
-                        'value'=>$model->idGrf->picName->nama,
+                    // [
+                    //     'attribute'=>'pic',
+                    //     'value'=>$model->idGrf->picName->nama,
             
-                    ],
+                    // ],
                     [
                         'attribute'=>'purpose',
                         'value'=>$model->idGrf->purpose,

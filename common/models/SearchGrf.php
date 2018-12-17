@@ -127,7 +127,7 @@ class SearchGrf extends Grf
             'date(created_date)' => $this->created_date,
             'date(updated_date)' => $this->updated_date,
             'updated_by' => $this->updated_by,
-            'grf.status_listing' => $this->status_listing,
+            'status_listing' => $this->status_listing,
             'status_return' => $this->status_return,
             'pic' => $this->pic,
             'id_region' => $this->id_region,

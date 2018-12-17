@@ -4,7 +4,9 @@ return [
 
 		'db' => [
 			'class' => 'yii\db\Connection',
-			 'dsn' => 'pgsql:host=10.9.38.46;dbname=inventory',
+			 // 'dsn' => 'pgsql:host=10.9.38.46;dbname=inventory',
+			 'dsn' => 'pgsql:host=10.9.39.46;dbname=inventorydev',
+			 // 'dsn' => 'pgsql:host=10.9.39.47;dbname=inventorydev',
 			//'dsn' => 'pgsql:host=localhost;dbname=inventory',
 			'username' => 'postgres',
 			//'password' => 'postgres',

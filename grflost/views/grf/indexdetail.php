@@ -50,16 +50,16 @@ $this->registerJs(
             ['class' => 'yii\grid\SerialColumn'],
 			[
                 'class' => 'yii\grid\ActionColumn',
-                'template'=>' {delete}',
+                'template'=>'{view} {delete}',
                 'buttons'=>[
                     'view' => function ($url, $model) {
-                         return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-pencil"></span>', '#updatedetail?id='.$model->id.'&header=Detail_Material_GRF', [
-                            'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/updatedetail', 'id' => $model->id]), 'header'=> yii::t('app','Update Detail Barang')
+                        return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-pencil"></span>', '#', [
+                            'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/updatedetail', 'idDetail' => $model->id]), 'header'=> yii::t('app','Update Detail Barang')
                         ]);
                     },
                     'delete' => function ($url, $model) {
                         return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-trash"></span>', '#', [
-                            'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/deletedetail', 'id' => $model->id]), 'header'=> yii::t('app','Material GRF Vendor')
+                            'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/deletedetail', 'idDetail' => $model->id]), 'header'=> yii::t('app','Material GRF Vendor')
                         ]);
                     },
                 ],

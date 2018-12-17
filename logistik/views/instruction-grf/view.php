@@ -8,7 +8,7 @@ use common\models\LaborForo;
 use common\models\Labor;
 
 /* @var $this yii\web\View */
-/* @var $model divisisatu\models\InstructionWhTransfer */
+/* @var $model divisisatu\models\InstructionGrf */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Instruction Wh Transfers', 'url' => ['index']];
@@ -121,13 +121,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute'=>'team_leader',
                         'value'=> function($model){
-                            return $model->team_leader;
-                            // $laborcek = Labor::find()->andWhere(['nik' => $model->team_leader])->exists();
-                            // if (!$laborcek) {
-                            //     $labor = LaborForo::find()->andWhere(['nik' => $model->team_leader])->one();
-                            // }else{
-                            //     return Labor::find()->andWhere(['nik' => $model->team_leader])->one()->nama;
-                            // }
+                            // return $model->idGrf->team_leader;
+                            $laborcek = Labor::find()->andWhere(['nik' => $model->idGrf->team_leader])->exists();
+                            if (!$laborcek) {
+                                return LaborForo::find()->andWhere(['nik' => $model->idGrf->team_leader])->one()->name;                                
+                            }else{
+                                return Labor::find()->andWhere(['nik' => $model->idGrf->team_leader])->one()->nama;
+                            }
                             // if($model->idGrf->teamLeader)return $model->idGrf->teamLeader->nama;
                         }            
                     ],
@@ -174,11 +174,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]) ?>
         </div>
-        <div class="col-sm-12">
-            <?php if(Yii::$app->controller->action->id == 'view' && $model->status_listing != 6)
-                echo Html::button(Yii::t('app','Update'), ['id'=>'updateButton','class' => 'btn btn-primary']); ?>
-            <?php if(Yii::$app->controller->action->id == 'view' && ($model->status_listing == 1 || $model->status_listing == 6 || $model->status_listing == 7))
-                echo Html::button(Yii::t('app','Delete'), ['id'=>'deleteButton','class' => 'btn btn-danger']); ?>
+        <div class="col-sm-12">            
         </div>
     </div>
     
@@ -190,6 +186,12 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
     
     
+    <?php if($this->context->action->id == 'view'){ ?>
+    <?php if(Yii::$app->controller->action->id == 'view' && $model->status_listing != 6)
+        echo Html::button(Yii::t('app','Update'), ['id'=>'updateButton','class' => 'btn btn-primary']); ?>
+    <?php if(Yii::$app->controller->action->id == 'view' && ($model->status_listing == 1 || $model->status_listing == 6 || $model->status_listing == 7))
+        echo Html::button(Yii::t('app','Delete'), ['id'=>'deleteButton','class' => 'btn btn-danger']); ?>
+    <?php } ?>  
     
     <?php if($this->context->action->id != 'view'){ ?>
     <p> 
@@ -229,7 +231,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="form-group field-instructionwhtransfer-revision_remark">
             <label class="control-label col-sm-2" for="instructionwhtransfer-revision_remark">Revision Remark</label>
             <div class="col-sm-6">
-            <?= Html::textArea('InstructionWhTransfer[revision_remark]','',['rows' => '5', 'class' => 'form-control', 'id' => 'instruction-wh-transfer-revision_remark']) ?>
+            <?= Html::textArea('InstructionGrf[revision_remark]','',['rows' => '5', 'class' => 'form-control', 'id' => 'instruction-wh-transfer-revision_remark']) ?>
             </div>
         </div>
         <br />
@@ -269,7 +271,7 @@ $('#revisionButton').click(function(){
     if (selectedAction == 'reject') url = '<?php echo Url::to([$this->context->id.'/reject', 'id' => $model->id]) ;?>';
 
     data = new FormData();
-    data.append( 'InstructionWhTransfer[revision_remark]', $( '#instruction-wh-transfer-revision_remark' ).val() );
+    data.append( 'InstructionGrf[revision_remark]', $( '#instruction-wh-transfer-revision_remark' ).val() );
     var button = $(this);
     button.prop('disabled', true);
     button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');

@@ -19,7 +19,7 @@ class SearchGrfDetail extends GrfDetail
     public function rules()
     {
         return [
-            [['id', 'id_grf', 'qty_request','qty_good','qty_not_good','qty_reject','qty_dismantle','qty_revocation','qty_good_rec', 'qty_good_for_recond','id_instruction_grf'], 'integer'],
+            [['id', 'id_grf', 'qty_request','qty_good','qty_not_good','qty_reject','qty_dismantle','qty_revocation','qty_good_rec','qty_good_for_recond','id_instruction_grf'], 'integer'],
             [['orafin_code', 'name','grouping','brand','type','warna','sn_type','im_code', 'description','item_desc'], 'safe'],
         ];
     }
@@ -56,7 +56,6 @@ class SearchGrfDetail extends GrfDetail
               'instruction_grf_detail.qty_dismantle',
               'instruction_grf_detail.qty_revocation',
               'instruction_grf_detail.qty_good_rec',
-              'instruction_grf_detail.qty_good_for_recond',
               'grf_detail.id_grf',
               // 'mkm_master_item.item_desc',
         ]);
@@ -68,9 +67,38 @@ class SearchGrfDetail extends GrfDetail
         return $dataProvider;
         }
 
+    public function searchByGrfDetail($params, $idGrf)
+    {
+        $query = GrfDetail::find()
+        ->joinWith('idGrf')
+        ->joinWith('idOrafinCode')
+        ->select([
+              'grf_detail.id as id',
+              'grf_detail.orafin_code',
+              'grf_detail.qty_request',
+              'master_item_im.name',
+              // 'instruction_grf_detail.id',
+              // 'instruction_grf_detail.qty_good',
+              // 'instruction_grf_detail.qty_not_good',
+              // 'instruction_grf_detail.qty_reject',
+              // 'instruction_grf_detail.qty_dismantle',
+              // 'instruction_grf_detail.qty_revocation',
+              // 'instruction_grf_detail.qty_good_rec',
+              // 'instruction_grf_detail.qty_good_for_recond',
+              'grf_detail.id_grf',
+              // 'mkm_master_item.item_desc',
+        ]);
+
+        $query->andWhere(['grf_detail.id_grf' => $idGrf]);
+        // $query->leftJoin('mkm_master_item', 'mkm_master_item.item_code = grf_detail.orafin_code');
+        $dataProvider = $this->_search($params, $query);
+
+        return $dataProvider;
+    }
+
   
     
-        public function _search($params, $query)
+      public function _search($params, $query)
       {
 
         // add conditions that should always apply here
@@ -79,6 +107,21 @@ class SearchGrfDetail extends GrfDetail
             'query' => $query,
             'pagination' => false,
         ]);
+
+        $dataProvider->sort->attributes['name'] = [
+            'asc' => ['master_item_im.name' => SORT_ASC],
+            'desc' => ['master_item_im.name' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['grouping'] = [
+            'asc' => ['master_item_im.grouping' => SORT_ASC],
+            'desc' => ['master_item_im.grouping' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['sn_type'] = [
+            'asc' => ['master_item_im.sn_type' => SORT_ASC],
+            'desc' => ['master_item_im.sn_type' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -95,15 +138,16 @@ class SearchGrfDetail extends GrfDetail
             'grf_detail.qty_request' => $this->qty_request,
         ]);
 
-        $query->andFilterWhere(['like', 'grf_detail.orafin_code', $this->orafin_code])
+        $query->andFilterWhere(['ilike', 'grf_detail.orafin_code', $this->orafin_code])
               ->andFilterWhere(['ilike', 'master_item_im.name', $this->name])
               ->andFilterWhere(['ilike', 'mkm_master_item.item_desc', $this->item_desc])
-              ->andFilterWhere(['ilike', 'grouping', $this->grouping])
+              ->andFilterWhere(['=', 'master_item_im.grouping', $this->grouping])
               ->andFilterWhere(['ilike', 'master_item_im.im_code', $this->im_code])
-              // ->andFilterWhere(['ilike', 'master_item_im.name', $this->name])
-              ->andFilterWhere(['ilike', 'master_item_im.brand', $this->brand])
-              ->andFilterWhere(['ilike', 'master_item_im.warna', $this->warna]);
+              
+              ->andFilterWhere(['=', 'master_item_im.brand', $this->brand])
+              ->andFilterWhere(['=', 'master_item_im.sn_type', $this->sn_type])
+              ->andFilterWhere(['=', 'master_item_im.warna', $this->warna]);
 
         return $dataProvider;
-    }
+      }
 }

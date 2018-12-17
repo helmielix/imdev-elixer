@@ -125,7 +125,7 @@ if(Yii::$app->controller->action->id == 'indexlog')
                             if(Yii::$app->controller->action->id == 'indexoverview') $viewurl = 'viewoverview';
                             if(Yii::$app->controller->action->id == 'indexlog') $viewurl = 'viewlog';
                              return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id.'&header=Detail_Grf', [
-                                        'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app','Detail Busdev Pre-Survey')
+                                        'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app','Detail Good Request Form')
                
                                 ]);
                         }
