@@ -211,7 +211,7 @@ $('#createButton').click(function () {
                     $('#modal').modal('show')
                         .find('#modalContent')
                         .load('<?php 
-                        $goto = ($model->isNewRecord) ? '/indexdetail' : '/view';
+                        $goto = ($model->isNewRecord) ? '/indexdetail' : '/indexdetail';
                         echo Url::to([$this->context->id.$goto, 'id' => $model->id]) ;?>');
                     $('#modalHeader').html('<h3>Detail Intruction Grf</h3>');
                 } else {

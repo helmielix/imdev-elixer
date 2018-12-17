@@ -10,6 +10,7 @@ use dosamigos\datepicker\DatePicker;
 use kartik\export\ExportMenu;
 
 use common\models\Reference;
+use common\models\Division;
 
 $this->title = Yii::t('app','Good Request Form');
 // if(Yii::$app->controller->action->id == 'index') 
@@ -104,14 +105,14 @@ function getFilterRequestor(){
                 'buttons'=>[
                      'view' => function ($url, $model) {
                          if(Yii::$app->controller->action->id == 'index' && !isset($model->status_listing)){
-                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-plus"></span>', '#create?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
-                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/create','id' => $model->id]), 'header'=> yii::t('app','')
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-plus"></span>', '#create?id='.$model->id.'&header=Detail_Good_Request_Form', [
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/create','id' => $model->id]), 'header'=> yii::t('app','Detail Good Request Form')
                             ]);
                         } 
                         else {
                             if(Yii::$app->controller->action->id == 'index') {
                                 $viewurl = 'view';
-                                $header = 'Create';
+                                $header = 'Detail Good Request Form';
                             }
 
                             if(Yii::$app->controller->action->id == 'indexverify') {
@@ -149,9 +150,12 @@ function getFilterRequestor(){
                 'attribute'=>'id_division',
                 'label'=> 'Division',
                 'value'=>'idGrf.idDivision.nama',
+                'filter' => ArrayHelper::map( Division::find()->all(),'id','nama' ),
             ],
-            [   'attribute'=>'grf_type',
+            [
+               'attribute'=>'grf_type',
                 'value'=>'idGrf.grfType.description',
+                'filter' => ArrayHelper::map( Reference::find()->andWhere(['table_relation' => 'grf_type'])->all(),'id','description' ),
             ],
             'wo_number',
             [
@@ -161,13 +165,13 @@ function getFilterRequestor(){
                 },
                 'filter' => getFilterRequestor(),
             ],
-            [
-                'attribute' => 'pic',
-                'value' => function($model){
-                    if($model->picName)
-                    return $model->picName->nama;
-                }
-            ],
+            // [
+            //     'attribute' => 'pic',
+            //     'value' => function($model){
+            //         if($model->picName)
+            //         return $model->picName->nama;
+            //     }
+            // ],
             
             
 

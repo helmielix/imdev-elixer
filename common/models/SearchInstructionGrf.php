@@ -43,8 +43,8 @@ class SearchInstructionGrf extends InstructionGrf
     public function search($params, $id_modul, $action)
     {
         $query = InstructionGrf::find();
-        // $query->joinWith('idGrf.idDivision');
-        $query->joinWith('idGrf', true, 'FULL JOIN');
+        $query->joinWith('idGrf.idDivision');
+        // $query->joinWith('idGrf', true, 'FULL JOIN');
         $query->select([ 
             'grf.grf_type',
             'grf.grf_number',
@@ -110,22 +110,26 @@ class SearchInstructionGrf extends InstructionGrf
             'sort'=> ['defaultOrder' => ['created_date'=>SORT_DESC]]
         ]);
         
-        // $dataProvider->sort->attributes['instruction_number'] = [
-        //     'asc' => ['instruction_wh_transfer.instruction_number' => SORT_ASC],
-        //     'desc' => ['instruction_wh_transfer.instruction_number' => SORT_DESC],
-        // ];
-        // $dataProvider->sort->attributes['delivery_target_date'] = [
-        //     'asc' => ['instruction_wh_transfer.delivery_target_date' => SORT_ASC],
-        //     'desc' => ['instruction_wh_transfer.delivery_target_date' => SORT_DESC],
-        // ];
-        // $dataProvider->sort->attributes['wh_destination'] = [
-        //     'asc' => ['instruction_wh_transfer.wh_destination' => SORT_ASC],
-        //     'desc' => ['instruction_wh_transfer.wh_destination' => SORT_DESC],
-        // ];
-        // $dataProvider->sort->attributes['wh_origin'] = [
-        //     'asc' => ['instruction_wh_transfer.wh_origin' => SORT_ASC],
-        //     'desc' => ['instruction_wh_transfer.wh_origin' => SORT_DESC],
-        // ];
+        $dataProvider->sort->attributes['grf_number'] = [
+            'asc' => ['grf.grf_number' => SORT_ASC],
+            'desc' => ['grf.grf_number' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['id_division'] = [
+            'asc' => ['grf.id_division' => SORT_ASC],
+            'desc' => ['grf.id_division' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['grf_type'] = [
+            'asc' => ['grf.grf_type' => SORT_ASC],
+            'desc' => ['grf.grf_type' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['wo_number'] = [
+            'asc' => ['grf.wo_number' => SORT_ASC],
+            'desc' => ['grf.wo_number' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['requestor'] = [
+            'asc' => ['grf.requestor' => SORT_ASC],
+            'desc' => ['grf.requestor' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -153,12 +157,15 @@ class SearchInstructionGrf extends InstructionGrf
             'created_date' => $this->created_date,
             'updated_date' => $this->updated_date,
             'requestor' => $this->requestor,
+            'grf_type' => $this->grf_type,
+            'division.id' => $this->id_division,
         ]);
 
        $query->andFilterWhere(['ilike', 'grf.grf_number', $this->grf_number])
             ->andFilterWhere(['ilike', 'grf.wo_number', $this->wo_number])
             ->andFilterWhere(['ilike', 'grf.purpose', $this->purpose])
-            ->andFilterWhere(['ilike', 'division.nama', $this->id_division]);
+            // ->andFilterWhere(['ilike', 'division.nama', $this->id_division])
+            ;
 
         return $dataProvider;
     }

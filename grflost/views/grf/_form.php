@@ -17,9 +17,9 @@ use kartik\depdrop\DepDrop;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="instruction-wh-transfer-form">
+<div class="grf-form">
 
-    <?php $form = ActiveForm::begin([
+   <?php $form = ActiveForm::begin([
         'enableClientValidation' => true,
         'id' => 'createForm',
         'layout' => 'horizontal',
@@ -34,7 +34,7 @@ use kartik\depdrop\DepDrop;
             ],
         ],
         'requiredCssClass' => 'requiredField'
-    ]); ?>
+    ]);  ?>
 	
     <?php $form->field($model, 'grf_number')->textInput(['disabled' => true]) ?>
 
@@ -240,7 +240,7 @@ $(document).ready(function () {
     }
     $(document.body).on('change', '#requestor_id', function () {
         val = $('#requestor_id').val();
-        if(val == 22 ) {
+        if(val == 22 || val == 23 ) {
           $('.vendor').show();
         } else {
           $('.vendor').hide();

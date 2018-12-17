@@ -49,6 +49,7 @@ $this->registerCss('
                     [
         
 		                'attribute' => 'qty_request',
+		                'contentOptions' => ['id' => 'qty_request'],
 		                // 'value' => $model->idGrf->idGrfDetail->qty_request,
                     ],
 
@@ -92,19 +93,19 @@ $this->registerCss('
 			'name',
 			[
 				'attribute' => 'brand',
-				// 'value' => 'referenceBrand.description',
+				'value' => 'referenceBrand.description',
 				 'filter' => Arrayhelper::map(Reference::find()->andWhere(['table_relation' => 'brand'])->all(), 'id', 'description'),
 			],
 			// 'type',
 			[
 				'attribute' => 'warna',
-				// 'value' => 'referenceWarna.description',
+				'value' => 'referenceWarna.description',
 				 'filter' => Arrayhelper::map(Reference::find()->andWhere(['table_relation' => 'warna'])->all(), 'id', 'description'),
 			],
 			
 			[
 				'attribute' => 'sn_type',
-				// 'value' => 'referenceSn.description',
+				'value' => 'referenceSn.description',
 				'filter' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => 'sn_type'])->all(), 'id_grouping', 'description'),
 			],
 			// 'stock_qty',
@@ -563,6 +564,8 @@ $this->registerCss('
 				currentRow.find('td:eq(10)').html(result.s_revocation);
 				currentRow.find('td:eq(11)').html(result.s_good_rec);
 				currentRow.find('td:eq(12)').html(result.s_good_for_recond);
+
+				console.log(result.s_good_for_recond+' total request');
             },
             complete: function () {
                 stock = currentRow.find('td:eq('+col+')').text();

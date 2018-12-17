@@ -45,8 +45,8 @@ class SearchLogGrf extends LogGrf
     public function search($params,  $action){
         $query = LogGrf::find();
         $query->select([ 
-            'log_grf.id',
             'log_grf.idlog',
+            'log_grf.id',
             'log_grf.grf_type',
             'log_grf.grf_number',
             'log_grf.wo_number',
@@ -121,6 +121,7 @@ class SearchLogGrf extends LogGrf
 
         // grid filtering conditions
         $query->andFilterWhere([
+            'idlog' => $this->idlog,
             'id' => $this->id,
             'grf_type' => $this->grf_type,
             'requestor' => $this->requestor,

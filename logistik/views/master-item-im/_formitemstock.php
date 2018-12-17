@@ -60,11 +60,12 @@ use kartik\select2\Select2;
 
 		<?= $form->field($model, 's_reject')->textInput() ?>
 
-		<?= $form->field($model, 's_good_dismantle')->textInput() ?>
+		<?= $form->field($model, 's_dismantle')->textInput() ?>
 
-		<?= $form->field($model, 's_not_good_dismantle')->textInput() ?>
+		<?= $form->field($model, 's_revocation')->textInput() ?>
 		
 		<?= $form->field($model, 's_good_rec')->textInput() ?>
+		<?= $form->field($model, 's_good_for_recond')->textInput() ?>
 
 
 		<?php if (!$model->isNewRecord):?>

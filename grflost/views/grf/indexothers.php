@@ -84,7 +84,7 @@ function getFilterGrf(){
 			<div class="col-sm-12">
 				<p>
 					<?php if (Yii::$app->controller->action->id == 'indexothers') { ?>
-						<?=  Html::a('Create', '#create?header=Create Good Request Form', ['class' => 'btn btn-success', 'id' => 'createModal', 'value'=>Url::to(['grf/createothers']), 'header'=> yii::t('app','Create Good Request Form')]) ; ?>
+						<?=  Html::a('Create', '#createothers?header=Create Good Request Form', ['class' => 'btn btn-success', 'id' => 'createModal', 'value'=>Url::to(['grf/createothers']), 'header'=> yii::t('app','Create Good Request Form')]) ; ?>
 					<?php } ?>
 				</p>
 			</div>

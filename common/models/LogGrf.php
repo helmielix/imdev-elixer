@@ -49,14 +49,9 @@ class LogGrf extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[ 'grf_type', 'status_listing', 'pic', 'id_region', 'id_division', 'status_return', 'id_vendor','requestor', 'team_leader', 'team_name'], 'integer'],
-            [['purpose'], 'string'],
-            [['grf_type_des','date_of_return'], 'safe'],
-            [['grf_number', 'wo_number', 'file_attachment_1', 'file_attachment_2', 'file_attachment_3'], 'string', 'max' => 255],
-            [['pic'], 'exist', 'skipOnError' => true, 'targetClass' => Labor::className(), 'targetAttribute' => ['pic' => 'nik']],
-            [['grf_type'], 'exist', 'skipOnError' => true, 'targetClass' => Reference::className(), 'targetAttribute' => ['grf_type' => 'id']],
-            [['requestor'], 'exist', 'skipOnError' => true, 'targetClass' => Reference::className(), 'targetAttribute' => ['requestor' => 'id']],
-            [['id_region'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['id_region' => 'id']],
+            [[ 'grf_type', 'status_listing', 'pic', 'id_region', 'id_division', 'status_return', 'id_vendor','requestor', 'team_leader', 'team_name','id','idlog'], 'integer'],
+            [['grf_type_des','date_of_return','id','idlog'], 'safe'],
+            
         ];
     }
 
@@ -83,6 +78,7 @@ class LogGrf extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'idlog' => 'ID Log',
             'id' => 'ID',
             'grf_number' => 'Nomor GRF',
             'wo_number' => 'No WO/IOM',

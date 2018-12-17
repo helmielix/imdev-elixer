@@ -65,6 +65,8 @@ return [
             'instruction-grf/currentstock',
             'instruction-grf/setsessiondetail',
             'instruction-grf/revisegrf',
+
+            'master-item-im/createstock',
         ]
     ],
     'params' => $params,

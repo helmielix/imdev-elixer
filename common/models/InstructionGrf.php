@@ -169,7 +169,7 @@ class InstructionGrf extends \yii\db\ActiveRecord
     }
      public function getIdInstructionGrfDetail()
     {
-        return $this->hasOne(InstructionGrfDetail::className(), ['id_instruction_grf' => 'id']);
+        return $this->hasMany(InstructionGrfDetail::className(), ['id_instruction_grf' => 'id']);
     }
 
 

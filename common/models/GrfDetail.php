@@ -34,7 +34,7 @@ class GrfDetail extends \yii\db\ActiveRecord
     {
         return [
             [['id_grf', 'qty_request', 'status_return'], 'integer'],
-            [['name', 'grouping'],'safe'],
+            [['name', 'grouping','item_desc'],'safe'],
             [['orafin_code'], 'string', 'max' => 255],
             [['id_grf'], 'exist', 'skipOnError' => true, 'targetClass' => Grf::className(), 'targetAttribute' => ['id_grf' => 'id']],
         ];
