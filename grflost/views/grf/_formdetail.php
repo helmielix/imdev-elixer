@@ -33,7 +33,7 @@ use common\models\MasterItemIm;
         'requiredCssClass' => 'requiredField'
     ]); ?>
 
-	<?= $form->field($model->idOrafinCode, 'item_code')->textInput(['disabled' => true]) ?>
+	<?= $form->field($model, 'orafin_code')->textInput(['disabled' => true]) ?>
 	<?= $form->field($model, 'qty_request')->textInput(['maxlength' => true]) ?>
 	
 	
@@ -49,7 +49,19 @@ use common\models\MasterItemIm;
 </div>
 
 <script>
+	<?php 
+		$qString = Yii::$app->request->getQueryParam('par');
+		$id = null;
+		
+		if ($qString == 'viewothers'){
+			$goto = '/viewothers';
+		}else{
+			$goto = '/view';
+			// $id = Yii::$app->session->get('idInstProd');
+		}
+	?>
 $('#updateButton').click(function () {
+	// alert($qString);
     var form = $('#updateForm');
     data = form.data("yiiActiveForm");
     $.each(data.attributes, function() {
@@ -73,7 +85,7 @@ $('#updateButton').click(function () {
 				if(response == 'success') {					
 					$('#modal').modal('show')
 						.find('#modalContent')
-						.load('<?php echo Url::to([$this->context->id.'/view', 'id' => Yii::$app->session->get('idInstWhTr')]) ;?>');
+						.load('<?php echo Url::to([$this->context->id.$goto, 'id' => $model->id_grf]) ;?>');
 					$('#modalHeader').html('<h3>Detail Instruksi Warehouse Transfer</h3>');
 				} else {
 					alert('error with message: ' + response);

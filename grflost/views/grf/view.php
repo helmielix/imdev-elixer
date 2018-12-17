@@ -10,6 +10,7 @@ use yii\helpers\ArrayHelper;
 use common\models\Reference;
 use common\models\Region;
 use common\models\Labor;
+use common\models\User;
 /* @var $this yii\web\View */
 /* @var $model divisisatu\models\InstructionWhTransfer */
 
@@ -102,6 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
 						'attribute' => 'team_name',
 						'value' => function($model){
+							if($model->teamName)
 							return $model->teamName->description;
 						},
 						'filter' => Arrayhelper::map(Reference::find()->andWhere(['table_relation' => 'team_name'])->all(), 'id', 'description'),
@@ -123,6 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'team_leader',
                         'value' => function($model){
+                        	if($model->team_leader)
                             return Labor::find()->andWhere(['nik' => $model->team_leader])->one()->nama;
                         },
                     ],
@@ -137,26 +140,27 @@ $this->params['breadcrumbs'][] = $this->title;
                         },                        
                     ],
                     [
-                        'attribute' => 'verified_by_grf',
+                        'attribute' => 'verified_by',
                         'label' => 'Verified By',
                         'value' => function ($model){
-                            if ( is_numeric($model->verified_by_grf) ){
-                                return User::findOne($model->verified_by_grf)->name;
+                            if ( is_numeric($model->verified_by) ){
+                                return User::findOne($model->verified_by)->name;
                             }
                         },
                         'visible' => ($model->status_listing > 3),
                     ],
                     [
-                        'attribute' => 'approved_by_grf',
-                        'label' => 'Verified By',
+                        'attribute' => 'approved_by',
+                        'label' => 'Approved By',
                         'value' => function ($model){
-                            if ( is_numeric($model->approved_by_grf) ){
-                                return User::findOne($model->approved_by_grf)->name;
+                            if ( is_numeric($model->approved_by) ){
+                                return User::findOne($model->approved_by)->name;
                             }
                         },
                         'visible' => ($model->status_listing > 4),
                     ],
                     'purpose:ntext',
+                    'revision_remark:ntext',
 				],
 			]) ?>
 		</div>
@@ -217,7 +221,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->qty_request;                  
                 },
             ],
-
+            [
+                'label' => 'UOM',        
+                'attribute' => 'item_uom_code',
+                'value' => function($model){
+                    return $model->idItemCode->item_uom_code;                  
+                },
+            ],
             
         ],
     ]); ?>
@@ -316,7 +326,7 @@ $('#revisionButton').click(function(){
 	if (selectedAction == 'reject') url = '<?php echo Url::to([$this->context->id.'/reject', 'id' => $model->id]) ;?>';
 
 	data = new FormData();
-	data.append( 'Grf[revision_remark]', $( '#instruction-wh-transfer-revision_remark' ).val() );
+	data.append( 'Grf[revision_remark]', $( '#grf-revision_remark' ).val() );
 	var button = $(this);
 	button.prop('disabled', true);
 	button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
@@ -376,7 +386,7 @@ $('#updateButton').click(function () {
 	$('#modal').modal('show')
 		.find('#modalContent')
 		.load('<?php echo Url::to([$this->context->id.'/update', 'id' => $model->id]) ;?>');
-	$('#modalHeader').html('<h3> Update Warehouse Transfer Instruction</h3>');
+	$('#modalHeader').html('<h3> Update GRF Others</h3>');
 });
 
 $('#deleteButton').click(function () {

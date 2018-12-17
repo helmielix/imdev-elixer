@@ -46,7 +46,8 @@ function getFilterStatus() {
 			39 => 'Need Revise by IM',
 			5 => 'Approved',
 			4 => 'Verified',
-			6 => 'Rejected',
+            6 => 'Rejected',
+			7 => 'Drafted',
 		];
 } ;
 
@@ -115,7 +116,7 @@ function getFilterGrf(){
                             if(Yii::$app->controller->action->id == 'indexothersapprove') $viewurl = 'viewothersapprove';
                             if(Yii::$app->controller->action->id == 'indexothersoverview') $viewurl = 'viewoverview';
                              return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id.'&header=Detail_Grf', [
-                                        'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app','Detail Busdev Pre-Survey')
+                                        'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app','Detail GRF Others')
                
                                 ]);
                         }
@@ -138,6 +139,7 @@ function getFilterGrf(){
             [
                 'attribute' => 'grf_type',
                 'value' => function($model){
+                    if($model->grfType)
                     return $model->grfType->description;
                 },
                 'filter' => getFilterGrf(),

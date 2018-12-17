@@ -36,7 +36,7 @@ use common\models\Vendor;
 class Grf extends \yii\db\ActiveRecord
 {
     public $file1,$file2,$file3, $division;
-    public   $rr_date,  $item_name, $im_code, $grouping, $qty, $sn_type, $id_instruction_grf, $orafin_code, $orafin_name, $id_detail, $id_instruction, $id_instruction_detail, $brand, $warna, $qty_good, $qty_not_good, $qty_reject, $incoming_date, $verified_by_grf, $approved_by_grf;
+    public   $rr_date,  $item_name, $im_code, $grouping, $qty, $sn_type, $id_instruction_grf, $orafin_code, $orafin_name, $id_detail, $id_instruction, $id_instruction_detail, $brand, $warna, $qty_good, $qty_not_good, $qty_reject, $incoming_date, $verified_by_grf, $approved_by_grf, $team_name, $team_leader;
 
     public static function tableName()
     {
@@ -49,17 +49,17 @@ class Grf extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[ 'grf_type', 'status_listing', 'pic', 'id_region', 'id_division', 'status_return', 'id_vendor','requestor', 'team_leader', 'team_name'], 'integer'],
+            [[ 'grf_type', 'status_listing', 'pic', 'id_region', 'id_division', 'status_return', 'id_vendor','requestor', 'team_leader'], 'integer'],
             [['purpose'], 'string'],
-            [['grf_type_des','date_of_return','file_attachment_1', 'file_attachment_2', 'file_attachment_3'], 'safe'],
-            [['grf_type', 'requestor',  'id_region','wo_number' ,'team_leader','team_name'], 'required'],
+            [['grf_type_des','date_of_return','file_attachment_1', 'file_attachment_2', 'file_attachment_3', 'pic_vendor'], 'safe'],
+            [['grf_type', 'requestor',  'id_region','wo_number'], 'required'],
             [['grf_number', 'wo_number'], 'string', 'max' => 255],
             [['pic'], 'exist', 'skipOnError' => true, 'targetClass' => Labor::className(), 'targetAttribute' => ['pic' => 'nik']],
             [['grf_type'], 'exist', 'skipOnError' => true, 'targetClass' => Reference::className(), 'targetAttribute' => ['grf_type' => 'id']],
             [['requestor'], 'exist', 'skipOnError' => true, 'targetClass' => Reference::className(), 'targetAttribute' => ['requestor' => 'id']],
             [['id_region'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['id_region' => 'id']],
             [['file1', 'file2', 'file3'], 'required', 'on'=>'create'],
-            [['file1', 'file2', 'file3'], 'required', 'on'=>'createothers']
+            [['file1'], 'required', 'on'=>'createothers']
         ];
     }
 
@@ -91,7 +91,7 @@ class Grf extends \yii\db\ActiveRecord
             'wo_number' => 'No WO/IOM',
             'grf_type' => 'Tipe GRF',
             'requestor' => 'Requestor',
-            'file_attachment_1' => 'File Attachment 1',
+            'file_attachment_1' => 'File Attachment 1 (WO/IOM)',
             'file_attachment_2' => 'File Attachment 2',
             'file_attachment_3' => 'File Attachment 3',
             'purpose' => 'Purpose',
@@ -104,7 +104,7 @@ class Grf extends \yii\db\ActiveRecord
             'pic' => 'Pic',
             'id_region' => 'Region',
             'id_division' => 'Division',
-            'file1' => 'File Attachment 1',
+            'file1' => 'File Attachment 1 (WO/IOM)',
             'file2' => 'File Attachment 2',
             'file3' => 'File Attachment 3',
             'id_vendor' => 'Vendor',

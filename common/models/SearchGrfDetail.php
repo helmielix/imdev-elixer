@@ -15,12 +15,12 @@ class SearchGrfDetail extends GrfDetail
     /**
      * @inheritdoc
      */
-    public $qty_good_rec, $sn_type, $description, $id_instruction_grf, $item_desc;
+    public $qty_good_rec, $sn_type, $description, $id_instruction_grf, $item_desc, $item_uom_code;
     public function rules()
     {
         return [
-            [['id', 'id_grf', 'qty_request','qty_good','qty_not_good','qty_reject','qty_dismantle','qty_revocation','qty_good_rec','qty_good_for_recond','id_instruction_grf'], 'integer'],
-            [['orafin_code', 'name','grouping','brand','type','warna','sn_type','im_code', 'description','item_desc'], 'safe'],
+            [['id', 'id_grf', 'qty_request','qty_good','qty_not_good','qty_reject','qty_dismantle_good','qty_dismantle_ng','qty_revocation','qty_good_rec','qty_good_for_recond','id_instruction_grf'], 'integer'],
+            [['orafin_code', 'name','grouping','brand','type','warna','sn_type','im_code', 'description','item_desc', 'item_uom_code'], 'safe'],
         ];
     }
 
@@ -43,19 +43,20 @@ class SearchGrfDetail extends GrfDetail
     public function search($params, $idGrf)
     {
         $query = GrfDetail::find()
-        ->joinWith('idGrf.idInGrf.idInstructionGrfDetail')
-				// ->joinWith('idItemCode')
+        // ->joinWith('idGrf.idInGrf.idInstructionGrfDetail')
+        ->joinWith('idGrf')
+				->joinWith('idItemCode')
         ->select([
               'grf_detail.id as id',
               'grf_detail.orafin_code',
               'grf_detail.qty_request',
-              'instruction_grf_detail.id',
-              'instruction_grf_detail.qty_good',
-              'instruction_grf_detail.qty_not_good',
-              'instruction_grf_detail.qty_reject',
-              'instruction_grf_detail.qty_dismantle',
-              'instruction_grf_detail.qty_revocation',
-              'instruction_grf_detail.qty_good_rec',
+              // 'instruction_grf_detail.id',
+              // 'instruction_grf_detail.qty_good',
+              // 'instruction_grf_detail.qty_not_good',
+              // 'instruction_grf_detail.qty_reject',
+              // 'instruction_grf_detail.qty_dismantle_good',
+              // 'instruction_grf_detail.qty_revocation',
+              // 'instruction_grf_detail.qty_good_rec',
               'grf_detail.id_grf',
               // 'mkm_master_item.item_desc',
         ]);
@@ -71,12 +72,12 @@ class SearchGrfDetail extends GrfDetail
     {
         $query = GrfDetail::find()
         ->joinWith('idGrf')
-        ->joinWith('idOrafinCode')
+        ->joinWith('idItemCode')
         ->select([
               'grf_detail.id as id',
               'grf_detail.orafin_code',
               'grf_detail.qty_request',
-              'master_item_im.name',
+              // 'master_item_im.name',
               // 'instruction_grf_detail.id',
               // 'instruction_grf_detail.qty_good',
               // 'instruction_grf_detail.qty_not_good',
@@ -86,7 +87,7 @@ class SearchGrfDetail extends GrfDetail
               // 'instruction_grf_detail.qty_good_rec',
               // 'instruction_grf_detail.qty_good_for_recond',
               'grf_detail.id_grf',
-              // 'mkm_master_item.item_desc',
+              'mkm_master_item.item_desc',
         ]);
 
         $query->andWhere(['grf_detail.id_grf' => $idGrf]);
@@ -141,6 +142,7 @@ class SearchGrfDetail extends GrfDetail
         $query->andFilterWhere(['ilike', 'grf_detail.orafin_code', $this->orafin_code])
               ->andFilterWhere(['ilike', 'master_item_im.name', $this->name])
               ->andFilterWhere(['ilike', 'mkm_master_item.item_desc', $this->item_desc])
+              ->andFilterWhere(['ilike', 'mkm_master_item.item_uom_code', $this->item_uom_code])
               ->andFilterWhere(['=', 'master_item_im.grouping', $this->grouping])
               ->andFilterWhere(['ilike', 'master_item_im.im_code', $this->im_code])
               
