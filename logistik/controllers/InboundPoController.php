@@ -16,6 +16,7 @@ use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use common\widgets\Email;
+use common\widgets\Displayerror;
 
 use common\models\OrafinRr;
 use common\models\SearchOrafinRr;
@@ -570,7 +571,7 @@ class InboundPoController extends Controller
 					$this->createLog($model);
 					$arrAuth = ['/inbound-po/index'];
 	                $header = 'Alert Need Revise INBOUND PO';
-	                $subject = 'This document is waiting your verify. Please click this link document : '.Url::base(true).'/inbound-po/index#view?id='.$model->id.'&header=Detail_INBOUND_PO';
+	                $subject = 'This document is waiting your Revise. Please click this link document : '.Url::base(true).'/inbound-po/index#view?id='.$model->id.'&header=Detail_INBOUND_PO';
 	                Email::sendEmail($arrAuth,$header,$subject);
 					return 'success';
 				} else {
@@ -1307,6 +1308,7 @@ class InboundPoController extends Controller
                         InboundPoDetailSn::deleteAll('id_inbound_po_detail = '.$idInboundPoDetail);
                         $error = $model->getErrors();
                         $error['line'] = [$periksa.$row];
+                        return Displayerror::pesan($model->getErrors());
                         return print_r($model->getErrors());
                     }else{
                     	$inboundPo = InboundPo::findOne($modelInboundPoDetail->id_inbound_po);

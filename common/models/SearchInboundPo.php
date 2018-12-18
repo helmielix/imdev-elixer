@@ -19,7 +19,7 @@ class SearchInboundPo extends InboundPo
     {
         return [
             [['id',  'created_by', 'updated_by', 'status_listing', 'verified_by'], 'integer'],
-            [['created_date', 'updated_date','pr_number','po_number','supplier','tgl_sj','rr_number', 'item_name','im_code','brand','warna','grouping','qty_rr','qty','qty_good','qty_not_good','qty_reject','orafin_name','orafin_code','sn_type','id_inbound', 'type','id_warehouse'], 'safe'],
+            [['created_date', 'updated_date','pr_number','po_number','supplier','tgl_sj','rr_number', 'item_name','im_code','brand','warna','grouping','qty_rr','qty','qty_good','qty_not_good','qty_reject','orafin_name','orafin_code','sn_type','id_inbound', 'type','id_warehouse','uom'], 'safe'],
         ];
     }
 
@@ -95,24 +95,28 @@ class SearchInboundPo extends InboundPo
             $dataProvider = $this->_search($params, $query);
         }else if($action == 'verify') {
             $query->andFilterWhere(['or',['=','inbound_po.status_listing', 1],['=','inbound_po.status_listing', 2],['=','inbound_po.status_listing', 4]])
+            ->leftJoin('warehouse', 'warehouse.id = inbound_po.id_warehouse')
             // ->orderBy(['inbound_po.updated_date' => SORT_DESC])
             ;
             $dataProvider = $this->_search($params, $query);
         }else if($action == 'approve') {
             $query->andFilterWhere(['or',['=','inbound_po.status_listing', 5],['=','inbound_po.status_listing', 4],])
-            ->andWhere(['in','id_warehouse',$idWarehouse])
+            ->andWhere(['in','inbound_po.id_warehouse',$idWarehouse])
+            ->leftJoin('warehouse', 'warehouse.id = inbound_po.id_warehouse')
             // ->orderBy(['inbound_po.updated_date' => SORT_DESC])
             ;
             $dataProvider = $this->_search($params, $query);
         }else if($action == 'overview') {
             $query->andFilterWhere(['!=','inbound_po.status_listing', 13])
-            ->andWhere(['in','id_warehouse',$idWarehouse])
+            ->andWhere(['in','inbound_po.id_warehouse',$idWarehouse])
+            ->leftJoin('warehouse', 'warehouse.id = inbound_po.id_warehouse')
             // ->orderBy(['inbound_po.updated_date' => SORT_DESC])
             ;
             $dataProvider = $this->_search($params, $query);
         } else if ($action == 'tagsn') {
             $query->andFilterWhere(['in','inbound_po.status_listing' ,[5,35,42,48]])
-                ->andWhere(['in','id_warehouse',$idWarehouse])
+                ->andWhere(['in','inbound_po.id_warehouse',$idWarehouse])
+                ->leftJoin('warehouse', 'warehouse.id = inbound_po.id_warehouse')
                 // ->orderBy(['inbound_po.updated_date' => SORT_DESC])
                 ;
                 $dataProvider = $this->_search($params, $query);
@@ -134,6 +138,7 @@ class SearchInboundPo extends InboundPo
                     'master_item_im.brand',
                     'master_item_im.warna',
                     'master_item_im.type',
+                    'master_item_im.uom',
                     
                 ])
                 ->andFilterWhere(['=','inbound_po_detail.id_inbound_po',$param])
@@ -151,14 +156,15 @@ class SearchInboundPo extends InboundPo
                     // 'orafin_view_mkm_pr_to_pay.rcv_quantity_received as qty',
                     'inbound_po.rr_number',
                     'master_item_im.grouping as grouping',
-                    // 'master_item_im.id as id_item_im',
+                    // 'master_item_im.uom',
+                    'master_item_im.uom as uom',
                     // 'inbound_po_detail.id as id_inbound_po_detail',
                     'inbound_po_detail.qty_rr',
 
                 ])
                 
                 ->andFilterWhere(['=','inbound_po.id',$param])
-                ->groupBy(['inbound_po.id','inbound_po_detail.id_inbound_po','inbound_po_detail.orafin_code','master_item_im.name','master_item_im.orafin_code','inbound_po_detail.qty_rr','master_item_im.sn_type','inbound_po.rr_number','master_item_im.grouping']);
+                ->groupBy(['inbound_po.id','inbound_po_detail.id_inbound_po','inbound_po_detail.orafin_code','master_item_im.name','master_item_im.orafin_code','inbound_po_detail.qty_rr','master_item_im.sn_type','inbound_po.rr_number','master_item_im.grouping','master_item_im.uom']);
 
                 $dataProvider = new ActiveDataProvider([
                     'query' => $query,
@@ -181,6 +187,7 @@ class SearchInboundPo extends InboundPo
                 $query->andFilterWhere(['ilike', 'master_item_im.name', $this->orafin_name])
                 // ->andFilterWhere(['ilike', 'orafin_view_mkm_pr_to_pay.pr_item_code', $this->orafin_code])
                 ->andFilterWhere(['ilike', 'master_item_im.orafin_code', $this->orafin_code])
+                ->andFilterWhere(['=', 'master_item_im.uom', $this->uom])
                 ->andFilterWhere(['=', 'master_item_im.grouping', $this->grouping]);
                 return $dataProvider;
         }else if ($action == 'indexdetail') {
@@ -221,6 +228,7 @@ class SearchInboundPo extends InboundPo
                 $query->andFilterWhere(['ilike', 'orafin_view_mkm_pr_to_pay.pr_item_description', $this->orafin_name])
                 ->andFilterWhere(['ilike', 'orafin_view_mkm_pr_to_pay.pr_item_code', $this->orafin_code])
                 ->andFilterWhere(['ilike', 'master_item_im.grouping', $this->grouping])
+                ->andFilterWhere(['=', 'master_item_im.uom', $this->uom])
                 ->andFilterWhere(['=', 'sn_type', $this->sn_type]);
                 return $dataProvider;
         }
@@ -307,14 +315,15 @@ class SearchInboundPo extends InboundPo
         
         $query->andFilterWhere(['ilike', 'rr_number', $this->rr_number])
             ->andFilterWhere(['ilike', 'po_number', $this->po_number])
-            ->andFilterWhere(['ilike', 'warehouse.nama_warehouse', $this->nama_warehouse])
+            ->andFilterWhere(['ilike', 'nama_warehouse', $this->id_warehouse])
             ->andFilterWhere(['ilike', 'supplier', $this->supplier])
-            ->andFilterWhere(['ilike', 'master_item_im.name', $this->item_name])
-            ->andFilterWhere(['ilike', 'im_code', $this->im_code])
-            ->andFilterWhere(['ilike', 'brand', $this->brand])
-            ->andFilterWhere(['ilike', 'warna', $this->warna])
-            ->andFilterWhere(['ilike', 'grouping', $this->grouping])
-            ->andFilterWhere(['ilike', 'type', $this->type])
+            ->andFilterWhere(['=', 'master_item_im.name', $this->item_name])
+            ->andFilterWhere(['=', 'im_code', $this->im_code])
+            ->andFilterWhere(['=', 'brand', $this->brand])
+            ->andFilterWhere(['=', 'warna', $this->warna])
+            ->andFilterWhere(['=', 'grouping', $this->grouping])
+            ->andFilterWhere(['=', 'type', $this->type])
+            ->andFilterWhere(['=', 'uom', $this->uom])
             
             ->andFilterWhere(['ilike', 'pr_number', $this->pr_number]);
 

@@ -28,7 +28,7 @@ use yii\behaviors\BlameableBehavior;
  */
 class InboundPo extends \yii\db\ActiveRecord
 {
-    public   $rr_date,  $item_name, $im_code, $grouping, $qty, $sn_type, $id_inbound_po, $orafin_code, $orafin_name, $id_detail, $id_inbound, $id_inbound_detail, $brand, $warna, $qty_good, $qty_not_good, $qty_reject, $id_item_im, $type, $req_good_qty, $qty_rr, $file;
+    public   $rr_date,  $item_name, $im_code, $grouping, $qty, $sn_type, $id_inbound_po, $orafin_code, $orafin_name, $id_detail, $id_inbound, $id_inbound_detail, $brand, $warna, $qty_good, $qty_not_good, $qty_reject, $id_item_im, $type, $req_good_qty, $qty_rr, $file,$uom;
 	
     public static function tableName()
     {
@@ -61,7 +61,7 @@ class InboundPo extends \yii\db\ActiveRecord
             [[ 'po_number', 'rr_number', 'tgl_sj', 'no_sj', 'id_warehouse'], 'required'],
             [[ 'file'], 'required', 'on' => 'create'],
             [[ 'created_by', 'updated_by', 'status_listing','verified_by','approved_by','id_warehouse'], 'integer'],
-            [['created_date', 'updated_date'], 'safe'],
+            [['created_date', 'updated_date','uom'], 'safe'],
             [['file'], 'file', 'extensions' => 'pdf,jpg', 'maxSize'=>1024*1024*5],
             [['status_listing'], 'exist', 'skipOnError' => true, 'targetClass' => StatusReference::className(), 'targetAttribute' => ['status_listing' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
@@ -93,7 +93,8 @@ class InboundPo extends \yii\db\ActiveRecord
             'rr_number' => 'RR Number',
             'nama_warehouse' => 'Warehouse Tujuan',
 			'id_warehouse' => 'Warehouse Penerima',
-            'file' => 'File Attachment'
+            'file' => 'File Attachment',
+            'uom' => 'UOM',
         ];
     }
 

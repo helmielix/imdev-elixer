@@ -24,6 +24,8 @@ $this->registerCss('
 	background-color: #FDFEFD;
 }
 ');
+
+// echo "<!-- ".var_dump($datasession)." -->";
 ?>
 <div class="instruction-wh-transfer-detail-index">
 	<div class="row">
@@ -692,6 +694,5 @@ $this->registerCss('
             .find('#modalContent')
             .load($(this).attr('value'));
         $('#modalHeader').html('<h3> '+ $(this).attr('header') +'</h3>');
-    });
-
+    });    
 </script>

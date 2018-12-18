@@ -143,6 +143,14 @@ function filterstatusdetail(){
                 },
                 'filter' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => 'item_type'])->all(), 'id', 'description'),
             ],
+            [
+                'attribute' => 'uom',
+                'value' => function($model){
+                    return Reference::findOne($model->uom)->description;
+                },
+                'filter' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => 'uom'])->all(), 'id', 'description'),
+            ],
+
 			'qty',
             'qty_good',
             'qty_not_good',

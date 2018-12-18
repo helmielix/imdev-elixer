@@ -178,7 +178,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     
-    <h3>Detail Warehouse Transfers Instruction</h3>
+    <!-- <h3>Detail Warehouse Transfers Instruction</h3> -->
     <?= $this->render('indexdetail', [
         'model' => $model,
         'searchModel' => $searchModel,

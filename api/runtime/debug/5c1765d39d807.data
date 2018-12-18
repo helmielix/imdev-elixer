@@ -1,0 +1,721 @@
+a:11:{s:6:"config";a:5:{s:10:"phpVersion";s:6:"5.6.31";s:10:"yiiVersion";s:8:"2.0.11.2";s:11:"application";a:8:{s:3:"yii";s:8:"2.0.11.2";s:4:"name";s:14:"My Application";s:7:"version";s:3:"1.0";s:8:"language";s:5:"en-US";s:14:"sourceLanguage";s:5:"en-US";s:7:"charset";s:5:"UTF-8";s:3:"env";s:3:"dev";s:5:"debug";b:1;}s:3:"php";a:5:{s:7:"version";s:6:"5.6.31";s:6:"xdebug";b:0;s:3:"apc";b:0;s:8:"memcache";b:0;s:9:"memcached";b:0;}s:10:"extensions";a:31:{s:22:"yiisoft/yii2-bootstrap";a:3:{s:4:"name";s:22:"yiisoft/yii2-bootstrap";s:7:"version";s:7:"2.0.6.0";s:5:"alias";a:1:{s:14:"@yii/bootstrap";s:50:"/opt/lampp/htdocs/im/vendor/yiisoft/yii2-bootstrap";}}s:16:"yiisoft/yii2-gii";a:3:{s:4:"name";s:16:"yiisoft/yii2-gii";s:7:"version";s:7:"2.0.5.0";s:5:"alias";a:1:{s:8:"@yii/gii";s:44:"/opt/lampp/htdocs/im/vendor/yiisoft/yii2-gii";}}s:18:"mdmsoft/yii2-admin";a:3:{s:4:"name";s:18:"mdmsoft/yii2-admin";s:7:"version";s:7:"2.7.0.0";s:5:"alias";a:1:{s:10:"@mdm/admin";s:46:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin";}}s:18:"yiisoft/yii2-faker";a:3:{s:4:"name";s:18:"yiisoft/yii2-faker";s:7:"version";s:7:"2.0.3.0";s:5:"alias";a:1:{s:10:"@yii/faker";s:46:"/opt/lampp/htdocs/im/vendor/yiisoft/yii2-faker";}}s:18:"yiisoft/yii2-debug";a:3:{s:4:"name";s:18:"yiisoft/yii2-debug";s:7:"version";s:7:"2.0.9.0";s:5:"alias";a:1:{s:10:"@yii/debug";s:46:"/opt/lampp/htdocs/im/vendor/yiisoft/yii2-debug";}}s:24:"rmrevin/yii2-fontawesome";a:3:{s:4:"name";s:24:"rmrevin/yii2-fontawesome";s:7:"version";s:8:"2.17.1.0";s:5:"alias";a:1:{s:24:"@rmrevin/yii/fontawesome";s:52:"/opt/lampp/htdocs/im/vendor/rmrevin/yii2-fontawesome";}}s:18:"cebe/yii2-gravatar";a:3:{s:4:"name";s:18:"cebe/yii2-gravatar";s:7:"version";s:7:"1.1.0.0";s:5:"alias";a:1:{s:14:"@cebe/gravatar";s:60:"/opt/lampp/htdocs/im/vendor/cebe/yii2-gravatar/cebe/gravatar";}}s:25:"kartik-v/yii2-krajee-base";a:3:{s:4:"name";s:25:"kartik-v/yii2-krajee-base";s:7:"version";s:7:"1.8.8.0";s:5:"alias";a:1:{s:12:"@kartik/base";s:53:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-krajee-base";}}s:24:"yiisoft/yii2-swiftmailer";a:3:{s:4:"name";s:24:"yiisoft/yii2-swiftmailer";s:7:"version";s:7:"2.0.7.0";s:5:"alias";a:1:{s:16:"@yii/swiftmailer";s:52:"/opt/lampp/htdocs/im/vendor/yiisoft/yii2-swiftmailer";}}s:25:"dmstr/yii2-adminlte-asset";a:3:{s:4:"name";s:25:"dmstr/yii2-adminlte-asset";s:7:"version";s:7:"2.4.2.0";s:5:"alias";a:1:{s:6:"@dmstr";s:53:"/opt/lampp/htdocs/im/vendor/dmstr/yii2-adminlte-asset";}}s:28:"kartik-v/yii2-widget-depdrop";a:3:{s:4:"name";s:28:"kartik-v/yii2-widget-depdrop";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:15:"@kartik/depdrop";s:56:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-widget-depdrop";}}s:20:"kartik-v/yii2-export";a:3:{s:4:"name";s:20:"kartik-v/yii2-export";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:14:"@kartik/export";s:48:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-export";}}s:31:"kartik-v/yii2-widget-datepicker";a:3:{s:4:"name";s:31:"kartik-v/yii2-widget-datepicker";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:12:"@kartik/date";s:59:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-widget-datepicker";}}s:20:"kartik-v/yii2-dialog";a:3:{s:4:"name";s:20:"kartik-v/yii2-dialog";s:7:"version";s:7:"1.0.1.0";s:5:"alias";a:1:{s:14:"@kartik/dialog";s:48:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-dialog";}}s:18:"kartik-v/yii2-grid";a:3:{s:4:"name";s:18:"kartik-v/yii2-grid";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:12:"@kartik/grid";s:46:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-grid";}}s:31:"2amigos/yii2-date-picker-widget";a:3:{s:4:"name";s:31:"2amigos/yii2-date-picker-widget";s:7:"version";s:7:"1.0.6.0";s:5:"alias";a:1:{s:21:"@dosamigos/datepicker";s:63:"/opt/lampp/htdocs/im/vendor/2amigos/yii2-date-picker-widget/src";}}s:36:"2amigos/yii2-date-time-picker-widget";a:3:{s:4:"name";s:36:"2amigos/yii2-date-time-picker-widget";s:7:"version";s:7:"1.0.4.0";s:5:"alias";a:1:{s:25:"@dosamigos/datetimepicker";s:68:"/opt/lampp/htdocs/im/vendor/2amigos/yii2-date-time-picker-widget/src";}}s:24:"ruskid/yii2-csv-importer";a:3:{s:4:"name";s:24:"ruskid/yii2-csv-importer";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:19:"@ruskid/csvimporter";s:52:"/opt/lampp/htdocs/im/vendor/ruskid/yii2-csv-importer";}}s:26:"moonlandsoft/yii2-phpexcel";a:3:{s:4:"name";s:26:"moonlandsoft/yii2-phpexcel";s:7:"version";s:7:"1.1.0.0";s:5:"alias";a:1:{s:18:"@moonland/phpexcel";s:54:"/opt/lampp/htdocs/im/vendor/moonlandsoft/yii2-phpexcel";}}s:31:"kartik-v/yii2-widget-timepicker";a:3:{s:4:"name";s:31:"kartik-v/yii2-widget-timepicker";s:7:"version";s:7:"1.0.3.0";s:5:"alias";a:1:{s:12:"@kartik/time";s:59:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-widget-timepicker";}}s:16:"apaoww/yii2-oci8";a:3:{s:4:"name";s:16:"apaoww/yii2-oci8";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:12:"@apaoww/oci8";s:44:"/opt/lampp/htdocs/im/vendor/apaoww/yii2-oci8";}}s:28:"kartik-v/yii2-widget-select2";a:3:{s:4:"name";s:28:"kartik-v/yii2-widget-select2";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:15:"@kartik/select2";s:56:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-widget-select2";}}s:19:"kartik-v/yii2-money";a:3:{s:4:"name";s:19:"kartik-v/yii2-money";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:13:"@kartik/money";s:47:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-money";}}s:24:"kartik-v/yii2-date-range";a:3:{s:4:"name";s:24:"kartik-v/yii2-date-range";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:17:"@kartik/daterange";s:52:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-date-range";}}s:18:"kartik-v/yii2-mpdf";a:3:{s:4:"name";s:18:"kartik-v/yii2-mpdf";s:7:"version";s:7:"1.0.1.0";s:5:"alias";a:1:{s:12:"@kartik/mpdf";s:46:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-mpdf";}}s:31:"kartik-v/yii2-widget-activeform";a:3:{s:4:"name";s:31:"kartik-v/yii2-widget-activeform";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:12:"@kartik/form";s:59:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-widget-activeform";}}s:22:"kartik-v/yii2-sortable";a:3:{s:4:"name";s:22:"kartik-v/yii2-sortable";s:7:"version";s:7:"1.2.0.0";s:5:"alias";a:1:{s:16:"@kartik/sortable";s:50:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-sortable";}}s:22:"kartik-v/yii2-dynagrid";a:3:{s:4:"name";s:22:"kartik-v/yii2-dynagrid";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:16:"@kartik/dynagrid";s:50:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-dynagrid";}}s:23:"kartik-v/yii2-popover-x";a:3:{s:4:"name";s:23:"kartik-v/yii2-popover-x";s:7:"version";s:7:"1.3.4.0";s:5:"alias";a:1:{s:15:"@kartik/popover";s:51:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-popover-x";}}s:22:"kartik-v/yii2-editable";a:3:{s:4:"name";s:22:"kartik-v/yii2-editable";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:16:"@kartik/editable";s:50:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-editable";}}s:17:"linslin/yii2-curl";a:3:{s:4:"name";s:17:"linslin/yii2-curl";s:7:"version";s:7:"1.0.3.0";s:5:"alias";a:1:{s:18:"@linslin/yii2/curl";s:45:"/opt/lampp/htdocs/im/vendor/linslin/yii2-curl";}}}}s:7:"request";a:14:{s:7:"flashes";a:0:{}s:10:"statusCode";i:200;s:14:"requestHeaders";a:5:{s:4:"host";s:22:"imdev.mncplaymedia.com";s:10:"user-agent";s:15:"Yii2-Curl-Agent";s:6:"accept";s:3:"*/*";s:14:"content-length";s:3:"776";s:12:"content-type";s:33:"application/x-www-form-urlencoded";}s:15:"responseHeaders";a:2:{s:12:"X-Powered-By";s:10:"PHP/5.6.31";s:12:"Content-Type";s:31:"application/json; charset=UTF-8";}s:5:"route";s:20:"site/create-grf-foro";s:6:"action";s:53:"api\controllers\SiteController::actionCreateGrfForo()";s:12:"actionParams";a:0:{}s:11:"requestBody";a:3:{s:12:"Content Type";s:33:"application/x-www-form-urlencoded";s:3:"Raw";s:776:"file_attachment_1=http%3A%2F%2Fforodev.mncplaymedia.com%2Fiko%2Fweb%2Fuploads%2FGRF%2FINHOUSE%2F10%2Fboq+grf+pabean+04.pdf&file_attachment_2=http%3A%2F%2Fforodev.mncplaymedia.com%2Fiko%2Fweb%2Fuploads%2FGRF%2FINHOUSE%2F10%2Fboq+grf+pabean+11.pdf&file_attachment_3=http%3A%2F%2Fforodev.mncplaymedia.com%2Fiko%2Fweb%2Fuploads%2FGRF%2FINHOUSE%2F10%2Fboq+pjmi+07.pdf&file_name_1=boq+grf+pabean+04.pdf&file_name_2=boq+grf+pabean+11.pdf&file_name_3=boq+pjmi+07.pdf&wo_number=WO%2FIKO%2F1811-00350&grf_number=0010%2FGRF%2FIKO-INHOUSE%2FXII%2F2018&grf_type=19&requestor=21&id_vendor=&id_division=3&id_region=13&team_leader=2131216002&team_name=58&purpose=Resend&id_modul=1&id_grf_others=10&source=Inhouse-IKO&list_item%5B0%5D%5Borafin_code%5D=HA117-01.627&list_item%5B0%5D%5Bqty%5D=14";s:17:"Decoded to Params";a:20:{s:17:"file_attachment_1";s:84:"http://forodev.mncplaymedia.com/iko/web/uploads/GRF/INHOUSE/10/boq grf pabean 04.pdf";s:17:"file_attachment_2";s:84:"http://forodev.mncplaymedia.com/iko/web/uploads/GRF/INHOUSE/10/boq grf pabean 11.pdf";s:17:"file_attachment_3";s:78:"http://forodev.mncplaymedia.com/iko/web/uploads/GRF/INHOUSE/10/boq pjmi 07.pdf";s:11:"file_name_1";s:21:"boq grf pabean 04.pdf";s:11:"file_name_2";s:21:"boq grf pabean 11.pdf";s:11:"file_name_3";s:15:"boq pjmi 07.pdf";s:9:"wo_number";s:17:"WO/IKO/1811-00350";s:10:"grf_number";s:29:"0010/GRF/IKO-INHOUSE/XII/2018";s:8:"grf_type";s:2:"19";s:9:"requestor";s:2:"21";s:9:"id_vendor";s:0:"";s:11:"id_division";s:1:"3";s:9:"id_region";s:2:"13";s:11:"team_leader";s:10:"2131216002";s:9:"team_name";s:2:"58";s:7:"purpose";s:6:"Resend";s:8:"id_modul";s:1:"1";s:13:"id_grf_others";s:2:"10";s:6:"source";s:11:"Inhouse-IKO";s:9:"list_item";a:1:{i:0;a:2:{s:11:"orafin_code";s:12:"HA117-01.627";s:3:"qty";s:2:"14";}}}}s:6:"SERVER";a:33:{s:18:"REDIRECT_UNIQUE_ID";s:24:"XBdl038AAAEAAEL-3CMAAAAB";s:15:"REDIRECT_STATUS";s:3:"200";s:9:"UNIQUE_ID";s:24:"XBdl038AAAEAAEL-3CMAAAAB";s:9:"HTTP_HOST";s:22:"imdev.mncplaymedia.com";s:15:"HTTP_USER_AGENT";s:15:"Yii2-Curl-Agent";s:11:"HTTP_ACCEPT";s:3:"*/*";s:14:"CONTENT_LENGTH";s:3:"776";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:4:"PATH";s:70:"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin";s:15:"LD_LIBRARY_PATH";s:29:"/opt/lampp/lib:/opt/lampp/lib";s:16:"SERVER_SIGNATURE";s:0:"";s:15:"SERVER_SOFTWARE";s:78:"Apache/2.4.26 (Unix) OpenSSL/1.0.2l PHP/5.6.31 mod_perl/2.0.8-dev Perl/v5.16.3";s:11:"SERVER_NAME";s:22:"imdev.mncplaymedia.com";s:11:"SERVER_ADDR";s:10:"10.9.38.45";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:10:"10.9.39.41";s:13:"DOCUMENT_ROOT";s:20:"/opt/lampp/htdocs/im";s:14:"REQUEST_SCHEME";s:4:"http";s:14:"CONTEXT_PREFIX";s:0:"";s:21:"CONTEXT_DOCUMENT_ROOT";s:20:"/opt/lampp/htdocs/im";s:12:"SERVER_ADMIN";s:15:"you@example.com";s:15:"SCRIPT_FILENAME";s:38:"/opt/lampp/htdocs/im/api/web/index.php";s:11:"REMOTE_PORT";s:5:"38728";s:12:"REDIRECT_URL";s:29:"/api/web/site/create-grf-foro";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:29:"/api/web/site/create-grf-foro";s:11:"SCRIPT_NAME";s:18:"/api/web/index.php";s:8:"PHP_SELF";s:18:"/api/web/index.php";s:18:"REQUEST_TIME_FLOAT";d:1545037267.6080000400543212890625;s:12:"REQUEST_TIME";i:1545037267;}s:3:"GET";a:0:{}s:4:"POST";a:20:{s:17:"file_attachment_1";s:84:"http://forodev.mncplaymedia.com/iko/web/uploads/GRF/INHOUSE/10/boq grf pabean 04.pdf";s:17:"file_attachment_2";s:84:"http://forodev.mncplaymedia.com/iko/web/uploads/GRF/INHOUSE/10/boq grf pabean 11.pdf";s:17:"file_attachment_3";s:78:"http://forodev.mncplaymedia.com/iko/web/uploads/GRF/INHOUSE/10/boq pjmi 07.pdf";s:11:"file_name_1";s:21:"boq grf pabean 04.pdf";s:11:"file_name_2";s:21:"boq grf pabean 11.pdf";s:11:"file_name_3";s:15:"boq pjmi 07.pdf";s:9:"wo_number";s:17:"WO/IKO/1811-00350";s:10:"grf_number";s:29:"0010/GRF/IKO-INHOUSE/XII/2018";s:8:"grf_type";s:2:"19";s:9:"requestor";s:2:"21";s:9:"id_vendor";s:0:"";s:11:"id_division";s:1:"3";s:9:"id_region";s:2:"13";s:11:"team_leader";s:10:"2131216002";s:9:"team_name";s:2:"58";s:7:"purpose";s:6:"Resend";s:8:"id_modul";s:1:"1";s:13:"id_grf_others";s:2:"10";s:6:"source";s:11:"Inhouse-IKO";s:9:"list_item";a:1:{i:0;a:2:{s:11:"orafin_code";s:12:"HA117-01.627";s:3:"qty";s:2:"14";}}}s:6:"COOKIE";a:0:{}s:5:"FILES";a:0:{}s:7:"SESSION";a:0:{}}s:3:"log";a:1:{s:8:"messages";a:26:{i:0;a:6:{i:0;s:33:"Bootstrap with yii\log\Dispatcher";i:1;i:8;i:2;s:31:"yii\base\Application::bootstrap";i:3;d:1545037267.64035701751708984375;i:4;a:0:{}i:5;i:5374984;}i:1;a:6:{i:0;s:21:"Loading module: debug";i:1;i:8;i:2;s:26:"yii\base\Module::getModule";i:3;d:1545037267.640388011932373046875;i:4;a:0:{}i:5;i:5378144;}i:2;a:6:{i:0;s:44:"Bootstrap with yii\debug\Module::bootstrap()";i:1;i:8;i:2;s:31:"yii\base\Application::bootstrap";i:3;d:1545037267.644712924957275390625;i:4;a:0:{}i:5;i:5980232;}i:3;a:6:{i:0;s:19:"Loading module: gii";i:1;i:8;i:2;s:26:"yii\base\Module::getModule";i:3;d:1545037267.729712963104248046875;i:4;a:0:{}i:5;i:6405248;}i:4;a:6:{i:0;s:42:"Bootstrap with yii\gii\Module::bootstrap()";i:1;i:8;i:2;s:31:"yii\base\Application::bootstrap";i:3;d:1545037267.7301199436187744140625;i:4;a:0:{}i:5;i:6457520;}i:13;a:6:{i:0;s:39:"Route requested: 'site/create-grf-foro'";i:1;i:8;i:2;s:34:"yii\web\Application::handleRequest";i:3;d:1545037267.7331960201263427734375;i:4;a:0:{}i:5;i:6842016;}i:14;a:6:{i:0;s:34:"Route to run: site/create-grf-foro";i:1;i:8;i:2;s:30:"yii\base\Controller::runAction";i:3;d:1545037267.7362821102142333984375;i:4;a:0:{}i:5;i:7301600;}i:15;a:6:{i:0;s:69:"Running action: api\controllers\SiteController::actionCreateGrfForo()";i:1;i:8;i:2;s:36:"yii\base\InlineAction::runWithParams";i:3;d:1545037267.7393300533294677734375;i:4;a:0:{}i:5;i:7722128;}i:16;a:6:{i:0;s:64:"Opening DB connection: pgsql:host=10.9.39.46;dbname=inventorydev";i:1;i:4;i:2;s:23:"yii\db\Connection::open";i:3;d:1545037267.7520620822906494140625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:373;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9756928;}i:19;a:6:{i:0;s:115:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("grf_number"='0010/GRF/IKO-INHOUSE/XII/2018') AND ("status_listing" != 3))";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7670400142669677734375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:373;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9758792;}i:22;a:6:{i:0;s:114:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("grf_number"='0010/GRF/IKO-INHOUSE/XII/2018') AND ("status_listing" = 3))";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.77171611785888671875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:379;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9767344;}i:25;a:6:{i:0;s:1949:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'grf'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7742450237274169921875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:386;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:9809704;}i:28;a:6:{i:0;s:871:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='grf'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.79170894622802734375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:386;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:9874800;}i:31;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='19'))";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8354609012603759765625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14729448;}i:34;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='21'))";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8388540744781494140625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14737192;}i:37;a:6:{i:0;s:55:"SELECT EXISTS(SELECT * FROM "region" WHERE ("id"='13'))";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.841065883636474609375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14744816;}i:40;a:6:{i:0;s:629:"INSERT INTO "grf" ("id_modul", "id_warehouse", "file_attachment_1", "file_attachment_2", "file_attachment_3", "wo_number", "grf_number", "grf_type", "requestor", "id_vendor", "id_division", "id_region", "team_leader", "team_name", "purpose", "source", "id_grf_others", "created_by", "updated_by", "verified_by", "approved_by", "status_listing", "created_date", "updated_date") VALUES (1, 2, 'boq grf pabean 04.pdf', 'boq grf pabean 11.pdf', 'boq pjmi 07.pdf', 'WO/IKO/1811-00350', '0010/GRF/IKO-INHOUSE/XII/2018', 19, 21, NULL, 3, 13, '2131216002', 58, 'Resend', 'Inhouse-IKO', 10, 21, 21, 21, 21, 5, NOW(), NOW()) RETURNING "id"";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8439829349517822265625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14759976;}i:43;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='19'))";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8601360321044921875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14776240;}i:46;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='21'))";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8627998828887939453125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14783728;}i:49;a:6:{i:0;s:55:"SELECT EXISTS(SELECT * FROM "region" WHERE ("id"='13'))";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.865087032318115234375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14791240;}i:52;a:6:{i:0;s:222:"UPDATE "grf" SET "file_attachment_1"='uploads/GRF/FORO/365/boq grf pabean 04.pdf', "file_attachment_2"='uploads/GRF/FORO/365/boq grf pabean 11.pdf', "file_attachment_3"='uploads/GRF/FORO/365/boq pjmi 07.pdf' WHERE "id"=365";i:1;i:4;i:2;s:23:"yii\db\Command::execute";i:3;d:1545037267.8676319122314453125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14782816;}i:55;a:6:{i:0;s:1956:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'grf_detail'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8804199695587158203125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:444;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14869688;}i:58;a:6:{i:0;s:878:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='grf_detail'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.891017913818359375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:444;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14885624;}i:61;a:6:{i:0;s:51:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("id"=365))";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.9017241001129150390625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:448;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14908304;}i:64;a:6:{i:0;s:130:"INSERT INTO "grf_detail" ("id_grf", "orafin_code", "qty_request", "qty_return") VALUES (365, 'HA117-01.627', 14, 0) RETURNING "id"";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.904180049896240234375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:448;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14912984;}i:67;a:6:{i:0;s:99:"Access to debugger is denied due to IP address restriction. The requesting IP address is 10.9.39.41";i:1;i:2;i:2;s:29:"yii\debug\Module::checkAccess";i:3;d:1545037267.9117031097412109375;i:4;a:0:{}i:5;i:11066808;}}}s:9:"profiling";a:3:{s:6:"memory";i:17069888;s:4:"time";d:0.2850201129913330078125;s:8:"messages";a:34:{i:17;a:6:{i:0;s:64:"Opening DB connection: pgsql:host=10.9.39.46;dbname=inventorydev";i:1;i:80;i:2;s:23:"yii\db\Connection::open";i:3;d:1545037267.7521159648895263671875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:373;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9759600;}i:18;a:6:{i:0;s:64:"Opening DB connection: pgsql:host=10.9.39.46;dbname=inventorydev";i:1;i:96;i:2;s:23:"yii\db\Connection::open";i:3;d:1545037267.76694488525390625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:373;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9763728;}i:20;a:6:{i:0;s:115:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("grf_number"='0010/GRF/IKO-INHOUSE/XII/2018') AND ("status_listing" != 3))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7670910358428955078125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:373;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9763664;}i:21;a:6:{i:0;s:115:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("grf_number"='0010/GRF/IKO-INHOUSE/XII/2018') AND ("status_listing" != 3))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7709829807281494140625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:373;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9766488;}i:23;a:6:{i:0;s:114:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("grf_number"='0010/GRF/IKO-INHOUSE/XII/2018') AND ("status_listing" = 3))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.771759033203125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:379;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9771328;}i:24;a:6:{i:0;s:114:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("grf_number"='0010/GRF/IKO-INHOUSE/XII/2018') AND ("status_listing" = 3))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7732589244842529296875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:379;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9774152;}i:26;a:6:{i:0;s:1949:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'grf'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7742989063262939453125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:386;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:9818744;}i:27;a:6:{i:0;s:1949:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'grf'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7904279232025146484375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:386;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:9906720;}i:29;a:6:{i:0;s:871:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='grf'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7917621135711669921875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:386;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:9880616;}i:30;a:6:{i:0;s:871:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='grf'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8003489971160888671875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:386;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:9888736;}i:32;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='19'))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8355350494384765625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14733296;}i:33;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='19'))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8380339145660400390625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14736272;}i:35;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='21'))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.838901042938232421875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14741040;}i:36;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='21'))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8403339385986328125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14743760;}i:38;a:6:{i:0;s:55:"SELECT EXISTS(SELECT * FROM "region" WHERE ("id"='13'))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8411118984222412109375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14748648;}i:39;a:6:{i:0;s:55:"SELECT EXISTS(SELECT * FROM "region" WHERE ("id"='13'))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8430271148681640625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14751368;}i:41;a:6:{i:0;s:629:"INSERT INTO "grf" ("id_modul", "id_warehouse", "file_attachment_1", "file_attachment_2", "file_attachment_3", "wo_number", "grf_number", "grf_type", "requestor", "id_vendor", "id_division", "id_region", "team_leader", "team_name", "purpose", "source", "id_grf_others", "created_by", "updated_by", "verified_by", "approved_by", "status_listing", "created_date", "updated_date") VALUES (1, 2, 'boq grf pabean 04.pdf', 'boq grf pabean 11.pdf', 'boq pjmi 07.pdf', 'WO/IKO/1811-00350', '0010/GRF/IKO-INHOUSE/XII/2018', 19, 21, NULL, 3, 13, '2131216002', 58, 'Resend', 'Inhouse-IKO', 10, 21, 21, 21, 21, 5, NOW(), NOW()) RETURNING "id"";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.84401702880859375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14762448;}i:42;a:6:{i:0;s:629:"INSERT INTO "grf" ("id_modul", "id_warehouse", "file_attachment_1", "file_attachment_2", "file_attachment_3", "wo_number", "grf_number", "grf_type", "requestor", "id_vendor", "id_division", "id_region", "team_leader", "team_name", "purpose", "source", "id_grf_others", "created_by", "updated_by", "verified_by", "approved_by", "status_listing", "created_date", "updated_date") VALUES (1, 2, 'boq grf pabean 04.pdf', 'boq grf pabean 11.pdf', 'boq pjmi 07.pdf', 'WO/IKO/1811-00350', '0010/GRF/IKO-INHOUSE/XII/2018', 19, 21, NULL, 3, 13, '2131216002', 58, 'Resend', 'Inhouse-IKO', 10, 21, 21, 21, 21, 5, NOW(), NOW()) RETURNING "id"";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8537080287933349609375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14767544;}i:44;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='19'))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8602058887481689453125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14780088;}i:45;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='19'))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.862042903900146484375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14782808;}i:47;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='21'))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8628780841827392578125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14787576;}i:48;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='21'))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8643290996551513671875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14790296;}i:50;a:6:{i:0;s:55:"SELECT EXISTS(SELECT * FROM "region" WHERE ("id"='13'))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8651330471038818359375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14795072;}i:51;a:6:{i:0;s:55:"SELECT EXISTS(SELECT * FROM "region" WHERE ("id"='13'))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.866692066192626953125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14797792;}i:53;a:6:{i:0;s:222:"UPDATE "grf" SET "file_attachment_1"='uploads/GRF/FORO/365/boq grf pabean 04.pdf', "file_attachment_2"='uploads/GRF/FORO/365/boq grf pabean 11.pdf', "file_attachment_3"='uploads/GRF/FORO/365/boq pjmi 07.pdf' WHERE "id"=365";i:1;i:80;i:2;s:23:"yii\db\Command::execute";i:3;d:1545037267.8676769733428955078125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14787016;}i:54;a:6:{i:0;s:222:"UPDATE "grf" SET "file_attachment_1"='uploads/GRF/FORO/365/boq grf pabean 04.pdf', "file_attachment_2"='uploads/GRF/FORO/365/boq grf pabean 11.pdf', "file_attachment_3"='uploads/GRF/FORO/365/boq pjmi 07.pdf' WHERE "id"=365";i:1;i:96;i:2;s:23:"yii\db\Command::execute";i:3;d:1545037267.8792569637298583984375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14789896;}i:56;a:6:{i:0;s:1956:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'grf_detail'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8804790973663330078125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:444;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14878768;}i:57;a:6:{i:0;s:1956:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'grf_detail'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8900740146636962890625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:444;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14902272;}i:59;a:6:{i:0;s:878:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='grf_detail'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8910639286041259765625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:444;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14891456;}i:60;a:6:{i:0;s:878:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='grf_detail'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.900579929351806640625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:444;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14897096;}i:62;a:6:{i:0;s:51:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("id"=365))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.901772975921630859375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:448;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14912080;}i:63;a:6:{i:0;s:51:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("id"=365))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.9034860134124755859375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:448;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14914896;}i:65;a:6:{i:0;s:130:"INSERT INTO "grf_detail" ("id_grf", "orafin_code", "qty_request", "qty_return") VALUES (365, 'HA117-01.627', 14, 0) RETURNING "id"";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.9042189121246337890625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:448;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14915992;}i:66;a:6:{i:0;s:130:"INSERT INTO "grf_detail" ("id_grf", "orafin_code", "qty_request", "qty_return") VALUES (365, 'HA117-01.627', 14, 0) RETURNING "id"";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.9094378948211669921875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:448;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14919408;}}}s:2:"db";a:1:{s:8:"messages";a:32:{i:20;a:6:{i:0;s:115:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("grf_number"='0010/GRF/IKO-INHOUSE/XII/2018') AND ("status_listing" != 3))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7670910358428955078125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:373;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9763664;}i:21;a:6:{i:0;s:115:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("grf_number"='0010/GRF/IKO-INHOUSE/XII/2018') AND ("status_listing" != 3))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7709829807281494140625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:373;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9766488;}i:23;a:6:{i:0;s:114:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("grf_number"='0010/GRF/IKO-INHOUSE/XII/2018') AND ("status_listing" = 3))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.771759033203125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:379;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9771328;}i:24;a:6:{i:0;s:114:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("grf_number"='0010/GRF/IKO-INHOUSE/XII/2018') AND ("status_listing" = 3))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7732589244842529296875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:379;s:8:"function";s:6:"exists";s:5:"class";s:12:"yii\db\Query";s:4:"type";s:2:"->";}}i:5;i:9774152;}i:26;a:6:{i:0;s:1949:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'grf'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7742989063262939453125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:386;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:9818744;}i:27;a:6:{i:0;s:1949:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'grf'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7904279232025146484375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:386;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:9906720;}i:29;a:6:{i:0;s:871:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='grf'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.7917621135711669921875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:386;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:9880616;}i:30;a:6:{i:0;s:871:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='grf'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8003489971160888671875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:386;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:9888736;}i:32;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='19'))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8355350494384765625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14733296;}i:33;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='19'))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8380339145660400390625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14736272;}i:35;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='21'))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.838901042938232421875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14741040;}i:36;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='21'))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8403339385986328125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14743760;}i:38;a:6:{i:0;s:55:"SELECT EXISTS(SELECT * FROM "region" WHERE ("id"='13'))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8411118984222412109375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14748648;}i:39;a:6:{i:0;s:55:"SELECT EXISTS(SELECT * FROM "region" WHERE ("id"='13'))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8430271148681640625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14751368;}i:41;a:6:{i:0;s:629:"INSERT INTO "grf" ("id_modul", "id_warehouse", "file_attachment_1", "file_attachment_2", "file_attachment_3", "wo_number", "grf_number", "grf_type", "requestor", "id_vendor", "id_division", "id_region", "team_leader", "team_name", "purpose", "source", "id_grf_others", "created_by", "updated_by", "verified_by", "approved_by", "status_listing", "created_date", "updated_date") VALUES (1, 2, 'boq grf pabean 04.pdf', 'boq grf pabean 11.pdf', 'boq pjmi 07.pdf', 'WO/IKO/1811-00350', '0010/GRF/IKO-INHOUSE/XII/2018', 19, 21, NULL, 3, 13, '2131216002', 58, 'Resend', 'Inhouse-IKO', 10, 21, 21, 21, 21, 5, NOW(), NOW()) RETURNING "id"";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.84401702880859375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14762448;}i:42;a:6:{i:0;s:629:"INSERT INTO "grf" ("id_modul", "id_warehouse", "file_attachment_1", "file_attachment_2", "file_attachment_3", "wo_number", "grf_number", "grf_type", "requestor", "id_vendor", "id_division", "id_region", "team_leader", "team_name", "purpose", "source", "id_grf_others", "created_by", "updated_by", "verified_by", "approved_by", "status_listing", "created_date", "updated_date") VALUES (1, 2, 'boq grf pabean 04.pdf', 'boq grf pabean 11.pdf', 'boq pjmi 07.pdf', 'WO/IKO/1811-00350', '0010/GRF/IKO-INHOUSE/XII/2018', 19, 21, NULL, 3, 13, '2131216002', 58, 'Resend', 'Inhouse-IKO', 10, 21, 21, 21, 21, 5, NOW(), NOW()) RETURNING "id"";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8537080287933349609375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:424;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14767544;}i:44;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='19'))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8602058887481689453125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14780088;}i:45;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='19'))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.862042903900146484375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14782808;}i:47;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='21'))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8628780841827392578125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14787576;}i:48;a:6:{i:0;s:58:"SELECT EXISTS(SELECT * FROM "reference" WHERE ("id"='21'))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8643290996551513671875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14790296;}i:50;a:6:{i:0;s:55:"SELECT EXISTS(SELECT * FROM "region" WHERE ("id"='13'))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8651330471038818359375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14795072;}i:51;a:6:{i:0;s:55:"SELECT EXISTS(SELECT * FROM "region" WHERE ("id"='13'))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.866692066192626953125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14797792;}i:53;a:6:{i:0;s:222:"UPDATE "grf" SET "file_attachment_1"='uploads/GRF/FORO/365/boq grf pabean 04.pdf', "file_attachment_2"='uploads/GRF/FORO/365/boq grf pabean 11.pdf', "file_attachment_3"='uploads/GRF/FORO/365/boq pjmi 07.pdf' WHERE "id"=365";i:1;i:80;i:2;s:23:"yii\db\Command::execute";i:3;d:1545037267.8676769733428955078125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14787016;}i:54;a:6:{i:0;s:222:"UPDATE "grf" SET "file_attachment_1"='uploads/GRF/FORO/365/boq grf pabean 04.pdf', "file_attachment_2"='uploads/GRF/FORO/365/boq grf pabean 11.pdf', "file_attachment_3"='uploads/GRF/FORO/365/boq pjmi 07.pdf' WHERE "id"=365";i:1;i:96;i:2;s:23:"yii\db\Command::execute";i:3;d:1545037267.8792569637298583984375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:437;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14789896;}i:56;a:6:{i:0;s:1956:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'grf_detail'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8804790973663330078125;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:444;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14878768;}i:57;a:6:{i:0;s:1956:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'grf_detail'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8900740146636962890625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:444;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14902272;}i:59;a:6:{i:0;s:878:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='grf_detail'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.8910639286041259765625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:444;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14891456;}i:60;a:6:{i:0;s:878:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='grf_detail'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.900579929351806640625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:444;s:8:"function";s:5:"__set";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14897096;}i:62;a:6:{i:0;s:51:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("id"=365))";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.901772975921630859375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:448;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14912080;}i:63;a:6:{i:0;s:51:"SELECT EXISTS(SELECT * FROM "grf" WHERE ("id"=365))";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.9034860134124755859375;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:448;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14914896;}i:65;a:6:{i:0;s:130:"INSERT INTO "grf_detail" ("id_grf", "orafin_code", "qty_request", "qty_return") VALUES (365, 'HA117-01.627', 14, 0) RETURNING "id"";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.9042189121246337890625;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:448;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14915992;}i:66;a:6:{i:0;s:130:"INSERT INTO "grf_detail" ("id_grf", "orafin_code", "qty_request", "qty_return") VALUES (365, 'HA117-01.627', 14, 0) RETURNING "id"";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545037267.9094378948211669921875;i:4;a:1:{i:0;a:5:{s:4:"file";s:55:"/opt/lampp/htdocs/im/api/controllers/SiteController.php";s:4:"line";i:448;s:8:"function";s:4:"save";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}i:5;i:14919408;}}}s:6:"assets";a:0:{}s:4:"mail";a:0:{}s:8:"timeline";a:3:{s:5:"start";d:1545037267.629251956939697265625;s:3:"end";d:1545037267.915142059326171875;s:6:"memory";i:17069888;}s:4:"user";N;s:6:"router";a:1:{s:8:"messages";a:8:{i:5;a:6:{i:0;a:3:{s:4:"rule";s:3:"gii";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545037267.732965946197509765625;i:4;a:0:{}i:5;i:6830824;}i:6;a:6:{i:0;a:3:{s:4:"rule";s:12:"gii/<id:\w+>";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545037267.73299503326416015625;i:4;a:0:{}i:5;i:6832632;}i:7;a:6:{i:0;a:3:{s:4:"rule";s:41:"gii/<controller:[\w\-]+>/<action:[\w\-]+>";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545037267.7330191135406494140625;i:4;a:0:{}i:5;i:6834480;}i:8;a:6:{i:0;a:3:{s:4:"rule";s:5:"debug";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545037267.7330379486083984375;i:4;a:0:{}i:5;i:6836296;}i:9;a:6:{i:0;a:3:{s:4:"rule";s:43:"debug/<controller:[\w\-]+>/<action:[\w\-]+>";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545037267.73305606842041015625;i:4;a:0:{}i:5;i:6838208;}i:10;a:6:{i:0;a:3:{s:4:"rule";s:1:"/";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545037267.7330729961395263671875;i:4;a:0:{}i:5;i:6839992;}i:11;a:6:{i:0;a:3:{s:4:"rule";s:30:"<controller:\w+>/<action:\w+>/";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545037267.7330930233001708984375;i:4;a:0:{}i:5;i:6841824;}i:12;a:6:{i:0;s:55:"No matching URL rules. Using default URL parsing logic.";i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545037267.7331058979034423828125;i:4;a:0:{}i:5;i:6843032;}}}s:7:"summary";a:9:{s:3:"tag";s:13:"5c1765d39d807";s:3:"url";s:58:"http://imdev.mncplaymedia.com/api/web/site/create-grf-foro";s:4:"ajax";i:0;s:6:"method";s:4:"POST";s:2:"ip";s:10:"10.9.39.41";s:4:"time";d:1545037267.6080000400543212890625;s:10:"statusCode";i:200;s:8:"sqlCount";i:16;s:9:"mailCount";i:0;}}

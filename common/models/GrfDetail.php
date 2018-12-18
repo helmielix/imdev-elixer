@@ -49,7 +49,11 @@ class GrfDetail extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_grf' => 'Id Grf',
             'orafin_code' => 'Orafin Code',
+            'item_desc' => 'Nama Barang',
             'qty_request' => 'Qty Request',
+            'name' => 'Nama Barang',
+            'grouping' => 'Grouping Barang',
+            'sn_type' => 'SN/Non',
         ];
     }
 

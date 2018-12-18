@@ -157,6 +157,13 @@ $arrQtyDetail = '';
 						},
 						'filter' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => 'item_type'])->all(), 'id', 'description'),
 					],
+					[
+						'attribute' => 'uom',
+						'value' => function($model){
+							return $model->referenceUom->description;
+						},
+						'filter' => ArrayHelper::map(Reference::find()->andWhere(['table_relation' => 'uom'])->all(), 'id', 'description'),
+					],
 					// 'stock_qty',
 					[
 						'attribute'=>'req_good_qty',

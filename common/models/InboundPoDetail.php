@@ -17,7 +17,7 @@ use common\models\MasterItemIm;
  */
 class InboundPoDetail extends \yii\db\ActiveRecord
 {
-    public  $orafin_name,  $im_code, $grouping, $brand, $warna, $type, $req_good_qty, $stock_qty, $serial_number, $mac_address;
+    public  $orafin_name,  $im_code, $grouping, $brand, $warna, $type, $req_good_qty, $stock_qty, $serial_number, $mac_address, $uom;
 	
     public static function tableName()
     {

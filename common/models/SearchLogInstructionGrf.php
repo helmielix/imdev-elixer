@@ -15,6 +15,7 @@ class SearchLogInstructionGrf extends LogInstructionGrf
     /**
      * @inheritdoc
      */
+    public $grf_type, $grf_number, $wo_number, $file_attacment_1, $file_attacment_2, $purpose, $id_region, $id_division, $requestor, $pic;
     public function rules()
     {
         return [
@@ -42,6 +43,30 @@ class SearchLogInstructionGrf extends LogInstructionGrf
     public function search($params)
     {
         $query = LogInstructionGrf::find();
+        $query->joinWith('idGrf.idDivision');
+        // $query->joinWith('idGrf', true, 'FULL JOIN');
+        $query->select([ 
+            'grf.grf_type',
+            'grf.grf_number',
+            'grf.wo_number',
+            'grf.file_attachment_1',
+            'grf.file_attachment_2',
+            'grf.file_attachment_3',
+            'grf.purpose',
+            'grf.id_region',
+            'grf.id_division',
+            'grf.requestor',
+            'grf.status_return',
+            'grf.status_listing',
+            'grf.pic',
+            'grf.id_modul',
+            'grf.id as id',
+            'log_instruction_grf.idlog',
+            // 'instruction_grf.created_date',
+            // 'instruction_grf.updated_date',
+            // 'instruction_grf.status_listing',
+            // 'division.nama',
+        ]);
 
         // add conditions that should always apply here
 

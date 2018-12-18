@@ -49,6 +49,7 @@ class MasterItemIm extends \yii\db\ActiveRecord
 	public $req_good_qty, $item_desc;
 	public $s_good_dismantle, $s_not_good_dismantle, $item_code, $s_good, $s_not_good, $s_reject;
     public $s_dismantle, $s_revocation, $s_good_for_recond, $s_good_rec;
+    public $id_master_item_im;
 
     public $qty_good_dismantle, $qty_not_good_dismantle, $qty_good, $qty_not_good, $qty_reject;
     public $qty_dismantle, $qty_revocation, $qty_good_for_recond, $qty_good_rec;

@@ -35,7 +35,7 @@ $this->registerJs(
 			'id' => 'pjaxindexdetail',
 			'timeout' => false, 
 			'enablePushState' => false,			
-			'clientOptions' => ['method' => 'POST', 'backdrop' => false, 
+			'clientOptions' => ['method' => 'GET', 'backdrop' => false, 
 			// "container" => "#pjaxindexdetail"
 			],
 		]); ?>

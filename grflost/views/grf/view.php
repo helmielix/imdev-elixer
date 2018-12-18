@@ -82,6 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		            		if($model->grfType)return $model->grfType->description;
 		            	}
 		            ],
+		             'revision_remark:ntext',
 		            
 
 				],
@@ -203,8 +204,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
 			// 'idOrafinCode.item_desc',
-			[
-                'label' => 'Nama Barang',        
+			[     
                 'attribute' => 'item_desc',
                 'value' => function($model){
                     return $model->idItemCode->item_desc;                  
@@ -261,16 +261,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'hint' => '',
                 ],
             ],
-    ]); ?>
-		<div class="form-group field-instructionwhtransfer-revision_remark">
-			<label class="control-label col-sm-2" for="grfr-revision_remark">Revision Remark</label>
-			<div class="col-sm-6">
-			<?= Html::textArea('Grf[revision_remark]','',['rows' => '5', 'class' => 'form-control', 'id' => 'grf-revision_remark']) ?>
-			</div>
-		</div>
-        <br />
-        <?= Html::button(\Yii::t('app','Submit Remark'), ['id'=>'revisionButton','class' => 'btn btn-primary']) ?>
+    ]); 
+    $model->revision_remark = '';
+    ?>
+		<br />
+    <?= $form->field($model, 'revision_remark')->textarea(['rows' => '5']) ?>
+    <?= Html::button(\Yii::t('app','Submit Remark'), ['id'=>'submitButton','class' => 'btn btn-primary']) ?>
     <?php ActiveForm::end(); ?>
+    <?php yii\widgets\Pjax::end() ?>
 
 </div>
 
@@ -299,61 +297,67 @@ $('#verifyButton').click(function () {
         });
     });
     
-$('#revisionButton').click(function(){
-	var resp = confirm("Do you want to revise this item?");
-	
-	if (resp == 0){
-		return false;
-	}
-	
-	var form = $('#submitForm');
-	data = form.data("yiiActiveForm");
-	$.each(data.attributes, function() {
-		this.status = 3;
-	});
-	form.yiiActiveForm("validate");
-	if (selectedAction == 'revise') url = '<?php echo Url::to([$this->context->id.'/revise', 'id' => $model->id]) ;?>';
-	if (selectedAction == 'reject') url = '<?php echo Url::to([$this->context->id.'/reject', 'id' => $model->id]) ;?>';
+$('#submitButton').click(function () {
+        if (selectedAction == 'revise') {
+            var resp = confirm("Do you want to revise this item?");
+        } else if (selectedAction == 'reject'){
+            var resp = confirm("Do you want to reject this item?");
+        }
 
-	data = new FormData();
-	data.append( 'Grf[revision_remark]', $( '#instruction-wh-transfer-revision_remark' ).val() );
-	var button = $(this);
-	button.prop('disabled', true);
-	button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
-	
-	$.ajax({
-		url: url,
-		type: 'post',
-		data: data,
-		processData: false,
-		contentType: false,
-		success: function (response) {
-			if(response == 'success') {
-				$('#modal').modal('hide');
-				if (selectedAction == 'revise') {
-					setPopupAlert('Data has been revised.');
-				} else {
-					setPopupAlert('Data has been rejeted.');
-				}
-			} else {
-				alert('error with message: ' + response);
-			}
-		},
-		error: function (xhr, getError) {
-			if (typeof getError === "object" && getError !== null) {
-				error = $.parseJSON(getError.responseText);
-				getError = error.message;
-			}
-			if (xhr.status != 302) {
-				alert("System recieve error with code: "+xhr.status);
-			}
-		},
-		complete: function () {
-			button.prop('disabled', false);
-			$('#spinRefresh').remove();
-		},
-	});
-});
+        if (resp == true) {
+            console.log(selectedAction);
+            var form = $('#submitForm');
+            data = form.data("yiiActiveForm");
+            $.each(data.attributes, function() {
+                this.status = 3;
+            });
+            form.yiiActiveForm("validate");
+
+            if (selectedAction == 'revise') url = '<?php echo Url::to([$this->context->id.'/revise', 'id' => $model->id]) ;?>';
+            
+            if (selectedAction == 'reject') url = '<?php echo Url::to([$this->context->id.'/reject', 'id' => $model->id]) ;?>';
+            
+            if (!form.find('.has-error').length) {
+
+                var button = $(this);
+                button.prop('disabled', true);
+                button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
+                data = new FormData();
+                data.append( 'Grf[revision_remark]', $( '#grf-revision_remark' ).val() );
+
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if(response == 'success') {
+                           $('#modal').modal('hide');
+                        } else {
+                           alert('error with message: ' + response);
+                           $('#spinRefresh').remove();
+                        }
+                    },
+                    error: function (xhr, getError) {
+                        if (typeof getError === "object" && getError !== null) {
+                            error = $.parseJSON(getError.responseText);
+                            getError = error.message;
+                        }
+                        if (xhr.status != 302) {
+                            alert("System recieve error with code: "+xhr.status);
+                        }
+                        $('#spinRefresh').remove();
+                    },
+                    complete: function () {
+                        button.prop('disabled', false);
+                    },
+                });
+            };
+        } else {
+            return false;
+        }
+    });
 
 $('#reviseButton').click(function(){
 	selectedAction = 'revise';

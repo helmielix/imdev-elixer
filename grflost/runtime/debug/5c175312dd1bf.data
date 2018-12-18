@@ -1,0 +1,361 @@
+a:11:{s:6:"config";a:5:{s:10:"phpVersion";s:6:"5.6.31";s:10:"yiiVersion";s:8:"2.0.11.2";s:11:"application";a:8:{s:3:"yii";s:8:"2.0.11.2";s:4:"name";s:14:"My Application";s:7:"version";s:3:"1.0";s:8:"language";s:5:"en-US";s:14:"sourceLanguage";s:5:"en-US";s:7:"charset";s:5:"UTF-8";s:3:"env";s:3:"dev";s:5:"debug";b:1;}s:3:"php";a:5:{s:7:"version";s:6:"5.6.31";s:6:"xdebug";b:0;s:3:"apc";b:0;s:8:"memcache";b:0;s:9:"memcached";b:0;}s:10:"extensions";a:31:{s:22:"yiisoft/yii2-bootstrap";a:3:{s:4:"name";s:22:"yiisoft/yii2-bootstrap";s:7:"version";s:7:"2.0.6.0";s:5:"alias";a:1:{s:14:"@yii/bootstrap";s:50:"/opt/lampp/htdocs/im/vendor/yiisoft/yii2-bootstrap";}}s:16:"yiisoft/yii2-gii";a:3:{s:4:"name";s:16:"yiisoft/yii2-gii";s:7:"version";s:7:"2.0.5.0";s:5:"alias";a:1:{s:8:"@yii/gii";s:44:"/opt/lampp/htdocs/im/vendor/yiisoft/yii2-gii";}}s:18:"mdmsoft/yii2-admin";a:3:{s:4:"name";s:18:"mdmsoft/yii2-admin";s:7:"version";s:7:"2.7.0.0";s:5:"alias";a:1:{s:10:"@mdm/admin";s:46:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin";}}s:18:"yiisoft/yii2-faker";a:3:{s:4:"name";s:18:"yiisoft/yii2-faker";s:7:"version";s:7:"2.0.3.0";s:5:"alias";a:1:{s:10:"@yii/faker";s:46:"/opt/lampp/htdocs/im/vendor/yiisoft/yii2-faker";}}s:18:"yiisoft/yii2-debug";a:3:{s:4:"name";s:18:"yiisoft/yii2-debug";s:7:"version";s:7:"2.0.9.0";s:5:"alias";a:1:{s:10:"@yii/debug";s:46:"/opt/lampp/htdocs/im/vendor/yiisoft/yii2-debug";}}s:24:"rmrevin/yii2-fontawesome";a:3:{s:4:"name";s:24:"rmrevin/yii2-fontawesome";s:7:"version";s:8:"2.17.1.0";s:5:"alias";a:1:{s:24:"@rmrevin/yii/fontawesome";s:52:"/opt/lampp/htdocs/im/vendor/rmrevin/yii2-fontawesome";}}s:18:"cebe/yii2-gravatar";a:3:{s:4:"name";s:18:"cebe/yii2-gravatar";s:7:"version";s:7:"1.1.0.0";s:5:"alias";a:1:{s:14:"@cebe/gravatar";s:60:"/opt/lampp/htdocs/im/vendor/cebe/yii2-gravatar/cebe/gravatar";}}s:25:"kartik-v/yii2-krajee-base";a:3:{s:4:"name";s:25:"kartik-v/yii2-krajee-base";s:7:"version";s:7:"1.8.8.0";s:5:"alias";a:1:{s:12:"@kartik/base";s:53:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-krajee-base";}}s:24:"yiisoft/yii2-swiftmailer";a:3:{s:4:"name";s:24:"yiisoft/yii2-swiftmailer";s:7:"version";s:7:"2.0.7.0";s:5:"alias";a:1:{s:16:"@yii/swiftmailer";s:52:"/opt/lampp/htdocs/im/vendor/yiisoft/yii2-swiftmailer";}}s:25:"dmstr/yii2-adminlte-asset";a:3:{s:4:"name";s:25:"dmstr/yii2-adminlte-asset";s:7:"version";s:7:"2.4.2.0";s:5:"alias";a:1:{s:6:"@dmstr";s:53:"/opt/lampp/htdocs/im/vendor/dmstr/yii2-adminlte-asset";}}s:28:"kartik-v/yii2-widget-depdrop";a:3:{s:4:"name";s:28:"kartik-v/yii2-widget-depdrop";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:15:"@kartik/depdrop";s:56:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-widget-depdrop";}}s:20:"kartik-v/yii2-export";a:3:{s:4:"name";s:20:"kartik-v/yii2-export";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:14:"@kartik/export";s:48:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-export";}}s:31:"kartik-v/yii2-widget-datepicker";a:3:{s:4:"name";s:31:"kartik-v/yii2-widget-datepicker";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:12:"@kartik/date";s:59:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-widget-datepicker";}}s:20:"kartik-v/yii2-dialog";a:3:{s:4:"name";s:20:"kartik-v/yii2-dialog";s:7:"version";s:7:"1.0.1.0";s:5:"alias";a:1:{s:14:"@kartik/dialog";s:48:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-dialog";}}s:18:"kartik-v/yii2-grid";a:3:{s:4:"name";s:18:"kartik-v/yii2-grid";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:12:"@kartik/grid";s:46:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-grid";}}s:31:"2amigos/yii2-date-picker-widget";a:3:{s:4:"name";s:31:"2amigos/yii2-date-picker-widget";s:7:"version";s:7:"1.0.6.0";s:5:"alias";a:1:{s:21:"@dosamigos/datepicker";s:63:"/opt/lampp/htdocs/im/vendor/2amigos/yii2-date-picker-widget/src";}}s:36:"2amigos/yii2-date-time-picker-widget";a:3:{s:4:"name";s:36:"2amigos/yii2-date-time-picker-widget";s:7:"version";s:7:"1.0.4.0";s:5:"alias";a:1:{s:25:"@dosamigos/datetimepicker";s:68:"/opt/lampp/htdocs/im/vendor/2amigos/yii2-date-time-picker-widget/src";}}s:24:"ruskid/yii2-csv-importer";a:3:{s:4:"name";s:24:"ruskid/yii2-csv-importer";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:19:"@ruskid/csvimporter";s:52:"/opt/lampp/htdocs/im/vendor/ruskid/yii2-csv-importer";}}s:26:"moonlandsoft/yii2-phpexcel";a:3:{s:4:"name";s:26:"moonlandsoft/yii2-phpexcel";s:7:"version";s:7:"1.1.0.0";s:5:"alias";a:1:{s:18:"@moonland/phpexcel";s:54:"/opt/lampp/htdocs/im/vendor/moonlandsoft/yii2-phpexcel";}}s:31:"kartik-v/yii2-widget-timepicker";a:3:{s:4:"name";s:31:"kartik-v/yii2-widget-timepicker";s:7:"version";s:7:"1.0.3.0";s:5:"alias";a:1:{s:12:"@kartik/time";s:59:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-widget-timepicker";}}s:16:"apaoww/yii2-oci8";a:3:{s:4:"name";s:16:"apaoww/yii2-oci8";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:12:"@apaoww/oci8";s:44:"/opt/lampp/htdocs/im/vendor/apaoww/yii2-oci8";}}s:28:"kartik-v/yii2-widget-select2";a:3:{s:4:"name";s:28:"kartik-v/yii2-widget-select2";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:15:"@kartik/select2";s:56:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-widget-select2";}}s:19:"kartik-v/yii2-money";a:3:{s:4:"name";s:19:"kartik-v/yii2-money";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:13:"@kartik/money";s:47:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-money";}}s:24:"kartik-v/yii2-date-range";a:3:{s:4:"name";s:24:"kartik-v/yii2-date-range";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:17:"@kartik/daterange";s:52:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-date-range";}}s:18:"kartik-v/yii2-mpdf";a:3:{s:4:"name";s:18:"kartik-v/yii2-mpdf";s:7:"version";s:7:"1.0.1.0";s:5:"alias";a:1:{s:12:"@kartik/mpdf";s:46:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-mpdf";}}s:31:"kartik-v/yii2-widget-activeform";a:3:{s:4:"name";s:31:"kartik-v/yii2-widget-activeform";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:12:"@kartik/form";s:59:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-widget-activeform";}}s:22:"kartik-v/yii2-sortable";a:3:{s:4:"name";s:22:"kartik-v/yii2-sortable";s:7:"version";s:7:"1.2.0.0";s:5:"alias";a:1:{s:16:"@kartik/sortable";s:50:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-sortable";}}s:22:"kartik-v/yii2-dynagrid";a:3:{s:4:"name";s:22:"kartik-v/yii2-dynagrid";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:16:"@kartik/dynagrid";s:50:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-dynagrid";}}s:23:"kartik-v/yii2-popover-x";a:3:{s:4:"name";s:23:"kartik-v/yii2-popover-x";s:7:"version";s:7:"1.3.4.0";s:5:"alias";a:1:{s:15:"@kartik/popover";s:51:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-popover-x";}}s:22:"kartik-v/yii2-editable";a:3:{s:4:"name";s:22:"kartik-v/yii2-editable";s:7:"version";s:11:"9999999-dev";s:5:"alias";a:1:{s:16:"@kartik/editable";s:50:"/opt/lampp/htdocs/im/vendor/kartik-v/yii2-editable";}}s:17:"linslin/yii2-curl";a:3:{s:4:"name";s:17:"linslin/yii2-curl";s:7:"version";s:7:"1.0.3.0";s:5:"alias";a:1:{s:18:"@linslin/yii2/curl";s:45:"/opt/lampp/htdocs/im/vendor/linslin/yii2-curl";}}}}s:7:"request";a:14:{s:7:"flashes";a:0:{}s:10:"statusCode";i:302;s:14:"requestHeaders";a:13:{s:4:"host";s:22:"imdev.mncplaymedia.com";s:10:"connection";s:10:"keep-alive";s:14:"content-length";s:2:"76";s:13:"cache-control";s:9:"max-age=0";s:6:"origin";s:29:"http://imdev.mncplaymedia.com";s:25:"upgrade-insecure-requests";s:1:"1";s:12:"content-type";s:33:"application/x-www-form-urlencoded";s:10:"user-agent";s:115:"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36";s:6:"accept";s:85:"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";s:7:"referer";s:57:"http://imdev.mncplaymedia.com/grflost/web/grf/indexothers";s:15:"accept-encoding";s:13:"gzip, deflate";s:15:"accept-language";s:23:"en-US,en;q=0.9,id;q=0.8";s:6:"cookie";s:1133:"_ga=GA1.2.482164384.1544424393; _identity-logistik=3831c0c61b76b28dab3d930752ebcf1bc2a88c58ee8f76f851dbab3d74e81a3ca%3A2%3A%7Bi%3A0%3Bs%3A18%3A%22_identity-logistik%22%3Bi%3A1%3Bs%3A46%3A%22%5B5%2C%22AMyqPB1J1tCRJtYrz_CzUmIcNstoBI-l%22%2C2592000%5D%22%3B%7D; _csrf-frontend=2fd01036381d53517188e2b3e4c363a32144784e1aa87574a5207d37b336acada%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22wpn3OxcENODZhIF-1m-wZN2WFvIKGlE0%22%3B%7D; _csrf-grflost=28e0e9c96a4a7678c3bd6b255618f96a538a71cfff8970c71fd9bfcaf2270cb9a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-grflost%22%3Bi%3A1%3Bs%3A32%3A%22vmkgLc-_psGbf2uTfblce3QojqO6_8wC%22%3B%7D; _csrf-logistik=99adf948e3965762afc2518290caf32ce5c2f38d8b8067f94a7beb2114bdf0eba%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-logistik%22%3Bi%3A1%3Bs%3A32%3A%2278z1Yiuz1T-MYq1vypXPJ00K6u6gwr_d%22%3B%7D; logistik=6diu4gi2bulo9htnctspdm1ks5; grflost=ova0gp8he87pcs6mn80um4p376; _identity-grflost=fe7153efa14b2727509761ba74e669f3f6fa0f61dc775f68f944ca079eb512b2a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-grflost%22%3Bi%3A1%3Bs%3A47%3A%22%5B32%2C%22Qmspp9H0vXooYDLKNT70XSpuzU_VKeAA%22%2C2592000%5D%22%3B%7D";}s:15:"responseHeaders";a:7:{s:12:"X-Powered-By";s:10:"PHP/5.6.31";s:10:"Set-Cookie";a:2:{i:0;s:52:"grflost=b4scu8bi6n9uo0aqlidk57qr90; path=/; HttpOnly";i:1;s:93:"_identity-grflost=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/; httponly";}s:7:"Expires";s:29:"Thu, 19 Nov 1981 08:52:00 GMT";s:13:"Cache-Control";s:62:"no-store, no-cache, must-revalidate, post-check=0, pre-check=0";s:6:"Pragma";s:8:"no-cache";s:8:"Location";s:33:"http://imdev.mncplaymedia.com/im/";s:12:"Content-Type";s:24:"text/html; charset=UTF-8";}s:5:"route";s:11:"site/logout";s:6:"action";s:50:"grflost\controllers\SiteController::actionLogout()";s:12:"actionParams";a:0:{}s:11:"requestBody";a:3:{s:12:"Content Type";s:33:"application/x-www-form-urlencoded";s:3:"Raw";s:76:"_csrf-grflost=NG81SV9HQ0JCAl4uEyRuHUQccis5dTYWUg1ZKjp0Ei1eHnp%2FAH80AQ%3D%3D";s:17:"Decoded to Params";a:1:{s:13:"_csrf-grflost";s:56:"NG81SV9HQ0JCAl4uEyRuHUQccis5dTYWUg1ZKjp0Ei1eHnp/AH80AQ==";}}s:6:"SERVER";a:41:{s:18:"REDIRECT_UNIQUE_ID";s:24:"XBdTEn8AAAEAAD2dw44AAAAJ";s:15:"REDIRECT_STATUS";s:3:"200";s:9:"UNIQUE_ID";s:24:"XBdTEn8AAAEAAD2dw44AAAAJ";s:9:"HTTP_HOST";s:22:"imdev.mncplaymedia.com";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:14:"CONTENT_LENGTH";s:2:"76";s:18:"HTTP_CACHE_CONTROL";s:9:"max-age=0";s:11:"HTTP_ORIGIN";s:29:"http://imdev.mncplaymedia.com";s:30:"HTTP_UPGRADE_INSECURE_REQUESTS";s:1:"1";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:15:"HTTP_USER_AGENT";s:115:"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36";s:11:"HTTP_ACCEPT";s:85:"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";s:12:"HTTP_REFERER";s:57:"http://imdev.mncplaymedia.com/grflost/web/grf/indexothers";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:20:"HTTP_ACCEPT_LANGUAGE";s:23:"en-US,en;q=0.9,id;q=0.8";s:11:"HTTP_COOKIE";s:1133:"_ga=GA1.2.482164384.1544424393; _identity-logistik=3831c0c61b76b28dab3d930752ebcf1bc2a88c58ee8f76f851dbab3d74e81a3ca%3A2%3A%7Bi%3A0%3Bs%3A18%3A%22_identity-logistik%22%3Bi%3A1%3Bs%3A46%3A%22%5B5%2C%22AMyqPB1J1tCRJtYrz_CzUmIcNstoBI-l%22%2C2592000%5D%22%3B%7D; _csrf-frontend=2fd01036381d53517188e2b3e4c363a32144784e1aa87574a5207d37b336acada%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22wpn3OxcENODZhIF-1m-wZN2WFvIKGlE0%22%3B%7D; _csrf-grflost=28e0e9c96a4a7678c3bd6b255618f96a538a71cfff8970c71fd9bfcaf2270cb9a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-grflost%22%3Bi%3A1%3Bs%3A32%3A%22vmkgLc-_psGbf2uTfblce3QojqO6_8wC%22%3B%7D; _csrf-logistik=99adf948e3965762afc2518290caf32ce5c2f38d8b8067f94a7beb2114bdf0eba%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-logistik%22%3Bi%3A1%3Bs%3A32%3A%2278z1Yiuz1T-MYq1vypXPJ00K6u6gwr_d%22%3B%7D; logistik=6diu4gi2bulo9htnctspdm1ks5; grflost=ova0gp8he87pcs6mn80um4p376; _identity-grflost=fe7153efa14b2727509761ba74e669f3f6fa0f61dc775f68f944ca079eb512b2a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-grflost%22%3Bi%3A1%3Bs%3A47%3A%22%5B32%2C%22Qmspp9H0vXooYDLKNT70XSpuzU_VKeAA%22%2C2592000%5D%22%3B%7D";s:4:"PATH";s:70:"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin";s:15:"LD_LIBRARY_PATH";s:29:"/opt/lampp/lib:/opt/lampp/lib";s:16:"SERVER_SIGNATURE";s:0:"";s:15:"SERVER_SOFTWARE";s:78:"Apache/2.4.26 (Unix) OpenSSL/1.0.2l PHP/5.6.31 mod_perl/2.0.8-dev Perl/v5.16.3";s:11:"SERVER_NAME";s:22:"imdev.mncplaymedia.com";s:11:"SERVER_ADDR";s:10:"10.9.38.45";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:11:"10.9.20.123";s:13:"DOCUMENT_ROOT";s:20:"/opt/lampp/htdocs/im";s:14:"REQUEST_SCHEME";s:4:"http";s:14:"CONTEXT_PREFIX";s:0:"";s:21:"CONTEXT_DOCUMENT_ROOT";s:20:"/opt/lampp/htdocs/im";s:12:"SERVER_ADMIN";s:15:"you@example.com";s:15:"SCRIPT_FILENAME";s:42:"/opt/lampp/htdocs/im/grflost/web/index.php";s:11:"REMOTE_PORT";s:5:"64924";s:12:"REDIRECT_URL";s:24:"/grflost/web/site/logout";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:24:"/grflost/web/site/logout";s:11:"SCRIPT_NAME";s:22:"/grflost/web/index.php";s:8:"PHP_SELF";s:22:"/grflost/web/index.php";s:18:"REQUEST_TIME_FLOAT";d:1545032466.8139998912811279296875;s:12:"REQUEST_TIME";i:1545032466;}s:3:"GET";a:0:{}s:4:"POST";a:1:{s:13:"_csrf-grflost";s:56:"NG81SV9HQ0JCAl4uEyRuHUQccis5dTYWUg1ZKjp0Ei1eHnp/AH80AQ==";}s:6:"COOKIE";a:8:{s:3:"_ga";s:26:"GA1.2.482164384.1544424393";s:18:"_identity-logistik";s:158:"3831c0c61b76b28dab3d930752ebcf1bc2a88c58ee8f76f851dbab3d74e81a3ca:2:{i:0;s:18:"_identity-logistik";i:1;s:46:"[5,"AMyqPB1J1tCRJtYrz_CzUmIcNstoBI-l",2592000]";}";s:14:"_csrf-frontend";s:140:"2fd01036381d53517188e2b3e4c363a32144784e1aa87574a5207d37b336acada:2:{i:0;s:14:"_csrf-frontend";i:1;s:32:"wpn3OxcENODZhIF-1m-wZN2WFvIKGlE0";}";s:13:"_csrf-grflost";s:139:"28e0e9c96a4a7678c3bd6b255618f96a538a71cfff8970c71fd9bfcaf2270cb9a:2:{i:0;s:13:"_csrf-grflost";i:1;s:32:"vmkgLc-_psGbf2uTfblce3QojqO6_8wC";}";s:14:"_csrf-logistik";s:140:"99adf948e3965762afc2518290caf32ce5c2f38d8b8067f94a7beb2114bdf0eba:2:{i:0;s:14:"_csrf-logistik";i:1;s:32:"78z1Yiuz1T-MYq1vypXPJ00K6u6gwr_d";}";s:8:"logistik";s:26:"6diu4gi2bulo9htnctspdm1ks5";s:7:"grflost";s:26:"ova0gp8he87pcs6mn80um4p376";s:17:"_identity-grflost";s:158:"fe7153efa14b2727509761ba74e669f3f6fa0f61dc775f68f944ca079eb512b2a:2:{i:0;s:17:"_identity-grflost";i:1;s:47:"[32,"Qmspp9H0vXooYDLKNT70XSpuzU_VKeAA",2592000]";}";}s:5:"FILES";a:0:{}s:7:"SESSION";a:0:{}}s:3:"log";a:1:{s:8:"messages";a:17:{i:0;a:6:{i:0;s:33:"Bootstrap with yii\log\Dispatcher";i:1;i:8;i:2;s:31:"yii\base\Application::bootstrap";i:3;d:1545032466.89373111724853515625;i:4;a:0:{}i:5;i:5372232;}i:1;a:6:{i:0;s:21:"Loading module: debug";i:1;i:8;i:2;s:26:"yii\base\Module::getModule";i:3;d:1545032466.893804073333740234375;i:4;a:0:{}i:5;i:5375400;}i:2;a:6:{i:0;s:44:"Bootstrap with yii\debug\Module::bootstrap()";i:1;i:8;i:2;s:31:"yii\base\Application::bootstrap";i:3;d:1545032466.9047400951385498046875;i:4;a:0:{}i:5;i:5977416;}i:3;a:6:{i:0;s:256:"Unable to write cache file '/opt/lampp/htdocs/im/grflost/runtime/cache/96/963454f612a8b5fb4a63ba1e97f028a1.bin': file_put_contents(/opt/lampp/htdocs/im/grflost/runtime/cache/96/963454f612a8b5fb4a63ba1e97f028a1.bin): failed to open stream: Permission denied";i:1;i:2;i:2;s:31:"yii\caching\FileCache::setValue";i:3;d:1545032466.91444301605224609375;i:4;a:0:{}i:5;i:6554976;}i:4;a:6:{i:0;s:19:"Loading module: gii";i:1;i:8;i:2;s:26:"yii\base\Module::getModule";i:3;d:1545032466.9149940013885498046875;i:4;a:0:{}i:5;i:6541968;}i:5;a:6:{i:0;s:42:"Bootstrap with yii\gii\Module::bootstrap()";i:1;i:8;i:2;s:31:"yii\base\Application::bootstrap";i:3;d:1545032466.9157350063323974609375;i:4;a:0:{}i:5;i:6594256;}i:14;a:6:{i:0;s:30:"Route requested: 'site/logout'";i:1;i:8;i:2;s:34:"yii\web\Application::handleRequest";i:3;d:1545032466.9222869873046875;i:4;a:0:{}i:5;i:6978936;}i:15;a:6:{i:0;s:25:"Route to run: site/logout";i:1;i:8;i:2;s:30:"yii\base\Controller::runAction";i:3;d:1545032466.924285888671875;i:4;a:0:{}i:5;i:7117224;}i:16;a:6:{i:0;s:15:"Session started";i:1;i:4;i:2;s:21:"yii\web\Session::open";i:3;d:1545032466.9288389682769775390625;i:4;a:1:{i:0;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:7416976;}i:17;a:6:{i:0;s:54:"SELECT * FROM "user" WHERE ("id"=32) AND ("status"=10)";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545032466.960299015045166015625;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9482080;}i:18;a:6:{i:0;s:64:"Opening DB connection: pgsql:host=10.9.39.46;dbname=inventorydev";i:1;i:4;i:2;s:23:"yii\db\Connection::open";i:3;d:1545032466.9604549407958984375;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9492728;}i:23;a:6:{i:0;s:1950:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'user'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545032466.9835751056671142578125;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9586440;}i:26;a:6:{i:0;s:872:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='user'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1545032467.0015799999237060546875;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9638848;}i:29;a:6:{i:0;s:66:"Running action: grflost\controllers\SiteController::actionLogout()";i:1;i:8;i:2;s:36:"yii\base\InlineAction::runWithParams";i:3;d:1545032467.01865291595458984375;i:4;a:0:{}i:5;i:9988728;}i:30;a:6:{i:0;s:38:"User '32' logged out from 10.9.20.123.";i:1;i:4;i:2;s:20:"yii\web\User::logout";i:3;d:1545032467.01945590972900390625;i:4;a:1:{i:0;a:5:{s:4:"file";s:59:"/opt/lampp/htdocs/im/grflost/controllers/SiteController.php";s:4:"line";i:106;s:8:"function";s:6:"logout";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:10007872;}i:31;a:6:{i:0;s:15:"Session started";i:1;i:4;i:2;s:21:"yii\web\Session::open";i:3;d:1545032467.0199239253997802734375;i:4;a:1:{i:0;a:5:{s:4:"file";s:59:"/opt/lampp/htdocs/im/grflost/controllers/SiteController.php";s:4:"line";i:106;s:8:"function";s:6:"logout";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:10013160;}i:32;a:6:{i:0;s:100:"Access to debugger is denied due to IP address restriction. The requesting IP address is 10.9.20.123";i:1;i:2;i:2;s:29:"yii\debug\Module::checkAccess";i:3;d:1545032467.024218082427978515625;i:4;a:0:{}i:5;i:10120672;}}}s:9:"profiling";a:3:{s:6:"memory";i:10298904;s:4:"time";d:0.1700890064239501953125;s:8:"messages";a:8:{i:19;a:6:{i:0;s:64:"Opening DB connection: pgsql:host=10.9.39.46;dbname=inventorydev";i:1;i:80;i:2;s:23:"yii\db\Connection::open";i:3;d:1545032466.9605529308319091796875;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9496456;}i:20;a:6:{i:0;s:64:"Opening DB connection: pgsql:host=10.9.39.46;dbname=inventorydev";i:1;i:96;i:2;s:23:"yii\db\Connection::open";i:3;d:1545032466.97702789306640625;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9501768;}i:21;a:6:{i:0;s:54:"SELECT * FROM "user" WHERE ("id"=32) AND ("status"=10)";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545032466.9772150516510009765625;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9501920;}i:22;a:6:{i:0;s:54:"SELECT * FROM "user" WHERE ("id"=32) AND ("status"=10)";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545032466.9808979034423828125;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9509688;}i:24;a:6:{i:0;s:1950:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'user'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545032466.983768939971923828125;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9596696;}i:25;a:6:{i:0;s:1950:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'user'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545032466.999373912811279296875;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9641216;}i:27;a:6:{i:0;s:872:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='user'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545032467.0017359256744384765625;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9645824;}i:28;a:6:{i:0;s:872:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='user'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545032467.0102651119232177734375;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9653904;}}}s:2:"db";a:1:{s:8:"messages";a:6:{i:21;a:6:{i:0;s:54:"SELECT * FROM "user" WHERE ("id"=32) AND ("status"=10)";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545032466.9772150516510009765625;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9501920;}i:22;a:6:{i:0;s:54:"SELECT * FROM "user" WHERE ("id"=32) AND ("status"=10)";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545032466.9808979034423828125;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9509688;}i:24;a:6:{i:0;s:1950:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'user'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545032466.983768939971923828125;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9596696;}i:25;a:6:{i:0;s:1950:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'user'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545032466.999373912811279296875;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9641216;}i:27;a:6:{i:0;s:872:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='user'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1545032467.0017359256744384765625;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9645824;}i:28;a:6:{i:0;s:872:"select
+    ct.conname as constraint_name,
+    a.attname as column_name,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    fa.attname as foreign_column_name
+from
+    (SELECT ct.conname, ct.conrelid, ct.confrelid, ct.conkey, ct.contype, ct.confkey, generate_subscripts(ct.conkey, 1) AS s
+       FROM pg_constraint ct
+    ) AS ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    inner join pg_attribute a on a.attrelid=ct.conrelid and a.attnum = ct.conkey[ct.s]
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+    left join pg_attribute fa on fa.attrelid=ct.confrelid and fa.attnum = ct.confkey[ct.s]
+where
+    ct.contype='f'
+    and c.relname='user'
+    and ns.nspname='public'
+order by
+    fns.nspname, fc.relname, a.attnum";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1545032467.0102651119232177734375;i:4;a:2:{i:0;a:5:{s:4:"file";s:43:"/opt/lampp/htdocs/im/common/models/User.php";s:4:"line";i:64;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:75:"/opt/lampp/htdocs/im/vendor/mdmsoft/yii2-admin/components/AccessControl.php";s:4:"line";i:103;s:8:"function";s:10:"getIsGuest";s:5:"class";s:12:"yii\web\User";s:4:"type";s:2:"->";}}i:5;i:9653904;}}}s:6:"assets";a:0:{}s:4:"mail";a:0:{}s:8:"timeline";a:3:{s:5:"start";d:1545032466.86563205718994140625;s:3:"end";d:1545032467.0378360748291015625;s:6:"memory";i:10298904;}s:4:"user";N;s:6:"router";a:1:{s:8:"messages";a:8:{i:6;a:6:{i:0;a:3:{s:4:"rule";s:3:"gii";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545032466.92175006866455078125;i:4;a:0:{}i:5;i:6967504;}i:7;a:6:{i:0;a:3:{s:4:"rule";s:12:"gii/<id:\w+>";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545032466.921907901763916015625;i:4;a:0:{}i:5;i:6969304;}i:8;a:6:{i:0;a:3:{s:4:"rule";s:41:"gii/<controller:[\w\-]+>/<action:[\w\-]+>";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545032466.9219710826873779296875;i:4;a:0:{}i:5;i:6971152;}i:9;a:6:{i:0;a:3:{s:4:"rule";s:5:"debug";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545032466.9220159053802490234375;i:4;a:0:{}i:5;i:6973032;}i:10;a:6:{i:0;a:3:{s:4:"rule";s:43:"debug/<controller:[\w\-]+>/<action:[\w\-]+>";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545032466.9220569133758544921875;i:4;a:0:{}i:5;i:6974880;}i:11;a:6:{i:0;a:3:{s:4:"rule";s:1:"/";s:5:"match";b:0;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545032466.92209911346435546875;i:4;a:0:{}i:5;i:6976664;}i:12;a:6:{i:0;s:60:"Request parsed with URL rule: <controller:\w+>/<action:\w+>/";i:1;i:8;i:2;s:29:"yii\web\UrlRule::parseRequest";i:3;d:1545032466.9222009181976318359375;i:4;a:0:{}i:5;i:6981152;}i:13;a:6:{i:0;a:3:{s:4:"rule";s:30:"<controller:\w+>/<action:\w+>/";s:5:"match";b:1;s:6:"parent";N;}i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1545032466.92224597930908203125;i:4;a:0:{}i:5;i:6980440;}}}s:7:"summary";a:9:{s:3:"tag";s:13:"5c175312dd1bf";s:3:"url";s:53:"http://imdev.mncplaymedia.com/grflost/web/site/logout";s:4:"ajax";i:0;s:6:"method";s:4:"POST";s:2:"ip";s:11:"10.9.20.123";s:4:"time";d:1545032466.8139998912811279296875;s:10:"statusCode";i:302;s:8:"sqlCount";i:3;s:9:"mailCount";i:0;}}

@@ -17,7 +17,7 @@ class SearchMasterItemIm extends MasterItemIm
     {
         return [
             [['id', 'created_by', 'updated_by', 'status', 'type', 'qty_request', 'qty_good', 'qty_noot_good', 'qty_reject','qty_dismantle_good','qty_good_rec','asset_barcode'], 'integer'],
-            [['sn_type','name', 'brand', 'created_date', 'updated_date', 'im_code', 'orafin_code', 'grouping', 'warna', 'orafin_code', 'name','item_code', 'item_desc'], 'safe'],
+            [['sn_type','name', 'brand', 'created_date', 'updated_date', 'im_code', 'orafin_code', 'grouping', 'warna', 'orafin_code', 'name','item_code', 'item_desc','uom'], 'safe'],
         ];
     }
 
@@ -70,6 +70,7 @@ class SearchMasterItemIm extends MasterItemIm
             'master_item_im.brand as brand',
             'master_item_im.warna as warna',
             'master_item_im.type as type',
+            'master_item_im.uom as uom',
             // 'master_item_im.req_good_qty as req_good_qty',
 
         ])
@@ -138,7 +139,8 @@ class SearchMasterItemIm extends MasterItemIm
 		$query = MasterItemIm::find()->joinWith('masterItemImDetails');
 		$query->joinWith(['referenceWarna refwarna', 'referenceBrand refbrand', 'referenceType reftype', 'referenceGrouping refgrouping']);
 		$query->select([
-			'master_item_im_detail.id',
+            'master_item_im_detail.id',
+			'master_item_im.id as id_master_item_im',
 			'im_code',
 			'name',
 			'brand',
@@ -275,7 +277,7 @@ class SearchMasterItemIm extends MasterItemIm
             ->andFilterWhere(['=', 'grouping', $this->grouping])
             ->andFilterWhere(['=', 'brand', $this->brand])
             ->andFilterWhere(['=', 'warna', $this->warna])
-            // ->andFilterWhere(['=', 'sn_type', $this->sn_type])
+            ->andFilterWhere(['=', 'uom', $this->uom])
             ->andFilterWhere(['=', 'type', $this->type])
             // ->andFilterWhere(['ilike', 'refwarna.description', $this->warna])
             ->andFilterWhere(['ilike', 'grf_detail.qty_request', $this->qty_request])
