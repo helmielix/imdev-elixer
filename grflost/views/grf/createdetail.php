@@ -31,7 +31,6 @@ $arrQtyDetail = '';
         // $idForm = 'saveForm';
     ?>
 	
-	
 	<div class="alert hidden" id="errorSummary">Please fix these following error: <ul id="ulerrorSummary"></ul></div>
     <?= GridView::widget([
         'id' => 'gridViewcreatedetail',
@@ -86,6 +85,7 @@ $arrQtyDetail = '';
         <?= Html::button('Previous', ['id'=>'prevButton','class' => 'btn btn-success','data-pjax' => false]);  ?>
         <?= Html::button('Submit', ['id'=>'submitedButton','class' => 'btn btn-success','data-pjax' => false]) ?>
     </p>
+
 	<?php yii\widgets\Pjax::end() ?>
 </div>
 
@@ -146,7 +146,7 @@ $arrQtyDetail = '';
                     $('#modal').modal('show')
 						.find('#modalContent')
 						.load('<?php echo Url::to([$this->context->id.$goto, 'id' => $idGrf]) ;?>');
-					$('#modalHeader').html('<h3>Detail Good Request Form</h3>');
+					$('#modalHeader').html('<h3>Detail Barang</h3>');
                 } else {
 					pesan = response.pesan;
 					pesan = pesan.split('\n');
@@ -181,5 +181,59 @@ $arrQtyDetail = '';
         $('#modalHeader').html('<h3> '+ $(this).attr('header') +'</h3>');
     });
 
-   
+    // $(document).on("pjax:send", function(e, contents) {
+    //   // event.stopPropagation();
+    //     // event.preventDefault();
+    //     // alert($( '#qty_request' ).val());
+    //     console.log('klik');
+    //     var form = $('#createForm');
+    //     // data = form.data("yiiActiveForm");
+    //     // $.each(data.attributes, function() {
+    //         // this.status = 3;
+    //     // });
+    //     // form.yiiActiveForm("validate");
+    //     if (!form.find('.has-error').length) {
+    //         data = new FormData(form[0]);
+            
+    //         // var button = $(this);
+    //         // button.prop('disabled', true);
+    //         // button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
+
+    //         $.ajax({
+    //             url: '<?php echo Url::to([$this->context->id.'/setsessiondetail']) ;?>',
+    //             type: 'post',
+    //             data: data,
+    //             cache: false,
+    //             processData: false,
+    //             contentType: false,
+    //             success: function (response) {
+    //                 if(response == 'success') {
+    //                     //if($( '#financeinvoicedocument-invoice_type' ).val() == 7011){
+    //                         // $('#modal2').modal('hide');
+    //                     //  var url = $('#pjax li.active a').attr('href');
+    //                     //  $.pjax.reload({container:'#pjax', url: url});
+    //                     // // }else{
+    //                         // $('#modal').modal('show')
+    //                         //  .find('#modalContent')
+    //                         //  .load('<?php echo Url::to(['/inbound-po/indexdetail']) ;?>');
+    //                         // $('#modalHeader').html('<h3> Inbound PO Detail </h3>');
+                            
+    //                     // }
+
+    //                 } else {
+    //                     alert('error with message: ' + response);
+    //                 }
+    //             },
+    //             error: function (xhr, getError) {
+    //                 if (typeof getError === "object" && getError !== null) {
+    //                     error = $.parseJSON(getError.responseText);
+    //                     getError = error.message;
+    //                 }
+    //                 if (xhr.status != 302) {
+    //                     alert("System recieve error with code: "+xhr.status);
+    //                 }
+    //             },
+    //         });
+    //     };
+    // })
 </script>

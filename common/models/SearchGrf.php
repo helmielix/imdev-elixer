@@ -65,11 +65,14 @@ class SearchGrf extends Grf
 
         
         if($action == 'input'){
-            $query  ->andFilterWhere(['grf.status_listing' => [1,2,3,6,7,39]]);
+            $query  ->andFilterWhere(['grf.status_listing' => [1,2,3,6,7,39]])
+                    ->andWhere(['source'=>NULL]);
         }else if($action == 'verify'){
-              $query->andFilterWhere(['or',['=','grf.status_listing', 1],['=','grf.status_listing', 4], ['=','grf.status_listing', 2]]);
+              $query->andFilterWhere(['or',['=','grf.status_listing', 1],['=','grf.status_listing', 4], ['=','grf.status_listing', 2]])
+                    ->andWhere(['source'=>NULL]);
         } else if ($action == 'approve'){
-            $query->andFilterWhere(['or',['=','grf.status_listing', 4],['=','grf.status_listing', 5]]);
+            $query->andFilterWhere(['or',['=','grf.status_listing', 4],['=','grf.status_listing', 5]])
+                ->andWhere(['source'=>NULL]);
         }
         else if($action == 'inputothers'){
              $query  ->andFilterWhere(['grf.status_listing' => [1,2,3,6,7,39]])

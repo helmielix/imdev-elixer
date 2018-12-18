@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
 use common\models\MkmMasterItem;
 use common\models\InstructionGrfDetail;
+use common\models\InstructionGrf;
 use common\models\MasterItemIm;
 use common\models\Reference;
 
@@ -26,6 +27,7 @@ $this->registerJs(
       // $(event.target).initializeMyPlugin()
     // })
 ");
+$modelinstruksi = InstructionGrf::find()->andWhere(['id' => Yii::$app->session->get('idGrf')])->one();
 ?>
 <div class="instruction-wh-transfer-detail-index">
 
@@ -74,7 +76,7 @@ $this->registerJs(
             ],
             // 'idOrafinCode.item_desc',
             [
-                'header' => 'Nama Barang',
+                // 'header' => 'Nama Barang',
                 'attribute' => 'name',
                 // 'value' => function($model){
                     // $item = MkmMasterItem::find()->select(['item_desc'])->andWhere(['item_code' => $model->orafin_code])->one();
@@ -83,7 +85,7 @@ $this->registerJs(
                 // 'value'=> 'idOrafinCode.name'
             ],
             [
-                'header' => 'Grouping Barang',
+                // 'header' => 'Grouping Barang',
                 'attribute' => 'grouping',
                 // 'value' => function($model){
                     // $item = MkmMasterItem::find()->select(['item_desc'])->andWhere(['item_code' => $model->orafin_code])->one();
@@ -94,7 +96,7 @@ $this->registerJs(
             ],
             'qty_request',
             [
-                'header' => 'SN/Non',
+                // 'header' => 'SN/Non',
                 // 'format' => 'raw',
                 'attribute' => 'sn_type',
                 // 'value' => function($model){
@@ -113,19 +115,25 @@ $this->registerJs(
             [
                 'label' => 'Status',
                 'format' => 'raw',
-                'value' => function($model){
+                'value' => function($model) use ($modelinstruksi) {
                     if(!MasterItemIm::find()->where(['orafin_code'=>$model->orafin_code])->exists() ){
                         return "<span class='label label-danger' >Not Registered</span>";
                     }else{ 
+
                         $modeldetail = InstructionGrfDetail::find()
                             ->select([new \yii\db\Expression('sum(qty_good + qty_not_good + qty_reject + qty_dismantle + qty_revocation + qty_good_rec + qty_good_for_recond) as qty_good')])
                             ->joinWith('idMasterItemIm')
+                            // ->joinWith('idInstructionGrf')
                             ->andWhere(['id_instruction_grf' => Yii::$app->session->get('idGrf')])
                             ->andWhere(['orafin_code' => $model->orafin_code])->one();
-                        if ( isset($modeldetail->qty_good) && $modeldetail->qty_good == $model->qty_request ) {
+                        
+                        if ( isset($modeldetail->qty_good) && $modeldetail->qty_good == $model->qty_request 
+                            && ($modelinstruksi->status_listing != 3)
+                            ) {
                             // return $model;
-                            return "<span class='label label-success'  >Closed</span>";                            
-                        }    
+                            return "<span class='label label-success'  >Closed</span>"
+                            ;
+                        }
                         
                         return "<span class='label label-primary'>Open</span>";
                     }
@@ -149,12 +157,15 @@ $this->registerJs(
                 'class' => 'yii\grid\ActionColumn',
                 'template'=>'{create}',
                 'buttons'=>[
-                    'create' => function ($url, $model) {
+                    'create' => function ($url, $model) use ($modelinstruksi) {
                         $modeldetail = InstructionGrfDetail::find()
                             ->select([new \yii\db\Expression('sum(qty_good + qty_not_good + qty_reject + qty_dismantle + qty_revocation + qty_good_rec + qty_good_for_recond) as qty_good')])
                             ->joinWith('idMasterItemIm')
                             ->andWhere(['orafin_code' => $model->orafin_code])->one();
-                        if ( !isset($modeldetail->qty_good) || $modeldetail->qty_good < $model->qty_request ) {
+                        
+                        if ( !isset($modeldetail->qty_good) || $modeldetail->qty_good < $model->qty_request 
+                             || ($modelinstruksi->status_listing == 3)
+                        ) {
                             return Html::a('<span style="margin:0px 2px" class="label label-success">Choose</span>', '#createdetail?id='.$model->id.'&header=Detail_Material_GRF_Vendor_IKO', [
                                 'title' => Yii::t('app', 'view'), 'class' => 'createsButton', 'value'=>Url::to([$this->context->id.'/createdetail', 'orafinCode' => $model->orafin_code]), 'header'=> yii::t('app','GRF Detail')
                             ]);
@@ -186,7 +197,7 @@ $this->registerJs(
                     // },
                 ],
                 
-                // 'visible' => (Yii::$app->controller->action->id == 'indexdetail')
+                'visible' => (Yii::$app->controller->action->id == 'indexdetail')
             ],
             
         ],

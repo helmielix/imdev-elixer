@@ -70,6 +70,17 @@ use common\models\Reference;
 				},
                 'filter' => Arrayhelper::map(Reference::find()->andWhere(['table_relation' => 'sn_type'])->all(), 'id', 'description'),
             ],
+            [
+                'attribute' => 'uom',
+                // 'label' => 'Grouping',
+                'value' => function($model){
+                    $modelItem = MasterItemIm::find()->where(['orafin_code'=>$model->orafin_code])->one();
+                    if($modelItem){
+                        return $modelItem->referenceUom->description;                      
+                    }
+                },
+                'filter' => Arrayhelper::map(Reference::find()->andWhere(['table_relation' => 'uom'])->all(), 'id', 'description'),
+            ],
 			[
                 'label' => 'Status',
 				'format' => 'raw',

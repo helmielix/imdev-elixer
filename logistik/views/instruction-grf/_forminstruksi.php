@@ -54,7 +54,7 @@ if (!$laborcek) {
         <div class='col-sm-6'>
             <?php if (Yii::$app->controller->action->id == 'create') {
             } 
-                echo Html::a(basename($model->idGrf->file_attachment_1), ['/downloadfile','id' => $model->idGrf->id], $options = ['target'=>'_blank', 'data' => [
+                echo Html::a(basename($model->idGrf->file_attachment_1), ['/instruction-grf/downloadfile','id' => $model->idGrf->id], $options = ['target'=>'_blank', 'data' => [
                         'method' => 'post',
                         'params' => [
                             'data' => 'file_attachment_1',
@@ -69,7 +69,7 @@ if (!$laborcek) {
         <div class='col-sm-6'>
             <?php if (Yii::$app->controller->action->id == 'create') {
             } 
-                echo Html::a(basename($model->idGrf->file_attachment_2), ['downloadfile','id' => $model->idGrf->id], $options = ['target'=>'_blank', 'data' => [
+                echo Html::a(basename($model->idGrf->file_attachment_2), ['/instruction-grf/downloadfile','id' => $model->idGrf->id], $options = ['target'=>'_blank', 'data' => [
                         'method' => 'post',
                         'params' => [
                             'data' => 'file_attachment_2',
@@ -84,7 +84,7 @@ if (!$laborcek) {
         <div class='col-sm-6'>
             <?php if (Yii::$app->controller->action->id == 'create') {
             } 
-                echo Html::a(basename($model->idGrf->file_attachment_3), ['downloadfile','id' => $model->idGrf->id], $options = ['target'=>'_blank', 'data' => [
+                echo Html::a(basename($model->idGrf->file_attachment_3), ['/instruction-grf/downloadfile','id' => $model->idGrf->id], $options = ['target'=>'_blank', 'data' => [
                         'method' => 'post',
                         'params' => [
                             'data' => 'file_attachment_3',
@@ -234,4 +234,5 @@ $('#createButton').click(function () {
         });
     };
 });
+$('#modal').removeAttr('tabindex');
 </script>

@@ -15,7 +15,7 @@ class SearchGrfDetail extends GrfDetail
     /**
      * @inheritdoc
      */
-    public $qty_good_rec, $sn_type, $description, $id_instruction_grf, $item_desc, $item_uom_code;
+    public $qty_good_rec, $sn_type, $description, $id_instruction_grf, $item_desc, $item_uom_code, $name, $grouping;
     public function rules()
     {
         return [
@@ -72,11 +72,16 @@ class SearchGrfDetail extends GrfDetail
     {
         $query = GrfDetail::find()
         ->joinWith('idGrf')
+        ->joinWith('idOrafinCode')
         ->joinWith('idItemCode')
         ->select([
               'grf_detail.id as id',
               'grf_detail.orafin_code',
               'grf_detail.qty_request',
+              'master_item_im.name',
+              'master_item_im.grouping',
+              'master_item_im.sn_type',
+              'mkm_master_item.item_desc',
               // 'master_item_im.name',
               // 'instruction_grf_detail.id',
               // 'instruction_grf_detail.qty_good',

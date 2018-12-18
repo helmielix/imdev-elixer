@@ -95,7 +95,7 @@
 
 //======================================================================================================================	
 				## List Grf
-			if(Yii::$app->user->can('/instruction-grf/index') || Yii::$app->user->can('/instruction-grf/indexapprove') || Yii::$app->user->can('/instruction-grf/indexverify')) {
+			if(Yii::$app->user->can('/instruction-grf/index') || Yii::$app->user->can('/instruction-grf/indexapprove') || Yii::$app->user->can('/instruction-grf/indexverify') || Yii::$app->user->can('/instruction-grf/indexoverview')) {
 				$arrItemsChild = [];
 				if(Yii::$app->user->can('/instruction-grf/index'))
 					array_push($arrItemsChild, ['label' => yii::t('app','Input'), 'icon' => 'plus', 'url' => ['/instruction-grf/index']]);
@@ -103,6 +103,10 @@
 					array_push($arrItemsChild, ['label' => yii::t('app','verify'), 'icon' => 'eye', 'url' => ['/instruction-grf/indexverify']]);
 				if(Yii::$app->user->can('/instruction-grf/indexapprove'))
 					array_push($arrItemsChild, ['label' => yii::t('app','Approve'), 'icon' => 'check-square-o', 'url' => ['/instruction-grf/indexapprove']]);
+				if(Yii::$app->user->can('/instruction-grf/indexoverview'))
+					array_push($arrItemsChild, ['label' => yii::t('app','Overview'), 'icon' => 'list', 'url' => ['/instruction-grf/indexoverview']]);
+				if(Yii::$app->user->can('/instruction-grf/indexlog'))
+					array_push($arrItemsChild, ['label' => yii::t('app','Log'), 'icon' => 'list', 'url' => ['/instruction-grf/indexlog']]);
 
 				array_push($arrItemsParent, ['label' => 'List Grf', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChild]);
 

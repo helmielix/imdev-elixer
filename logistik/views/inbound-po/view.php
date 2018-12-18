@@ -149,6 +149,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Arrayhelper::map(Reference::find()->andWhere(['table_relation' => 'sn_type'])->all(), 'id', 'description'),
             ],
             [
+                'attribute' => 'uom',
+                'value' => function($model){
+                    if($model->uom)
+                    return Reference::findOne($model->uom)->description;
+                },
+                'filter' => Arrayhelper::map(Reference::find()->andWhere(['table_relation' => 'uom'])->all(), 'id', 'description'),
+            ],
+            [
                 'label' => 'Status',
                 'format' => 'raw',
                 'value' => function($model){

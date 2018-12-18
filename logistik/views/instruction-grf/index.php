@@ -10,7 +10,9 @@ use dosamigos\datepicker\DatePicker;
 use kartik\export\ExportMenu;
 
 use common\models\Reference;
+use common\models\StatusReference;
 use common\models\Division;
+use common\models\Region;
 
 $this->title = Yii::t('app','Good Request Form');
 // if(Yii::$app->controller->action->id == 'index') 
@@ -20,14 +22,10 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
 // $this->registerJsFile('@commonpath/js/popup_alert.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 function getFilterStatus() {
-    if(Yii::$app->controller->action->id == 'index')
-        return [
-            1 => 'Inputted',
-            2 => 'Revised',
-            3 => 'Need Revise',
-            6 => 'Rejected',
-            7 => 'Drafted'
-        ];
+    if(Yii::$app->controller->action->id == 'index'){
+        $list = ArrayHelper::map( statusReference::find()->andWhere(['id' => [53,43,1,2,3,6] ])->all(),'id','status_listing' ) ;
+        return $list;
+    }        
 
     if(Yii::$app->controller->action->id == 'indexverify')
         return [
@@ -44,16 +42,11 @@ function getFilterStatus() {
             5 => 'Approved',
             1 => 'Inputted'
         ];
-    if(Yii::$app->controller->action->id == 'indexoverview')
-        return [
-            1 => 'Inputted',
-            2 => 'Revised',
-            3 => 'Need Revise',
-            39 => 'Need Revise by IM',
-            5 => 'Approved',
-            4 => 'Verified',
-            6 => 'Rejected',
-        ];
+    if(Yii::$app->controller->action->id == 'indexoverview'){
+        $list = ArrayHelper::map( statusReference::find()->andWhere(['id' => [53,43,1,2,3,4,5,6] ])->all(),'id','status_listing' ) ;
+        return $list;
+    }
+        
 } ;
 
 function getFilterRequestor(){
@@ -104,14 +97,21 @@ function getFilterRequestor(){
                 'template'=>'{view}',
                 'buttons'=>[
                      'view' => function ($url, $model) {
-                         if(Yii::$app->controller->action->id == 'index' && !isset($model->status_listing)){
+                         if((Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'indexoverview') && !isset($model->status_listing)){
                             return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-plus"></span>', '#create?id='.$model->id.'&header=Detail_Good_Request_Form', [
-                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/create','id' => $model->id]), 'header'=> yii::t('app','Detail Good Request Form')
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/create','id' => $model->id]), 'header'=> yii::t('app','GRF')
                             ]);
                         } 
                         else {
                             if(Yii::$app->controller->action->id == 'index') {
                                 $viewurl = 'view';
+                                $header = 'Detail Good Request Form';
+                                if ($model->status_listing == 53) {
+                                    $header = 'GRF';
+                                }
+                            }
+                            if(Yii::$app->controller->action->id == 'indexoverview') {
+                                $viewurl = 'viewoverview';
                                 $header = 'Detail Good Request Form';
                             }
 
@@ -151,6 +151,16 @@ function getFilterRequestor(){
                 'label'=> 'Division',
                 'value'=>'idGrf.idDivision.nama',
                 'filter' => ArrayHelper::map( Division::find()->all(),'id','nama' ),
+            ],
+            [   
+                'attribute'=>'id_region',
+                'label'=> 'Region',
+                'value'=> function($model){
+                    if (is_numeric(($model->id_region))) {
+                        return Region::find()->andWhere(['id' => $model->id_region])->one()->name;
+                    }
+                },
+                'filter' => ArrayHelper::map( Region::find()->all(),'id','name' ),
             ],
             [
                'attribute'=>'grf_type',

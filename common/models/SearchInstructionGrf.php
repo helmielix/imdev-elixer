@@ -20,7 +20,7 @@ class SearchInstructionGrf extends InstructionGrf
     {
         return [
             [['id', 'created_by', 'updated_by', 'status_listing','grf_type','pic', 'status_return'], 'integer'],
-            [['incoming_date', 'created_date', 'updated_date', 'note','grf_number','wo_number','id_division','requestor'], 'safe'],
+            [['incoming_date', 'created_date', 'updated_date', 'note','grf_number','wo_number','id_division','requestor', 'id_region'], 'safe'],
         ];
     }
 
@@ -43,8 +43,8 @@ class SearchInstructionGrf extends InstructionGrf
     public function search($params, $id_modul, $action)
     {
         $query = InstructionGrf::find();
-        $query->joinWith('idGrf.idDivision');
-        // $query->joinWith('idGrf', true, 'FULL JOIN');
+        // $query->joinWith('idGrf.idDivision');
+        $query->joinWith(['idGrf.idDivision'], true, 'FULL JOIN');
         $query->select([ 
             'grf.grf_type',
             'grf.grf_number',
@@ -70,11 +70,16 @@ class SearchInstructionGrf extends InstructionGrf
         if($action == 'input'){
             $query  ->andFilterWhere(['grf.status_listing' => 5])
                     ->andWhere(['instruction_grf.status_listing' => null])
-                    ->orFilterWhere(['and',['instruction_grf.id_modul' => $id_modul],['not in', 'instruction_grf.status_listing', [5]]]);
+                    ->orFilterWhere(['and',['not in', 'instruction_grf.status_listing', [4,5]]])
+                    ;
         }else if($action == 'verify'){
             $query  ->andFilterWhere(['instruction_grf.status_listing' => [1,2,4 ]]);
         }else if($action == 'approve'){
             $query  ->andFilterWhere(['instruction_grf.status_listing' => [4,5 ]]);
+        }else if($action == 'overview'){
+            $query  ->andFilterWhere(['grf.status_listing' => 5])
+                    ->andWhere(['instruction_grf.status_listing' => null]);
+            $query  ->orFilterWhere(['instruction_grf.status_listing' => [1,2,3,4,5,53,43 ]]);
         }else if($action == 'asset'){
             $query  ->andFilterWhere(['grf.grf_type' => [20]]);
             $query  ->andFilterWhere(['instruction_grf.status_listing' => [ 5 ]]);
@@ -118,6 +123,10 @@ class SearchInstructionGrf extends InstructionGrf
             'asc' => ['grf.id_division' => SORT_ASC],
             'desc' => ['grf.id_division' => SORT_DESC],
         ];
+        $dataProvider->sort->attributes['id_region'] = [
+            'asc' => ['grf.id_region' => SORT_ASC],
+            'desc' => ['grf.id_region' => SORT_DESC],
+        ];
         $dataProvider->sort->attributes['grf_type'] = [
             'asc' => ['grf.grf_type' => SORT_ASC],
             'desc' => ['grf.grf_type' => SORT_DESC],
@@ -139,9 +148,10 @@ class SearchInstructionGrf extends InstructionGrf
             return $dataProvider;
         }
         
-        if ($this->status_listing == 999) {
+        if ($this->status_listing == 53) {
             $query->andFilterWhere(['grf.status_listing' => 5])
                 ->andWhere(['instruction_grf.status_listing' => null]);
+            $query->orFilterWhere(['instruction_grf.status_listing' => 53]);
         }else {
             $query->andFilterWhere(['instruction_grf.status_listing' => $this->status_listing]);
         }
@@ -151,7 +161,7 @@ class SearchInstructionGrf extends InstructionGrf
             'id' => $this->id,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
-            'status_listing' => $this->status_listing,
+            // 'status_listing' => $this->status_listing,
             'status_return' => $this->status_return,
             'incoming_date' => $this->incoming_date,
             'created_date' => $this->created_date,
@@ -159,6 +169,7 @@ class SearchInstructionGrf extends InstructionGrf
             'requestor' => $this->requestor,
             'grf_type' => $this->grf_type,
             'division.id' => $this->id_division,
+            'grf.id_region' => $this->id_region,
         ]);
 
        $query->andFilterWhere(['ilike', 'grf.grf_number', $this->grf_number])

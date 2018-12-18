@@ -19,7 +19,7 @@ class SearchInboundPoDetail extends InboundPoDetail
     {
         return [
             [['id', 'id_inbound_po', 'id_item_im'], 'integer'],
-            [['sn_type','im_code','qty_good','qty_not_good','qty_reject','qty','grouping','brand','warna','type'], 'safe'],
+            [['sn_type','im_code','qty_good','qty_not_good','qty_reject','qty','grouping','brand','warna','type','uom'], 'safe'],
         ];
     }
 
@@ -93,6 +93,7 @@ class SearchInboundPoDetail extends InboundPoDetail
             'master_item_im.brand',
             'master_item_im.warna',
             'master_item_im.type',
+            'master_item_im.uom',
         ])
         ->andWhere(['and',['inbound_po_detail.id_inbound_po'=>$id],['like','inbound_po_detail.orafin_code',$orafinCode]]);
         $dataProvider = $this->_search($params, $query);
@@ -158,6 +159,7 @@ class SearchInboundPoDetail extends InboundPoDetail
         $query->andFilterWhere(['ilike', 'im_code', $this->im_code])
         ->andFilterWhere(['=', 'brand', $this->brand])
         ->andFilterWhere(['=', 'warna', $this->warna])
+        ->andFilterWhere(['=', 'master_item_im.uom', $this->uom])
         // ->andFilterWhere(['ilike', 'master_item_im.grouping', $this->grouping])
         ->andFilterWhere(['=', 'type', $this->type]);
 
