@@ -151,6 +151,7 @@ if(Yii::$app->controller->action->id == 'indexlog')
             [
                 'attribute' => 'grf_type',
                 'value' => function($model){
+                    if($model->grfType)
                     return $model->grfType->description;
                 },
                 'filter' => getFilterGrf(),
