@@ -107,6 +107,7 @@ class SearchGrfDetail extends GrfDetail
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => false,
+            
         ]);
 
         $dataProvider->sort->attributes['name'] = [

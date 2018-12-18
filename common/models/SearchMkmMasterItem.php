@@ -53,7 +53,7 @@ class SearchMkmMasterItem extends MkmMasterItem
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => ['pageSize' => 20 ],
+            'pagination' => ['pageSize' => 100 ],
         ]);
 
         $this->load($params);
