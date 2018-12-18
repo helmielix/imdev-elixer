@@ -16,10 +16,12 @@ $arrQtyDetail = '';
 <div class="instruction-wh-transfer-detail-index">
 
             
-<?php 
-        Pjax::begin(['id' => 'gridpjax', 'timeout' => 5000, 'enablePushState' => false, 'clientOptions' => ['method' => 'GET','backdrop' => false,]]) 
-        // Pjax::begin()
-    ?>
+    <?php Pjax::begin([
+            'id' => 'pjaxcreatedetail', 
+            'timeout' => false, 
+            'enablePushState' => false, 
+            'clientOptions' => ['method' => 'GET', 'backdrop' => false, ]
+        ]); ?>
     
     <?php 
         $arrQtyDetail = Yii::$app->session->get('countQty');
@@ -28,11 +30,10 @@ $arrQtyDetail = '';
         // }
         // $idForm = 'saveForm';
     ?>
-	<!--  -->
 	
 	<div class="alert hidden" id="errorSummary">Please fix these following error: <ul id="ulerrorSummary"></ul></div>
     <?= GridView::widget([
-        'id' => 'gridViewdetail',
+        'id' => 'gridViewcreatedetail',
         'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
 		'options' => ['style' => 'overflow-x:scroll'],
@@ -59,6 +60,7 @@ $arrQtyDetail = '';
 			'attribute'=>'item_desc',
             'value' =>'item_desc',
             ],
+            'item_uom_code',
 			[
                 'attribute'=>'qty_request',
                 'format' => 'raw',
@@ -72,7 +74,7 @@ $arrQtyDetail = '';
                        }else {
                            $model->qty_request = null;
                        }
-                        return Html::textInput('qty_request[]', $model->qty_request);
+                        return Html::textInput('qty_request[]', $model->qty_request, ['class' => 'form-control input-sm']);
                     }
             ],
 			
@@ -110,13 +112,19 @@ $arrQtyDetail = '';
         $('#modalHeader').html('<h3> Create Inbound PO </h3>');
     });
     
-    $(document).on('click', '#submitedButton', function(event){
+    // $(document).on('click', '#submitedButton', function(event){
     // $('#submitedButton').click(function () {
-
+    $('.instruction-wh-transfer-detail-index').on('mousedown', '#submitedButton', function (e) {
         event.stopImmediatePropagation();
         console.log('klik');
-        var form = $('#createForm');
-		data = new FormData(form[0]);
+        var form = $('#gridViewcreatedetail-container');
+		data = new FormData();
+        form.find('input:hidden, input:text')
+            .each(function(){
+                name = $(this).attr('name');
+                val = $(this).val();
+                data.append(name, val);
+            });
 		
 		var button = $(this);
 		button.prop('disabled', true);

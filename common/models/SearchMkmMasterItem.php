@@ -67,7 +67,8 @@ class SearchMkmMasterItem extends MkmMasterItem
         // grid filtering conditions        
 
         $query->andFilterWhere(['ilike', 'item_desc', $this->item_desc])            
-            ->andFilterWhere(['ilike', 'item_code', $this->item_code]);            
+            ->andFilterWhere(['ilike', 'item_code', $this->item_code])            
+            ->andFilterWhere(['ilike', 'item_uom_code', $this->item_uom_code]);            
 
         return $dataProvider;
 

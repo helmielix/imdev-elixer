@@ -10,6 +10,7 @@ use yii\helpers\ArrayHelper;
 use common\models\Reference;
 use common\models\Region;
 use common\models\Labor;
+use common\models\User;
 /* @var $this yii\web\View */
 /* @var $model divisisatu\models\InstructionWhTransfer */
 
@@ -103,6 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
 						'attribute' => 'team_name',
 						'value' => function($model){
+							if($model->teamName)
 							return $model->teamName->description;
 						},
 						'filter' => Arrayhelper::map(Reference::find()->andWhere(['table_relation' => 'team_name'])->all(), 'id', 'description'),
@@ -124,6 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'team_leader',
                         'value' => function($model){
+                        	if($model->team_leader)
                             return Labor::find()->andWhere(['nik' => $model->team_leader])->one()->nama;
                         },
                     ],
@@ -138,26 +141,27 @@ $this->params['breadcrumbs'][] = $this->title;
                         },                        
                     ],
                     [
-                        'attribute' => 'verified_by_grf',
+                        'attribute' => 'verified_by',
                         'label' => 'Verified By',
                         'value' => function ($model){
-                            if ( is_numeric($model->verified_by_grf) ){
-                                return User::findOne($model->verified_by_grf)->name;
+                            if ( is_numeric($model->verified_by) ){
+                                return User::findOne($model->verified_by)->name;
                             }
                         },
                         'visible' => ($model->status_listing > 3),
                     ],
                     [
-                        'attribute' => 'approved_by_grf',
-                        'label' => 'Verified By',
+                        'attribute' => 'approved_by',
+                        'label' => 'Approved By',
                         'value' => function ($model){
-                            if ( is_numeric($model->approved_by_grf) ){
-                                return User::findOne($model->approved_by_grf)->name;
+                            if ( is_numeric($model->approved_by) ){
+                                return User::findOne($model->approved_by)->name;
                             }
                         },
                         'visible' => ($model->status_listing > 4),
                     ],
                     'purpose:ntext',
+                    'revision_remark:ntext',
 				],
 			]) ?>
 		</div>
@@ -217,7 +221,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->qty_request;                  
                 },
             ],
-
+            [
+                'label' => 'UOM',        
+                'attribute' => 'item_uom_code',
+                'value' => function($model){
+                    return $model->idItemCode->item_uom_code;                  
+                },
+            ],
             
         ],
     ]); ?>
@@ -304,6 +314,7 @@ $('#submitButton').click(function () {
             var resp = confirm("Do you want to reject this item?");
         }
 
+// <<<<<<< HEAD
         if (resp == true) {
             console.log(selectedAction);
             var form = $('#submitForm');
@@ -358,6 +369,47 @@ $('#submitButton').click(function () {
             return false;
         }
     });
+// =======
+// 	data = new FormData();
+// 	data.append( 'Grf[revision_remark]', $( '#grf-revision_remark' ).val() );
+// 	var button = $(this);
+// 	button.prop('disabled', true);
+// 	button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
+	
+// 	$.ajax({
+// 		url: url,
+// 		type: 'post',
+// 		data: data,
+// 		processData: false,
+// 		contentType: false,
+// 		success: function (response) {
+// 			if(response == 'success') {
+// 				$('#modal').modal('hide');
+// 				if (selectedAction == 'revise') {
+// 					setPopupAlert('Data has been revised.');
+// 				} else {
+// 					setPopupAlert('Data has been rejeted.');
+// 				}
+// 			} else {
+// 				alert('error with message: ' + response);
+// 			}
+// 		},
+// 		error: function (xhr, getError) {
+// 			if (typeof getError === "object" && getError !== null) {
+// 				error = $.parseJSON(getError.responseText);
+// 				getError = error.message;
+// 			}
+// 			if (xhr.status != 302) {
+// 				alert("System recieve error with code: "+xhr.status);
+// 			}
+// 		},
+// 		complete: function () {
+// 			button.prop('disabled', false);
+// 			$('#spinRefresh').remove();
+// 		},
+// 	});
+// });
+// >>>>>>> 003ffd50a043721be233b55db0101be41adaef28
 
 $('#reviseButton').click(function(){
 	selectedAction = 'revise';
@@ -380,7 +432,7 @@ $('#updateButton').click(function () {
 	$('#modal').modal('show')
 		.find('#modalContent')
 		.load('<?php echo Url::to([$this->context->id.'/update', 'id' => $model->id]) ;?>');
-	$('#modalHeader').html('<h3> Update Warehouse Transfer Instruction</h3>');
+	$('#modalHeader').html('<h3> Update GRF Others</h3>');
 });
 
 $('#deleteButton').click(function () {

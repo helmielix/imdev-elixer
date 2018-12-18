@@ -62,6 +62,7 @@ return [
         'allowActions' => [
 			'site/*',
 			'gii/*',
+            
         ]
     ],
     'params' => $params,

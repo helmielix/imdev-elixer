@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	
 	
 	<?php 
-	Pjax::begin(['id' => 'gridpjax', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'POST']]) 
+	Pjax::begin(['id' => 'gridpjax', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'GET']]) 
 	// Pjax::begin()
 	?>
 	<?= GridView::widget([

@@ -444,7 +444,7 @@ class InboundPoController extends Controller
         ]);
     }
 	
-	public function actionViewdetailsn($idInboundPoDetail = NULL)
+	public function actionViewdetailsn($idInboundPoDetail)
     {
 		// if($idInboundPoDetail == NULL){
 		// 	$idInboundPoDetail = \Yii::$app->session->get('idInboundPoDetail');
@@ -453,7 +453,7 @@ class InboundPoController extends Controller
 		$this->layout = 'blank';
 		
 		$searchModel = new SearchInboundPoDetailSn();
-        $dataProvider = $searchModel->searchByAction(Yii::$app->request->post(), $idInboundPoDetail);
+        $dataProvider = $searchModel->searchByAction(Yii::$app->request->queryParams, $idInboundPoDetail);
 		
 		
 		$model = InboundPoDetail::findOne($idInboundPoDetail);

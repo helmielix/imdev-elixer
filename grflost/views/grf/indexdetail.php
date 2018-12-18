@@ -25,9 +25,9 @@ $this->registerJs(
 ?>
 <div class="grf-detail-index">
 
-	<?php if(($this->context->action->id == 'view' && $model->status_listing != 6) || $this->context->action->id == 'indexdetail' ){ ?>
+	<?php if(($this->context->action->id == 'view' && $model->status_listing != 6) || $this->context->action->id == 'indexdetail'  || $this->context->action->id == 'deletedetail' ){ ?>
     <p>
-        <?php if(Yii::$app->controller->action->id == 'indexdetail')
+        <?php if(Yii::$app->controller->action->id == 'indexdetail'|| $this->context->action->id == 'deletedetail')
         echo Html::button(Yii::t('app','Add'), ['id'=>'createsButton','class' => 'btn btn-success']) ?>
     </p>
 	<?php } ?>
@@ -54,7 +54,7 @@ $this->registerJs(
                 'buttons'=>[
                     'view' => function ($url, $model) {
                         return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-pencil"></span>', '#', [
-                            'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/updatedetail', 'idDetail' => $model->id]), 'header'=> yii::t('app','Update Detail Barang')
+                            'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/updatedetail', 'idDetail' => $model->id, 'par'=>'viewothers']), 'header'=> yii::t('app','Update Detail Barang')
                         ]);
                     },
                     'delete' => function ($url, $model) {
@@ -71,9 +71,14 @@ $this->registerJs(
 			],
 			// 'idOrafinCode.item_desc',
 			[
-				'header' => 'Nama Barang',
-				'attribute' => 'item_desc',
+                'header' => 'Nama Barang',
+                'attribute' => 'item_desc',
                 'value'=> 'idItemCode.item_desc'
+            ],
+            [
+				'header' => 'UOM',
+				'attribute' => 'item_uom_code',
+                'value'=> 'idItemCode.item_uom_code'
 			],
             [
                 'header' => 'Qty Request',
@@ -84,11 +89,11 @@ $this->registerJs(
         ],
     ]); ?>
 	<?php yii\widgets\Pjax::end() ?>
-	<?php if(($this->context->action->id == 'view' && $model->status_listing != 6) || $this->context->action->id == 'indexdetail' ){ ?>
+	<?php if(($this->context->action->id == 'view' && $model->status_listing != 6) || $this->context->action->id == 'indexdetail' || Yii::$app->controller->action->id == 'deletedetail'){ ?>
     <p>        
-		<?php if(Yii::$app->controller->action->id == 'indexdetail')
+		<?php if(Yii::$app->controller->action->id == 'indexdetail'  || Yii::$app->controller->action->id == 'deletedetail')
 			echo Html::button(Yii::t('app','Previous'), ['id'=>'previousButton','class' => 'btn btn-primary']);  ?>
-        <?php if(Yii::$app->controller->action->id == 'indexdetail')
+        <?php if(Yii::$app->controller->action->id == 'indexdetail'  || Yii::$app->controller->action->id == 'deletedetail')
 		echo Html::button(Yii::t('app','Submit Instruction'), ['id'=>'submitButton','class' => 'btn btn-success']) ?>		
     </p>
 	<?php } ?>
@@ -125,7 +130,7 @@ $this->registerJs(
         $('#modal').modal('show')
             .find('#modalContent')
             .load('<?php echo Url::to([$this->context->id.'/update','id'=>Yii::$app->session->get('idGrf')]) ;?>');
-        $('#modalHeader').html('<h3> Detail Instruksi Warehouse Transfer </h3>');
+        $('#modalHeader').html('<h3> Update GRF Others </h3>');
     });
     
     $('#submitButton').click(function () {

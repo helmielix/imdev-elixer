@@ -21,7 +21,7 @@ class GrfDetail extends \yii\db\ActiveRecord
      */
     public $name, $grouping, $im_code, $brand, $warna, $referenceSn, $type, $qty_good,
             $qty_not_good, $qty_reject, $qty_dismantle, $qty_revocation, $qty_good_for_recond,
-            $qty_good_rec, $sn_type, $status_listing, $description, $id_instruction_grf, $referenceBrand, $item_code;
+            $qty_good_rec, $sn_type, $status_listing, $description, $id_instruction_grf, $referenceBrand, $item_code, $qty_dismantle_good,$qty_dismantle_ng;
     public static function tableName()
     {
         return 'grf_detail';
