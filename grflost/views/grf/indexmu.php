@@ -94,19 +94,20 @@ function getFilterStatus() {
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
+            // 'id_instruction_grf',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template'=>'{view}',
                 'buttons'=>[
                      'view' => function ($url, $model) {
-                        if(Yii::$app->controller->action->id == 'indexmr' && empty($model->qty_return)){
-                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-plus"></span>', '#createmr?id='.$model->id_instruction_grf.'&header=Create_Tag_SN', [
-                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/createmr','id' => $model->id_instruction_grf]), 'header'=> yii::t('app','Create Material Return Peminjaman')
+                        if(Yii::$app->controller->action->id == 'indexmu' && $model->status_return == 31){
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-plus"></span>', '#createmu?id='.$model->id_instruction_grf.'&header=Create_Tag_SN', [
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/createmu','id' => $model->id_instruction_grf]), 'header'=> yii::t('app','Create Material Return Peminjaman')
                             ]);
                         } 
                         else {
-                            if(Yii::$app->controller->action->id == 'indexmu' ) {
-                                $viewurl = 'viewmr';
+                            if(Yii::$app->controller->action->id == 'indexmu' || Yii::$app->controller->action->id == 'indexmuverify' || Yii::$app->controller->action->id == 'indexmuapprove') {
+                                $viewurl = 'viewmu';
                                 $header = 'Create Tag SN';
                             }
                             
@@ -119,14 +120,15 @@ function getFilterStatus() {
                     },
                 ],
             ],
+            // 'status_return',
             [
                 'attribute' => 'status_return',
                 'format' => 'raw',
                 'value' => function ($searchModel) {
-                  if ($searchModel->qty_return != '') {
-                        return "<span class='label' style='background-color:{$searchModel->statusListing->status_color}' >{$searchModel->statusListing->status_listing}</span>";
+                  if ($searchModel->status_return != 31) {
+                        return "<span class='label' style='background-color:{$searchModel->statusReturn->status_color}' >{$searchModel->statusReturn->status_listing}</span>";
                     } else {
-                        return "<span class='label' style='background-color:red'>New Received</span>";
+                        return "<span class='label' style='background-color:red'>New Return</span>";
                     }
                 },
                 'filter' => getFilterStatus()
@@ -138,16 +140,16 @@ function getFilterStatus() {
                 
             ],
             'pic',
-            [
-                'attribute' => 'id_division',
-                'value'=>'idInstructionGrf.idGrf.idDivision.nama',
-                // 'value' => function($model){
-                // return $model->idInboundGrf->idGrf->idDivision->nama;
-            // },
-            ],
+            // [
+            //     'attribute' => 'id_division',
+            //     'value'=>'idInstructionGrf.idGrf.idDivision.nama',
+            //     // 'value' => function($model){
+            //     // return $model->idInboundGrf->idGrf->idDivision->nama;
+            // // },
+            // ],
             [
             'attribute' => 'grf_type',
-            'value'=>'idInstructionGrf.idGrf.grfType.description',
+            // 'value'=>'idInstructionGrf.idGrf.grfType.description',
             ],
             // [   
             //     'attribute'=>'id_division',

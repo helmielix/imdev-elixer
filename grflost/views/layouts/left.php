@@ -24,7 +24,9 @@
 
 					// --------------------------------------
 
-					array_push($arrItemsChildChild, ['label' => yii::t('app','input'), 'icon' => 'check-square-o', 'url' => ['/grf/indexmu']]);
+					array_push($arrItemsChildChild, ['label' => yii::t('app','Input'), 'icon' => 'check-square-o', 'url' => ['/grf/indexmu']]);
+
+					array_push($arrItemsChildChild, ['label' => yii::t('app','Verification'), 'icon' => 'check-square-o', 'url' => ['/grf/indexmuverify']]);
 
 					array_push($arrItemsChild, ['label' => 'Material Usage', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);	
 					// ---------------------------------------------------

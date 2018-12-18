@@ -54,9 +54,9 @@ use common\models\MasterItemIm;
 		$id = null;
 		
 		if ($qString == 'viewothers'){
-			$goto = '/viewothers';
+			$goto = '/indexdetail';
 		}else{
-			$goto = '/view';
+			$goto = '/indexdetail';
 			// $id = Yii::$app->session->get('idInstProd');
 		}
 	?>

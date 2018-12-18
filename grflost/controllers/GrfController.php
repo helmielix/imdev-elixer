@@ -12,6 +12,7 @@ use common\models\MasterItemIm;
 use common\models\SearchGrf;
 use common\models\SearchLogGrf;
 use common\models\SearchOutboundGrf;
+use common\models\SearchOutboundGrfDetail;
 use common\models\SearchGrfDetail;
 use common\models\SearchMasterItemIm;
 use common\models\SearchMkmMasterItem;
@@ -178,7 +179,18 @@ class GrfController extends Controller
     public function actionIndexmu()
     {
         $searchModel = new SearchOutboundGrf();
-        $dataProvider = $searchModel->search(Yii::$app->request->post(), $this->id_modul, 'grfmr');
+        $dataProvider = $searchModel->searchMu(Yii::$app->request->post(), $this->id_modul, 'grfmr');
+
+        return $this->render('indexmu', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionIndexmuverify()
+    {
+        $searchModel = new SearchOutboundGrf();
+        $dataProvider = $searchModel->searchMu(Yii::$app->request->post(), $this->id_modul, 'grfmr_verify');
 
         return $this->render('indexmu', [
             'searchModel' => $searchModel,
@@ -249,6 +261,20 @@ class GrfController extends Controller
         ]);
     }
 
+    public function actionViewmu($id){
+        $this->layout = 'blank';
+        $model = OutboundGrf::findOne($id);
+        
+        $searchModel = new SearchOutboundGrfDetail();
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
+        
+        return $this->render('viewmu', [
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
      public function actionCreatemr($id){
         $this->layout = 'blank';
         $model = OutboundGrf::findOne($id);
@@ -261,6 +287,79 @@ class GrfController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionCreatemu($id){
+        $this->layout = 'blank';
+        $model = OutboundGrf::findOne($id);
+
+        if(Yii::$app->request->isPost){
+        	$model = Grf::findOne($id);
+        	$model->status_return = 38;
+        	$model->save();
+        	// $model
+        	$data_id_grf_detail  = Yii::$app->request->post('id_grf_detail');
+        	$data_qty_return  = Yii::$app->request->post('qty_return');
+
+        	foreach($data_id_grf_detail as $key => $value){
+				// if($data_qty_request[$key] == '')
+				if($data_id_grf_detail[$key] == '' && $data_id_grf_detail[$key] == 0){
+					continue;
+				}
+				$values = explode(';',$value);
+			
+				$model = new GrfDetail();
+				// $model->id_grf	= $idGrf;
+				// $model->orafin_code	= $values[0];
+				// $model->qty_request			= ($data_qty_request[$key] == '') ? 0 : $data_qty_request[$key];
+				$model->qty_return		= ($data_qty_return[$key] == '') ? 0 : $data_qty_return[$key];
+				$model->status_return = 36;
+				/*
+				$modelMasterItem = MasterItemIm::findOne($values[0]);
+				$overStock = 1;
+				$pesan = [];
+				if($model->qty_request > $modelMasterItem->s_good){
+					$pesan[] = $model->getAttributeLabel('qty_request')." is more than Stock for IM Code ".$values[1];
+					$overStock = 0;
+				}
+				
+				if ($overStock == 0)
+					return json_encode(['status' => 'error', 'id' => $values[0], 'pesan' => implode("\n",$pesan)]);
+				*/
+				
+				if(!$model->save()){
+					$error = $model->getErrors();
+					$error[0] = ['for IM Code '.$values[1]];
+					return json_encode(['status' => 'error', 'id' => $values[0], 'pesan' => Displayerror::pesan($error)]);
+				}
+			}
+			
+			// return json_encode(['status' => 'success']);
+        	// return json_encode($data_id_grf_detail);
+
+        	return 'success';
+        }
+        
+        $searchModel = new SearchOutboundGrfDetail();
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
+        // return print_r($dataProvider->models);
+        return $this->render('viewmu', [
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function detailViewmu($id){
+    	$model = OutboundGrf::findOne($id);
+    	$searchModel = new SearchOutboundGrfDetail();
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
+
+        return [
+            'model' => $model,
+			'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ];
     }
 	
 	public function actionView($id)
@@ -951,7 +1050,7 @@ class GrfController extends Controller
 
      public function actionExportpdf($id) {
         
-        $arrayreturn = $this->detailView($id);
+        $arrayreturn = $this->detailViewmu($id);
         $model = $arrayreturn['model'];
         $dataprovider = $arrayreturn['dataProvider'];
         $dataprovider->sort = false;
@@ -960,7 +1059,7 @@ class GrfController extends Controller
         
         $pdf = new Pdf([
             'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
-            'content' => $this->renderPartial('viewmr', $arrayreturn),
+            'content' => $this->renderPartial('viewmu', $arrayreturn),
             'filename'=> 'Material_Return.pdf',
             'format' => Pdf::FORMAT_A4,
             'orientation' => Pdf::ORIENT_PORTRAIT,

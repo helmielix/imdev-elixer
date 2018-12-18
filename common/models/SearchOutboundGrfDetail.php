@@ -42,20 +42,22 @@ class SearchOutboundGrfDetail extends outboundGrfDetail
     public function search($params, $id)
     {
         $query = OutboundGrfDetail::find();
-        $query->joinWith('idOutboundGrf.idInstructionGrf.idGrf.idGrfDetail.idOrafinCode.referenceSn');
-        $query->joinWith('idOutboundGrf.idInstructionGrf.idInstructionGrfDetail');
+        $query->joinWith('idGrfDetail.idOrafinCode.referenceSn');
+        // $query->joinWith('idOutboundGrf.idInstructionGrf.idInstructionGrfDetail');
          $query->select([ 
-            'master_item_im.im_code',
+            'distinct(master_item_im.im_code)',
             'master_item_im.name',
             'master_item_im.brand',
             'master_item_im.type',
             'master_item_im.warna',
+            'master_item_im.grouping',
             'reference.description',
             'grf_detail.qty_request',
+            'grf_detail.id as id_grf_detail',
             'outbound_grf_detail.id_outbound_grf as id_instruction_grf',
             'outbound_grf_detail.status_listing',
             'outbound_grf_detail.id_outbound_grf',
-            'outbound_grf_detail.id as id',
+            // 'outbound_grf_detail.id as id',
             'outbound_grf_detail.qty_good',
             'outbound_grf_detail.qty_noot_good',
             'outbound_grf_detail.qty_reject',

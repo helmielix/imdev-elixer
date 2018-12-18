@@ -40,10 +40,10 @@ class SearchOutboundGrf extends OutboundGrf
      *
      * @return ActiveDataProvider
      */
-    public function search($params,$id_modul, $action)
+    public function search($params,$id_modul, $action, $id = null)
     {
         $query = OutboundGrf::find();
-        $query->joinWith('idInstructionGrf.idGrf.idGrfDetail', true, 'FULL JOIN');
+        $query->joinWith('idInstructionGrf.idGrf');
         $query->joinWith('outboundGrfDetails.idMasterItemImDetail.idMasterItemIm.referenceSn');
         $query->select([
             'grf.grf_number',
@@ -58,11 +58,11 @@ class SearchOutboundGrf extends OutboundGrf
             'grf.id_modul',
             'grf.id_warehouse',
             'grf.pic',
-            'grf_detail.id',
-            'grf_detail.qty_request',
-            'grf_detail.status_return',
-            'grf_detail.qty_return',
-            'grf_detail.orafin_code',
+            // 'grf_detail.id',
+            // 'grf_detail.qty_request',
+            // 'grf_detail.status_return',
+            // 'grf_detail.qty_return',
+            // 'grf_detail.orafin_code',
             'instruction_grf.id as id_instruction_grf',
             'instruction_grf.incoming_date',
             'instruction_grf.note',
@@ -80,6 +80,7 @@ class SearchOutboundGrf extends OutboundGrf
             'master_item_im.sn_type',
             'reference.description',
             'outbound_grf_detail.id_item_im',
+            'outbound_grf_detail.id',
             // 'master_item_im.name',
         ]);
         
@@ -95,6 +96,98 @@ class SearchOutboundGrf extends OutboundGrf
         // add conditions that should always apply here
         }else if($action == 'grfmr'){
             $query  ->andFilterWhere(['outbound_grf.status_listing' => [25]]);
+            $query  ->andWhere(['outbound_grf_detail.id_outbound_grf' => $id]);
+
+        // add conditions that should always apply here
+        }else if($action == 'approve'){
+            $query  ->andFilterWhere(['outbound_grf.status_listing' => [22, 25, 5]]);
+
+        }else if($action == 'regtagsn'){
+            $query  ->andFilterWhere(['instruction_grf.status_listing' => 5])
+                    ->andFilterWhere(['instruction_grf.id_modul' => $id_modul])
+                    ->andFilterWhere(['grf.grf_type' => 19])
+                    ->andWhere(['outbound_grf.status_listing' => null])
+                    ->orFilterWhere(['and',['outbound_grf.id_modul' => $id_modul],['not in', 'outbound_grf.status_listing', [5, 25, 22]]]);
+        }else if($action == 'regprintsj'){
+            $query  ->andFilterWhere(['outbound_grf.status_listing' => [42, 2, 22, 25, 1]]);
+            $query  ->andFilterWhere(['grf.grf_type' => 19]);
+            $query  ->andFilterWhere(['outbound_grf.id_modul' => $id_modul]);
+    
+        }else if($action == 'regapprove'){
+            $query  ->andFilterWhere(['outbound_grf.status_listing' => [22, 25, 5]]);
+            $query  ->andFilterWhere(['grf.grf_type' => 19]);
+        }else if($action == 'overview'){
+            $query  ->andFilterWhere(['outbound_grf.id_modul' => $id_modul]);
+            $query  ->andFilterWhere(['grf.grf_type' => 20]);
+        }else if($action == 'regoverview'){
+            $query  ->andFilterWhere(['outbound_grf.id_modul' => $id_modul]);
+            $query  ->andFilterWhere(['grf.grf_type' => 19]);
+        }
+       
+        $dataProvider = $this->_search($params, $query);
+
+        return $dataProvider;
+    }
+
+    public function searchMu($params,$id_modul, $action)
+    {
+        $query = OutboundGrf::find();
+        $query->joinWith('idInstructionGrf.idGrf');
+        $query->joinWith('outboundGrfDetails.idMasterItemImDetail.idMasterItemIm.referenceSn');
+        $query->select([
+            'grf.grf_number',
+            'grf.wo_number',
+            'grf.grf_type',
+            'grf.requestor',
+            'grf.file_attachment_1',
+            'grf.file_attachment_2',
+            'grf.purpose',
+            'grf.id_region',
+            'grf.id_division',
+            'grf.id_modul',
+            'grf.id_warehouse',
+            'grf.pic',
+            'grf.status_return as status_return',
+            // 'grf_detail.id',
+            // 'grf_detail.qty_request',
+            // 'grf_detail.status_return',
+            // 'grf_detail.qty_return',
+            // 'grf_detail.orafin_code',
+            'instruction_grf.id as id_instruction_grf',
+            'instruction_grf.incoming_date',
+            'instruction_grf.note',
+            'outbound_grf.status_listing',
+            'outbound_grf.created_date',
+            'outbound_grf.updated_date',
+            // 'outbound_grf_detail.id_outbound_grf',
+            // 'master_item_im.name',
+            // 'master_item_im.im_code',
+            // 'master_item_im.brand',
+            // 'master_item_im.grouping',
+            // 'master_item_im.type',
+            // 'master_item_im.warna',
+            // 'master_item_im.sn_type',
+            // 'reference.description',
+            // 'outbound_grf_detail.id_item_im',
+            // 'master_item_im.name',
+        ]);
+        
+        if($action == 'tagsn'){
+            $query  ->andFilterWhere(['instruction_grf.status_listing' => 5])
+                    ->andFilterWhere(['grf.grf_type' => 20])
+                    ->andFilterWhere(['instruction_grf.id_modul' => $id_modul])
+                    ->andWhere(['outbound_grf.status_listing' => null])
+                    ->orFilterWhere(['and',['outbound_grf.id_modul' => $id_modul],['not in', 'outbound_grf.status_listing', [5, 25, 22]]]);
+        }else if($action == 'printsj'){
+            $query  ->andFilterWhere(['outbound_grf.status_listing' => [42, 2, 22, 25, 1]]);
+            $query  ->andFilterWhere(['outbound_grf.id_modul' => $id_modul]);
+        // add conditions that should always apply here
+        }else if($action == 'grfmr'){
+            $query  ->andFilterWhere(['outbound_grf.status_listing' => [25]]);
+
+        // add conditions that should always apply here
+        }else if($action == 'grfmr_verify'){
+            $query  ->andFilterWhere(['grf.status_return' => [38]]);
 
         // add conditions that should always apply here
         }else if($action == 'approve'){
@@ -131,7 +224,7 @@ class SearchOutboundGrf extends OutboundGrf
     {
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-			'pagination' => ['pageSize' => Yii::$app->params['defaultPageSize'] ],
+			'pagination' => ['pageSize' => 5 ],
             'sort'=> ['defaultOrder' => ['created_date'=>SORT_DESC]]
         ]);
         

@@ -66,7 +66,7 @@ class OutboundGrf extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public $division,$file1,$file2, $name, $im_code, $brand, $sn_type, $id_outbound_grf,$grouping, $warna, $type, $description, $referenceSn, $qty_request, $id_item_im, $qty_detail, $id_detail, $id_outbound_grf_detail, $qty_return, $id_grf, $id, $orafin_code, $id_instruction_grf, $requestor;
+    public $division,$file1,$file2, $name, $im_code, $brand, $sn_type, $id_outbound_grf,$grouping, $warna, $type, $description, $referenceSn, $qty_request, $id_item_im, $qty_detail, $id_detail, $id_outbound_grf_detail, $qty_return, $id_grf, $id, $orafin_code,  $requestor;
     public function rules()
     {
         return [

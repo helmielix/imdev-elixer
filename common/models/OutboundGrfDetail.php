@@ -26,7 +26,7 @@ class OutboundGrfDetail extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public $im_code, $name, $brand, $type, $warna, $sn_type, $description, $qty_request, $orafin_code;
+    public $im_code, $name, $brand, $type, $warna, $sn_type, $description, $qty_request, $orafin_code, $grouping, $id_grf_detail;
     public static function tableName()
     {
         return 'outbound_grf_detail';
@@ -84,6 +84,11 @@ class OutboundGrfDetail extends \yii\db\ActiveRecord
     public function getIdOutboundGrf()
     {
         return $this->hasOne(OutboundGrf::className(), ['id_instruction_grf' => 'id_outbound_grf']);
+    }
+
+    public function getIdGrfDetail()
+    {
+        return $this->hasOne(GrfDetail::className(), ['id_grf' => 'id_outbound_grf']);
     }
 
     public function getStatusReference(){
