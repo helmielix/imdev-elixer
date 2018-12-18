@@ -124,7 +124,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             // return $model->idGrf->team_leader;
                             $laborcek = Labor::find()->andWhere(['nik' => $model->idGrf->team_leader])->exists();
                             if (!$laborcek) {
-                                return LaborForo::find()->andWhere(['nik' => $model->idGrf->team_leader])->one()->name;                                
+                            	if (is_numeric($model->idGrf->team_leader)) {                            		
+                                	return LaborForo::find()->andWhere(['nik' => $model->idGrf->team_leader])->one()->name;                                
+                            	}
                             }else{
                                 return Labor::find()->andWhere(['nik' => $model->idGrf->team_leader])->one()->nama;
                             }
@@ -134,31 +136,31 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute'=>'team_name',
                         'value'=> function($model){
-                            if($model->idGrf->teamName)return $model->idGrf->teamName->description;
+                            if(($model->idGrf->teamName))return $model->idGrf->teamName->description;
                         }            
                     ],
                     [
                         'label'=>'GRF Inputted By',
                         'value'=> function($model){
-                            if($model->idGrf->createdBy)return $model->idGrf->createdBy->username;
+                            if(($model->idGrf->createdBy))return $model->idGrf->createdBy->username;
                         }            
                     ],
                     [
                          'label'=>'GRF Verified By',
                         'value'=> function($model){
-                            if($model->idGrf->verifiedBy)return $model->idGrf->verifiedBy->username;
+                            if(($model->idGrf->verifiedBy))return $model->idGrf->verifiedBy->username;
                         }            
                     ],
                     [
                          'label'=>'GRF Approved By',
                         'value'=> function($model){
-                            if($model->idGrf->approvedBy)return $model->idGrf->approvedBy->username;
+                            if(($model->idGrf->approvedBy))return $model->idGrf->approvedBy->username;
                         }            
                     ],
                     [
                         'label'=>'Inputted By',
                         'value'=> function($model){
-                            if($model->createdBy)return $model->createdBy->username;
+                            if(($model->createdBy))return $model->createdBy->username;
                         }            
                     ],
                     [

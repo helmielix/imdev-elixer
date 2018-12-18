@@ -103,11 +103,14 @@ function getFilterRequestor(){
                             ]);
                         } 
                         else {
+                            $icon = 'eye-open';
                             if(Yii::$app->controller->action->id == 'index') {
                                 $viewurl = 'view';
                                 $header = 'Detail Good Request Form';
                                 if ($model->status_listing == 53) {
                                     $header = 'GRF';
+                                    $viewurl = 'update';
+                                    $icon = 'plus';
                                 }
                             }
                             if(Yii::$app->controller->action->id == 'indexoverview') {
@@ -125,7 +128,7 @@ function getFilterRequestor(){
                                 $header = 'Approval';
                             }
                             $headerlnk = str_replace(' ', '_', $header);
-                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id.
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-'.$icon.'"></span>', '#'.$viewurl.'?id='.$model->id.
                             '&header='.$headerlnk, [
                                 'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app',$header) 
                                 ]);

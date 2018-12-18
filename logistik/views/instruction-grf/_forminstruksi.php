@@ -171,8 +171,11 @@ if (!$laborcek) {
                 case 'create':
                     $actionText = 'Create';
                     break;
-                case 'update':
+                case 'update':                    
                     $actionText = 'Update';
+                    if ($model->status_listing == 53) {
+                        $actionText = 'Create';
+                    }
                     break;
             } ?>
             <?= Html::button($actionText, ['id'=>'createButton','class' => 'btn btn-success']) ?>

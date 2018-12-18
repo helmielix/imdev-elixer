@@ -114,7 +114,7 @@ function getFilterGrf(){
                             if(Yii::$app->controller->action->id == 'indexothers') $viewurl = 'viewothers';
                             if(Yii::$app->controller->action->id == 'indexothersverify') $viewurl = 'viewothersverify';
                             if(Yii::$app->controller->action->id == 'indexothersapprove') $viewurl = 'viewothersapprove';
-                            if(Yii::$app->controller->action->id == 'indexothersoverview') $viewurl = 'viewoverview';
+                            if(Yii::$app->controller->action->id == 'indexothersoverview') $viewurl = 'viewothersoverview';
                              return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#'.$viewurl.'?id='.$model->id.'&header=Detail_Grf', [
                                         'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to(['grf/'.$viewurl, 'id' => $model->id]), 'header'=> yii::t('app','Detail GRF Others')
                

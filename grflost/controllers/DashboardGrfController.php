@@ -60,6 +60,9 @@ class DashboardGrfController extends Controller
 		if(Yii::$app->user->can('/grf/index')) {
 			array_push($arrFilter,['ilike','table_source','GRF Revision']);
 		}
+		if(Yii::$app->user->can('/grf/indexothers')) {
+			array_push($arrFilter,['ilike','table_source','GRF Revision']);
+		}
 		// if(Yii::$app->user->can('/dashboard-divisisatu/index')) {
 		// 	array_push($arrFilter,['ilike','table_source','BA SURVEY Rejection']);
 		// }

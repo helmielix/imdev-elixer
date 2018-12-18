@@ -380,7 +380,7 @@ $this->registerCss('
 					// if(isset($datasession[$model->id]['update'])){
 						// $val = 0;
 					// }else 
-						if (isset($datasession[$model->id]['rgood'])){
+					if (isset($datasession[$model->id]['rgood'])){
 						$val = $datasession[$model->id]['rgood'];
 					}
 					$rem = $model->s_good - $val;

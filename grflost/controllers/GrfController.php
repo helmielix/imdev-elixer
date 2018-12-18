@@ -14,6 +14,7 @@ use common\models\SearchLogGrf;
 use common\models\SearchOutboundGrf;
 use common\models\SearchGrfDetail;
 use common\models\SearchMasterItemIm;
+use common\models\SearchMkmMasterItem;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -56,7 +57,7 @@ class GrfController extends Controller
     private function listIndex($action)
     {
         $searchModel = new SearchGrf();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$action);
+        $dataProvider = $searchModel->search(Yii::$app->request->post(),$action);
 
         return [
             'searchModel' => $searchModel,
@@ -189,7 +190,7 @@ class GrfController extends Controller
 
 		$this->layout = 'blank';
 		$searchModel = new SearchGrfDetail();
-        $dataProvider = $searchModel->searchByGrfDetail(Yii::$app->request->queryParams, Yii::$app->session->get('idGrf'));        
+        $dataProvider = $searchModel->searchByGrfDetail(Yii::$app->request->getQueryParams(), Yii::$app->session->get('idGrf'));
 
         return $this->render('indexdetail', [
             'searchModel' => $searchModel,
@@ -207,7 +208,7 @@ class GrfController extends Controller
 		$model = $this->findModel($id);
 		
 		$searchModel = new SearchGrfDetail();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+        $dataProvider = $searchModel->search(Yii::$app->request->post(), $id);
 		
 		// Yii::$app->session->set('idGrf', $model->id);
 		
@@ -268,7 +269,7 @@ class GrfController extends Controller
 		$model = $this->findModel($id);
 		
 		$searchModel = new SearchGrfDetail();
-        $dataProvider = $searchModel->searchByGrfDetail(Yii::$app->request->queryParams, $id);
+        $dataProvider = $searchModel->searchByGrfDetail(Yii::$app->request->post(), $id);
 		
 		// Yii::$app->session->set('idGrf', $model->id);
 		
@@ -312,6 +313,12 @@ class GrfController extends Controller
 	}
 
 	public function actionViewothersapprove($id){
+		$this->layout = 'blank';
+		Yii::$app->session->set('idGrf', $id);
+		return $this->render('view', $this->detailViewothers($id));
+	}
+
+	public function actionViewothersoverview($id){
 		$this->layout = 'blank';
 		Yii::$app->session->set('idGrf', $id);
 		return $this->render('view', $this->detailViewothers($id));
@@ -570,13 +577,21 @@ class GrfController extends Controller
 			
 			$data_item_code  = Yii::$app->request->post('item_code');
 			$data_qty_request  = Yii::$app->request->post('qty_request');
-
+			$data_qty_return  = Yii::$app->request->post('qty_return');
+			// $data_im_code  = Yii::$app->request->post('im_code');
+			// $data_r_notgood = Yii::$app->request->post('rnotgood');
+			// $data_r_reject  = Yii::$app->request->post('rreject');
+			// return print_r($data_im_code);
+			
+			// if (count($data_im_code) == 0){
+			// 	return json_encode(['status' => 'success']);
+			// }
 			
 			foreach($data_item_code as $key => $value){
 				// if($data_qty_request[$key] == '')
-				 if( ($data_qty_req[$value] == '') ||
-                    ($data_qty_req[$value] == 0) ){
-                    continue;
+				if($data_qty_request[$key] == '' && $data_qty_request[$key] == 0 && 
+					$data_qty_return[$key] == '' && $data_qty_return[$key] == 0){
+					continue;
 				}
 				$values = explode(';',$value);
 			
@@ -614,8 +629,8 @@ class GrfController extends Controller
 		$modelDetail = GrfDetail::find()->select(['orafin_code'])->where(['id_grf' => $idGrf])->all();
 		$orafin_code = ArrayHelper::map($modelDetail, 'item_code', 'item_code');
 		
-		$searchModel = new SearchMasterItemIm();
-        $dataProvider = $searchModel->searchMasterOrafin(Yii::$app->request->getQueryParams());
+		$searchModel = new SearchMkmMasterItem();
+        $dataProvider = $searchModel->searchByCreateDetailItem(Yii::$app->request->getQueryParams());
 
         return $this->render('createdetail', [
         	'idGrf' => $idGrf,
@@ -709,7 +724,7 @@ class GrfController extends Controller
         $searchModel = new SearchMkmMasterItem();
         $dataProvider = $searchModel->searchByCreateDetailItem(Yii::$app->request->getQueryParams(), $modelDetail->orafin_code);
 
-        return $this->render('createdetail', [
+        return $this->render('_formdetail', [
         	'model' => $modelDetail,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -851,8 +866,14 @@ class GrfController extends Controller
     public function actionDelete($id)
     {
     	GrfDetail::deleteAll('id_grf = :id_grf', [':id_grf' => $id]);
+    	$model = $this->findModel($id);
+    	$cek = 1;
+    	if($model->source == 'others')$cek =2;
         $this->findModel($id)->delete();
 
+        if($cek == 2){
+        	 return $this->redirect(['indexothers']);
+        }
         return $this->redirect(['index']);
     }
 
@@ -1007,6 +1028,8 @@ class GrfController extends Controller
         $modelLog = new LogGrf();
         $modelLog->setAttributes($model->attributes);
         $modelLog->source = $model->source;
+        $modelLog->grf_number = $model->grf_number;
+        $modelLog->wo_number = $model->wo_number;
         if(!$modelLog->save())return print_r($modelLog->getErrors());
         // $modelLog->save();
     }

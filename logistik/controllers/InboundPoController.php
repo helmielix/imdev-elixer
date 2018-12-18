@@ -1034,7 +1034,7 @@ class InboundPoController extends Controller
 			InboundPoDetail::deleteAll('id_inbound_po = :id_inbound_po AND orafin_code = :orafin_code', [':id_inbound_po' => $idInboundPo, ':orafin_code' => $orafinCode]);
 			
 			foreach($quantities as $key  => $data){
-				if($key == '' && $key == 0){
+				if($quantities[$key] == '' && $quantities[$key] == 0){
 					continue;
 				}
 				// return print_r($quantities[$key]);
@@ -1201,9 +1201,9 @@ class InboundPoController extends Controller
 
 	
 	public function actionUploadsn($id = NULL, $idInboundPo = NULL, $qty = NULL) {
+		ini_set('memory_limit', '600M');
         $this->layout = 'blank';
         $model = new UploadForm();
-
         $model->scenario = 'xls';
 		
 		if($id != NULL){
@@ -1255,7 +1255,6 @@ class InboundPoController extends Controller
                     if ($row == 2) {
                     	$missCol = array_diff_key($reqCol,$data);
                     	if (count($missCol) > 0) {
-                            InboundPoDetailSn::deleteAll('id_inbound_po_detail = '.Yii::$app->session->get('idInboundPoDetail'));
                     		return "Column ".implode(array_keys($missCol), ", ")." is not exist in XLS File";
                     	}
                     }
@@ -1334,9 +1333,9 @@ class InboundPoController extends Controller
                 }
 
 				
-				$modelInboundPoDetail->qty_good = $qtyGood;
-				$modelInboundPoDetail->qty_not_good = $qtyNotGood;
-				$modelInboundPoDetail->qty_reject = $qtyReject;
+				$modelInboundPoDetail->qty_good += $qtyGood;
+				$modelInboundPoDetail->qty_not_good += $qtyNotGood;
+				$modelInboundPoDetail->qty_reject += $qtyReject;
 
 				$model = InboundPoDetailSn::find()->where(['id_inbound_po_detail'=>$modelInboundPoDetail->id])->asArray()->all();
 				//check max qty

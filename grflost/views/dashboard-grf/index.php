@@ -81,13 +81,13 @@ $this->registerCssFile('@commonpath/css/jquery-ui_override.css',['depends' => [\
 									Html::a('View',Url::to(['grf/index#view','id'=>$searchModel->task]));
 							}
 							// Grf Others
-							if($searchModel->table_source == "GRF Verification") {
+							if($searchModel->table_source == "GRF Verification Others") {
 								return $searchModel->note .
 									Html::a('View',Url::to(['grf/indexothersverify#viewverify','id'=>$searchModel->task]));
-							} elseif ($searchModel->table_source == "GRF Approval"){
+							} elseif ($searchModel->table_source == "GRF Approval Others"){
 								return $searchModel->note .
 									Html::a('View',Url::to(['grf/indexothersapprove#viewapprove','id'=>$searchModel->task]));
-							} elseif ($searchModel->table_source == "GRF Revision"){
+							} elseif ($searchModel->table_source == "GRF Revision Others"){
 								return $searchModel->note .
 									Html::a('View',Url::to(['grf/index#view','id'=>$searchModel->task]));
 							}
