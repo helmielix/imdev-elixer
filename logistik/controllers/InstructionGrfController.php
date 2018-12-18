@@ -234,6 +234,7 @@ class InstructionGrfController extends Controller
         $model->status_listing = 53;
         $model->status_return = $modelGrf->status_return;
         $model->id_modul = $this->id_modul;
+        // $model->sentdate = date('Y-m-d', strtotime("+1 days"));
         // $model->id_grf = $modelGrf->id;
 
         // $model->wo_number = $modelGrf->wo_number;
@@ -697,6 +698,9 @@ class InstructionGrfController extends Controller
             return 'success';
             
         } else {
+            if ($model->status_listing == 53) {
+                $model->id_warehouse = '';
+            }
             return $this->render('update', [
                 'model' => $model,
                 'modelGrf' => $modelGrf,

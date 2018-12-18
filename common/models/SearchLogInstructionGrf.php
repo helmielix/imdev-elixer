@@ -20,7 +20,7 @@ class SearchLogInstructionGrf extends LogInstructionGrf
     {
         return [
             [['id', 'created_by', 'updated_by', 'status_listing', 'id_modul', 'id_grf', 'id_warehouse', 'status_return'], 'integer'],
-            [['incoming_date', 'created_date', 'updated_date', 'note', 'date_of_return', 'revision_remark'], 'safe'],
+            [['incoming_date', 'created_date', 'updated_date', 'note', 'date_of_return', 'revision_remark', 'grf_number', 'id_division', 'grf_type', 'wo_number', 'requestor'], 'safe'],
         ];
     }
 
@@ -74,6 +74,31 @@ class SearchLogInstructionGrf extends LogInstructionGrf
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['grf_number'] = [
+            'asc' => ['grf.grf_number' => SORT_ASC],
+            'desc' => ['grf.grf_number' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['id_division'] = [
+            'asc' => ['grf.id_division' => SORT_ASC],
+            'desc' => ['grf.id_division' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['id_region'] = [
+            'asc' => ['grf.id_region' => SORT_ASC],
+            'desc' => ['grf.id_region' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['grf_type'] = [
+            'asc' => ['grf.grf_type' => SORT_ASC],
+            'desc' => ['grf.grf_type' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['wo_number'] = [
+            'asc' => ['grf.wo_number' => SORT_ASC],
+            'desc' => ['grf.wo_number' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['requestor'] = [
+            'asc' => ['grf.requestor' => SORT_ASC],
+            'desc' => ['grf.requestor' => SORT_DESC],
+        ];
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -96,9 +121,15 @@ class SearchLogInstructionGrf extends LogInstructionGrf
             'id_warehouse' => $this->id_warehouse,
             'date_of_return' => $this->date_of_return,
             'status_return' => $this->status_return,
+            'requestor' => $this->requestor,
+            'grf_type' => $this->grf_type,
+            'division.id' => $this->id_division,
+            'grf.id_region' => $this->id_region,
         ]);
 
         $query->andFilterWhere(['like', 'note', $this->note])
+            ->andFilterWhere(['ilike', 'grf.grf_number', $this->grf_number])
+            ->andFilterWhere(['ilike', 'grf.wo_number', $this->wo_number])
             ->andFilterWhere(['like', 'revision_remark', $this->revision_remark]);
 
         return $dataProvider;

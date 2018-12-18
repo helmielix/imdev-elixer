@@ -22,15 +22,16 @@ $this->registerJsFile('@commonpath/js/btn_modal.js',['depends' => [\yii\web\Jque
 
 function getFilterStatus() {
 	if(Yii::$app->controller->action->id == 'indexlog')
-		return [
-			1 => 'Inputted',
-			2 => 'Revised',
-			3 => 'Need Revise',
-			5 => 'Approved',
-			7 => 'Drafted',
-			47 => 'Report From WH',
-			13 => 'Deleted',
-		];
+        return ArrayHelper::map( statusReference::find()->andWhere(['id' => [47,53,43,1,2,3,4,5,6,13] ])->all(),'id','status_listing' ) ;
+		// return [
+		// 	1 => 'Inputted',
+		// 	2 => 'Revised',
+		// 	3 => 'Need Revise',
+		// 	5 => 'Approved',
+		// 	7 => 'Drafted',
+		// 	47 => 'Report From WH',
+		// 	13 => 'Deleted',
+		// ];
 	if(Yii::$app->controller->action->id == 'indexapprove')
 		return [
 			5 => 'Approved',

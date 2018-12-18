@@ -60,7 +60,11 @@ $arrQtyDetail = '';
 			'attribute'=>'item_desc',
             'value' =>'item_desc',
             ],
-            'item_uom_code',
+            [
+                'attribute' => 'item_uom_code',
+                'label' => 'UOM',
+            ],
+            // 'item_uom_code',
 			[
                 'attribute'=>'qty_request',
                 'format' => 'raw',

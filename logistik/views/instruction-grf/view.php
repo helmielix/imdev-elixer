@@ -121,7 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute'=>'team_leader',
                         'value'=> function($model){
-                            // return $model->idGrf->team_leader;
+                            return $model->idGrf->grf_number;
                             $laborcek = Labor::find()->andWhere(['nik' => $model->idGrf->team_leader])->exists();
                             if (!$laborcek) {
                                 return LaborForo::find()->andWhere(['nik' => $model->idGrf->team_leader])->one()->name;                                

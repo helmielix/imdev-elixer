@@ -227,7 +227,7 @@ class SearchInboundPo extends InboundPo
                 ]);
                 $query->andFilterWhere(['ilike', 'orafin_view_mkm_pr_to_pay.pr_item_description', $this->orafin_name])
                 ->andFilterWhere(['ilike', 'orafin_view_mkm_pr_to_pay.pr_item_code', $this->orafin_code])
-                ->andFilterWhere(['ilike', 'master_item_im.grouping', $this->grouping])
+                ->andFilterWhere(['=', 'master_item_im.grouping', $this->grouping])
                 ->andFilterWhere(['=', 'master_item_im.uom', $this->uom])
                 ->andFilterWhere(['=', 'sn_type', $this->sn_type]);
                 return $dataProvider;
@@ -317,8 +317,8 @@ class SearchInboundPo extends InboundPo
             ->andFilterWhere(['ilike', 'po_number', $this->po_number])
             ->andFilterWhere(['ilike', 'nama_warehouse', $this->id_warehouse])
             ->andFilterWhere(['ilike', 'supplier', $this->supplier])
-            ->andFilterWhere(['=', 'master_item_im.name', $this->item_name])
-            ->andFilterWhere(['=', 'im_code', $this->im_code])
+            ->andFilterWhere(['ilike', 'master_item_im.name', $this->item_name])
+            ->andFilterWhere(['ilike', 'im_code', $this->im_code])
             ->andFilterWhere(['=', 'brand', $this->brand])
             ->andFilterWhere(['=', 'warna', $this->warna])
             ->andFilterWhere(['=', 'grouping', $this->grouping])
