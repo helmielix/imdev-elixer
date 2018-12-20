@@ -308,7 +308,7 @@ class GrfController extends Controller
 				}
 				$values = explode(';',$value);
 			
-				$model = new GrfDetail();
+				$model = GrfDetail::findOne($values[0]);
 				// $model->id_grf	= $idGrf;
 				// $model->orafin_code	= $values[0];
 				// $model->qty_request			= ($data_qty_request[$key] == '') ? 0 : $data_qty_request[$key];
@@ -343,7 +343,7 @@ class GrfController extends Controller
         $searchModel = new SearchOutboundGrfDetail();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
         // return print_r($dataProvider->models);
-        return $this->render('viewmu', [
+        return $this->render('createmu', [
             'model' => $model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
