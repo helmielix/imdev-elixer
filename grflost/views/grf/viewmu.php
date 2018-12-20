@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'options' => ['style' => 'overflow-x:scroll'],
-        // 'summary' => false,
+        'summary' => false,
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
             
