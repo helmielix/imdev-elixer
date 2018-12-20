@@ -28,6 +28,8 @@
 
 					array_push($arrItemsChildChild, ['label' => yii::t('app','Verification'), 'icon' => 'check-square-o', 'url' => ['/grf/indexmuverify']]);
 
+					array_push($arrItemsChildChild, ['label' => yii::t('app','Approval'), 'icon' => 'check-square-o', 'url' => ['/grf/indexmuapprove']]);
+
 					array_push($arrItemsChild, ['label' => 'Material Usage', 'icon' => 'balance-scale', 'url' => ['#'], 'items' => $arrItemsChildChild]);	
 					// ---------------------------------------------------
 

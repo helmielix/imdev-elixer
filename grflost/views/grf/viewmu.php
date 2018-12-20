@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => ['class' => 'small table table-striped table-bordered detail-view'],
                 'template' => '<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
                 'attributes' => [
-                    
+                    // 'id_instruction_grf',
                     [
                         'label' => 'Nomor Surat Jalan',
                         'attribute' => 'no_sj',
@@ -61,6 +61,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <hr>
   <div class="alert hidden" id="errorSummary">Please fix these following error: <ul id="ulerrorSummary"></ul></div>
+  <div class="row">
+        <div class="col-sm-offset-7">
+            
+            <?= Html::a(Yii::t('app','Print Material Usage'), [$this->context->id.'/printmu', 'id'=>$model->id_instruction_grf], ['id'=>'printMuButton','class' => 'btn btn-primary btn-sm', 'data-method' => 'post', 'target' => '_blank']) ?>
+            <?= Html::a(Yii::t('app','Print Material Return'), [$this->context->id.'/printmu', 'id'=>$model->id_instruction_grf], ['id'=>'printMrButton','class' => 'btn btn-primary btn-sm', 'data-method' => 'post', 'target' => '_blank']) ?>
+        </div>
+    </div>
     <?php 
     Pjax::begin(['id' => 'pjaxviewdetail', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'GET']]) 
     // Pjax::begin()
@@ -112,17 +119,21 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'req_qty',
             
             [
-                'attribute' => 'qty_return',
+                'attribute' => 'qty_used',
                 'format' => 'raw',
                 'value' => function ($model){
                     $val = '';
-                    if ($model->qty_return){
-                        $val = $model->qty_return;
+                    if ($model->qty_used){
+                        $val = $model->qty_used;
                     }
-                    $out = Html::textInput('qty_return[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'qty_return', 'qtyreturn' => $model->qty_return]);
+                    $out = Html::textInput('qty_used[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'qty_used', 'qtyreturn' => $model->qty_used]);
 
-                    return $out.Html::hiddenInput('orafin_code[]', $model->orafin_code, ['class' => 'orafin_code']);
-
+                    
+                    if(Yii::$app->controller->action->id == 'viewmu'){
+                        return $out.Html::hiddenInput('orafin_code[]', $model->orafin_code, ['class' => 'orafin_code']);
+                    }else{
+                        return $model->qty_used;
+                    }
                 },
             ],
 
@@ -130,8 +141,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'delta',
                 'value' => function ($model){
                     $val = 0;
-                    if ($model->qty_return){
-                        $val = $model->qty_return;
+                    if ($model->qty_used){
+                        $val = $model->qty_used;
                     }
                     return $model->qty_request - $val;
                 },
@@ -151,19 +162,27 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- <?php if(Yii::$app->controller->action->id == 'createmu')
             echo Html::button(Yii::t('app','Report to IC'), ['id'=>'reportButton','class' => 'btn btn-warning']); ?> -->
         <?php if(Yii::$app->controller->action->id == 'createmu')
-            echo Html::button(Yii::t('app','Submit'), ['id'=>'inputButton','class' => 'btn btn-success']); ?>
+            // echo Html::button(Yii::t('app','Submit'), ['id'=>'inputButton','class' => 'btn btn-success']); ?>
         
-        <?php if(Yii::$app->controller->action->id == 'viewmu')
-            echo Html::button(Yii::t('app','Update'), ['id'=>'updateButton','class' => 'btn btn-success']); ?>
+        <?php if($model->idInstructionGrf->idGrf->status_return == 47)
+           echo Html::button(Yii::t('app','Update Stock'), ['id'=>'updateStockButton','class' => 'btn btn-success']); ?>
+
+        <?php if($model->idInstructionGrf->idGrf->status_return == 47)
+           echo Html::button(Yii::t('app','Report to AMD'), ['id'=>'reportAmdButton','class' => 'btn btn-success']); ?>
 
         <?php if(Yii::$app->controller->action->id == 'viewmu')
-            echo Html::button(Yii::t('app','Print Material Return Form'), ['id'=>'exportButton','class' => 'btn btn-primary']); ?>
+            // echo Html::button(Yii::t('app','Print Material Return Form'), ['id'=>'exportButton','class' => 'btn btn-primary']); ?>
 
         
-        <?php if(Yii::$app->controller->action->id == 'viewapprove' && $model->status_listing != 5)
+        
+        <?php if(Yii::$app->controller->action->id == 'viewmuverify' && $model->idInstructionGrf->idGrf->status_return != 4)
+            echo Html::button(Yii::t('app','Revise'), ['id'=>'revisevButton','class' => 'btn btn-warning']); ?>
+        <?php if(Yii::$app->controller->action->id == 'viewmuapprove' && $model->idInstructionGrf->idGrf->status_return != 5)
+            echo Html::button(Yii::t('app','Revise'), ['id'=>'reviseaButton','class' => 'btn btn-warning']); ?>
+        <?php if(Yii::$app->controller->action->id == 'viewmuapprove' && $model->idInstructionGrf->idGrf->status_return != 5)
             echo Html::button(Yii::t('app','Approve'), ['id'=>'approveButton','class' => 'btn btn-success']); ?>
-        <?php if(Yii::$app->controller->action->id == 'viewapprove' && $model->status_listing != 5)
-            echo Html::button(Yii::t('app','Revise'), ['id'=>'reviseButton','class' => 'btn btn-warning']); ?>
+        <?php if(Yii::$app->controller->action->id == 'viewmuverify' && $model->idInstructionGrf->idGrf->status_return != 4)
+            echo Html::button(Yii::t('app','Verify'), ['id'=>'verifyButton','class' => 'btn btn-success']); ?>
         
            
 
@@ -196,6 +215,42 @@ $this->params['breadcrumbs'][] = $this->title;
     
 </div>
 <script>
+    $('#verifyButton').click(function () {
+        $.ajax({
+            url: '<?php echo Url::to(['/grf/verifymu', 'id' => $model->id_instruction_grf]) ;?>',
+            type: 'post',
+            success: function (response) {
+                $('#modal').modal('hide');
+                setPopupAlert('<?= Yii::$app->params['pesanVerify'] ?>');
+            }
+        });
+    });
+
+
+    $('#approveButton').click(function () {
+        $.ajax({
+            url: '<?php echo Url::to(['/grf/approvemu', 'id' => $model->id_instruction_grf]) ;?>',
+            type: 'post',
+            async:true,
+            success: function (response) {
+                $('#modal').modal('hide');
+                setPopupAlert('Data has been approved.');
+            }
+        });
+    });
+
+    $('#reportAmdButton').click(function () {
+        $.ajax({
+            url: '<?php echo Url::to(['/grf/report-amd', 'id' => $model->id_instruction_grf]) ;?>',
+            type: 'post',
+            async:true,
+            success: function (response) {
+                $('#modal').modal('hide');
+                setPopupAlert('Data has been reported.');
+            }
+        });
+    });
+
     $('table').on('blur', '.input-sm', function(){
         var input = $(this);
         var currentRow = input.closest('tr');
@@ -209,7 +264,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 
         count = stock - val;
         if (count < 0){
-            alert('<?= $model->getAttributeLabel('qty_return') ?> more than Request Qty.');
+            alert('<?= $model->getAttributeLabel('qty_used') ?> more than Request Qty.');
             input.val(stock);
             val = stock;
             count = stock - val;
@@ -349,17 +404,7 @@ $this->params['breadcrumbs'][] = $this->title;
         });
     });
     
-    $('#approveButton').click(function () {
-        $.ajax({
-            url: '<?php echo Url::to(['/inbound-wh-transfer/approve', 'id' => $model->id_outbound_grf]) ;?>',
-            type: 'post',
-            async:true,
-            success: function (response) {
-                $('#modal').modal('hide');
-                setPopupAlert('Data has been approved.');
-            }
-        });
-    });
+    
 
     $('.uploadButton').click(function () {
         $('#modal').modal('show')
@@ -376,45 +421,5 @@ $this->params['breadcrumbs'][] = $this->title;
     });
 
 
-  $('#exportButton').click(function () {
-        var hot = $('#handover_time').val();
-        console.log(hot);
-        // return false;
-        // window.open("<?php echo Url::to([$this->context->id.'/exportpdf', 'id' => $model->id_instruction_grf]) ?>", "_blank");
-        
-        var button = $(this);
-        button.prop('disabled', true);
-        button.append(' <i id="spinRefresh" class="fa fa-spin fa-refresh"></i>');
-        
-        data = new FormData();
-        data.append( 'time', $( '#handover_time' ).val() );
-        
-        $.ajax({
-            url: '<?php echo Url::to([$this->context->id.'/savehandovertime', 'id' => $model->id_instruction_grf]) ;?>',
-            type: 'post',
-            data: data,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                if(response == 'success') {
-                    window.open("<?php echo Url::to([$this->context->id.'/exportpdf', 'id' => $model->id_instruction_grf]) ?>", "_blank");
-                } else {
-                    alert('error with message: ' + response.pesan);
-                }
-            },
-            error: function (xhr, getError) {
-                if (typeof getError === "object" && getError !== null) {
-                    error = $.parseJSON(getError.responseText);
-                    getError = error.message;
-                }
-                if (xhr.status != 302) {
-                    alert("System recieve error with code: "+xhr.status);
-                }
-            },
-            complete: function () {
-                button.prop('disabled', false);
-                $('#spinRefresh').remove();
-            },
-        });
-    });
+  
 </script>

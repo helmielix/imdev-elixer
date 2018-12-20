@@ -112,14 +112,14 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'req_qty',
             
             [
-                'attribute' => 'qty_return',
+                'attribute' => 'qty_used',
                 'format' => 'raw',
                 'value' => function ($model){
                     $val = '';
-                    if ($model->qty_return){
-                        $val = $model->qty_return;
+                    if ($model->qty_used){
+                        $val = $model->qty_used;
                     }
-                    $out = Html::textInput('qty_return[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'qty_return', 'qtyreturn' => $model->qty_return]);
+                    $out = Html::textInput('qty_used[]', $val, ['class' => 'form-control input-sm', 'dataim' => 'qty_used', 'qtyreturn' => $model->qty_used]);
 
                     return $out.Html::hiddenInput('orafin_code[]', $model->orafin_code, ['class' => 'orafin_code']);
 
@@ -130,8 +130,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'delta',
                 'value' => function ($model){
                     $val = 0;
-                    if ($model->qty_return){
-                        $val = $model->qty_return;
+                    if ($model->qty_used){
+                        $val = $model->qty_used;
                     }
                     return $model->qty_request - $val;
                 },
@@ -209,7 +209,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 
         count = stock - val;
         if (count < 0){
-            alert('<?= $model->getAttributeLabel('qty_return') ?> more than Request Qty.');
+            alert('<?= $model->getAttributeLabel('qty_used') ?> more than Request Qty.');
             input.val(stock);
             val = stock;
             count = stock - val;

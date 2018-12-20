@@ -183,11 +183,15 @@ class SearchOutboundGrf extends OutboundGrf
             $query  ->andFilterWhere(['outbound_grf.id_modul' => $id_modul]);
         // add conditions that should always apply here
         }else if($action == 'grfmr'){
-            $query  ->andFilterWhere(['outbound_grf.status_listing' => [25]]);
+            $query  ->andFilterWhere(['and',['outbound_grf.status_listing' => [25,47]], ['!=','grf.status_return',54]]);
 
         // add conditions that should always apply here
         }else if($action == 'grfmr_verify'){
-            $query  ->andFilterWhere(['grf.status_return' => [38]]);
+            $query  ->andFilterWhere(['grf.status_return' => [38,4]]);
+
+        // add conditions that should always apply here
+        }else if($action == 'grfmr_approve'){
+            $query  ->andFilterWhere(['grf.status_return' => [4,5]]);
 
         // add conditions that should always apply here
         }else if($action == 'approve'){

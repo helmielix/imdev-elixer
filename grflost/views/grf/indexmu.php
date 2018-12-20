@@ -97,18 +97,37 @@ function getFilterStatus() {
             // 'id_instruction_grf',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template'=>'{view}',
+                'template'=>'{detail} {view}',
                 'buttons'=>[
+                    'detail' => function ($url, $model) {
+                        if(Yii::$app->controller->action->id == 'indexmu' && $model->status_return == 47){
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-eye-open"></span>', '#viewmu?id='.$model->id_instruction_grf.'&header=Create_Tag_SN', [
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/viewmu','id' => $model->id_instruction_grf]), 'header'=> yii::t('app','Create Material Return Peminjaman')
+                            ]);
+                        }
+                    },
                      'view' => function ($url, $model) {
                         if(Yii::$app->controller->action->id == 'indexmu' && $model->status_return == 31){
                             return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-plus"></span>', '#createmu?id='.$model->id_instruction_grf.'&header=Create_Tag_SN', [
                                 'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/createmu','id' => $model->id_instruction_grf]), 'header'=> yii::t('app','Create Material Return Peminjaman')
                             ]);
+                        } else if(Yii::$app->controller->action->id == 'indexmu' && $model->status_return == 47){
+                            return Html::a('<span style="margin:0px 2px" class="glyphicon glyphicon-pencil"></span>', '#createmu?id='.$model->id_instruction_grf.'&header=Create_Tag_SN', [
+                                'title' => Yii::t('app', 'view'), 'class' => 'viewButton', 'value'=>Url::to([$this->context->id.'/createmu','id' => $model->id_instruction_grf]), 'header'=> yii::t('app','Create Material Return Peminjaman')
+                            ]);
                         } 
                         else {
-                            if(Yii::$app->controller->action->id == 'indexmu' || Yii::$app->controller->action->id == 'indexmuverify' || Yii::$app->controller->action->id == 'indexmuapprove') {
+                            if(Yii::$app->controller->action->id == 'indexmu' ) {
                                 $viewurl = 'viewmu';
-                                $header = 'Create Tag SN';
+                                $header = 'Detail Material Usage';
+                            }
+                            if(Yii::$app->controller->action->id == 'indexmuverify'){
+                                $viewurl = 'viewmuverify';
+                                $header = 'Detail Material Usage';
+                            }
+                            if(Yii::$app->controller->action->id == 'indexmuapprove'){
+                                $viewurl = 'viewmuapprove';
+                                $header = 'Detail Material Usage';
                             }
                             
                             $headerlnk = str_replace(' ', '_', $header);

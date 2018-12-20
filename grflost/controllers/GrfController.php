@@ -198,6 +198,17 @@ class GrfController extends Controller
         ]);
     }
 
+    public function actionIndexmuapprove()
+    {
+        $searchModel = new SearchOutboundGrf();
+        $dataProvider = $searchModel->searchMu(Yii::$app->request->post(), $this->id_modul, 'grfmr_approve');
+
+        return $this->render('indexmu', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
 	public function actionIndexdetail(){
 
 		$this->layout = 'blank';
@@ -275,6 +286,34 @@ class GrfController extends Controller
         ]);
     }
 
+    public function actionViewmuverify($id){
+        $this->layout = 'blank';
+        $model = OutboundGrf::findOne($id);
+        
+        $searchModel = new SearchOutboundGrfDetail();
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
+        
+        return $this->render('viewmu', [
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionViewmuapprove($id){
+        $this->layout = 'blank';
+        $model = OutboundGrf::findOne($id);
+        
+        $searchModel = new SearchOutboundGrfDetail();
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
+        
+        return $this->render('viewmu', [
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
      public function actionCreatemr($id){
         $this->layout = 'blank';
         $model = OutboundGrf::findOne($id);
@@ -296,10 +335,21 @@ class GrfController extends Controller
         if(Yii::$app->request->isPost){
         	$model = Grf::findOne($id);
         	$model->status_return = 38;
+
+        	$newidinst = Grf::find()->andWhere(['and',['like', 'mu_number', '%/'.date('Y'), false],['id_modul' => $model->id_modul]])->count() + 1;
+			$newidinstexist = Grf::find()->andWhere(['and',['mu_number' => $newidinst],['id_modul' => $model->id_modul]])->exists();
+			$newidinst++;
+
+			$monthroman = Numbertoroman::convert(date('n'));
+
+			$model->mu_number = sprintf("%04d", $newidinst).'/INST-IC1/WT/'.$monthroman.date('/Y');
+
         	$model->save();
         	// $model
         	$data_id_grf_detail  = Yii::$app->request->post('id_grf_detail');
-        	$data_qty_return  = Yii::$app->request->post('qty_return');
+        	$data_qty_used  = Yii::$app->request->post('qty_used');
+
+
 
         	foreach($data_id_grf_detail as $key => $value){
 				// if($data_qty_request[$key] == '')
@@ -312,7 +362,7 @@ class GrfController extends Controller
 				// $model->id_grf	= $idGrf;
 				// $model->orafin_code	= $values[0];
 				// $model->qty_request			= ($data_qty_request[$key] == '') ? 0 : $data_qty_request[$key];
-				$model->qty_return		= ($data_qty_return[$key] == '') ? 0 : $data_qty_return[$key];
+				$model->qty_used		= ($data_qty_used[$key] == '') ? 0 : $data_qty_used[$key];
 				$model->status_return = 36;
 				/*
 				$modelMasterItem = MasterItemIm::findOne($values[0]);
@@ -869,7 +919,7 @@ class GrfController extends Controller
 		return 'success';
 	}
 
-	 public function actionVerify($id)
+	public function actionVerify($id)
     {   
         $model = $this->findModel($id);
         if($model->status_listing == 1 || $model->status_listing == 2){
@@ -888,6 +938,26 @@ class GrfController extends Controller
             return 'Not valid for verify';
         }
     }
+
+    public function actionVerifymu($id)
+    {   
+        $model = $this->findModel($id);
+        if($model->status_return == 38){
+            $model->status_return = 4;
+            $model->verified_by_mu = Yii::$app->user->identity->id;
+
+            if ($model->save()) {
+            	$this->createLog($model);
+            	$arrAuth = ['/grf/indexapprove'];
+                $header = 'Alert Approval Material Usage ';
+                $subject = 'This document is waiting your approval. Please click this link document : '.Url::base(true).'/grf/indexapprove#viewmuapprove?id='.$model->id.'&header=Detail_Good_Request_Form';
+                Email::sendEmail($arrAuth, $header, $subject);
+                return 'success';
+            } 
+        }else{
+            return 'Not valid for verify';
+        }
+    }
 	
 	public function actionApprove($id){
 		$model = $this->findModel($id);
@@ -895,6 +965,38 @@ class GrfController extends Controller
 		if ($model->status_listing == 4){
 			$model->status_listing = 5;
 			$model->approved_by = Yii::$app->user->identity->id;
+			if ($model->save()){
+				$this->createLog($model);
+				return 'success';
+			}
+			
+		}else{
+			return 'Not Valid for Approve';
+		}
+	}
+
+	public function actionReportAmd($id){
+		$model = $this->findModel($id);
+		
+		if ($model->status_return == 47){
+			$model->status_return = 54;
+			// $model->approved_by = Yii::$app->user->identity->id;
+			if ($model->save()){
+				$this->createLog($model);
+				return 'success';
+			}
+			
+		}else{
+			return 'Not Valid for Approve';
+		}
+	}
+
+	public function actionApprovemu($id){
+		$model = $this->findModel($id);
+		
+		if ($model->status_return == 4){
+			$model->status_return = 5;
+			$model->approved_by_mu = Yii::$app->user->identity->id;
 			if ($model->save()){
 				$this->createLog($model);
 				return 'success';
@@ -1046,6 +1148,38 @@ class GrfController extends Controller
         }else{
             return 'failed';
         }
+    }
+
+    public function actionPrintmu($id) {
+
+		$model = OutboundGrf::findOne($id);
+        $searchModel = new SearchOutboundGrfDetail();
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $id);
+		$dataProvider->sort = false;
+		$dataProvider->pagination = false;
+
+		$arrayreturn['model'] = $model;
+		$arrayreturn['dataProvider'] = $dataProvider;
+		$arrayreturn['searchModel'] = null;
+
+
+        $pdf = new Pdf([
+            // 'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
+            'content' => $this->renderPartial('viewmu_printmu', $arrayreturn),
+            'filename'=> 'instruction_warehouse_transfer.pdf',
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'options' => [
+                'title' => 'Material Usage Form',
+
+            ],
+            'methods' => [
+                'SetHeader' => ['Instruction Warehouse'],
+                'SetFooter' => ['|Page {PAGENO}|'],
+            ]
+        ]);
+        return $pdf->render();
     }
 
      public function actionExportpdf($id) {
